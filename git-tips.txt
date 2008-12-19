@@ -6,4 +6,9 @@ git log
 
 git add git-tips.txt
 git status
-git commit
+
+git commit			// addatut asiat
+git commit tiedostonnimi
+git commit .
+
+git push
