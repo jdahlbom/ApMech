@@ -1,0 +1,5 @@
+Tässä tehtyjä juttuja:
+
+git clone git://192.168.2.1/apmech.git
+
+git log
