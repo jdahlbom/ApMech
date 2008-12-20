@@ -21,9 +21,7 @@
 		DED3E5B20EFC7DD000B36728 /* Ogre.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = DED3E57D0EFC79C500B36728 /* Ogre.framework */; };
 		DED3E5B70EFC7E6400B36728 /* media.cfg in Resources */ = {isa = PBXBuildFile; fileRef = DED3E5B60EFC7E6400B36728 /* media.cfg */; };
 		DED3E7A10EFC84A100B36728 /* Media in Resources */ = {isa = PBXBuildFile; fileRef = DED3E5EB0EFC84A000B36728 /* Media */; };
-		DED3E7A30EFC84B100B36728 /* Media in CopyFiles */ = {isa = PBXBuildFile; fileRef = DED3E5EB0EFC84A000B36728 /* Media */; };
 		DEEE0A850EFD90B80093C3AD /* terrain.png in Resources */ = {isa = PBXBuildFile; fileRef = DEEE0A840EFD90B80093C3AD /* terrain.png */; };
-		DEEE0A9D0EFD968D0093C3AD /* terrain.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = DEEE0A840EFD90B80093C3AD /* terrain.png */; };
 		DEF01D0E0EFDA9B200E18C05 /* Cg.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = DED3E57C0EFC79C500B36728 /* Cg.framework */; };
 /* End PBXBuildFile section */
 
@@ -36,17 +34,6 @@
 			files = (
 				DEF01D0E0EFDA9B200E18C05 /* Cg.framework in CopyFiles */,
 				DED3E5B20EFC7DD000B36728 /* Ogre.framework in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DED3E5C40EFC7FD700B36728 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 7;
-			files = (
-				DEEE0A9D0EFD968D0093C3AD /* terrain.png in CopyFiles */,
-				DED3E7A30EFC84B100B36728 /* Media in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,7 +146,6 @@
 				8D0C4E8F0486CD37000505A6 /* Sources */,
 				8D0C4E910486CD37000505A6 /* Frameworks */,
 				DED3E5B00EFC7DB900B36728 /* CopyFiles */,
-				DED3E5C40EFC7FD700B36728 /* CopyFiles */,
 			);
 			buildRules = (
 			);

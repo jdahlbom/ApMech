@@ -7,9 +7,34 @@ using namespace Ogre;
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 #include <CoreFoundation/CoreFoundation.h>
-
+#endif
 bool keepRendering = true;
 Mech mech;
+
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+// This function will locate the path to our application on OS X,
+// unlike windows you can not rely on the curent working directory
+// for locating your configuration files and resources.
+std::string macBundlePath()
+{
+    char path[1024];
+    CFBundleRef mainBundle = CFBundleGetMainBundle();
+    assert(mainBundle);
+	
+    CFURLRef mainBundleURL = CFBundleCopyBundleURL(mainBundle);
+    assert(mainBundleURL);
+	
+    CFStringRef cfStringRef = CFURLCopyFileSystemPath( mainBundleURL, kCFURLPOSIXPathStyle);
+    assert(cfStringRef);
+	
+    CFStringGetCString(cfStringRef, path, 1024, kCFStringEncodingASCII);
+	
+    CFRelease(mainBundleURL);
+    CFRelease(cfStringRef);
+	
+    return std::string(path);
+}
+#endif
 
 
 class MyFrameListener : public FrameListener, public OIS::KeyListener
@@ -92,17 +117,19 @@ class APMech {
 	Root *root;
 	RenderWindow *window;
 	RenderSystem *rSys;
+	SceneManager *sceneMgr;
 
 	void setupResources(void);
-	void loadResources(void);
+	bool loadResources(void);
 	bool loadTerrain();
 	
 
 	public:
 	
 	APMech();
-	virtual ~APmech();
-	
+	virtual ~APMech();
+	bool initialize();
+	bool run();
 };
 
 
@@ -116,7 +143,7 @@ APMech::~APMech()
 
 }
 
-APMech::initialize()
+bool APMech::initialize()
 {
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 	Ogre::String resourcePath;
@@ -146,60 +173,36 @@ APMech::initialize()
 	
 	root->showConfigDialog();
 	 
- #if 1
  	root->initialise(true, "test window"); 
 	window = root->getAutoCreatedWindow(); 
- #else
-  	root->initialise(false); 
-	window = root->createRenderWindow( 
-		"Manual Ogre Window",  // window name 
-		800,                   // window width, in pixels 
-		600,                   // window height, in pixels 
-		false,                 // fullscreen or not 
-		0);    
-#endif
 
-	TextureManager::getSingleton().setDefaultNumMipmaps(5);
-	ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+	loadResources();
+	loadTerrain();
+	
+	// add the event listener
+	MyFrameListener *frameListener = new MyFrameListener(window);
+	root->addFrameListener(frameListener);
+	return true;
 }
 
-APMech::loadTerrain()
+bool APMech::loadTerrain()
 {
-	SceneManager *sceneMgr = root->createSceneManager(ST_EXTERIOR_CLOSE);
-	sceneMgr->setWorldGeometry(resourcePath + "Media/terrain.cfg");
-}
-
-
-// This function will locate the path to our application on OS X,
-// unlike windows you can not rely on the curent working directory
-// for locating your configuration files and resources.
-std::string macBundlePath()
-{
-    char path[1024];
-    CFBundleRef mainBundle = CFBundleGetMainBundle();
-    assert(mainBundle);
-	
-    CFURLRef mainBundleURL = CFBundleCopyBundleURL(mainBundle);
-    assert(mainBundleURL);
-	
-    CFStringRef cfStringRef = CFURLCopyFileSystemPath( mainBundleURL, kCFURLPOSIXPathStyle);
-    assert(cfStringRef);
-	
-    CFStringGetCString(cfStringRef, path, 1024, kCFStringEncodingASCII);
-	
-    CFRelease(mainBundleURL);
-    CFRelease(cfStringRef);
-	
-    return std::string(path);
-}
+	sceneMgr = root->createSceneManager(ST_EXTERIOR_CLOSE);
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+	sceneMgr->setWorldGeometry(macBundlePath() + "/Contents/Resources/Media/terrain.cfg");
+#else
+	sceneMgr->setWorldGeometry("terrain.cfg");
 #endif
+	return true;
+}
 
-#if 1
 
-void loadResources(void)
+bool APMech::loadResources(void)
 {
 	// Initialise, parse scripts etc
+	TextureManager::getSingleton().setDefaultNumMipmaps(5);
     Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+	return true;
 }
 
 void APMech::setupResources(void)
@@ -245,69 +248,8 @@ void APMech::setupResources(void)
 
 }
 
-#endif
-
-
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-#define WIN32_LEAN_AND_MEAN
-#include "windows.h"
-
-INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT )
-#else
-int main(int argc, char **argv)
-#endif
+bool APMech::run()
 {
-
-	Root *root;
-
-#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-	Ogre::String resourcePath;
-    resourcePath = macBundlePath() + "/Contents/Resources/";
-    root = new Ogre::Root(resourcePath + "plugins.cfg",
-                          resourcePath + "ogre.cfg", resourcePath + "Ogre.log");
-#else
-    root = new Root();
-#endif
-
-	// OpenGL
-	RenderSystem *rSys = root->getRenderSystemByName("OpenGL Rendering Subsystem");
-	rSys->setConfigOption("Full Screen", "No");
-	root->setRenderSystem(rSys);
-
-    setupResources();
-	// loadResources();
-
-	// end gracelessly if the preferred renderer is not available 
-	if (root->getRenderSystem() == NULL) { 
-		std::cout << "ERROR: render system is NULL\n";
-		delete root; 
-		return 1; 
-	}
-	
-	root->restoreConfig();
-	
-	root->showConfigDialog();
-	 
- #if 1
- 	root->initialise(true, "test window"); 
-	RenderWindow *window = root->getAutoCreatedWindow(); 
- #else
-  	root->initialise(false); 
-	RenderWindow *window = root->createRenderWindow( 
-		"Manual Ogre Window",  // window name 
-		800,                   // window width, in pixels 
-		600,                   // window height, in pixels 
-		false,                 // fullscreen or not 
-		0);    
-#endif
-
-	TextureManager::getSingleton().setDefaultNumMipmaps(5);
-	ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-
-	SceneManager *sceneMgr = root->createSceneManager(ST_EXTERIOR_CLOSE);
-	sceneMgr->setWorldGeometry(resourcePath + "Media/terrain.cfg");
-
-
 	sceneMgr->setAmbientLight( ColourValue( 1.0, 1.0, 0.9 ) );
 	sceneMgr->setShadowTechnique(SHADOWTYPE_STENCIL_ADDITIVE);
 
@@ -347,10 +289,6 @@ int main(int argc, char **argv)
     vp->setBackgroundColour(ColourValue(0,0,0));
     mCamera->setAspectRatio(Real(vp->getActualWidth()) / Real(vp->getActualHeight()));
 	
-	// add the event listener
-	
-	MyFrameListener *frameListener = new MyFrameListener(window);
-	root->addFrameListener(frameListener);
 	
 	int i = 0;
 	while (keepRendering) {
@@ -360,6 +298,25 @@ int main(int argc, char **argv)
 		robotNode->setPosition(Vector3(mech.getX(), 0, mech.getY()));
 		root->renderOneFrame(); 
 	} 
+
+	return true;
+}
+
+
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+#define WIN32_LEAN_AND_MEAN
+#include "windows.h"
+
+INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT )
+#else
+int main(int argc, char **argv)
+#endif
+{
+
+	APMech game;
+	
+	game.initialize();
+	game.run();
 
     return 0;
 }

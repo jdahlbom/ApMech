@@ -9,8 +9,8 @@
 			8D0C4E890486CD37000505A6 /* sample1_ismo */,
 		);
 		breakpoints = (
-			DEC36F8B0EFD3908002DF754 /* apmech.cpp:280 */,
-			DE1E128E0EFD70AB00BAD786 /* apmech.cpp:45 */,
+			DEC36F8B0EFD3908002DF754 /* apmech.cpp:316 */,
+			DE1E128E0EFD70AB00BAD786 /* apmech.cpp:70 */,
 		);
 		codeSenseManager = DED3E5770EFC78E600B36728 /* Code sense */;
 		executables = (
@@ -103,8 +103,8 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 251504993;
-			PBXWorkspaceStateSaveDate = 251504993;
+			PBXPerProjectTemplateStateSaveDate = 251507337;
+			PBXWorkspaceStateSaveDate = 251507337;
 		};
 		perUserProjectItems = {
 			DEA81CC40EFDA0D400E5A09B = DEA81CC40EFDA0D400E5A09B /* PBXTextBookmark */;
@@ -149,9 +149,25 @@
 			DEC36F990EFD3A6A002DF754 = DEC36F990EFD3A6A002DF754 /* PBXTextBookmark */;
 			DEC36F9B0EFD3A6A002DF754 = DEC36F9B0EFD3A6A002DF754 /* PBXTextBookmark */;
 			DEEE0AB80EFD99FD0093C3AD = DEEE0AB80EFD99FD0093C3AD /* PBXTextBookmark */;
-			DEF01D030EFDA99500E18C05 /* PBXTextBookmark */ = DEF01D030EFDA99500E18C05 /* PBXTextBookmark */;
-			DEF01D0D0EFDA9A500E18C05 /* PBXTextBookmark */ = DEF01D0D0EFDA9A500E18C05 /* PBXTextBookmark */;
-			DEF01D120EFDA9E000E18C05 /* PBXTextBookmark */ = DEF01D120EFDA9E000E18C05 /* PBXTextBookmark */;
+			DEF01D030EFDA99500E18C05 = DEF01D030EFDA99500E18C05 /* PBXTextBookmark */;
+			DEF01D0D0EFDA9A500E18C05 = DEF01D0D0EFDA9A500E18C05 /* PBXTextBookmark */;
+			DEF01D120EFDA9E000E18C05 = DEF01D120EFDA9E000E18C05 /* PBXTextBookmark */;
+			DEF01D340EFDB59200E18C05 /* PBXTextBookmark */ = DEF01D340EFDB59200E18C05 /* PBXTextBookmark */;
+			DEF01D350EFDB59200E18C05 /* PBXTextBookmark */ = DEF01D350EFDB59200E18C05 /* PBXTextBookmark */;
+			DEF01D370EFDB59200E18C05 /* PBXTextBookmark */ = DEF01D370EFDB59200E18C05 /* PBXTextBookmark */;
+			DEF01D390EFDB59200E18C05 /* PBXTextBookmark */ = DEF01D390EFDB59200E18C05 /* PBXTextBookmark */;
+			DEF01D3A0EFDB59200E18C05 /* PBXTextBookmark */ = DEF01D3A0EFDB59200E18C05 /* PBXTextBookmark */;
+			DEF01D3C0EFDB59200E18C05 /* PBXTextBookmark */ = DEF01D3C0EFDB59200E18C05 /* PBXTextBookmark */;
+			DEF01D3D0EFDB59200E18C05 /* PBXTextBookmark */ = DEF01D3D0EFDB59200E18C05 /* PBXTextBookmark */;
+			DEF01D420EFDB61800E18C05 /* PBXTextBookmark */ = DEF01D420EFDB61800E18C05 /* PBXTextBookmark */;
+			DEF01D440EFDB61800E18C05 /* PBXTextBookmark */ = DEF01D440EFDB61800E18C05 /* PBXTextBookmark */;
+			DEF01D450EFDB61800E18C05 /* PBXTextBookmark */ = DEF01D450EFDB61800E18C05 /* PBXTextBookmark */;
+			DEF01D470EFDB61800E18C05 /* PBXTextBookmark */ = DEF01D470EFDB61800E18C05 /* PBXTextBookmark */;
+			DEF01D4D0EFDB63200E18C05 /* PBXTextBookmark */ = DEF01D4D0EFDB63200E18C05 /* PBXTextBookmark */;
+			DEF01D570EFDB63200E18C05 /* PBXTextBookmark */ = DEF01D570EFDB63200E18C05 /* PBXTextBookmark */;
+			DEF01D580EFDB63200E18C05 /* PBXTextBookmark */ = DEF01D580EFDB63200E18C05 /* PBXTextBookmark */;
+			DEF01D5D0EFDB6B900E18C05 /* PBXTextBookmark */ = DEF01D5D0EFDB6B900E18C05 /* PBXTextBookmark */;
+			DEF01D5E0EFDB6B900E18C05 /* PBXTextBookmark */ = DEF01D5E0EFDB6B900E18C05 /* PBXTextBookmark */;
 		};
 		sourceControlManager = DED3E5760EFC78E600B36728 /* Source Control */;
 		userBuildSettings = {
@@ -163,7 +179,7 @@
 			DED3E56C0EFC78E300B36728 /* sample1_ismo */,
 		);
 	};
-	DE1E128E0EFD70AB00BAD786 /* apmech.cpp:45 */ = {
+	DE1E128E0EFD70AB00BAD786 /* apmech.cpp:70 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -175,8 +191,8 @@
 		functionName = "keyPressed(const OIS::KeyEvent &arg)";
 		hitCount = 0;
 		ignoreCount = 0;
-		lineNumber = 45;
-		modificationTime = 251500450.280945;
+		lineNumber = 70;
+		modificationTime = 251508200.190102;
 		state = 2;
 	};
 	DEA81CAF0EFD9EF200E5A09B /* gameobject.h */ = {
@@ -212,7 +228,7 @@
 		fRef = DED3E5790EFC797A00B36728 /* apmech.cpp */;
 		name = "apmech.cpp: 224";
 		rLen = 0;
-		rLoc = 8567;
+		rLoc = 7993;
 		rType = 0;
 		vrLen = 2301;
 		vrLoc = 4863;
@@ -222,7 +238,7 @@
 		fRef = DED3E5790EFC797A00B36728 /* apmech.cpp */;
 		name = "apmech.cpp: 224";
 		rLen = 0;
-		rLoc = 8567;
+		rLoc = 7993;
 		rType = 0;
 		vrLen = 2301;
 		vrLoc = 4863;
@@ -579,7 +595,7 @@
 		fRef = DED3E5790EFC797A00B36728 /* apmech.cpp */;
 		name = "apmech.cpp: 219";
 		rLen = 0;
-		rLoc = 7326;
+		rLoc = 7979;
 		rType = 0;
 		vrLen = 0;
 		vrLoc = 0;
@@ -589,7 +605,7 @@
 		fRef = DED3E5790EFC797A00B36728 /* apmech.cpp */;
 		name = "apmech.cpp: 233";
 		rLen = 0;
-		rLoc = 7812;
+		rLoc = 7993;
 		rType = 0;
 		vrLen = 2176;
 		vrLoc = 5138;
@@ -611,7 +627,7 @@
 			sepNavWindowFrame = "{{412, 0}, {955, 1028}}";
 		};
 	};
-	DEC36F8B0EFD3908002DF754 /* apmech.cpp:280 */ = {
+	DEC36F8B0EFD3908002DF754 /* apmech.cpp:316 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -623,9 +639,9 @@
 		functionName = "main(int argc, char **argv)";
 		hitCount = 0;
 		ignoreCount = 0;
-		lineNumber = 280;
+		lineNumber = 316;
 		location = sample1_ismo;
-		modificationTime = 251500450.280483;
+		modificationTime = 251508200.189891;
 		state = 2;
 	};
 	DEC36F940EFD3A6A002DF754 /* PBXTextBookmark */ = {
@@ -661,18 +677,13 @@
 		name = allocator.h;
 		path = "/Developer/SDKs/MacOSX10.5.sdk/usr/include/c++/4.0.0/bits/allocator.h";
 		sourceTree = "<absolute>";
-		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1170, 1946}}";
-			sepNavSelRange = "{3335, 0}";
-			sepNavVisRange = "{0, 0}";
-		};
 	};
 	DEC36F9B0EFD3A6A002DF754 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = DED3E5790EFC797A00B36728 /* apmech.cpp */;
 		name = "SampleApp.cpp: 62";
 		rLen = 0;
-		rLoc = 9094;
+		rLoc = 7993;
 		rType = 0;
 		vrLen = 616;
 		vrLoc = 1205;
@@ -718,9 +729,9 @@
 	};
 	DED3E5790EFC797A00B36728 /* apmech.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1170, 3892}}";
-			sepNavSelRange = "{5633, 0}";
-			sepNavVisRange = "{0, 0}";
+			sepNavIntBoundsRect = "{{0, 0}, {896, 4802}}";
+			sepNavSelRange = "{4106, 0}";
+			sepNavVisRange = "{2866, 1425}";
 			sepNavWindowFrame = "{{557, 0}, {955, 1028}}";
 		};
 	};
@@ -737,7 +748,7 @@
 		fRef = DED3E5790EFC797A00B36728 /* apmech.cpp */;
 		name = "apmech.cpp: 193";
 		rLen = 0;
-		rLoc = 7326;
+		rLoc = 7979;
 		rType = 0;
 		vrLen = 0;
 		vrLoc = 0;
@@ -771,5 +782,193 @@
 		rType = 0;
 		vrLen = 0;
 		vrLoc = 0;
+	};
+	DEF01D340EFDB59200E18C05 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DED3E5790EFC797A00B36728 /* apmech.cpp */;
+		name = "apmech.cpp: 254";
+		rLen = 0;
+		rLoc = 6016;
+		rType = 0;
+		vrLen = 603;
+		vrLoc = 5820;
+	};
+	DEF01D350EFDB59200E18C05 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEF01D360EFDB59200E18C05 /* asm Ogre::SceneManager::setAmbientLight  0x00ae19de */;
+		name = "asm Ogre::SceneManager::setAmbientLight  0x00ae19de: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 558;
+		vrLoc = 0;
+	};
+	DEF01D360EFDB59200E18C05 /* asm Ogre::SceneManager::setAmbientLight  0x00ae19de */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = file;
+		path = "asm Ogre::SceneManager::setAmbientLight  0x00ae19de";
+		sourceTree = "<group>";
+	};
+	DEF01D370EFDB59200E18C05 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEF01D380EFDB59200E18C05 /* asm Ogre::SceneManager::setAmbientLight  0x00ae19de */;
+		name = "asm Ogre::SceneManager::setAmbientLight  0x00ae19de: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 558;
+		vrLoc = 0;
+	};
+	DEF01D380EFDB59200E18C05 /* asm Ogre::SceneManager::setAmbientLight  0x00ae19de */ = {
+		isa = PBXFileReference;
+		path = "asm Ogre::SceneManager::setAmbientLight  0x00ae19de";
+		sourceTree = "<group>";
+	};
+	DEF01D390EFDB59200E18C05 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DED3E5790EFC797A00B36728 /* apmech.cpp */;
+		name = "apmech.cpp: 254";
+		rLen = 0;
+		rLoc = 6016;
+		rType = 0;
+		vrLen = 603;
+		vrLoc = 5820;
+	};
+	DEF01D3A0EFDB59200E18C05 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEF01D3B0EFDB59200E18C05 /* asm Ogre::SceneManager::setAmbientLight  0x00ae19de */;
+		name = "asm Ogre::SceneManager::setAmbientLight  0x00ae19de: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 558;
+		vrLoc = 0;
+	};
+	DEF01D3B0EFDB59200E18C05 /* asm Ogre::SceneManager::setAmbientLight  0x00ae19de */ = {
+		isa = PBXFileReference;
+		path = "asm Ogre::SceneManager::setAmbientLight  0x00ae19de";
+		sourceTree = "<group>";
+	};
+	DEF01D3C0EFDB59200E18C05 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DED3E5790EFC797A00B36728 /* apmech.cpp */;
+		name = "apmech.cpp: 254";
+		rLen = 0;
+		rLoc = 6016;
+		rType = 0;
+		vrLen = 603;
+		vrLoc = 5820;
+	};
+	DEF01D3D0EFDB59200E18C05 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEF01D3E0EFDB59200E18C05 /* asm Ogre::SceneManager::setAmbientLight  0x00ae19de */;
+		name = "asm Ogre::SceneManager::setAmbientLight  0x00ae19de: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 558;
+		vrLoc = 0;
+	};
+	DEF01D3E0EFDB59200E18C05 /* asm Ogre::SceneManager::setAmbientLight  0x00ae19de */ = {
+		isa = PBXFileReference;
+		path = "asm Ogre::SceneManager::setAmbientLight  0x00ae19de";
+		sourceTree = "<group>";
+	};
+	DEF01D420EFDB61800E18C05 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEF01D430EFDB61800E18C05 /* asm Ogre::SceneManager::setAmbientLight  0x00ae19de */;
+		name = "asm Ogre::SceneManager::setAmbientLight  0x00ae19de: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 558;
+		vrLoc = 0;
+	};
+	DEF01D430EFDB61800E18C05 /* asm Ogre::SceneManager::setAmbientLight  0x00ae19de */ = {
+		isa = PBXFileReference;
+		path = "asm Ogre::SceneManager::setAmbientLight  0x00ae19de";
+		sourceTree = "<group>";
+	};
+	DEF01D440EFDB61800E18C05 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DED3E5790EFC797A00B36728 /* apmech.cpp */;
+		rLen = 0;
+		rLoc = 318;
+		rType = 1;
+	};
+	DEF01D450EFDB61800E18C05 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEF01D460EFDB61800E18C05 /* asm Ogre::SceneManager::setAmbientLight  0x00ae19de */;
+		name = "asm Ogre::SceneManager::setAmbientLight  0x00ae19de: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 558;
+		vrLoc = 0;
+	};
+	DEF01D460EFDB61800E18C05 /* asm Ogre::SceneManager::setAmbientLight  0x00ae19de */ = {
+		isa = PBXFileReference;
+		path = "asm Ogre::SceneManager::setAmbientLight  0x00ae19de";
+		sourceTree = "<group>";
+	};
+	DEF01D470EFDB61800E18C05 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DED3E5790EFC797A00B36728 /* apmech.cpp */;
+		name = "apmech.cpp: 318";
+		rLen = 0;
+		rLoc = 7980;
+		rType = 0;
+		vrLen = 280;
+		vrLoc = 7690;
+	};
+	DEF01D4D0EFDB63200E18C05 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DED3E5790EFC797A00B36728 /* apmech.cpp */;
+		name = "apmech.cpp: 319";
+		rLen = 0;
+		rLoc = 7980;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	DEF01D570EFDB63200E18C05 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DED3E5790EFC797A00B36728 /* apmech.cpp */;
+		name = "apmech.cpp: 180";
+		rLen = 11;
+		rLoc = 3768;
+		rType = 0;
+		vrLen = 1245;
+		vrLoc = 2773;
+	};
+	DEF01D580EFDB63200E18C05 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DED3E5790EFC797A00B36728 /* apmech.cpp */;
+		name = "apmech.cpp: 318";
+		rLen = 0;
+		rLoc = 7979;
+		rType = 0;
+		vrLen = 1792;
+		vrLoc = 6198;
+	};
+	DEF01D5D0EFDB6B900E18C05 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DED3E5790EFC797A00B36728 /* apmech.cpp */;
+		name = "apmech.cpp: 319";
+		rLen = 0;
+		rLoc = 7980;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	DEF01D5E0EFDB6B900E18C05 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DED3E5790EFC797A00B36728 /* apmech.cpp */;
+		name = "apmech.cpp: 192";
+		rLen = 0;
+		rLoc = 4106;
+		rType = 0;
+		vrLen = 1425;
+		vrLoc = 2866;
 	};
 }
