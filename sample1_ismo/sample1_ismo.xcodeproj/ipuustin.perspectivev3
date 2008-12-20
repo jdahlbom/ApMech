@@ -216,7 +216,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>DEA81D310EFDA78000E5A09B</string>
+						<string>DEA81D330EFDA82D00E5A09B</string>
 						<key>history</key>
 						<array>
 							<string>DEA81D040EFDA57900E5A09B</string>
@@ -406,7 +406,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>DEA81D300EFDA78000E5A09B</string>
+										<string>DEA81D320EFDA82D00E5A09B</string>
 										<key>history</key>
 										<array>
 											<string>DEC36F940EFD3A6A002DF754</string>
@@ -728,8 +728,8 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>/Users/ipuustin/git/apmech/sample1_ismo/sample1_ismo.xcodeproj</string>
 		<string>DEEE0AAC0EFD97EE0093C3AD</string>
+		<string>/Users/ipuustin/git/apmech/sample1_ismo/sample1_ismo.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
 	<string>62 55 1616 973 0 0 1680 1028 </string>
