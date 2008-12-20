@@ -1,0 +1,27 @@
+## Compiler and linker settings
+INCLUDES = ../ogre/Samples/Common/include/
+DEFINES = -g
+LIBS = OGRE CEGUI-OGRE CEGUI OIS
+CXX = gcc
+CXXFLAGS = $(shell pkg-config --cflags $(LIBS)) $(DEFINES) -I$(INCLUDES)
+LD = gcc
+LDFLAGS = $(shell pkg-config --libs $(LIBS))
+SRCDIR = src
+OBJDIR = obj
+
+## Files to include in yourApp project
+SAMPLEAPP = $(OBJDIR)/SampleApp.o
+
+## Compilation and linking occurs here
+all: SampleApp
+	$(LD) $(LDFLAGS) $(SAMPLEAPP) -o SampleApp
+
+SampleApp: $(SAMPLEAPP)
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
+	$(CXX) -c -o $@ $< $(CXXFLAGS)
+
+
+## Clean up
+clean:
+	rm -f $(OBJDIR)/* SampleApp

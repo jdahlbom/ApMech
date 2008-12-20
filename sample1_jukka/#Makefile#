@@ -1,0 +1,27 @@
+## Compiler and linker settings
+INCLUDES = /home/jukkad/devel/ogre/Samples/Common/include/
+DEFINES = -g
+LIBS = OGRE CEGUI-OGRE CEGUI OIS
+CXX = gcc
+CXXFLAGS = $(shell pkg-config --cflags $(LIBS)) $(DEFINES) -I$(INCLUDES)
+LD = gcc
+LDFLAGS = $(shell pkg-config --libs $(LIBS))
+SRCDIR = src
+OBJDIR = obj
+
+## Files to include in yourApp project
+SAMPLEAPP = SampleApp.o
+
+## Compilation and linking occurs here
+all: SampleApp
+	$(LD) $(LDFLAGS) $(SAMPLEAPP) -o SampleApp
+
+SampleApp: $(SAMPLEAPP)
+
+%.o: $(SRCDIR)/%.cpp
+	$(CXX) -c -o $@ $< $(CXXFLAGS)
+
+
+## Clean up
+clean:
+	rm -f $(OBJDIR)/* SampleApp
