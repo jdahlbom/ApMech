@@ -85,6 +85,91 @@ class MyFrameListener : public FrameListener, public OIS::KeyListener
 	} 
 };
 
+class APMech {
+
+	private:
+	
+	Root *root;
+	RenderWindow *window;
+	RenderSystem *rSys;
+
+	void setupResources(void);
+	void loadResources(void);
+	bool loadTerrain();
+	
+
+	public:
+	
+	APMech();
+	virtual ~APmech();
+	
+};
+
+
+APMech::APMech()
+{
+
+}
+
+APMech::~APMech()
+{
+
+}
+
+APMech::initialize()
+{
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+	Ogre::String resourcePath;
+    resourcePath = macBundlePath() + "/Contents/Resources/";
+    root = new Ogre::Root(resourcePath + "plugins.cfg",
+                          resourcePath + "ogre.cfg", resourcePath + "Ogre.log");
+#else
+    root = new Root();
+#endif
+
+	// OpenGL
+	rSys = root->getRenderSystemByName("OpenGL Rendering Subsystem");
+	rSys->setConfigOption("Full Screen", "No");
+	root->setRenderSystem(rSys);
+
+    setupResources();
+	// loadResources();
+
+	// end gracelessly if the preferred renderer is not available 
+	if (root->getRenderSystem() == NULL) { 
+		std::cout << "ERROR: render system is NULL\n";
+		delete root; 
+		return 1; 
+	}
+	
+	root->restoreConfig();
+	
+	root->showConfigDialog();
+	 
+ #if 1
+ 	root->initialise(true, "test window"); 
+	window = root->getAutoCreatedWindow(); 
+ #else
+  	root->initialise(false); 
+	window = root->createRenderWindow( 
+		"Manual Ogre Window",  // window name 
+		800,                   // window width, in pixels 
+		600,                   // window height, in pixels 
+		false,                 // fullscreen or not 
+		0);    
+#endif
+
+	TextureManager::getSingleton().setDefaultNumMipmaps(5);
+	ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+}
+
+APMech::loadTerrain()
+{
+	SceneManager *sceneMgr = root->createSceneManager(ST_EXTERIOR_CLOSE);
+	sceneMgr->setWorldGeometry(resourcePath + "Media/terrain.cfg");
+}
+
+
 // This function will locate the path to our application on OS X,
 // unlike windows you can not rely on the curent working directory
 // for locating your configuration files and resources.
@@ -117,7 +202,7 @@ void loadResources(void)
     Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 }
 
-void setupResources(void)
+void APMech::setupResources(void)
 {
     // Load resource paths from config file
     Ogre::ConfigFile cf;
@@ -176,10 +261,10 @@ int main(int argc, char **argv)
 	Root *root;
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-        Ogre::String resourcePath;
-        resourcePath = macBundlePath() + "/Contents/Resources/";
-        root = new Ogre::Root(resourcePath + "plugins.cfg",
-                         resourcePath + "ogre.cfg", resourcePath + "Ogre.log");
+	Ogre::String resourcePath;
+    resourcePath = macBundlePath() + "/Contents/Resources/";
+    root = new Ogre::Root(resourcePath + "plugins.cfg",
+                          resourcePath + "ogre.cfg", resourcePath + "Ogre.log");
 #else
     root = new Root();
 #endif
