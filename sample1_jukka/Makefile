@@ -9,19 +9,25 @@ LDFLAGS = $(shell pkg-config --libs $(LIBS))
 SRCDIR = src
 OBJDIR = obj
 
+BIN = SampleApp
+
 ## Files to include in yourApp project
-SAMPLEAPP = $(OBJDIR)/SampleApp.o
+OBJS = SampleApp.o SampleFrameListener.o
 
 ## Compilation and linking occurs here
-all: SampleApp
-	$(LD) $(LDFLAGS) $(SAMPLEAPP) -o SampleApp
+all: tempDirectories application
+	$(LD) $(LDFLAGS) $(OBJDIR)/*.o -o $(BIN)
 
-SampleApp: $(SAMPLEAPP)
+tempDirectories:
+	- mkdir $(OBJDIR)
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
-	$(CXX) -c -o $@ $< $(CXXFLAGS)
+application: $(OBJS)
+
+%.o: $(SRCDIR)/%.cpp
+	$(CXX) -c -o $(OBJDIR)/$@ $< $(CXXFLAGS)
 
 
 ## Clean up
 clean:
-	rm -f $(OBJDIR)/* SampleApp
+	rm -R -f $(OBJDIR)
+	- rm $(BIN)
