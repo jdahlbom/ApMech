@@ -9,8 +9,8 @@
 			8D0C4E890486CD37000505A6 /* sample1_ismo */,
 		);
 		breakpoints = (
-			DEC36F8B0EFD3908002DF754 /* apmech.cpp:320 */,
-			DE1E128E0EFD70AB00BAD786 /* apmech.cpp:71 */,
+			DEC36F8B0EFD3908002DF754 /* apmech.cpp:331 */,
+			DE1E128E0EFD70AB00BAD786 /* apmech.cpp:76 */,
 		);
 		codeSenseManager = DED3E5770EFC78E600B36728 /* Code sense */;
 		executables = (
@@ -194,6 +194,11 @@
 			DECAC3800EFE6802001EEFCB /* PBXTextBookmark */ = DECAC3800EFE6802001EEFCB /* PBXTextBookmark */;
 			DECAC3810EFE6802001EEFCB /* PBXTextBookmark */ = DECAC3810EFE6802001EEFCB /* PBXTextBookmark */;
 			DECAC3820EFE6802001EEFCB /* PBXTextBookmark */ = DECAC3820EFE6802001EEFCB /* PBXTextBookmark */;
+			DECAC3880EFE6BF7001EEFCB /* PBXTextBookmark */ = DECAC3880EFE6BF7001EEFCB /* PBXTextBookmark */;
+			DECAC3890EFE6BF7001EEFCB /* PBXTextBookmark */ = DECAC3890EFE6BF7001EEFCB /* PBXTextBookmark */;
+			DECAC38A0EFE6BF7001EEFCB /* PBXTextBookmark */ = DECAC38A0EFE6BF7001EEFCB /* PBXTextBookmark */;
+			DECAC38B0EFE6BF7001EEFCB /* PBXTextBookmark */ = DECAC38B0EFE6BF7001EEFCB /* PBXTextBookmark */;
+			DECAC38C0EFE6BF7001EEFCB /* PBXTextBookmark */ = DECAC38C0EFE6BF7001EEFCB /* PBXTextBookmark */;
 		};
 		sourceControlManager = DED3E5760EFC78E600B36728 /* Source Control */;
 		userBuildSettings = {
@@ -205,7 +210,7 @@
 			DED3E56C0EFC78E300B36728 /* sample1_ismo */,
 		);
 	};
-	DE1E128E0EFD70AB00BAD786 /* apmech.cpp:71 */ = {
+	DE1E128E0EFD70AB00BAD786 /* apmech.cpp:76 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -217,7 +222,7 @@
 		functionName = "keyPressed(const OIS::KeyEvent &arg)";
 		hitCount = 0;
 		ignoreCount = 0;
-		lineNumber = 71;
+		lineNumber = 76;
 		modificationTime = 251552772.887124;
 		state = 2;
 	};
@@ -275,7 +280,7 @@
 			sepNavWindowFrame = "{{412, 0}, {955, 1028}}";
 		};
 	};
-	DEC36F8B0EFD3908002DF754 /* apmech.cpp:320 */ = {
+	DEC36F8B0EFD3908002DF754 /* apmech.cpp:331 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -287,7 +292,7 @@
 		functionName = "main(int argc, char **argv)";
 		hitCount = 0;
 		ignoreCount = 0;
-		lineNumber = 320;
+		lineNumber = 331;
 		location = sample1_ismo;
 		modificationTime = 251552772.886938;
 		state = 2;
@@ -532,7 +537,7 @@
 		fRef = DED3E5790EFC797A00B36728 /* apmech.cpp */;
 		name = "apmech.cpp: 299";
 		rLen = 0;
-		rLoc = 7665;
+		rLoc = 7849;
 		rType = 0;
 		vrLen = 1855;
 		vrLoc = 6276;
@@ -542,7 +547,7 @@
 		fRef = DED3E5790EFC797A00B36728 /* apmech.cpp */;
 		name = "apmech.cpp: 299";
 		rLen = 0;
-		rLoc = 7665;
+		rLoc = 7849;
 		rType = 0;
 		vrLen = 1855;
 		vrLoc = 6276;
@@ -1222,6 +1227,56 @@
 		vrLen = 1103;
 		vrLoc = 0;
 	};
+	DECAC3880EFE6BF7001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEA81CAF0EFD9EF200E5A09B /* gameobject.h */;
+		name = "gameobject.h: 49";
+		rLen = 0;
+		rLoc = 1091;
+		rType = 0;
+		vrLen = 1103;
+		vrLoc = 0;
+	};
+	DECAC3890EFE6BF7001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEFB66BB0EFDC9F400E2CB86 /* gameengine.h */;
+		name = "gameengine.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 438;
+		vrLoc = 0;
+	};
+	DECAC38A0EFE6BF7001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEA81CAF0EFD9EF200E5A09B /* gameobject.h */;
+		name = "gameobject.h: 49";
+		rLen = 0;
+		rLoc = 1091;
+		rType = 0;
+		vrLen = 1103;
+		vrLoc = 0;
+	};
+	DECAC38B0EFE6BF7001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEFB66BB0EFDC9F400E2CB86 /* gameengine.h */;
+		name = "gameengine.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 438;
+		vrLoc = 0;
+	};
+	DECAC38C0EFE6BF7001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DED3E5790EFC797A00B36728 /* apmech.cpp */;
+		name = "apmech.cpp: 156";
+		rLen = 0;
+		rLoc = 3196;
+		rType = 0;
+		vrLen = 1132;
+		vrLoc = 2664;
+	};
 	DED3E56C0EFC78E300B36728 /* sample1_ismo */ = {
 		isa = PBXExecutable;
 		activeArgIndices = (
@@ -1263,9 +1318,9 @@
 	};
 	DED3E5790EFC797A00B36728 /* apmech.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1555, 4508}}";
-			sepNavSelRange = "{246, 0}";
-			sepNavVisRange = "{18, 604}";
+			sepNavIntBoundsRect = "{{0, 0}, {896, 5054}}";
+			sepNavSelRange = "{3087, 0}";
+			sepNavVisRange = "{2664, 1132}";
 			sepNavWindowFrame = "{{557, 0}, {955, 1028}}";
 		};
 	};
@@ -1282,6 +1337,13 @@
 			sepNavIntBoundsRect = "{{0, 0}, {896, 900}}";
 			sepNavSelRange = "{349, 0}";
 			sepNavVisRange = "{0, 754}";
+		};
+	};
+	DEFB66BB0EFDC9F400E2CB86 /* gameengine.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {896, 900}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 438}";
 		};
 	};
 }

@@ -41,6 +41,11 @@ std::string macBundlePath()
 class MyFrameListener : public FrameListener, public OIS::KeyListener
 {
 
+	private:
+	
+	GameEngine *engine;
+	RenderWindow *window;
+
 	protected:
 	
  	OIS::Keyboard *mKeyboard;
@@ -48,7 +53,7 @@ class MyFrameListener : public FrameListener, public OIS::KeyListener
 	
 	public:
 	
-	MyFrameListener(RenderWindow *window)
+	MyFrameListener(RenderWindow *window, GameEngine *engine): engine(engine), window(window)
 	{
 		// using buffered input
 		OIS::ParamList pl;
@@ -151,6 +156,12 @@ APMech::~APMech()
 
 bool APMech::initialize()
 {
+
+	engine = new GameEngine();
+	
+	world = engine->request_world();
+
+
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 	Ogre::String resourcePath;
     resourcePath = macBundlePath() + "/Contents/Resources/";
@@ -185,7 +196,7 @@ bool APMech::initialize()
 	loadResources();
 	
 	// add the event listener
-	MyFrameListener *frameListener = new MyFrameListener(window);
+	MyFrameListener *frameListener = new MyFrameListener(window, engine);
 	root->addFrameListener(frameListener);
 	return true;
 }
