@@ -1,15 +1,20 @@
 #include <vector>
+#include <CEGUI/CEGUI.h>
 
 #include "ExampleApplication.h"
 #include "SampleFrameListener.h"
+#include "OgreCEGUIRenderer.h"
 
 class TutorialApplication : public ExampleApplication
 {
 protected:
     int terrainMaxX, terrainMaxY;
+    CEGUI::System *mSystem;
+    CEGUI::OgreCEGUIRenderer *mRenderer;
 
 public:
-    TutorialApplication()
+    TutorialApplication():
+        mSystem(0), mRenderer(0)
     {
         terrainMaxX = 1500;
         terrainMaxY = 1500;
@@ -17,6 +22,10 @@ public:
 
     ~TutorialApplication()
     {
+        if(mSystem)
+            delete(mSystem);
+        if(mRenderer)
+            delete(mRenderer);
     }
 protected:
     void chooseSceneManager(void)
@@ -27,19 +36,52 @@ protected:
 
     void createScene(void)
     {
+        this->mRenderer = new CEGUI::OgreCEGUIRenderer(mWindow, Ogre::RENDER_QUEUE_OVERLAY, false, 3000, mSceneMgr);
+        this->mSystem = new CEGUI::System(mRenderer);
 
-        mSceneMgr->setAmbientLight( ColourValue( 1.0, 1.0, 0.9 ) );
+        CEGUI::SchemeManager::getSingleton().loadScheme((CEGUI::utf8*)"TaharezLookSkin.scheme");
+        mSystem->setDefaultMouseCursor((CEGUI::utf8*)"TaharezLook", (CEGUI::utf8*)"MouseArrow");
+        mSystem->setDefaultFont((CEGUI::utf8*)"BlueHighway-12");
+        // Setting the default mouse cursor will result in always showing the cursor while
+        // over a CEGUI window.
+        CEGUI::MouseCursor::getSingleton().setImage(CEGUI::System::getSingleton().getDefaultMouseCursor());
+
+        // Quit button
+        CEGUI::WindowManager *win = CEGUI::WindowManager::getSingletonPtr();
+        CEGUI::Window *sheet = win->createWindow("DefaultGUISheet", "CEGUIDemo/Sheet");
+
+        CEGUI::Window *quit = win->createWindow("TaharezLook/Button", "CEGUIDemo/QuitButton");
+        quit->setText("Quit");
+        quit->setSize(CEGUI::UVector2(CEGUI::UDim(0.15, 0), CEGUI::UDim(0.05, 0)));
+
+        sheet->addChildWindow(quit);
+        mSystem->setGUISheet(sheet);
+
+        // Lighting
+
+        mSceneMgr->setAmbientLight( ColourValue( 0.3, 0.3, 0.3 ) );
         mSceneMgr->setShadowTechnique(SHADOWTYPE_STENCIL_ADDITIVE);
 
         std::vector<Entity*> entities;
         std::vector<Entity*>::iterator entityIterator;
 
-        SceneNode *terrainCenterNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("terrainCenter", Vector3(750, 0, 750));
+        SceneNode *terrainCenterNode = mSceneMgr->getRootSceneNode()->createChildSceneNode("terrainCenter", Vector3((int)terrainMaxX/2, 0,(int)terrainMaxY/2));
 
         Entity *robotEntity = mSceneMgr->createEntity( "Robot", "robot.mesh" );
-        SceneNode *robotNode = terrainCenterNode->createChildSceneNode("RobotNode");
+        SceneNode *locationNode = terrainCenterNode->createChildSceneNode("SelfLocationNode");
+        SceneNode *robotNode = locationNode->createChildSceneNode("SelfRotationNode");
+
+        float robotDirectionYaw = 0.5f;
+        robotNode->yaw(Radian(robotDirectionYaw));
         robotNode->attachObject( robotEntity );
         entities.push_back(robotEntity);
+
+
+        Vector3 robotLocation = Vector3();
+        Vector3 cameraOffset = Vector3(-200,1000,0);
+
+        SceneNode *cameraNode = robotNode->createChildSceneNode("CameraNode", cameraOffset);
+        cameraNode->attachObject(mCamera);
 
         for(entityIterator = entities.begin(); entityIterator != entities.end(); ++entityIterator)
         {
@@ -47,11 +89,29 @@ protected:
         }
 
         Light *light;
-        light = mSceneMgr->createLight("Light3");
+        light = mSceneMgr->createLight("Light1");
         light->setType(Light::LT_DIRECTIONAL);
         light->setDiffuseColour(ColourValue(1, 0, 0));
         light->setSpecularColour(ColourValue(1, 0, 0));
         light->setDirection(Vector3(0, -1, 1) );
+
+
+       // CEGUI setup
+        CEGUI::Texture *cTex = mRenderer->createTexture((CEGUI::utf8*)"R2TTex");
+
+        CEGUI::Imageset *imageSet = CEGUI::ImagesetManager::getSingleton().createImageset((CEGUI::utf8*)"RttImageset", cTex);
+        imageSet->defineImage((CEGUI::utf8*)"RttImage",
+            CEGUI::Point(0.0f, 0.0f),
+            CEGUI::Size(cTex->getWidth(), cTex->getHeight()),
+            CEGUI::Point(0.0f,0.0f));
+
+        CEGUI::Window *si = win->createWindow((CEGUI::utf8*)"TaharezLook/StaticImage", "RTTWindow");
+        si->setSize(CEGUI::UVector2(CEGUI::UDim(0.5f, 0), CEGUI::UDim(0.4f, 0)));
+        si->setPosition(CEGUI::UVector2(CEGUI::UDim(0.5f, 0), CEGUI::UDim(0, 0)));
+        si->setProperty("Image", CEGUI::PropertyHelper::imageToString(&imageSet->getImage((CEGUI::utf8*)"RttImage")));
+
+        sheet->addChildWindow(si);
+
     }
 
     virtual void createFrameListener(void)
@@ -60,26 +120,27 @@ protected:
         mRoot->addFrameListener(mFrameListener);
         // Show the frame stats overlay
         mFrameListener->showDebugOverlay(true);
-
     }
 
-  virtual void createCamera(void)
-  {
-      mCamera = mSceneMgr->createCamera("PlayerCam");
-      Vector3 robotLocation = Vector3((int)terrainMaxX/2, 0,(int)terrainMaxY/2);
-      //mCamera->setPosition(robotLocation + Vector3(0,100,0));
-      mCamera->setPosition(Vector3(850, 300, 750));
-      mCamera->lookAt(Vector3(750, 20, 750));
-      //mCamera->lookAt(robotLocation);
-      mCamera->setNearClipDistance(5);
-  }
+    virtual void createCamera(void)
+    {
+        mCamera = mSceneMgr->createCamera("PlayerCam");
+        mCamera->setNearClipDistance(5);
 
-  virtual void createViewports(void)
-  {
-    Viewport* vp = mWindow->addViewport(mCamera);
-    vp->setBackgroundColour(ColourValue(0,0,0));
-    mCamera->setAspectRatio(Real(vp->getActualWidth()) / Real(vp->getActualHeight()));
-  }
+        // Camera lies right above the player object, so pitching:
+        float PI = 3.1415f;
+        Radian quarter(0.5f * PI);
+        Radian almostQuarter(0.4f * PI);
+        mCamera->pitch(-almostQuarter);
+        mCamera->yaw(-quarter);
+    }
+
+    virtual void createViewports(void)
+    {
+        Viewport* vp = mWindow->addViewport(mCamera);
+        vp->setBackgroundColour(ColourValue(0,0,0));
+        mCamera->setAspectRatio(Real(vp->getActualWidth()) / Real(vp->getActualHeight()));
+    }
 
 };
 
