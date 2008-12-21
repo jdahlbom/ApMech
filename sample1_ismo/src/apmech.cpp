@@ -41,6 +41,11 @@ std::string macBundlePath()
 class MyFrameListener : public FrameListener, public OIS::KeyListener
 {
 
+	private:
+	
+	GameEngine *engine;
+	RenderWindow *window;
+
 	protected:
 	
  	OIS::Keyboard *mKeyboard;
@@ -48,7 +53,7 @@ class MyFrameListener : public FrameListener, public OIS::KeyListener
 	
 	public:
 	
-	MyFrameListener(RenderWindow *window)
+	MyFrameListener(RenderWindow *window, GameEngine *engine): engine(engine), window(window)
 	{
 		// using buffered input
 		OIS::ParamList pl;
@@ -74,30 +79,9 @@ class MyFrameListener : public FrameListener, public OIS::KeyListener
 			keepRendering = false;
 			return false;
 		}
-		
-		int x = mech.getX();
-		int y = mech.getY();
-		
-		switch (arg.key) {
-			case OIS::KC_UP:
-				mech.setLocation(x, y+1, 0);
-				break;
-			case OIS::KC_DOWN:
-				mech.setLocation(x, y-1, 0);
-				break;
-			case OIS::KC_LEFT:
-				std::cout << "left key\n";
-				mech.setLocation(x-1, y ,0);
-				break;
-			case OIS::KC_RIGHT:
-				std::cout << "right key\n";
-				mech.setLocation(x+1, y, 0);
-				break;
-			default:
-				std::cout << "unknown key\n";
+		else {
+			return engine->processKbEvent(arg.key);
 		}
-		
-		return true;
 	}
 	
 	bool keyReleased(const OIS::KeyEvent &arg) {
@@ -136,6 +120,7 @@ class APMech {
 	virtual ~APMech();
 	bool initialize();
 	bool run();
+	bool updateGraphics(GameObject *o);
 };
 
 
@@ -151,6 +136,12 @@ APMech::~APMech()
 
 bool APMech::initialize()
 {
+
+	engine = new GameEngine();
+	
+	engine->connectToServer();
+
+
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 	Ogre::String resourcePath;
     resourcePath = macBundlePath() + "/Contents/Resources/";
@@ -185,7 +176,7 @@ bool APMech::initialize()
 	loadResources();
 	
 	// add the event listener
-	MyFrameListener *frameListener = new MyFrameListener(window);
+	MyFrameListener *frameListener = new MyFrameListener(window, engine);
 	root->addFrameListener(frameListener);
 	return true;
 }
@@ -253,6 +244,34 @@ void APMech::setupResources(void)
 
 }
 
+bool APMech::updateGraphics(GameObject *o)
+{
+	SceneNode *graphics;
+
+	/* get the graphical representation from the object */
+	if (!o->is_visible())
+		return false;
+		
+	graphics = o->getGraphics();
+	
+	if (graphics == NULL) {
+	
+		// draw this object
+		SceneNode *corner = sceneMgr->getRootSceneNode()->createChildSceneNode("terrainCorner", Vector3(0, 0, 0));
+		Entity *robotEntity = sceneMgr->createEntity(o->id_s, "robot.mesh");
+
+		graphics = corner->createChildSceneNode("RobotNode");
+		graphics->attachObject(robotEntity);
+		// entities.push_back(robotEntity);		
+		o->setGraphics(graphics);
+	}
+	
+	
+	graphics->setPosition(Vector3(o->getX(), 0, o->getY()));
+	
+	return true;
+}
+
 bool APMech::run()
 {
 	loadTerrain();
@@ -268,7 +287,7 @@ bool APMech::run()
 
 	SceneNode *terrainCenterNode = sceneMgr->getRootSceneNode()->createChildSceneNode("terrainCenter", Vector3(750, 0, 750));
 	
-	Entity *robotEntity = sceneMgr->createEntity( "Robot", "robot.mesh" );
+	Entity *robotEntity = sceneMgr->createEntity("Robot", "robot.mesh");
 	SceneNode *robotNode = terrainCenterNode->createChildSceneNode("RobotNode");
 	robotNode->attachObject( robotEntity );
 	entities.push_back(robotEntity);
@@ -299,7 +318,6 @@ bool APMech::run()
 	while (keepRendering) {
 		// std::cout << "Render frame " << i++ << "\n";
 
-		robotNode->setPosition(Vector3(mech.getX(), 0, mech.getY()));
 		root->renderOneFrame(); 
 	} 
 

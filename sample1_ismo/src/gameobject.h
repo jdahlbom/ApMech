@@ -1,4 +1,5 @@
 #include <map>
+#include <Ogre.h>
 
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
@@ -17,8 +18,9 @@ class GameObject {
 	static void deinit_maps();
 	
 	private:
-	
-   	int id;
+
+
+	Ogre::SceneNode *node;
 
     // is the object visible in the game world
     bool visible;
@@ -26,11 +28,17 @@ class GameObject {
 	// does the object need syncing with the network server?
 	bool dirty;
 	
+	// is the player currently controlling this object?
+	bool player;
+	
 	int x;
 	int y;
 	int z;
 
     public:
+		
+   	int id;
+	std::string id_s; // string representation of the id
 
     GameObject(int id);
 
@@ -41,7 +49,16 @@ class GameObject {
 
 	bool is_dirty() { return dirty; }
 	void set_dirty(bool state) { dirty = state; }
-		
+	bool is_visible() { return visible; }
+	void set_visible(bool state) { visible = state; }
+	bool is_player() { return player; }
+	void set_player(bool state) { player = state; }	
+	
+	Ogre::SceneNode *getGraphics() { return node; }
+	void setGraphics(Ogre::SceneNode *node) { this->node = node; }
+
+
+	
 	void setLocation(int x, int y, int z) { this->x = x; this->y = y; this->z = z; }
 	int getX() { return this->x; }
 	int getY() { return this->y; }

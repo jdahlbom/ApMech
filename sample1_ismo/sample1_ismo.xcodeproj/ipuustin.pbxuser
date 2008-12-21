@@ -9,8 +9,8 @@
 			8D0C4E890486CD37000505A6 /* sample1_ismo */,
 		);
 		breakpoints = (
-			DEC36F8B0EFD3908002DF754 /* apmech.cpp:320 */,
-			DE1E128E0EFD70AB00BAD786 /* apmech.cpp:71 */,
+			DEC36F8B0EFD3908002DF754 /* apmech.cpp:338 */,
+			DE1E128E0EFD70AB00BAD786 /* apmech.cpp:76 */,
 		);
 		codeSenseManager = DED3E5770EFC78E600B36728 /* Code sense */;
 		executables = (
@@ -194,6 +194,46 @@
 			DECAC3800EFE6802001EEFCB /* PBXTextBookmark */ = DECAC3800EFE6802001EEFCB /* PBXTextBookmark */;
 			DECAC3810EFE6802001EEFCB /* PBXTextBookmark */ = DECAC3810EFE6802001EEFCB /* PBXTextBookmark */;
 			DECAC3820EFE6802001EEFCB /* PBXTextBookmark */ = DECAC3820EFE6802001EEFCB /* PBXTextBookmark */;
+			DECAC3880EFE6BF7001EEFCB /* PBXTextBookmark */ = DECAC3880EFE6BF7001EEFCB /* PBXTextBookmark */;
+			DECAC3890EFE6BF7001EEFCB /* PBXTextBookmark */ = DECAC3890EFE6BF7001EEFCB /* PBXTextBookmark */;
+			DECAC38A0EFE6BF7001EEFCB /* PBXTextBookmark */ = DECAC38A0EFE6BF7001EEFCB /* PBXTextBookmark */;
+			DECAC38B0EFE6BF7001EEFCB /* PBXTextBookmark */ = DECAC38B0EFE6BF7001EEFCB /* PBXTextBookmark */;
+			DECAC38C0EFE6BF7001EEFCB /* PBXTextBookmark */ = DECAC38C0EFE6BF7001EEFCB /* PBXTextBookmark */;
+			DECAC3970EFE70A8001EEFCB /* PBXBookmark */ = DECAC3970EFE70A8001EEFCB /* PBXBookmark */;
+			DECAC3990EFE72B9001EEFCB /* PBXTextBookmark */ = DECAC3990EFE72B9001EEFCB /* PBXTextBookmark */;
+			DECAC39A0EFE72B9001EEFCB /* PBXTextBookmark */ = DECAC39A0EFE72B9001EEFCB /* PBXTextBookmark */;
+			DECAC39B0EFE72B9001EEFCB /* PBXTextBookmark */ = DECAC39B0EFE72B9001EEFCB /* PBXTextBookmark */;
+			DECAC39C0EFE72B9001EEFCB /* PBXTextBookmark */ = DECAC39C0EFE72B9001EEFCB /* PBXTextBookmark */;
+			DECAC39D0EFE72B9001EEFCB /* PBXTextBookmark */ = DECAC39D0EFE72B9001EEFCB /* PBXTextBookmark */;
+			DECAC39E0EFE72B9001EEFCB /* PBXTextBookmark */ = DECAC39E0EFE72B9001EEFCB /* PBXTextBookmark */;
+			DECAC3BF0EFE773D001EEFCB /* PBXTextBookmark */ = DECAC3BF0EFE773D001EEFCB /* PBXTextBookmark */;
+			DECAC3C40EFE77F1001EEFCB /* PBXTextBookmark */ = DECAC3C40EFE77F1001EEFCB /* PBXTextBookmark */;
+			DECAC3C50EFE77F1001EEFCB /* PBXTextBookmark */ = DECAC3C50EFE77F1001EEFCB /* PBXTextBookmark */;
+			DECAC3C60EFE77F1001EEFCB /* PBXTextBookmark */ = DECAC3C60EFE77F1001EEFCB /* PBXTextBookmark */;
+			DECAC3C70EFE77F1001EEFCB /* PBXTextBookmark */ = DECAC3C70EFE77F1001EEFCB /* PBXTextBookmark */;
+			DECAC3C80EFE77F1001EEFCB /* PBXTextBookmark */ = DECAC3C80EFE77F1001EEFCB /* PBXTextBookmark */;
+			DECAC3C90EFE77F1001EEFCB /* PBXTextBookmark */ = DECAC3C90EFE77F1001EEFCB /* PBXTextBookmark */;
+			DECAC3CA0EFE77F1001EEFCB /* PBXTextBookmark */ = DECAC3CA0EFE77F1001EEFCB /* PBXTextBookmark */;
+			DECAC3CB0EFE77F1001EEFCB /* PBXTextBookmark */ = DECAC3CB0EFE77F1001EEFCB /* PBXTextBookmark */;
+			DECAC3CC0EFE77F1001EEFCB /* PBXTextBookmark */ = DECAC3CC0EFE77F1001EEFCB /* PBXTextBookmark */;
+			DECAC3CD0EFE77F1001EEFCB /* PBXTextBookmark */ = DECAC3CD0EFE77F1001EEFCB /* PBXTextBookmark */;
+			DECAC3CE0EFE77F1001EEFCB /* PBXTextBookmark */ = DECAC3CE0EFE77F1001EEFCB /* PBXTextBookmark */;
+			DECAC3CF0EFE77F1001EEFCB /* PBXTextBookmark */ = DECAC3CF0EFE77F1001EEFCB /* PBXTextBookmark */;
+			DECAC3D00EFE77F1001EEFCB /* PBXTextBookmark */ = DECAC3D00EFE77F1001EEFCB /* PBXTextBookmark */;
+			DECAC3D10EFE77F1001EEFCB /* PBXTextBookmark */ = DECAC3D10EFE77F1001EEFCB /* PBXTextBookmark */;
+			DECAC3D20EFE77F1001EEFCB /* PBXTextBookmark */ = DECAC3D20EFE77F1001EEFCB /* PBXTextBookmark */;
+			DECAC3D30EFE77F1001EEFCB /* PBXTextBookmark */ = DECAC3D30EFE77F1001EEFCB /* PBXTextBookmark */;
+			DECAC3D40EFE77F1001EEFCB /* PBXTextBookmark */ = DECAC3D40EFE77F1001EEFCB /* PBXTextBookmark */;
+			DECAC3D50EFE77F1001EEFCB /* PBXTextBookmark */ = DECAC3D50EFE77F1001EEFCB /* PBXTextBookmark */;
+			DECAC3D60EFE77F1001EEFCB /* PBXTextBookmark */ = DECAC3D60EFE77F1001EEFCB /* PBXTextBookmark */;
+			DECAC3D70EFE77F1001EEFCB /* PBXTextBookmark */ = DECAC3D70EFE77F1001EEFCB /* PBXTextBookmark */;
+			DECAC3D80EFE77F1001EEFCB /* PBXTextBookmark */ = DECAC3D80EFE77F1001EEFCB /* PBXTextBookmark */;
+			DECAC3D90EFE77F1001EEFCB /* PBXTextBookmark */ = DECAC3D90EFE77F1001EEFCB /* PBXTextBookmark */;
+			DECAC3DA0EFE77F1001EEFCB /* PBXTextBookmark */ = DECAC3DA0EFE77F1001EEFCB /* PBXTextBookmark */;
+			DECAC3DB0EFE77F1001EEFCB /* PBXTextBookmark */ = DECAC3DB0EFE77F1001EEFCB /* PBXTextBookmark */;
+			DECAC3DC0EFE77F1001EEFCB /* PBXTextBookmark */ = DECAC3DC0EFE77F1001EEFCB /* PBXTextBookmark */;
+			DECAC3DD0EFE77F1001EEFCB /* PBXTextBookmark */ = DECAC3DD0EFE77F1001EEFCB /* PBXTextBookmark */;
+			DECAC3DE0EFE77FC001EEFCB /* PBXTextBookmark */ = DECAC3DE0EFE77FC001EEFCB /* PBXTextBookmark */;
 		};
 		sourceControlManager = DED3E5760EFC78E600B36728 /* Source Control */;
 		userBuildSettings = {
@@ -205,7 +245,7 @@
 			DED3E56C0EFC78E300B36728 /* sample1_ismo */,
 		);
 	};
-	DE1E128E0EFD70AB00BAD786 /* apmech.cpp:71 */ = {
+	DE1E128E0EFD70AB00BAD786 /* apmech.cpp:76 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -217,15 +257,15 @@
 		functionName = "keyPressed(const OIS::KeyEvent &arg)";
 		hitCount = 0;
 		ignoreCount = 0;
-		lineNumber = 71;
+		lineNumber = 76;
 		modificationTime = 251552772.887124;
 		state = 2;
 	};
 	DEA81CAF0EFD9EF200E5A09B /* gameobject.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {896, 900}}";
-			sepNavSelRange = "{1091, 0}";
-			sepNavVisRange = "{0, 1103}";
+			sepNavIntBoundsRect = "{{0, 0}, {896, 980}}";
+			sepNavSelRange = "{801, 0}";
+			sepNavVisRange = "{0, 1552}";
 		};
 	};
 	DEA81CB00EFD9EF200E5A09B /* gameworld.cpp */ = {
@@ -252,7 +292,7 @@
 	};
 	DEA81CCE0EFDA10C00E5A09B /* mech.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1555, 313}}";
+			sepNavIntBoundsRect = "{{0, 0}, {896, 900}}";
 			sepNavSelRange = "{167, 0}";
 			sepNavVisRange = "{0, 304}";
 			sepNavWindowFrame = "{{501, 0}, {955, 1028}}";
@@ -275,7 +315,7 @@
 			sepNavWindowFrame = "{{412, 0}, {955, 1028}}";
 		};
 	};
-	DEC36F8B0EFD3908002DF754 /* apmech.cpp:320 */ = {
+	DEC36F8B0EFD3908002DF754 /* apmech.cpp:338 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -287,7 +327,7 @@
 		functionName = "main(int argc, char **argv)";
 		hitCount = 0;
 		ignoreCount = 0;
-		lineNumber = 320;
+		lineNumber = 338;
 		location = sample1_ismo;
 		modificationTime = 251552772.886938;
 		state = 2;
@@ -314,7 +354,7 @@
 		fRef = DEA81CAF0EFD9EF200E5A09B /* gameobject.h */;
 		name = "gameobject.h: 31";
 		rLen = 0;
-		rLoc = 657;
+		rLoc = 825;
 		rType = 0;
 		vrLen = 1066;
 		vrLoc = 0;
@@ -364,7 +404,7 @@
 		fRef = DEFB66BA0EFDC9F400E2CB86 /* gameengine.cpp */;
 		name = "gameengine.cpp: 19";
 		rLen = 0;
-		rLoc = 349;
+		rLoc = 382;
 		rType = 0;
 		vrLen = 754;
 		vrLoc = 0;
@@ -384,7 +424,7 @@
 		fRef = DEA81CAF0EFD9EF200E5A09B /* gameobject.h */;
 		name = "gameobject.h: 23";
 		rLen = 0;
-		rLoc = 657;
+		rLoc = 825;
 		rType = 0;
 		vrLen = 859;
 		vrLoc = 0;
@@ -404,7 +444,7 @@
 		fRef = DEA81CAF0EFD9EF200E5A09B /* gameobject.h */;
 		name = "gameobject.h: 31";
 		rLen = 0;
-		rLoc = 657;
+		rLoc = 825;
 		rType = 0;
 		vrLen = 1066;
 		vrLoc = 0;
@@ -504,7 +544,7 @@
 		fRef = DEFB66BA0EFDC9F400E2CB86 /* gameengine.cpp */;
 		name = "gameengine.cpp: 19";
 		rLen = 0;
-		rLoc = 349;
+		rLoc = 382;
 		rType = 0;
 		vrLen = 754;
 		vrLoc = 0;
@@ -532,7 +572,7 @@
 		fRef = DED3E5790EFC797A00B36728 /* apmech.cpp */;
 		name = "apmech.cpp: 299";
 		rLen = 0;
-		rLoc = 7665;
+		rLoc = 8142;
 		rType = 0;
 		vrLen = 1855;
 		vrLoc = 6276;
@@ -542,7 +582,7 @@
 		fRef = DED3E5790EFC797A00B36728 /* apmech.cpp */;
 		name = "apmech.cpp: 299";
 		rLen = 0;
-		rLoc = 7665;
+		rLoc = 8142;
 		rType = 0;
 		vrLen = 1855;
 		vrLoc = 6276;
@@ -552,16 +592,16 @@
 		fRef = DEA81CAF0EFD9EF200E5A09B /* gameobject.h */;
 		name = "gameobject.h: 6";
 		rLen = 0;
-		rLoc = 58;
+		rLoc = 76;
 		rType = 0;
-		vrLen = 1252;
+		vrLen = 1103;
 		vrLoc = 0;
 	};
 	DECAC3030EFE5D68001EEFCB /* gameobject.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {896, 900}}";
-			sepNavSelRange = "{427, 0}";
-			sepNavVisRange = "{0, 1330}";
+			sepNavIntBoundsRect = "{{0, 0}, {896, 910}}";
+			sepNavSelRange = "{1257, 0}";
+			sepNavVisRange = "{0, 1396}";
 		};
 	};
 	DECAC3240EFE6262001EEFCB /* PBXTextBookmark */ = {
@@ -605,9 +645,9 @@
 		fRef = DEA81CAF0EFD9EF200E5A09B /* gameobject.h */;
 		name = "gameobject.h: 18";
 		rLen = 0;
-		rLoc = 350;
+		rLoc = 368;
 		rType = 0;
-		vrLen = 1108;
+		vrLen = 1103;
 		vrLoc = 0;
 	};
 	DECAC3290EFE6262001EEFCB /* PBXTextBookmark */ = {
@@ -615,7 +655,7 @@
 		fRef = DECAC3030EFE5D68001EEFCB /* gameobject.cpp */;
 		name = "gameobject.cpp: 24";
 		rLen = 0;
-		rLoc = 1191;
+		rLoc = 1257;
 		rType = 0;
 		vrLen = 727;
 		vrLoc = 0;
@@ -625,9 +665,9 @@
 		fRef = DEA81CAF0EFD9EF200E5A09B /* gameobject.h */;
 		name = "gameobject.h: 54";
 		rLen = 0;
-		rLoc = 1103;
+		rLoc = 1564;
 		rType = 0;
-		vrLen = 1272;
+		vrLen = 1103;
 		vrLoc = 0;
 	};
 	DECAC32B0EFE6262001EEFCB /* PBXTextBookmark */ = {
@@ -645,9 +685,9 @@
 		fRef = DEA81CAF0EFD9EF200E5A09B /* gameobject.h */;
 		name = "gameobject.h: 54";
 		rLen = 0;
-		rLoc = 1103;
+		rLoc = 1564;
 		rType = 0;
-		vrLen = 1272;
+		vrLen = 1103;
 		vrLoc = 0;
 	};
 	DECAC32D0EFE6262001EEFCB /* PBXTextBookmark */ = {
@@ -665,9 +705,9 @@
 		fRef = DEA81CAF0EFD9EF200E5A09B /* gameobject.h */;
 		name = "gameobject.h: 54";
 		rLen = 0;
-		rLoc = 1103;
+		rLoc = 1564;
 		rType = 0;
-		vrLen = 1272;
+		vrLen = 1103;
 		vrLoc = 0;
 	};
 	DECAC32F0EFE6262001EEFCB /* PBXTextBookmark */ = {
@@ -685,9 +725,9 @@
 		fRef = DEA81CAF0EFD9EF200E5A09B /* gameobject.h */;
 		name = "gameobject.h: 58";
 		rLen = 0;
-		rLoc = 1103;
+		rLoc = 1564;
 		rType = 0;
-		vrLen = 1272;
+		vrLen = 1103;
 		vrLoc = 0;
 	};
 	DECAC3310EFE6262001EEFCB /* PBXTextBookmark */ = {
@@ -695,7 +735,7 @@
 		fRef = DECAC3030EFE5D68001EEFCB /* gameobject.cpp */;
 		name = "gameobject.cpp: 12";
 		rLen = 0;
-		rLoc = 1330;
+		rLoc = 1396;
 		rType = 0;
 		vrLen = 179;
 		vrLoc = 0;
@@ -705,7 +745,7 @@
 		fRef = DEA81CAF0EFD9EF200E5A09B /* gameobject.h */;
 		name = "gameobject.h: 50";
 		rLen = 0;
-		rLoc = 1103;
+		rLoc = 1564;
 		rType = 0;
 		vrLen = 1023;
 		vrLoc = 0;
@@ -725,7 +765,7 @@
 		fRef = DEA81CAF0EFD9EF200E5A09B /* gameobject.h */;
 		name = "gameobject.h: 19";
 		rLen = 0;
-		rLoc = 456;
+		rLoc = 486;
 		rType = 0;
 		vrLen = 1026;
 		vrLoc = 0;
@@ -745,7 +785,7 @@
 		fRef = DEA81CAF0EFD9EF200E5A09B /* gameobject.h */;
 		name = "gameobject.h: 13";
 		rLen = 94;
-		rLoc = 256;
+		rLoc = 274;
 		rType = 0;
 		vrLen = 1026;
 		vrLoc = 0;
@@ -781,7 +821,7 @@
 		fRef = DECAC3030EFE5D68001EEFCB /* gameobject.cpp */;
 		name = "gameobject.cpp: 22";
 		rLen = 0;
-		rLoc = 1191;
+		rLoc = 1257;
 		rType = 0;
 		vrLen = 631;
 		vrLoc = 0;
@@ -801,7 +841,7 @@
 		fRef = DECAC3030EFE5D68001EEFCB /* gameobject.cpp */;
 		name = "gameobject.cpp: 24";
 		rLen = 0;
-		rLoc = 1191;
+		rLoc = 1257;
 		rType = 0;
 		vrLen = 727;
 		vrLoc = 0;
@@ -811,9 +851,9 @@
 		fRef = DEA81CAF0EFD9EF200E5A09B /* gameobject.h */;
 		name = "gameobject.h: 18";
 		rLen = 0;
-		rLoc = 350;
+		rLoc = 368;
 		rType = 0;
-		vrLen = 1108;
+		vrLen = 1103;
 		vrLoc = 0;
 	};
 	DECAC33E0EFE6262001EEFCB /* PBXTextBookmark */ = {
@@ -831,7 +871,7 @@
 		fRef = DECAC3030EFE5D68001EEFCB /* gameobject.cpp */;
 		name = "gameobject.cpp: 26";
 		rLen = 0;
-		rLoc = 1191;
+		rLoc = 1257;
 		rType = 0;
 		vrLen = 804;
 		vrLoc = 0;
@@ -841,7 +881,7 @@
 		fRef = DECAC3030EFE5D68001EEFCB /* gameobject.cpp */;
 		name = "gameobject.cpp: 26";
 		rLen = 0;
-		rLoc = 1191;
+		rLoc = 1257;
 		rType = 0;
 		vrLen = 804;
 		vrLoc = 0;
@@ -851,9 +891,9 @@
 		fRef = DEA81CAF0EFD9EF200E5A09B /* gameobject.h */;
 		name = "gameobject.h: 18";
 		rLen = 0;
-		rLoc = 350;
+		rLoc = 368;
 		rType = 0;
-		vrLen = 1110;
+		vrLen = 1103;
 		vrLoc = 0;
 	};
 	DECAC34A0EFE63D9001EEFCB /* PBXTextBookmark */ = {
@@ -987,9 +1027,9 @@
 		fRef = DEA81CAF0EFD9EF200E5A09B /* gameobject.h */;
 		name = "gameobject.h: 21";
 		rLen = 0;
-		rLoc = 429;
+		rLoc = 447;
 		rType = 0;
-		vrLen = 1160;
+		vrLen = 1103;
 		vrLoc = 0;
 	};
 	DECAC3620EFE6497001EEFCB /* PBXTextBookmark */ = {
@@ -1013,7 +1053,7 @@
 		fRef = DECAC3030EFE5D68001EEFCB /* gameobject.cpp */;
 		name = "gameobject.cpp: 37";
 		rLen = 0;
-		rLoc = 1191;
+		rLoc = 1257;
 		rType = 0;
 		vrLen = 1065;
 		vrLoc = 0;
@@ -1023,9 +1063,9 @@
 		fRef = DEA81CAF0EFD9EF200E5A09B /* gameobject.h */;
 		name = "gameobject.h: 20";
 		rLen = 0;
-		rLoc = 441;
+		rLoc = 459;
 		rType = 0;
-		vrLen = 1110;
+		vrLen = 1103;
 		vrLoc = 0;
 	};
 	DECAC3660EFE6497001EEFCB /* PBXTextBookmark */ = {
@@ -1043,9 +1083,9 @@
 		fRef = DEA81CAF0EFD9EF200E5A09B /* gameobject.h */;
 		name = "gameobject.h: 21";
 		rLen = 0;
-		rLoc = 429;
+		rLoc = 447;
 		rType = 0;
-		vrLen = 1160;
+		vrLen = 1103;
 		vrLoc = 0;
 	};
 	DECAC3680EFE6497001EEFCB /* PBXTextBookmark */ = {
@@ -1053,7 +1093,7 @@
 		fRef = DECAC3030EFE5D68001EEFCB /* gameobject.cpp */;
 		name = "gameobject.cpp: 37";
 		rLen = 0;
-		rLoc = 1191;
+		rLoc = 1257;
 		rType = 0;
 		vrLen = 1065;
 		vrLoc = 0;
@@ -1079,7 +1119,7 @@
 		fRef = DECAC3030EFE5D68001EEFCB /* gameobject.cpp */;
 		name = "gameobject.cpp: 38";
 		rLen = 0;
-		rLoc = 1087;
+		rLoc = 1115;
 		rType = 0;
 		vrLen = 1093;
 		vrLoc = 0;
@@ -1099,7 +1139,7 @@
 		comments = "error: request for member 'insert' in 'GameObject::id_to_go', which is of non-class type 'std::map<int, GameObject*, std::less<int>, std::allocator<std::pair<const int, GameObject*> > >*'";
 		fRef = DECAC3030EFE5D68001EEFCB /* gameobject.cpp */;
 		rLen = 1;
-		rLoc = 50;
+		rLoc = 52;
 		rType = 1;
 	};
 	DECAC3740EFE66CB001EEFCB /* PBXTextBookmark */ = {
@@ -1107,7 +1147,7 @@
 		fRef = DEA81CAF0EFD9EF200E5A09B /* gameobject.h */;
 		name = "gameobject.h: 15";
 		rLen = 0;
-		rLoc = 341;
+		rLoc = 359;
 		rType = 0;
 		vrLen = 1103;
 		vrLoc = 0;
@@ -1127,7 +1167,7 @@
 		fRef = DEA81CAF0EFD9EF200E5A09B /* gameobject.h */;
 		name = "gameobject.h: 18";
 		rLen = 0;
-		rLoc = 417;
+		rLoc = 435;
 		rType = 0;
 		vrLen = 1103;
 		vrLoc = 0;
@@ -1139,7 +1179,7 @@
 		rLen = 0;
 		rLoc = 424;
 		rType = 0;
-		vrLen = 1354;
+		vrLen = 1330;
 		vrLoc = 0;
 	};
 	DECAC3780EFE66CB001EEFCB /* PBXTextBookmark */ = {
@@ -1147,7 +1187,7 @@
 		fRef = DEA81CAF0EFD9EF200E5A09B /* gameobject.h */;
 		name = "gameobject.h: 38";
 		rLen = 0;
-		rLoc = 686;
+		rLoc = 854;
 		rType = 0;
 		vrLen = 1101;
 		vrLoc = 0;
@@ -1167,7 +1207,7 @@
 		fRef = DEA81CAF0EFD9EF200E5A09B /* gameobject.h */;
 		name = "gameobject.h: 15";
 		rLen = 0;
-		rLoc = 341;
+		rLoc = 359;
 		rType = 0;
 		vrLen = 1103;
 		vrLoc = 0;
@@ -1177,7 +1217,7 @@
 		fRef = DECAC3030EFE5D68001EEFCB /* gameobject.cpp */;
 		name = "gameobject.cpp: 54";
 		rLen = 0;
-		rLoc = 1191;
+		rLoc = 1257;
 		rType = 0;
 		vrLen = 1252;
 		vrLoc = 0;
@@ -1189,7 +1229,7 @@
 		rLen = 0;
 		rLoc = 904;
 		rType = 0;
-		vrLen = 1402;
+		vrLen = 1330;
 		vrLoc = 0;
 	};
 	DECAC3800EFE6802001EEFCB /* PBXTextBookmark */ = {
@@ -1217,10 +1257,402 @@
 		fRef = DEA81CAF0EFD9EF200E5A09B /* gameobject.h */;
 		name = "gameobject.h: 49";
 		rLen = 0;
-		rLoc = 1091;
+		rLoc = 1552;
 		rType = 0;
 		vrLen = 1103;
 		vrLoc = 0;
+	};
+	DECAC3880EFE6BF7001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEA81CAF0EFD9EF200E5A09B /* gameobject.h */;
+		name = "gameobject.h: 49";
+		rLen = 0;
+		rLoc = 1552;
+		rType = 0;
+		vrLen = 1103;
+		vrLoc = 0;
+	};
+	DECAC3890EFE6BF7001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEFB66BB0EFDC9F400E2CB86 /* gameengine.h */;
+		name = "gameengine.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 438;
+		vrLoc = 0;
+	};
+	DECAC38A0EFE6BF7001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEA81CAF0EFD9EF200E5A09B /* gameobject.h */;
+		name = "gameobject.h: 49";
+		rLen = 0;
+		rLoc = 1552;
+		rType = 0;
+		vrLen = 1103;
+		vrLoc = 0;
+	};
+	DECAC38B0EFE6BF7001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEFB66BB0EFDC9F400E2CB86 /* gameengine.h */;
+		name = "gameengine.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 438;
+		vrLoc = 0;
+	};
+	DECAC38C0EFE6BF7001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DED3E5790EFC797A00B36728 /* apmech.cpp */;
+		name = "apmech.cpp: 156";
+		rLen = 0;
+		rLoc = 2822;
+		rType = 0;
+		vrLen = 1132;
+		vrLoc = 2664;
+	};
+	DECAC3970EFE70A8001EEFCB /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = DED3E5790EFC797A00B36728 /* apmech.cpp */;
+	};
+	DECAC3990EFE72B9001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEFB66BB0EFDC9F400E2CB86 /* gameengine.h */;
+		name = "gameengine.h: 11";
+		rLen = 0;
+		rLoc = 193;
+		rType = 0;
+		vrLen = 489;
+		vrLoc = 0;
+	};
+	DECAC39A0EFE72B9001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEFB66BA0EFDC9F400E2CB86 /* gameengine.cpp */;
+		name = "gameengine.cpp: 1";
+		rLen = 0;
+		rLoc = 2;
+		rType = 0;
+		vrLen = 1213;
+		vrLoc = 0;
+	};
+	DECAC39B0EFE72B9001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEFB66BA0EFDC9F400E2CB86 /* gameengine.cpp */;
+		name = "gameengine.cpp: 16";
+		rLen = 0;
+		rLoc = 291;
+		rType = 0;
+		vrLen = 1213;
+		vrLoc = 0;
+	};
+	DECAC39C0EFE72B9001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEFB66BB0EFDC9F400E2CB86 /* gameengine.h */;
+		name = "gameengine.h: 11";
+		rLen = 0;
+		rLoc = 193;
+		rType = 0;
+		vrLen = 489;
+		vrLoc = 0;
+	};
+	DECAC39D0EFE72B9001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEFB66BA0EFDC9F400E2CB86 /* gameengine.cpp */;
+		name = "gameengine.cpp: 1";
+		rLen = 0;
+		rLoc = 2;
+		rType = 0;
+		vrLen = 1213;
+		vrLoc = 0;
+	};
+	DECAC39E0EFE72B9001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DED3E5790EFC797A00B36728 /* apmech.cpp */;
+		name = "apmech.cpp: 273";
+		rLen = 0;
+		rLoc = 7037;
+		rType = 0;
+		vrLen = 2272;
+		vrLoc = 5801;
+	};
+	DECAC3BF0EFE773D001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "error: expected constructor, destructor, or type conversion before '->' token";
+		fRef = DED3E5790EFC797A00B36728 /* apmech.cpp */;
+		rLen = 1;
+		rLoc = 269;
+		rType = 1;
+	};
+	DECAC3C40EFE77F1001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DECAC3030EFE5D68001EEFCB /* gameobject.cpp */;
+		name = "gameobject.cpp: 56";
+		rLen = 0;
+		rLoc = 1257;
+		rType = 0;
+		vrLen = 1396;
+		vrLoc = 0;
+	};
+	DECAC3C50EFE77F1001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEFB66BB0EFDC9F400E2CB86 /* gameengine.h */;
+		name = "gameengine.h: 24";
+		rLen = 0;
+		rLoc = 362;
+		rType = 0;
+		vrLen = 485;
+		vrLoc = 0;
+	};
+	DECAC3C60EFE77F1001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEFB66BA0EFDC9F400E2CB86 /* gameengine.cpp */;
+		name = "gameengine.cpp: 63";
+		rLen = 0;
+		rLoc = 1246;
+		rType = 0;
+		vrLen = 1263;
+		vrLoc = 87;
+	};
+	DECAC3C70EFE77F1001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEA81CCE0EFDA10C00E5A09B /* mech.cpp */;
+		name = "mech.cpp: 12";
+		rLen = 0;
+		rLoc = 167;
+		rType = 0;
+		vrLen = 304;
+		vrLoc = 0;
+	};
+	DECAC3C80EFE77F1001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEA81CB20EFD9EF200E5A09B /* mech.h */;
+		name = "mech.h: 15";
+		rLen = 0;
+		rLoc = 206;
+		rType = 0;
+		vrLen = 299;
+		vrLoc = 0;
+	};
+	DECAC3C90EFE77F1001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEA81CAF0EFD9EF200E5A09B /* gameobject.h */;
+		name = "gameobject.h: 41";
+		rLen = 0;
+		rLoc = 801;
+		rType = 0;
+		vrLen = 1552;
+		vrLoc = 0;
+	};
+	DECAC3CA0EFE77F1001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DED3E5790EFC797A00B36728 /* apmech.cpp */;
+		name = "apmech.cpp: 273";
+		rLen = 0;
+		rLoc = 7037;
+		rType = 0;
+		vrLen = 2272;
+		vrLoc = 5801;
+	};
+	DECAC3CB0EFE77F1001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEFB66BB0EFDC9F400E2CB86 /* gameengine.h */;
+		name = "gameengine.h: 11";
+		rLen = 0;
+		rLoc = 193;
+		rType = 0;
+		vrLen = 489;
+		vrLoc = 0;
+	};
+	DECAC3CC0EFE77F1001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEA81CAF0EFD9EF200E5A09B /* gameobject.h */;
+		name = "gameobject.h: 22";
+		rLen = 0;
+		rLoc = 460;
+		rType = 0;
+		vrLen = 1157;
+		vrLoc = 0;
+	};
+	DECAC3CD0EFE77F1001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DECAC3030EFE5D68001EEFCB /* gameobject.cpp */;
+		name = "gameobject.cpp: 56";
+		rLen = 0;
+		rLoc = 1257;
+		rType = 0;
+		vrLen = 1396;
+		vrLoc = 0;
+	};
+	DECAC3CE0EFE77F1001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DED3E5790EFC797A00B36728 /* apmech.cpp */;
+		name = "apmech.cpp: 141";
+		rLen = 28;
+		rLoc = 2823;
+		rType = 0;
+		vrLen = 1112;
+		vrLoc = 2360;
+	};
+	DECAC3CF0EFE77F1001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEFB66BB0EFDC9F400E2CB86 /* gameengine.h */;
+		name = "gameengine.h: 24";
+		rLen = 0;
+		rLoc = 362;
+		rType = 0;
+		vrLen = 485;
+		vrLoc = 0;
+	};
+	DECAC3D00EFE77F1001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEFB66BA0EFDC9F400E2CB86 /* gameengine.cpp */;
+		name = "gameengine.cpp: 21";
+		rLen = 0;
+		rLoc = 360;
+		rType = 0;
+		vrLen = 1189;
+		vrLoc = 87;
+	};
+	DECAC3D10EFE77F1001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DED3E5790EFC797A00B36728 /* apmech.cpp */;
+		name = "apmech.cpp: 123";
+		rLen = 0;
+		rLoc = 2711;
+		rType = 0;
+		vrLen = 902;
+		vrLoc = 2136;
+	};
+	DECAC3D20EFE77F1001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEFB66BB0EFDC9F400E2CB86 /* gameengine.h */;
+		name = "gameengine.h: 24";
+		rLen = 0;
+		rLoc = 362;
+		rType = 0;
+		vrLen = 485;
+		vrLoc = 0;
+	};
+	DECAC3D30EFE77F1001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEA81CAF0EFD9EF200E5A09B /* gameobject.h */;
+		name = "gameobject.h: 46";
+		rLen = 0;
+		rLoc = 1156;
+		rType = 0;
+		vrLen = 1247;
+		vrLoc = 0;
+	};
+	DECAC3D40EFE77F1001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DED3E5790EFC797A00B36728 /* apmech.cpp */;
+		name = "apmech.cpp: 257";
+		rLen = 0;
+		rLoc = 6511;
+		rType = 0;
+		vrLen = 1689;
+		vrLoc = 5511;
+	};
+	DECAC3D50EFE77F1001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEA81CAF0EFD9EF200E5A09B /* gameobject.h */;
+		name = "gameobject.h: 51";
+		rLen = 0;
+		rLoc = 1264;
+		rType = 0;
+		vrLen = 1406;
+		vrLoc = 0;
+	};
+	DECAC3D60EFE77F1001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DED3E5790EFC797A00B36728 /* apmech.cpp */;
+		name = "apmech.cpp: 255";
+		rLen = 0;
+		rLoc = 6449;
+		rType = 0;
+		vrLen = 2208;
+		vrLoc = 5511;
+	};
+	DECAC3D70EFE77F1001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEFB66BA0EFDC9F400E2CB86 /* gameengine.cpp */;
+		name = "gameengine.cpp: 63";
+		rLen = 0;
+		rLoc = 1246;
+		rType = 0;
+		vrLen = 1263;
+		vrLoc = 87;
+	};
+	DECAC3D80EFE77F1001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEA81CCE0EFDA10C00E5A09B /* mech.cpp */;
+		name = "mech.cpp: 12";
+		rLen = 0;
+		rLoc = 167;
+		rType = 0;
+		vrLen = 304;
+		vrLoc = 0;
+	};
+	DECAC3D90EFE77F1001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEA81CB20EFD9EF200E5A09B /* mech.h */;
+		name = "mech.h: 15";
+		rLen = 0;
+		rLoc = 206;
+		rType = 0;
+		vrLen = 299;
+		vrLoc = 0;
+	};
+	DECAC3DA0EFE77F1001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEA81CAF0EFD9EF200E5A09B /* gameobject.h */;
+		name = "gameobject.h: 54";
+		rLen = 0;
+		rLoc = 1242;
+		rType = 0;
+		vrLen = 1551;
+		vrLoc = 0;
+	};
+	DECAC3DB0EFE77F1001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DED3E5790EFC797A00B36728 /* apmech.cpp */;
+		name = "apmech.cpp: 266";
+		rLen = 0;
+		rLoc = 6528;
+		rType = 0;
+		vrLen = 1397;
+		vrLoc = 5822;
+	};
+	DECAC3DC0EFE77F1001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DEA81CAF0EFD9EF200E5A09B /* gameobject.h */;
+		name = "gameobject.h: 41";
+		rLen = 0;
+		rLoc = 801;
+		rType = 0;
+		vrLen = 1552;
+		vrLoc = 0;
+	};
+	DECAC3DD0EFE77F1001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DED3E5790EFC797A00B36728 /* apmech.cpp */;
+		name = "apmech.cpp: 270";
+		rLen = 0;
+		rLoc = 6567;
+		rType = 0;
+		vrLen = 1688;
+		vrLoc = 5822;
+	};
+	DECAC3DE0EFE77FC001EEFCB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = DED3E5790EFC797A00B36728 /* apmech.cpp */;
+		name = "apmech.cpp: 270";
+		rLen = 0;
+		rLoc = 6567;
+		rType = 0;
+		vrLen = 1779;
+		vrLoc = 5822;
 	};
 	DED3E56C0EFC78E300B36728 /* sample1_ismo */ = {
 		isa = PBXExecutable;
@@ -1263,10 +1695,10 @@
 	};
 	DED3E5790EFC797A00B36728 /* apmech.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1555, 4508}}";
-			sepNavSelRange = "{246, 0}";
-			sepNavVisRange = "{18, 604}";
-			sepNavWindowFrame = "{{557, 0}, {955, 1028}}";
+			sepNavIntBoundsRect = "{{0, 0}, {896, 4452}}";
+			sepNavSelRange = "{6567, 0}";
+			sepNavVisRange = "{5822, 1779}";
+			sepNavWindowFrame = "{{352, 0}, {955, 1028}}";
 		};
 	};
 	DED3E5B60EFC7E6400B36728 /* media.cfg */ = {
@@ -1279,9 +1711,16 @@
 	};
 	DEFB66BA0EFDC9F400E2CB86 /* gameengine.cpp */ = {
 		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {896, 980}}";
+			sepNavSelRange = "{1246, 0}";
+			sepNavVisRange = "{87, 1263}";
+		};
+	};
+	DEFB66BB0EFDC9F400E2CB86 /* gameengine.h */ = {
+		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {896, 900}}";
-			sepNavSelRange = "{349, 0}";
-			sepNavVisRange = "{0, 754}";
+			sepNavSelRange = "{362, 0}";
+			sepNavVisRange = "{0, 485}";
 		};
 	};
 }

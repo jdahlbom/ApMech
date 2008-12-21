@@ -46,10 +46,14 @@ void GameObject::deinit_maps()
 GameObject::GameObject(int id): visible(false), x(0), y(0), z(0), id(id) {
 
 	GameObject::init_maps();
+	std::stringstream stream;
+
 
 	GameObject::go_to_id->insert(GoIdPair(this, id));
 	GameObject::id_to_go->insert(IdGoPair(id, this));
-
+	
+	stream << id;
+	id_s = stream.str();
 }
 
 GameObject::~GameObject()

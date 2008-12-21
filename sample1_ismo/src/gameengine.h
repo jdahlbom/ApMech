@@ -8,6 +8,7 @@
  */
 
 #include "gameworld.h"
+#include <iostream>
 
 class GameEngine {
 
@@ -20,9 +21,11 @@ class GameEngine {
 	virtual ~GameEngine();
 	
 	// get a game world from the network server
-	GameWorld * request_world();
+	bool connectToServer();
 	
 	// sync the world with the server
-	bool sync_world(GameWorld *);
+	bool syncWorld(GameWorld *);
+
+	bool processKbEvent(int test);
 
 };
