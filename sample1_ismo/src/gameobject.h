@@ -1,8 +1,8 @@
-#include <map>
-#include <Ogre.h>
-
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
+
+#include <map>
+#include <Ogre.h>
 
 class GameObject {
     
@@ -18,7 +18,6 @@ class GameObject {
 	static void deinit_maps();
 	
 	private:
-
 
 	Ogre::SceneNode *node;
 
@@ -47,8 +46,8 @@ class GameObject {
 	// any class that inherits GameObject must be ready to serialize!
 	virtual int serialize(uint8_t buffer[], int start, int buflength) = 0;
 
-	bool is_dirty() { return dirty; }
-	void set_dirty(bool state) { dirty = state; }
+	bool isDirty() { return dirty; }
+	void setDirty(bool state) { dirty = state; }
 	bool is_visible() { return visible; }
 	void set_visible(bool state) { visible = state; }
 	bool is_player() { return player; }
@@ -57,13 +56,13 @@ class GameObject {
 	Ogre::SceneNode *getGraphics() { return node; }
 	void setGraphics(Ogre::SceneNode *node) { this->node = node; }
 
-
-	
 	void setLocation(int x, int y, int z) { this->x = x; this->y = y; this->z = z; }
 	int getX() { return this->x; }
 	int getY() { return this->y; }
 	int getZ() { return this->z; }
 
+    // only the world overrides this
+    virtual bool isWorld();
 };
 
 #endif

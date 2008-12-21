@@ -1,15 +1,11 @@
 #include "gameworld.h"
 
-GameWorld::GameWorld(int id) : GameObject(id)
-{
-    
-}
+GameWorld::GameWorld(int id) : GameObject(id) { }
 
 GameWorld::~GameWorld()
 {
-    // remove the world_objects vector contents
+    // remove the world_objects vector contents?
 }
-
 
 void GameWorld::addObject(GameObject *o)
 {
@@ -38,5 +34,24 @@ std::list<GameObject *> GameWorld::getObjects()
 }
 
 int GameWorld::serialize(uint8_t buffer[], int start, int buflength) {
+    /* TODO */
 	return 0;
 }
+
+bool GameWorld::isWorld()
+{
+    std::cout << "Is a game world!" << std::endl; 
+    return true;
+}
+
+#if 0
+GameObject * GameWorld::getPlayer()
+{
+    return this->player;
+}
+
+void GameWorld::setPlayer(GameObject *o)
+{
+    this->player = o;
+}
+#endif

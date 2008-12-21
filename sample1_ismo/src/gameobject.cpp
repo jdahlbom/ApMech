@@ -43,7 +43,7 @@ void GameObject::deinit_maps()
 }
 
 
-GameObject::GameObject(int id): visible(false), x(0), y(0), z(0), id(id) {
+GameObject::GameObject(int id): visible(false), x(0), y(0), z(0), id(id), node(NULL) {
 
 	GameObject::init_maps();
 	std::stringstream stream;
@@ -62,4 +62,9 @@ GameObject::~GameObject()
 	GameObject::id_to_go->erase(this->id);
 	
 	GameObject::deinit_maps();
+}
+
+bool GameObject::isWorld()
+{
+    return false;
 }

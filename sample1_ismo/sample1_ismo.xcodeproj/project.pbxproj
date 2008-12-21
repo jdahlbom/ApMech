@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		8D0C4E8D0486CD37000505A6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0867D6AAFE840B52C02AAC07 /* InfoPlist.strings */; };
 		8D0C4E920486CD37000505A6 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20286C33FDCF999611CA2CEA /* Carbon.framework */; };
+		DE86D3A10EFED27100B72F7D /* graphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DE86D3A00EFED27100B72F7D /* graphics.cpp */; };
 		DEA81CB30EFD9EF200E5A09B /* gameworld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEA81CB00EFD9EF200E5A09B /* gameworld.cpp */; };
 		DEA81CCF0EFDA10C00E5A09B /* mech.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEA81CCE0EFDA10C00E5A09B /* mech.cpp */; };
 		DEBB0F9C0EFD168100BD6675 /* resources.cfg in Resources */ = {isa = PBXBuildFile; fileRef = DEBB0F9B0EFD168100BD6675 /* resources.cfg */; };
@@ -46,6 +47,10 @@
 		20286C33FDCF999611CA2CEA /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		8D0C4E960486CD37000505A6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D0C4E970486CD37000505A6 /* sample1_ismo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sample1_ismo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DE06A8000EFEFB290003C317 /* network_strategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = network_strategy.h; path = src/network_strategy.h; sourceTree = "<group>"; };
+		DE86D39F0EFED27100B72F7D /* graphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = graphics.h; path = src/graphics.h; sourceTree = "<group>"; };
+		DE86D3A00EFED27100B72F7D /* graphics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = graphics.cpp; path = src/graphics.cpp; sourceTree = "<group>"; };
+		DE86D3E70EFED79E00B72F7D /* apmech.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = apmech.h; path = src/apmech.h; sourceTree = "<group>"; };
 		DEA81CAF0EFD9EF200E5A09B /* gameobject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gameobject.h; path = src/gameobject.h; sourceTree = "<group>"; };
 		DEA81CB00EFD9EF200E5A09B /* gameworld.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = gameworld.cpp; path = src/gameworld.cpp; sourceTree = "<group>"; };
 		DEA81CB10EFD9EF200E5A09B /* gameworld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gameworld.h; path = src/gameworld.h; sourceTree = "<group>"; };
@@ -62,7 +67,7 @@
 		DED3E5B60EFC7E6400B36728 /* media.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = media.cfg; sourceTree = "<group>"; };
 		DED3E5EB0EFC84A000B36728 /* Media */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Media; path = ../Media; sourceTree = SOURCE_ROOT; };
 		DEEE0A840EFD90B80093C3AD /* terrain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = terrain.png; path = ../Media/materials/textures/terrain.png; sourceTree = SOURCE_ROOT; };
-		DEFB66BA0EFDC9F400E2CB86 /* gameengine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = gameengine.cpp; path = src/gameengine.cpp; sourceTree = "<group>"; };
+		DEFB66BA0EFDC9F400E2CB86 /* gameengine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.cpp.cpp; name = gameengine.cpp; path = src/gameengine.cpp; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; };
 		DEFB66BB0EFDC9F400E2CB86 /* gameengine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gameengine.h; path = src/gameengine.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -117,6 +122,10 @@
 				DED3E5790EFC797A00B36728 /* apmech.cpp */,
 				DEA81CCE0EFDA10C00E5A09B /* mech.cpp */,
 				DECAC3030EFE5D68001EEFCB /* gameobject.cpp */,
+				DE86D39F0EFED27100B72F7D /* graphics.h */,
+				DE86D3A00EFED27100B72F7D /* graphics.cpp */,
+				DE86D3E70EFED79E00B72F7D /* apmech.h */,
+				DE06A8000EFEFB290003C317 /* network_strategy.h */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -208,6 +217,7 @@
 				DEA81CCF0EFDA10C00E5A09B /* mech.cpp in Sources */,
 				DEFB66BC0EFDC9F400E2CB86 /* gameengine.cpp in Sources */,
 				DECAC3040EFE5D68001EEFCB /* gameobject.cpp in Sources */,
+				DE86D3A10EFED27100B72F7D /* graphics.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

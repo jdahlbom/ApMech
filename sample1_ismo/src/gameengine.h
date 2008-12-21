@@ -1,31 +1,40 @@
-/*
- *  gameengine.h
- *  sample1_ismo
- *
- *  Created by Ismo Puustinen on 21.12.2008.
- *  Copyright 2008 __MyCompanyName__. All rights reserved.
- *
- */
+#ifndef GAMEENGINE_H
+#define GAMEENGINE_H
 
-#include "gameworld.h"
-#include <iostream>
+class Graphics;
+class GameObject;
+class GameWorld;
 
 class GameEngine {
 
 	private:
 	// network connection to server
 
+    // player
+    GameObject *player;
+    // world
+    GameWorld *world;
+    // graphics
+    Graphics *graphics;
+    
+    bool keepRendering;
+    
+	// get a game world from the network server
+	bool connectToServer();
+    
 	public:
 	
 	GameEngine();
 	virtual ~GameEngine();
 	
-	// get a game world from the network server
-	bool connectToServer();
+    bool initialize(Graphics *graphics);
 	
 	// sync the world with the server
-	bool syncWorld(GameWorld *);
+	bool syncWorld();
 
-	bool processKbEvent(int test);
+	bool processKbEvent(int event);
+    bool GameEngine::processNetworkEvent(GameObject *o);
+    bool run();
 
 };
+#endif

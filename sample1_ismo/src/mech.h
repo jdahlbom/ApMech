@@ -1,8 +1,9 @@
 #ifndef MECH_H
 #define MECH_H
 
+class GameWorld;
+
 #include "gameobject.h"
-#include "gameworld.h"
 
 class Mech: public GameObject {
     

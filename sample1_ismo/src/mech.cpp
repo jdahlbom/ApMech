@@ -1,12 +1,3 @@
-/*
- *  mech.cpp
- *  sample1_ismo
- *
- *  Created by Ismo Puustinen on 20.12.2008.
- *  Copyright 2008 __MyCompanyName__. All rights reserved.
- *
- */
-
 #include "mech.h"
 
 Mech::Mech(int id): GameObject(id) {
