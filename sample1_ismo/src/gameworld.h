@@ -20,5 +20,7 @@ class GameWorld: public GameObject {
 
     void addObject(GameObject *o);
 	bool removeObject(GameObject *o);
+	
+	std::list<GameObject *> getObjects();
 };
 #endif

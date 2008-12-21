@@ -1,7 +1,8 @@
 #include "Ogre.h"
 #include "OIS/OIS.h"
 #include "mech.h"
-
+#include "gameworld.h"
+#include "gameengine.h"
 
 using namespace Ogre;
 
@@ -114,10 +115,15 @@ class APMech {
 
 	private:
 	
+	// for Ogre 3D
 	Root *root;
 	RenderWindow *window;
 	RenderSystem *rSys;
 	SceneManager *sceneMgr;
+
+	// for game logic
+	GameWorld *world;
+	GameEngine *engine;
 
 	void setupResources(void);
 	bool loadResources(void);
@@ -177,7 +183,6 @@ bool APMech::initialize()
 	window = root->getAutoCreatedWindow(); 
 
 	loadResources();
-	loadTerrain();
 	
 	// add the event listener
 	MyFrameListener *frameListener = new MyFrameListener(window);
@@ -250,6 +255,8 @@ void APMech::setupResources(void)
 
 bool APMech::run()
 {
+	loadTerrain();
+
 	sceneMgr->setAmbientLight( ColourValue( 1.0, 1.0, 0.9 ) );
 	sceneMgr->setShadowTechnique(SHADOWTYPE_STENCIL_ADDITIVE);
 
