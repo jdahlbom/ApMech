@@ -8,18 +8,20 @@
  */
 
 #include "gameengine.h"
+#include <OIS/OIS.h>
 
 GameEngine::GameEngine() {}
 GameEngine::~GameEngine() {}
 	
-GameWorld * GameEngine::request_world()
+bool GameEngine::connectToServer()
 {
 	// TODO: request this from the server here
 	
-	return new GameWorld(1);
+	return true;
+	// return new GameWorld(1);
 }
 
-bool GameEngine::sync_world(GameWorld * world)
+bool GameEngine::syncWorld(GameWorld * world)
 {
 	std::list<GameObject *>::iterator i;
 
@@ -35,5 +37,34 @@ bool GameEngine::sync_world(GameWorld * world)
         }
     }
 
+	return true;
+}
+
+bool GameEngine::processKbEvent(int key) {
+			
+	// int x = mech.getX();
+	// int y = mech.getY();
+		
+	switch (key) {
+		case OIS::KC_UP:
+			std::cout << "up key\n";
+			// mech.setLocation(x, y+1, 0);
+			break;
+		case OIS::KC_DOWN:
+			std::cout << "down key\n";
+			// mech.setLocation(x, y-1, 0);
+			break;
+		case OIS::KC_LEFT:
+			std::cout << "left key\n";
+			// mech.setLocation(x-1, y ,0);
+			break;
+		case OIS::KC_RIGHT:
+			std::cout << "right key\n";
+			// mech.setLocation(x+1, y, 0);
+			break;
+		default:
+			std::cout << "unknown key\n";
+	}
+		
 	return true;
 }
