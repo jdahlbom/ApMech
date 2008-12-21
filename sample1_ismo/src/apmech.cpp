@@ -80,18 +80,18 @@ class MyFrameListener : public FrameListener, public OIS::KeyListener
 		
 		switch (arg.key) {
 			case OIS::KC_UP:
-				mech.setLocation(x, y+1);
+				mech.setLocation(x, y+1, 0);
 				break;
 			case OIS::KC_DOWN:
-				mech.setLocation(x, y-1);
+				mech.setLocation(x, y-1, 0);
 				break;
 			case OIS::KC_LEFT:
 				std::cout << "left key\n";
-				mech.setLocation(x-1,y);
+				mech.setLocation(x-1, y ,0);
 				break;
 			case OIS::KC_RIGHT:
 				std::cout << "right key\n";
-				mech.setLocation(x+1, y);
+				mech.setLocation(x+1, y, 0);
 				break;
 			default:
 				std::cout << "unknown key\n";
@@ -264,7 +264,7 @@ bool APMech::run()
 	std::vector<Entity*>::iterator entityIterator;
 
 
-	mech.setLocation(0, 0);
+	mech.setLocation(0, 0, 0);
 
 	SceneNode *terrainCenterNode = sceneMgr->getRootSceneNode()->createChildSceneNode("terrainCenter", Vector3(750, 0, 750));
 	

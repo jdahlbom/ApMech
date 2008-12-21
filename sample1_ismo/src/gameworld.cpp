@@ -36,3 +36,7 @@ std::list<GameObject *> GameWorld::getObjects()
 {
 	return this->world_objects;
 }
+
+int GameWorld::serialize(uint8_t buffer[], int start, int buflength) {
+	return 0;
+}
