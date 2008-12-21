@@ -10,26 +10,11 @@
 #include "mech.h"
 
 Mech::Mech() {
-	this->x = 0;
-	this->y = 0;
 }
 
 Mech::~Mech() {
 }
 
-
-void Mech::setLocation(int x, int y)
-{
-	this->x = x;
-	this->y = y;
-}
-
-int Mech::getX()
-{
-	return this->x;
-}
-
-int Mech::getY()
-{
-	return this->y;
+int Mech::serialize(uint8_t buffer[], int start, int buflength) {
+	return 0;
 }

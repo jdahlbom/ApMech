@@ -11,12 +11,31 @@ class GameObject {
 
     // is it possible to serialize this object for network transfer
     bool serializable;
+	
+	// does the object need syncing with the network server?
+	bool dirty;
+	
+	int x;
+	int y;
+	int z;
 
     public:
 
     GameObject(): visible(false), serializable(true) {}
 
     virtual ~GameObject() {}
+	
+	bool is_dirty() { return dirty; }
+	void set_dirty(bool state) { dirty = state; }
+	
+	virtual int serialize(uint8_t buffer[], int start, int buflength) = 0;
+	
+	void setLocation(int x, int y, int z) { this->x = x; this->y = y; this->z = z; }
+
+	int getX() { return this->x; }
+	int getY() { return this->y; }
+	int getZ() { return this->z; }
+
 
 };
 #endif

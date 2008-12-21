@@ -1,7 +1,8 @@
 #include "Ogre.h"
 #include "OIS/OIS.h"
 #include "mech.h"
-
+#include "gameworld.h"
+#include "gameengine.h"
 
 using namespace Ogre;
 
@@ -79,18 +80,18 @@ class MyFrameListener : public FrameListener, public OIS::KeyListener
 		
 		switch (arg.key) {
 			case OIS::KC_UP:
-				mech.setLocation(x, y+1);
+				mech.setLocation(x, y+1, 0);
 				break;
 			case OIS::KC_DOWN:
-				mech.setLocation(x, y-1);
+				mech.setLocation(x, y-1, 0);
 				break;
 			case OIS::KC_LEFT:
 				std::cout << "left key\n";
-				mech.setLocation(x-1,y);
+				mech.setLocation(x-1, y ,0);
 				break;
 			case OIS::KC_RIGHT:
 				std::cout << "right key\n";
-				mech.setLocation(x+1, y);
+				mech.setLocation(x+1, y, 0);
 				break;
 			default:
 				std::cout << "unknown key\n";
@@ -114,10 +115,15 @@ class APMech {
 
 	private:
 	
+	// for Ogre 3D
 	Root *root;
 	RenderWindow *window;
 	RenderSystem *rSys;
 	SceneManager *sceneMgr;
+
+	// for game logic
+	GameWorld *world;
+	GameEngine *engine;
 
 	void setupResources(void);
 	bool loadResources(void);
@@ -177,7 +183,6 @@ bool APMech::initialize()
 	window = root->getAutoCreatedWindow(); 
 
 	loadResources();
-	loadTerrain();
 	
 	// add the event listener
 	MyFrameListener *frameListener = new MyFrameListener(window);
@@ -250,6 +255,8 @@ void APMech::setupResources(void)
 
 bool APMech::run()
 {
+	loadTerrain();
+
 	sceneMgr->setAmbientLight( ColourValue( 1.0, 1.0, 0.9 ) );
 	sceneMgr->setShadowTechnique(SHADOWTYPE_STENCIL_ADDITIVE);
 
@@ -257,7 +264,7 @@ bool APMech::run()
 	std::vector<Entity*>::iterator entityIterator;
 
 
-	mech.setLocation(0, 0);
+	mech.setLocation(0, 0, 0);
 
 	SceneNode *terrainCenterNode = sceneMgr->getRootSceneNode()->createChildSceneNode("terrainCenter", Vector3(750, 0, 750));
 	

@@ -20,5 +20,10 @@ class GameWorld: public GameObject {
 
     void addObject(GameObject *o);
 	bool removeObject(GameObject *o);
+	
+	std::list<GameObject *> getObjects();
+	
+	int serialize(uint8_t buffer[], int start, int buflength);
+
 };
 #endif
