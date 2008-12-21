@@ -22,6 +22,7 @@ class NetData {
     static const int SERVERFULL = -3;
 
     static const enet_uint8 PACKET_NETUSER = 40;
+    static const enet_uint8 PACKET_DISCONNECT = 9;
 
  private:
     enum status_type { enet_error, offline, connected, server };

@@ -1,20 +1,24 @@
 #include "gameworld.h"
 
-GameWorld::GameWorld() {
+GameWorld::GameWorld(int id) : GameObject(id)
+{
     
 }
 
-GameWorld::~GameWorld() {
+GameWorld::~GameWorld()
+{
     // remove the world_objects vector contents
 }
 
 
-void GameWorld::addObject(GameObject *o) {
+void GameWorld::addObject(GameObject *o)
+{
     world_objects.push_back(o);
     return;
 }
 
-bool GameWorld::removeObject(GameObject *o) {
+bool GameWorld::removeObject(GameObject *o)
+{
 
     std::list<GameObject *>::iterator i;
 
@@ -26,4 +30,13 @@ bool GameWorld::removeObject(GameObject *o) {
     }
 
     return false;
+}
+
+std::list<GameObject *> GameWorld::getObjects()
+{
+	return this->world_objects;
+}
+
+int GameWorld::serialize(uint8_t buffer[], int start, int buflength) {
+	return 0;
 }

@@ -10,16 +10,11 @@ class Mech: public GameObject {
     GameWorld *world;
     // Location *location;
 
-	int x;
-	int y;
-
     public:
 	
-    Mech();
+    Mech(int id);
 	virtual ~Mech();
 
-	void setLocation(int x, int y);
-	int getX();
-	int getY();
+	int serialize(uint8_t buffer[], int start, int buflength);
 };
 #endif

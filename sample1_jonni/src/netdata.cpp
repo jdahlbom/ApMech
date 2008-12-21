@@ -150,6 +150,10 @@ int NetData::service()
                             users.insert(make_pair(uid, NetUser(uid, *event.peer)));
                             h += users.find(uid)->second.serialset(data, h);
                         }
+                    } else if (data[h] == NetData::PACKET_DISCONNECT) {
+                        h++; uid = *(int *)(data+h);
+                        cout << users.find(uid)->second.nick << " (uid "<<uid<<") has disconnected."<<endl;
+                        users.erase(uid);
                     }
                 }
                 enet_packet_destroy(event.packet);
@@ -164,6 +168,11 @@ int NetData::service()
             } else if (status == server) {
                 users.erase(int(event.data));
                 cout << "Client " << event.data << " has disconnected" << endl;
+
+                enet_uint8 buffer[6]; buffer[0] = 1; buffer[1] = NetData::PACKET_DISCONNECT;    // Let clients know!
+                *(int *)(buffer + 2) = int(event.data);
+                ENetPacket *packet = enet_packet_create(buffer, 6, ENET_PACKET_FLAG_RELIABLE);
+                enet_host_broadcast(enethost, 0, packet);
                 // Not detecting if we get disconnect messages from users who weren't connected in the first place. Oh well.
             }
             break;

@@ -8,21 +8,20 @@ LD = gcc
 LDFLAGS = $(shell pkg-config --libs $(LIBS))
 SRCDIR = src
 OBJDIR = obj
-APP_NAME = apmech
 
 ## Files to include in yourApp project
-APPLICATION_FILES = apmech.o gameworld.o mech.o
+SAMPLEAPP = $(OBJDIR)/SampleApp.o
 
 ## Compilation and linking occurs here
-all: app_files
-	$(LD) $(LDFLAGS) $(APPLICATION_FILES) -o $(APP_NAME)
+all: SampleApp
+	$(LD) $(LDFLAGS) $(SAMPLEAPP) -o SampleApp
 
-app_files: $(APPLICATION_FILES)
+SampleApp: $(SAMPLEAPP)
 
-%.o: $(SRCDIR)/%.cpp
-	$(CXX) -c -o $(OBJDIR)/$@ $< $(CXXFLAGS)
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
+	$(CXX) -c -o $@ $< $(CXXFLAGS)
 
 
 ## Clean up
 clean:
-	-rm -f $(OBJDIR)/* $(APP_NAME)
+	rm -f $(OBJDIR)/* SampleApp

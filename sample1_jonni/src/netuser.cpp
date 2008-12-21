@@ -2,13 +2,15 @@
 
 NetUser::NetUser()
 {
-    uid = x = y = -1; nick = "uninitialized";
+    uid = -1; x = y = 0; nick = "uninitialized";
+    color = 0x00FFFFFF;
     changed = false;
 }
 
 NetUser::NetUser(int _uid, ENetPeer _peer)
 {
-    x = y = -1;  nick = "uninitialized";
+    x = y = 0;  nick = "uninitialized";
+    color = 0x00FFFFFF;
     uid = _uid;
     peer = _peer;
     changed = false;
