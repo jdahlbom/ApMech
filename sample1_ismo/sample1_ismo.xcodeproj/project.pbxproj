@@ -13,6 +13,7 @@
 		DEA81CCF0EFDA10C00E5A09B /* mech.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEA81CCE0EFDA10C00E5A09B /* mech.cpp */; };
 		DEBB0F9C0EFD168100BD6675 /* resources.cfg in Resources */ = {isa = PBXBuildFile; fileRef = DEBB0F9B0EFD168100BD6675 /* resources.cfg */; };
 		DEBB0F9E0EFD168A00BD6675 /* plugins.cfg in Resources */ = {isa = PBXBuildFile; fileRef = DEBB0F9D0EFD168A00BD6675 /* plugins.cfg */; };
+		DECAC3040EFE5D68001EEFCB /* gameobject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DECAC3030EFE5D68001EEFCB /* gameobject.cpp */; };
 		DED3E57A0EFC797A00B36728 /* apmech.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DED3E5790EFC797A00B36728 /* apmech.cpp */; };
 		DED3E57E0EFC79C500B36728 /* Cg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DED3E57C0EFC79C500B36728 /* Cg.framework */; };
 		DED3E57F0EFC79C600B36728 /* Ogre.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DED3E57D0EFC79C500B36728 /* Ogre.framework */; };
@@ -52,6 +53,7 @@
 		DEA81CCE0EFDA10C00E5A09B /* mech.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mech.cpp; path = src/mech.cpp; sourceTree = "<group>"; };
 		DEBB0F9B0EFD168100BD6675 /* resources.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = resources.cfg; path = Mac/resources.cfg; sourceTree = "<group>"; };
 		DEBB0F9D0EFD168A00BD6675 /* plugins.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = plugins.cfg; path = Mac/plugins.cfg; sourceTree = "<group>"; };
+		DECAC3030EFE5D68001EEFCB /* gameobject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = gameobject.cpp; path = src/gameobject.cpp; sourceTree = "<group>"; };
 		DED3E5790EFC797A00B36728 /* apmech.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = apmech.cpp; path = src/apmech.cpp; sourceTree = "<group>"; };
 		DED3E57C0EFC79C500B36728 /* Cg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cg.framework; path = ../../../Desktop/OgreSDK/Dependencies/Cg.framework; sourceTree = SOURCE_ROOT; };
 		DED3E57D0EFC79C500B36728 /* Ogre.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ogre.framework; path = ../../../Desktop/OgreSDK/Dependencies/Ogre.framework; sourceTree = SOURCE_ROOT; };
@@ -114,6 +116,7 @@
 				DEA81CB20EFD9EF200E5A09B /* mech.h */,
 				DED3E5790EFC797A00B36728 /* apmech.cpp */,
 				DEA81CCE0EFDA10C00E5A09B /* mech.cpp */,
+				DECAC3030EFE5D68001EEFCB /* gameobject.cpp */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -204,6 +207,7 @@
 				DEA81CB30EFD9EF200E5A09B /* gameworld.cpp in Sources */,
 				DEA81CCF0EFDA10C00E5A09B /* mech.cpp in Sources */,
 				DEFB66BC0EFDC9F400E2CB86 /* gameengine.cpp in Sources */,
+				DECAC3040EFE5D68001EEFCB /* gameobject.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

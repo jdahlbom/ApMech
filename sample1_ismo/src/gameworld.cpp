@@ -1,6 +1,6 @@
 #include "gameworld.h"
 
-GameWorld::GameWorld()
+GameWorld::GameWorld(int id) : GameObject(id)
 {
     
 }

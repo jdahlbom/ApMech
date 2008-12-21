@@ -15,7 +15,7 @@ class GameWorld: public GameObject {
     // reference to the actual 3D representation of the world
 
     public:
-    GameWorld();
+    GameWorld(int id);
     virtual GameWorld::~GameWorld();
 
     void addObject(GameObject *o);

@@ -12,7 +12,7 @@ class Mech: public GameObject {
 
     public:
 	
-    Mech();
+    Mech(int id);
 	virtual ~Mech();
 
 	int serialize(uint8_t buffer[], int start, int buflength);

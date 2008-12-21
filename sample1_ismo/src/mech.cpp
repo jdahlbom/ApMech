@@ -9,7 +9,7 @@
 
 #include "mech.h"
 
-Mech::Mech() {
+Mech::Mech(int id): GameObject(id) {
 }
 
 Mech::~Mech() {

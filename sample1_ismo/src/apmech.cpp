@@ -10,7 +10,7 @@ using namespace Ogre;
 #include <CoreFoundation/CoreFoundation.h>
 #endif
 bool keepRendering = true;
-Mech mech;
+Mech mech(2);
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 // This function will locate the path to our application on OS X,
@@ -296,10 +296,7 @@ bool APMech::run()
     vp->setBackgroundColour(ColourValue(0,0,0));
     mCamera->setAspectRatio(Real(vp->getActualWidth()) / Real(vp->getActualHeight()));
 	
-	
-	int i = 0;
 	while (keepRendering) {
-		i++;
 		// std::cout << "Render frame " << i++ << "\n";
 
 		robotNode->setPosition(Vector3(mech.getX(), 0, mech.getY()));

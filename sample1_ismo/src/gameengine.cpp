@@ -16,7 +16,7 @@ GameWorld * GameEngine::request_world()
 {
 	// TODO: request this from the server here
 	
-	return new GameWorld();
+	return new GameWorld(1);
 }
 
 bool GameEngine::sync_world(GameWorld * world)

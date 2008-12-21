@@ -197,7 +197,106 @@
 	<key>Notifications</key>
 	<array/>
 	<key>OpenEditors</key>
-	<array/>
+	<array>
+		<dict>
+			<key>Content</key>
+			<dict>
+				<key>PBXProjectModuleGUID</key>
+				<string>DECAC2B30EFE5480001EEFCB</string>
+				<key>PBXProjectModuleLabel</key>
+				<string>gameobject.h</string>
+				<key>PBXSplitModuleInNavigatorKey</key>
+				<dict>
+					<key>Split0</key>
+					<dict>
+						<key>PBXProjectModuleGUID</key>
+						<string>DECAC2D10EFE58B8001EEFCB</string>
+						<key>PBXProjectModuleLabel</key>
+						<string>gameobject.h</string>
+						<key>_historyCapacity</key>
+						<integer>0</integer>
+						<key>bookmark</key>
+						<string>DECAC3820EFE6802001EEFCB</string>
+						<key>history</key>
+						<array>
+							<string>DECAC2D30EFE58B8001EEFCB</string>
+							<string>DECAC2D40EFE58B8001EEFCB</string>
+							<string>DECAC2D50EFE58B8001EEFCB</string>
+							<string>DECAC2D70EFE58B8001EEFCB</string>
+							<string>DECAC3240EFE6262001EEFCB</string>
+							<string>DECAC3250EFE6262001EEFCB</string>
+							<string>DECAC3270EFE6262001EEFCB</string>
+							<string>DECAC3620EFE6497001EEFCB</string>
+							<string>DECAC3800EFE6802001EEFCB</string>
+							<string>DECAC3740EFE66CB001EEFCB</string>
+						</array>
+						<key>prevStack</key>
+						<array>
+							<string>DECAC2D90EFE58B8001EEFCB</string>
+							<string>DECAC2DA0EFE58B8001EEFCB</string>
+							<string>DECAC2DB0EFE58B8001EEFCB</string>
+							<string>DECAC2DC0EFE58B8001EEFCB</string>
+							<string>DECAC2DD0EFE58B8001EEFCB</string>
+							<string>DECAC2DE0EFE58B8001EEFCB</string>
+							<string>DECAC2DF0EFE58B8001EEFCB</string>
+							<string>DECAC2E00EFE58B8001EEFCB</string>
+							<string>DECAC2E10EFE58B8001EEFCB</string>
+							<string>DECAC2E20EFE58B8001EEFCB</string>
+							<string>DECAC2E30EFE58B8001EEFCB</string>
+							<string>DECAC2E40EFE58B8001EEFCB</string>
+							<string>DECAC2E50EFE58B8001EEFCB</string>
+							<string>DECAC2EB0EFE5C33001EEFCB</string>
+							<string>DECAC32A0EFE6262001EEFCB</string>
+							<string>DECAC32B0EFE6262001EEFCB</string>
+							<string>DECAC32C0EFE6262001EEFCB</string>
+							<string>DECAC32D0EFE6262001EEFCB</string>
+							<string>DECAC32E0EFE6262001EEFCB</string>
+							<string>DECAC32F0EFE6262001EEFCB</string>
+							<string>DECAC3300EFE6262001EEFCB</string>
+							<string>DECAC3310EFE6262001EEFCB</string>
+							<string>DECAC3320EFE6262001EEFCB</string>
+							<string>DECAC3330EFE6262001EEFCB</string>
+							<string>DECAC3340EFE6262001EEFCB</string>
+							<string>DECAC3350EFE6262001EEFCB</string>
+							<string>DECAC3360EFE6262001EEFCB</string>
+							<string>DECAC3370EFE6262001EEFCB</string>
+							<string>DECAC3380EFE6262001EEFCB</string>
+							<string>DECAC33A0EFE6262001EEFCB</string>
+							<string>DECAC33B0EFE6262001EEFCB</string>
+							<string>DECAC33C0EFE6262001EEFCB</string>
+							<string>DECAC33D0EFE6262001EEFCB</string>
+							<string>DECAC3460EFE62AB001EEFCB</string>
+							<string>DECAC3650EFE6497001EEFCB</string>
+							<string>DECAC3660EFE6497001EEFCB</string>
+							<string>DECAC3670EFE6497001EEFCB</string>
+							<string>DECAC3680EFE6497001EEFCB</string>
+							<string>DECAC3690EFE6497001EEFCB</string>
+							<string>DECAC3750EFE66CB001EEFCB</string>
+							<string>DECAC3760EFE66CB001EEFCB</string>
+							<string>DECAC3770EFE66CB001EEFCB</string>
+							<string>DECAC3780EFE66CB001EEFCB</string>
+							<string>DECAC3790EFE66CB001EEFCB</string>
+							<string>DECAC37A0EFE66CB001EEFCB</string>
+							<string>DECAC3810EFE6802001EEFCB</string>
+						</array>
+					</dict>
+					<key>SplitCount</key>
+					<string>1</string>
+				</dict>
+				<key>StatusBarVisibility</key>
+				<true/>
+			</dict>
+			<key>Geometry</key>
+			<dict>
+				<key>Frame</key>
+				<string>{{0, 20}, {955, 931}}</string>
+				<key>PBXModuleWindowStatusBarHidden2</key>
+				<false/>
+				<key>RubberWindowFrame</key>
+				<string>352 56 955 972 0 0 1680 1028 </string>
+			</dict>
+		</dict>
+	</array>
 	<key>PerspectiveWidths</key>
 	<array>
 		<integer>1616</integer>
@@ -233,8 +332,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -280,6 +377,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
+									<integer>14</integer>
 									<integer>5</integer>
 									<integer>0</integer>
 								</array>
@@ -318,7 +416,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>DED3E5700EFC78E600B36728</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>allocator.h</string>
+								<string>asm std::_Rb_tree_decrement  0x92df47da</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -326,10 +424,19 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>DED3E5710EFC78E600B36728</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>allocator.h</string>
+										<string>asm std::_Rb_tree_decrement  0x92df47da</string>
 										<key>history</key>
 										<array>
 											<string>DEC36F990EFD3A6A002DF754</string>
+											<string>DECAC34A0EFE63D9001EEFCB</string>
+											<string>DECAC34B0EFE63D9001EEFCB</string>
+											<string>DECAC34D0EFE63D9001EEFCB</string>
+										</array>
+										<key>prevStack</key>
+										<array>
+											<string>DECAC3500EFE63D9001EEFCB</string>
+											<string>DECAC3510EFE63D9001EEFCB</string>
+											<string>DECAC3520EFE63D9001EEFCB</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -368,9 +475,7 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {1231, 900}}</string>
-										<key>RubberWindowFrame</key>
-										<string>62 55 1616 973 0 0 1680 1028 </string>
+										<string>{{10, 27}, {0, 327}}</string>
 									</dict>
 									<key>Module</key>
 									<string>XCDetailModule</string>
@@ -410,6 +515,8 @@
 									<string>PBXCVSModule</string>
 								</dict>
 								<dict>
+									<key>BecomeActive</key>
+									<true/>
 									<key>ContentConfiguration</key>
 									<dict>
 										<key>PBXProjectModuleGUID</key>
@@ -425,6 +532,8 @@
 									<dict>
 										<key>Frame</key>
 										<string>{{10, 27}, {1231, 900}}</string>
+										<key>RubberWindowFrame</key>
+										<string>62 55 1616 973 0 0 1680 1028 </string>
 									</dict>
 									<key>Module</key>
 									<string>PBXBuildResultsModule</string>
@@ -452,11 +561,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>DEFB66C70EFDCA3F00E2CB86</string>
+				<string>DECAC2C80EFE58B8001EEFCB</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>DEFB66C80EFDCA3F00E2CB86</string>
+				<string>DECAC2C90EFE58B8001EEFCB</string>
 				<string>DED3E5700EFC78E600B36728</string>
-				<string>DEFB66C90EFDCA3F00E2CB86</string>
+				<string>DECAC2CA0EFE58B8001EEFCB</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
@@ -601,14 +710,14 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>DEFB66600EFDC10200E2CB86</string>
+				<string>DECAC2CB0EFE58B8001EEFCB</string>
 				<string>1CCC7628064C1048000F2A68</string>
 				<string>1CCC7629064C1048000F2A68</string>
-				<string>DEFB66610EFDC10200E2CB86</string>
-				<string>DEFB66620EFDC10200E2CB86</string>
-				<string>DEFB66630EFDC10200E2CB86</string>
-				<string>DEFB66640EFDC10200E2CB86</string>
-				<string>DEFB66650EFDC10200E2CB86</string>
+				<string>DECAC2CC0EFE58B8001EEFCB</string>
+				<string>DECAC2CD0EFE58B8001EEFCB</string>
+				<string>DECAC2CE0EFE58B8001EEFCB</string>
+				<string>DECAC2CF0EFE58B8001EEFCB</string>
+				<string>DECAC2D00EFE58B8001EEFCB</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -617,7 +726,7 @@
 	<key>PerspectivesBarVisible</key>
 	<true/>
 	<key>PinnedNavigatorIdentifier</key>
-	<string>DEF01D210EFDB28B00E18C05</string>
+	<string>DECAC2B30EFE5480001EEFCB</string>
 	<key>ShelfIsVisible</key>
 	<false/>
 	<key>SourceDescription</key>
@@ -640,7 +749,11 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>DECAC33F0EFE6262001EEFCB</string>
+		<string>DECAC3400EFE6262001EEFCB</string>
+		<string>DECAC3410EFE6262001EEFCB</string>
 		<string>/Users/ipuustin/git/apmech/sample1_ismo/sample1_ismo.xcodeproj</string>
+		<string>DECAC2B30EFE5480001EEFCB</string>
 	</array>
 	<key>WindowString</key>
 	<string>62 55 1616 973 0 0 1680 1028 </string>
