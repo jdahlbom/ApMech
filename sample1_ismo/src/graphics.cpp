@@ -165,10 +165,10 @@ void Graphics::setupResources(void)
             // In order to make things portable on OS X we need to provide
             // the loading with it's own bundle path location
             Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
-                                                                           Ogre::String(macBundlePath() + "/" + archName), typeName, secName);
+                    Ogre::String(macBundlePath() + "/" + archName), typeName, secName);
 #else
             Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
-                                                                           archName, typeName, secName);
+                    archName, typeName, secName);
 #endif
         }
     }
@@ -184,7 +184,7 @@ bool Graphics::updateGraphics(GameObject *o)
     std::cout << "updateGraphics" << std::endl;
     
 	/* get the graphical representation from the object */
-	if (!o->is_visible())
+	if (!o->isVisible())
 		return false;
     
 	node = o->getGraphics();

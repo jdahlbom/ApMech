@@ -14,8 +14,8 @@ class GameObject {
 	static std::map<GameObject *, int> *go_to_id;
 	static std::map<int, GameObject *> *id_to_go;
 	// static int refcount;
-	static void init_maps();
-	static void deinit_maps();
+	static void initMaps();
+	static void deinitMaps();
 	
 	private:
 
@@ -48,10 +48,10 @@ class GameObject {
 
 	bool isDirty() { return dirty; }
 	void setDirty(bool state) { dirty = state; }
-	bool is_visible() { return visible; }
-	void set_visible(bool state) { visible = state; }
-	bool is_player() { return player; }
-	void set_player(bool state) { player = state; }	
+	bool isVisible() { return visible; }
+	void setVisible(bool state) { visible = state; }
+	bool isPlayer() { return player; }
+	void setPlayer(bool state) { player = state; }	
 	
 	Ogre::SceneNode *getGraphics() { return node; }
 	void setGraphics(Ogre::SceneNode *node) { this->node = node; }

@@ -18,7 +18,7 @@ std::map<GameObject *, int> *GameObject::go_to_id = NULL;
 std::map<int, GameObject *> *GameObject::id_to_go = NULL;
 // int GameObject::refcount = 0;
 
-void GameObject::init_maps()
+void GameObject::initMaps()
 {
 	if (GameObject::go_to_id == NULL)
 		GameObject::go_to_id = new std::map<GameObject*, int>;
@@ -29,7 +29,7 @@ void GameObject::init_maps()
 	return;
 }
 
-void GameObject::deinit_maps()
+void GameObject::deinitMaps()
 {
 	// GameObject::refcount--;
 	if (GameObject::id_to_go->empty()) {
@@ -45,7 +45,7 @@ void GameObject::deinit_maps()
 
 GameObject::GameObject(int id): visible(false), x(0), y(0), z(0), id(id), node(NULL) {
 
-	GameObject::init_maps();
+	GameObject::initMaps();
 	std::stringstream stream;
 
 
@@ -61,7 +61,7 @@ GameObject::~GameObject()
 	GameObject::go_to_id->erase(this);
 	GameObject::id_to_go->erase(this->id);
 	
-	GameObject::deinit_maps();
+	GameObject::deinitMaps();
 }
 
 bool GameObject::isWorld()

@@ -15,11 +15,11 @@ bool GameEngine::connectToServer()
     GameObject *mech = new Mech(2);
     
     mech->setLocation(750,750,0);
-    mech->set_player(true);
-    mech->set_visible(true);
+    mech->setPlayer(true);
+    mech->setVisible(true);
     
-    gw->set_player(false);
-    gw->set_visible(false);
+    gw->setPlayer(false);
+    gw->setVisible(false);
     
     processNetworkEvent(gw);
     processNetworkEvent(mech);
@@ -106,7 +106,7 @@ bool GameEngine::processNetworkEvent(GameObject *o) {
         this->world = (GameWorld *) o;
     }
     
-    if (o->is_player()) {
+    if (o->isPlayer()) {
         std::cout << "Received a player!" << std::endl;
         this->player = o;
     }
