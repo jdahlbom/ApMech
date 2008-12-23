@@ -12,6 +12,7 @@
 #include <iostream>
 #include "netdata.h"
 #include <cstdlib> // for random
+#include <cstdio> // getchar
 
 using namespace std;
 
@@ -30,6 +31,7 @@ int main ( int argc, char** argv )
         while (1) {             // Server main loop
             netdata->service();
             SDL_Delay(5);
+
         }
 
 
@@ -38,7 +40,7 @@ int main ( int argc, char** argv )
         map<int,NetUser>::iterator p = netdata->users.begin();
 
         netdata = new NetData(NetData::CLIENT);
-        netdata->connect("192.168.2.3", 5074);
+        netdata->connect("88.115.124.42", 5074);
         netdata->me.nick = "Test";
         netdata->me.changed = true; // Mark all info for transmission
 

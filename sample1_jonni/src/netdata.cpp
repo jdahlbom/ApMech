@@ -30,6 +30,7 @@ NetData::~NetData() {
 }
 
 
+
 int NetData::connect(std::string ip, int port)
 {
     ENetAddress address;
@@ -80,10 +81,8 @@ int NetData::disconnect()
     {
         enet_peer_disconnect(enetserver, me.uid);
 
-        while (enet_host_service(enethost, &event, 3000) > 0)
-        {
-            switch (event.type)
-            {
+        while (enet_host_service(enethost, &event, 3000) > 0) {
+            switch (event.type) {
              case ENET_EVENT_TYPE_DISCONNECT:
                 cout << "Disconnected from server successfully" << endl;
                 return 1;
@@ -195,7 +194,7 @@ int NetData::service()
 
         ENetPacket *packet = enet_packet_create(buffer, length, ENET_PACKET_FLAG_RELIABLE);
         enet_peer_send(enetserver, 0, packet);
-//        me.changed = false;
+        me.changed = false;
 
     } else if ((status == server) ) {          // 1st iteration: send anyway, even if no updates.
 
@@ -215,7 +214,7 @@ int NetData::service()
             enet_host_broadcast(enethost, 0, packet);
         }
 
-        me.changed = false;
+//        me.changed = false;// Is server's "me" even used like this?!?
     }
 
     return items;
