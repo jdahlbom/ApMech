@@ -68,3 +68,17 @@ bool GameObject::isWorld()
 {
     return false;
 }
+
+GameObject * GameObjectId::get() {
+    
+    GameObject *ret = NULL;
+    
+    std::map<int, GameObject *>::iterator iter;
+    iter = GameObject::id_to_go->find(id);
+    
+    if (iter != GameObject::id_to_go->end()) {
+        ret = (*iter).second;
+    }
+    
+    return ret;
+}

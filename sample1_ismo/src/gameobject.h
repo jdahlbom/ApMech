@@ -9,10 +9,6 @@ class GameObject {
 	/* Here we add data about the properties that are common to all
      * objects in the game world */
 	
-	// maps for changing mapping the game objects to ints and vice versa
-
-	static std::map<GameObject *, int> *go_to_id;
-	static std::map<int, GameObject *> *id_to_go;
 	// static int refcount;
 	static void initMaps();
 	static void deinitMaps();
@@ -37,6 +33,11 @@ class GameObject {
     public:
 		
    	int id;
+    
+	// maps for changing mapping the game objects to ints and vice versa    
+	static std::map<GameObject *, int> *go_to_id;
+	static std::map<int, GameObject *> *id_to_go;
+    
 	std::string id_s; // string representation of the id
 
     GameObject(int id);
@@ -63,6 +64,15 @@ class GameObject {
 
     // only the world overrides this
     virtual bool isWorld();
+};
+
+class GameObjectId {
+
+private:
+    int id;
+public:
+    GameObjectId(int id) : id(id) { }
+    GameObject * get();
 };
 
 #endif
