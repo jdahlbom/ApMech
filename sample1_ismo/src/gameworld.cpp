@@ -20,7 +20,7 @@ bool GameWorld::removeObject(GameObject *o)
 
     for (i = this->world_objects.begin(); i != this->world_objects.end(); ++i) {
         if (*i == o) {
-            this->world_objects.erase(i);    
+            this->world_objects.erase(i);
             return true;
         }
     }
@@ -30,17 +30,17 @@ bool GameWorld::removeObject(GameObject *o)
 
 std::list<GameObject *> GameWorld::getObjects()
 {
-	return this->world_objects;
+    return this->world_objects;
 }
 
 int GameWorld::serialize(uint8_t buffer[], int start, int buflength) {
     /* TODO */
-	return 0;
+    return 0;
 }
 
 bool GameWorld::isWorld()
 {
-    std::cout << "Is a game world!" << std::endl; 
+    std::cout << "Is a game world!" << std::endl;
     return true;
 }
 

@@ -15,13 +15,13 @@ int main(int argc, char **argv)
 {
 
     GameEngine engine;
-	Graphics graphics;
+    Graphics graphics;
 
     graphics.initialize(&engine);
     graphics.load();
 
-	engine.initialize(&graphics);
-	engine.run();
+    engine.initialize(&graphics);
+    engine.run();
 
     return 0;
 }
