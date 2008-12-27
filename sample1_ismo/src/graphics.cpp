@@ -1,6 +1,7 @@
 #include "graphics.h"
 #include "gameengine.h"
 #include "gameobject.h"
+#include "apframelistener.h"
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 // This function will locate the path to our application on OS X,
@@ -27,40 +28,6 @@ std::string macBundlePath()
 }
 #endif
 
-MyFrameListener::MyFrameListener(RenderWindow *window, GameEngine *engine): engine(engine), window(window)
-{
-    // using buffered input
-    OIS::ParamList pl;
-    size_t windowHnd = 0;
-    std::ostringstream windowHndStr;
-    window->getCustomAttribute("test window", &windowHnd);
-    windowHndStr << windowHnd;
-    pl.insert(std::make_pair(std::string("test window"), windowHndStr.str()));
-
-    mInputManager = OIS::InputManager::createInputSystem( pl );
-    mKeyboard = static_cast<OIS::Keyboard*>(mInputManager->createInputObject( OIS::OISKeyboard, true ));
-    // mInputManager->addKeyListener(this, "game");
-    mKeyboard->setEventCallback(this);
-}
-
-bool MyFrameListener::keyPressed(const OIS::KeyEvent &arg)
-{
-    std::cout << "Key pressed!\n";
-
-    return engine->processKbEvent(arg.key);
-}
-
-bool MyFrameListener::keyReleased(const OIS::KeyEvent &arg)
-{
-    return true;
-}
-
-bool MyFrameListener::frameStarted(const FrameEvent &evt)
-{
-    // std::cout << "frame!\n";
-    mKeyboard->capture();
-    return true;
-}
 
 
 Graphics::Graphics()
@@ -73,54 +40,54 @@ Graphics::~Graphics()
 
 bool Graphics::initialize(GameEngine *engine)
 {
-    this->engine = engine;
+    this->engine_ = engine;
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     Ogre::String resourcePath;
     resourcePath = macBundlePath() + "/Contents/Resources/";
-    root = new Ogre::Root(resourcePath + "plugins.cfg",
+    root_ = new Ogre::Root(resourcePath + "plugins.cfg",
                           resourcePath + "ogre.cfg", resourcePath + "Ogre.log");
 #else
-    root = new Root();
+    root_ = new Root();
 #endif
 
     // OpenGL
-    rSys = root->getRenderSystemByName("OpenGL Rendering Subsystem");
-    rSys->setConfigOption("Full Screen", "No");
-    root->setRenderSystem(rSys);
+    rSys_ = root_->getRenderSystemByName("OpenGL Rendering Subsystem");
+    rSys_->setConfigOption("Full Screen", "No");
+    root_->setRenderSystem(rSys_);
 
     setupResources();
     // loadResources();
 
     // end gracelessly if the preferred renderer is not available
-    if (root->getRenderSystem() == NULL) {
+    if (root_->getRenderSystem() == NULL) {
         std::cout << "ERROR: render system is NULL\n";
-        delete root;
+        delete root_;
         return 1;
     }
 
-    root->restoreConfig();
+    root_->restoreConfig();
 
-    root->showConfigDialog();
+    root_->showConfigDialog();
 
-    root->initialise(true, "test window");
-    window = root->getAutoCreatedWindow();
+    root_->initialise(true, "test window");
+    window_ = root_->getAutoCreatedWindow();
 
     loadResources();
 
     // add the event listener
-    MyFrameListener *frameListener = new MyFrameListener(window, engine);
-    root->addFrameListener(frameListener);
+    ApFrameListener *frameListener = new ApFrameListener(window_, engine_);
+    root_->addFrameListener(frameListener);
     return true;
 }
 
 bool Graphics::loadTerrain()
 {
-    sceneMgr = root->createSceneManager(ST_EXTERIOR_CLOSE);
+    sceneMgr_= root_->createSceneManager(ST_EXTERIOR_CLOSE);
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-    sceneMgr->setWorldGeometry(macBundlePath() + "/Contents/Resources/Media/terrain.cfg");
+    sceneMgr_->setWorldGeometry(macBundlePath() + "/Contents/Resources/Media/terrain.cfg");
 #else
-    sceneMgr->setWorldGeometry("terrain.cfg");
+    sceneMgr_->setWorldGeometry("terrain.cfg");
 #endif
     return true;
 }
@@ -192,8 +159,8 @@ bool Graphics::updateGraphics(GameObject *gameObject)
     if (node == NULL) {
 
         // draw this object
-        SceneNode *corner = sceneMgr->getRootSceneNode()->createChildSceneNode("terrainCorner", Vector3(0, 0, 0));
-        Entity *robotEntity = sceneMgr->createEntity(gameObject->id_s, "robot.mesh");
+        SceneNode *corner = sceneMgr_->getRootSceneNode()->createChildSceneNode("terrainCorner", Vector3(0, 0, 0));
+        Entity *robotEntity = sceneMgr_->createEntity(gameObject->id_s, "robot.mesh");
 
         node = corner->createChildSceneNode(gameObject->id_s);
         node->attachObject(robotEntity);
@@ -211,8 +178,8 @@ bool Graphics::load()
 {
     loadTerrain();
 
-    sceneMgr->setAmbientLight( ColourValue( 1.0, 1.0, 0.9 ) );
-    sceneMgr->setShadowTechnique(SHADOWTYPE_STENCIL_ADDITIVE);
+    sceneMgr_->setAmbientLight( ColourValue( 1.0, 1.0, 0.9 ) );
+    sceneMgr_->setShadowTechnique(SHADOWTYPE_STENCIL_ADDITIVE);
 
     std::vector<Entity*> entities;
     std::vector<Entity*>::iterator entityIterator;
@@ -221,8 +188,8 @@ bool Graphics::load()
     // mech.setLocation(0, 0, 0);
 #if 0
 
-    SceneNode *terrainCenterNode = sceneMgr->getRootSceneNode()->createChildSceneNode("terrainCenter", Vector3(750, 0, 750));
-    Entity *robotEntity = sceneMgr->createEntity("Robot", "robot.mesh");
+    SceneNode *terrainCenterNode = sceneMgr_->getRootSceneNode()->createChildSceneNode("terrainCenter", Vector3(750, 0, 750));
+    Entity *robotEntity = sceneMgr_->createEntity("Robot", "robot.mesh");
     SceneNode *robotNode = terrainCenterNode->createChildSceneNode("RobotNode");
     robotNode->attachObject( robotEntity );
     entities.push_back(robotEntity);
@@ -233,13 +200,13 @@ bool Graphics::load()
 #endif
 
     Light *light;
-    light = sceneMgr->createLight("Light3");
+    light = sceneMgr_->createLight("Light3");
     light->setType(Light::LT_DIRECTIONAL);
     light->setDiffuseColour(ColourValue(1, 0, 0));
     light->setSpecularColour(ColourValue(1, 0, 0));
     light->setDirection(Vector3(0, -1, 1) );
 
-    Camera *mCamera = sceneMgr->createCamera("PlayerCam");
+    Camera *mCamera = sceneMgr_->createCamera("PlayerCam");
     Vector3 robotLocation = Vector3((int)1500/2, 0,(int)1500/2);
     //mCamera->setPosition(robotLocation + Vector3(0,100,0));
     mCamera->setPosition(Vector3(850, 300, 750));
@@ -247,7 +214,7 @@ bool Graphics::load()
     //mCamera->lookAt(robotLocation);
     mCamera->setNearClipDistance(5);
 
-    Viewport* vp = window->addViewport(mCamera);
+    Viewport* vp = window_->addViewport(mCamera);
     vp->setBackgroundColour(ColourValue(0,0,0));
     mCamera->setAspectRatio(Real(vp->getActualWidth()) / Real(vp->getActualHeight()));
 
@@ -256,8 +223,8 @@ bool Graphics::load()
 
 bool Graphics::render()
 {
-    if (root) {
-        root->renderOneFrame();
+    if (root_) {
+        root_->renderOneFrame();
         return true;
     }
     return false;
