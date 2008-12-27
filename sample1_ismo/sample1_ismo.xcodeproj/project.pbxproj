@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		8D0C4E8D0486CD37000505A6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0867D6AAFE840B52C02AAC07 /* InfoPlist.strings */; };
 		8D0C4E920486CD37000505A6 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20286C33FDCF999611CA2CEA /* Carbon.framework */; };
+		DE38A1C40F065CDE00B29D90 /* apframelistener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DE38A1C30F065CDE00B29D90 /* apframelistener.cpp */; };
 		DE86D3A10EFED27100B72F7D /* graphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DE86D3A00EFED27100B72F7D /* graphics.cpp */; };
 		DEA81CB30EFD9EF200E5A09B /* gameworld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEA81CB00EFD9EF200E5A09B /* gameworld.cpp */; };
 		DEA81CCF0EFDA10C00E5A09B /* mech.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEA81CCE0EFDA10C00E5A09B /* mech.cpp */; };
@@ -48,6 +49,7 @@
 		8D0C4E960486CD37000505A6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D0C4E970486CD37000505A6 /* sample1_ismo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sample1_ismo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE06A8000EFEFB290003C317 /* network_strategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = network_strategy.h; path = src/network_strategy.h; sourceTree = "<group>"; };
+		DE38A1C30F065CDE00B29D90 /* apframelistener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = apframelistener.cpp; path = src/apframelistener.cpp; sourceTree = "<group>"; };
 		DE86D39F0EFED27100B72F7D /* graphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = graphics.h; path = src/graphics.h; sourceTree = "<group>"; };
 		DE86D3A00EFED27100B72F7D /* graphics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = graphics.cpp; path = src/graphics.cpp; sourceTree = "<group>"; };
 		DE86D3E70EFED79E00B72F7D /* apmech.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = apmech.h; path = src/apmech.h; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 		20286C2AFDCF999611CA2CEA /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				DE38A1C30F065CDE00B29D90 /* apframelistener.cpp */,
 				DEFB66BA0EFDC9F400E2CB86 /* gameengine.cpp */,
 				DEFB66BB0EFDC9F400E2CB86 /* gameengine.h */,
 				DEA81CAF0EFD9EF200E5A09B /* gameobject.h */,
@@ -218,6 +221,7 @@
 				DEFB66BC0EFDC9F400E2CB86 /* gameengine.cpp in Sources */,
 				DECAC3040EFE5D68001EEFCB /* gameobject.cpp in Sources */,
 				DE86D3A10EFED27100B72F7D /* graphics.cpp in Sources */,
+				DE38A1C40F065CDE00B29D90 /* apframelistener.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
