@@ -7,11 +7,11 @@ class GameWorld;
 
 class Mech: public GameObject {
     
-    private:
+ private:
     GameWorld *world;
     // Location *location;
 
-    public:
+ public:
 	
     Mech(int id);
 	virtual ~Mech();

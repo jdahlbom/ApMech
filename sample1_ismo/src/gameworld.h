@@ -6,7 +6,7 @@
 
 class GameWorld: public GameObject {
 
-    private:
+ private:
     // list of all objects in the game world
     std::list<GameObject *> world_objects;
 
@@ -15,7 +15,7 @@ class GameWorld: public GameObject {
 
     // reference to the actual 3D representation of the world
 
-    public:
+ public:
     GameWorld(int id);
     virtual ~GameWorld();
 

@@ -13,7 +13,7 @@ class GameObject {
     static void initMaps();
     static void deinitMaps();
 
-    private:
+ private:
 
     Ogre::SceneNode *node;
 
@@ -30,7 +30,7 @@ class GameObject {
     int y;
     int z;
 
-    public:
+ public:
 
     int id;
 
@@ -68,9 +68,9 @@ class GameObject {
 
 class GameObjectId {
 
-private:
+ private:
     int id;
-public:
+ public:
     GameObjectId(int id) : id(id) { }
     GameObject * get();
 };
