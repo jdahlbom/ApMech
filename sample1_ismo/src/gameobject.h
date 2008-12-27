@@ -32,7 +32,7 @@ class GameObject {
 
     public:
 
-       int id;
+    int id;
 
     // maps for changing mapping the game objects to ints and vice versa
     static std::map<GameObject *, int> *go_to_id;

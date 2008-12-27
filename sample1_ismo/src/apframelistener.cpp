@@ -11,11 +11,9 @@ ApFrameListener::ApFrameListener(RenderWindow *window, GameEngine *engine): engi
     OIS::ParamList pl;
     size_t windowHnd = 0;
     std::ostringstream windowHndStr;
-    window_->getCustomAttribute("test window", &windowHnd);
+    window_->getCustomAttribute("WINDOW", &windowHnd);
     windowHndStr << windowHnd;
-    std::cout << "Window handler: " << windowHndStr << "\n";
-    exit;
-    pl.insert(std::make_pair(std::string("test window"), windowHndStr.str()));
+    pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
 
     mInputManager_ = OIS::InputManager::createInputSystem( pl );
     mKeyboard_ = static_cast<OIS::Keyboard*>(mInputManager_->createInputObject( OIS::OISKeyboard, true ));

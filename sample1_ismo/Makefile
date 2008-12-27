@@ -31,3 +31,4 @@ application: $(OBJS)
 clean:
 	rm -R -f $(OBJDIR)
 	- rm $(BIN)
+	- rm Ogre.log CEGUI.log
