@@ -10,17 +10,17 @@ class GameEngine;
 
 class ApFrameListener : public FrameListener, public OIS::KeyListener
 {
-    private:
+ private:
 
     GameEngine *engine_;
     RenderWindow *window_;
 
-    protected:
+ protected:
 
     OIS::Keyboard *mKeyboard_;
     OIS::InputManager *mInputManager_;
 
-    public:
+ public:
 
     ApFrameListener(RenderWindow *window, GameEngine *engine);
 

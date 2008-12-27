@@ -12,7 +12,7 @@ class GameWorld;
 
 class Graphics {
 
-    private:
+ private:
 
     // for Ogre 3D
     Root *root_;
@@ -29,7 +29,7 @@ class Graphics {
     bool loadTerrain();
 
 
-    public:
+ public:
 
     Graphics();
     virtual ~Graphics();

@@ -7,7 +7,7 @@ class GameWorld;
 
 class GameEngine {
 
-    private:
+ private:
     // player
     GameObject *player;
     // world
@@ -21,7 +21,7 @@ class GameEngine {
     // get a game world from the network server
     bool connectToServer();
 
-    public:
+ public:
 
     GameEngine();
     virtual ~GameEngine();
