@@ -64,10 +64,18 @@ GameObject::~GameObject()
     GameObject::deinitMaps();
 }
 
-bool GameObject::isWorld()
-{
-    return false;
-}
+bool GameObject::isDirty() const { return dirty; }
+void GameObject::setDirty(bool state) { dirty = state; }
+bool GameObject::isVisible() const { return visible; }
+void GameObject::setVisible(bool state) { visible = state; }
+bool GameObject::isPlayer() const { return player; }
+void GameObject::setPlayer(bool state) { player = state; }
+
+bool GameObject::isWorld() { return false; }
+
+Ogre::SceneNode *GameObject::getSceneNode() const { return node; }
+void GameObject::setSceneNode(Ogre::SceneNode *node) { this->node = node; }
+
 
 GameObject * GameObjectId::get() {
 

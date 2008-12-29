@@ -1,9 +1,17 @@
 #include "apmech.h"
+#include "apeventhandler.h"
 
 #include <list>
 
-GameEngine::GameEngine(): keepRendering(true) {}
-GameEngine::~GameEngine() {}
+GameEngine::GameEngine(): keepRendering(true)
+{
+    this->eventHandler_ = new ApEventHandler(this);
+}
+GameEngine::~GameEngine()
+{
+    if(this->eventHandler_)
+        delete(this->eventHandler_);
+}
 
 bool GameEngine::connectToServer()
 {
@@ -95,31 +103,38 @@ bool GameEngine::processKbEvent(int key) {
     return true;
 }
 
-bool GameEngine::processNetworkEvent(GameObject *o) {
+bool GameEngine::processNetworkEvent(GameObject *gameObject) {
     /* TODO: put the object to the maps and lists */
     /* TODO: update references to the object */
 
-    if (o->isWorld()) {
+    if (gameObject->isWorld()) {
         std::cout << "Received a world!" << std::endl;
-        this->world = (GameWorld *) o;
+        this->world = (GameWorld *) gameObject;
     }
 
-    if (o->isPlayer()) {
+    if (gameObject->isPlayer()) {
         std::cout << "Received a player!" << std::endl;
-        this->player = o;
+        this->player = gameObject;
     }
 
-    graphics->updateGraphics(o);
+    graphics->updateGraphics(gameObject);
 
     return true;
 }
 
+bool GameEngine::quitEvent()
+{
+    this->keepRendering = false;
+    return false;
+}
 
 bool GameEngine::initialize(Graphics *graphics)
 {
     this->graphics = graphics;
     return this->connectToServer();
 }
+
+ApEventHandler *GameEngine::getEventHandler() const { return this->eventHandler_; }
 
 bool GameEngine::run()
 {

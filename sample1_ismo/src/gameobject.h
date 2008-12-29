@@ -47,15 +47,16 @@ class GameObject {
     // any class that inherits GameObject must be ready to serialize!
     virtual int serialize(uint8_t buffer[], int start, int buflength) = 0;
 
-    bool isDirty() { return dirty; }
-    void setDirty(bool state) { dirty = state; }
-    bool isVisible() { return visible; }
-    void setVisible(bool state) { visible = state; }
-    bool isPlayer() { return player; }
-    void setPlayer(bool state) { player = state; }
+    bool isDirty() const;
+    void setDirty(bool state);
+    bool isVisible() const;
+    void setVisible(bool state);
+    bool isPlayer() const;
+    void setPlayer(bool state);
+    bool isWorld() const;
 
-    Ogre::SceneNode *getGraphics() { return node; }
-    void setGraphics(Ogre::SceneNode *node) { this->node = node; }
+    Ogre::SceneNode *getSceneNode() const;
+    void setSceneNode(Ogre::SceneNode *node);
 
     void setLocation(int x, int y, int z) { this->x = x; this->y = y; this->z = z; }
     int getX() { return this->x; }

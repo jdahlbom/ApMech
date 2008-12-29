@@ -2,6 +2,8 @@
 #include "gameengine.h"
 #include "gameobject.h"
 #include "apframelistener.h"
+#include "apeventhandler.h"
+#include "apgui.h"
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 // This function will locate the path to our application on OS X,
@@ -70,20 +72,26 @@ bool Graphics::initialize(GameEngine *engine)
 
     root_->showConfigDialog();
 
-    root_->initialise(true, "test window");
+    root_->initialise(true, "Achtung Panzer! (test window)");
     window_ = root_->getAutoCreatedWindow();
 
     loadResources();
 
+    sceneMgr_= root_->createSceneManager(ST_EXTERIOR_CLOSE);
+
+    // get event handler for the engine
+    ApEventHandler *eventHandler = engine_->getEventHandler();
+    // add the GUI
+    ApGui *guiOverlay = new ApGui(window_, sceneMgr_, eventHandler);
     // add the event listener
-    ApFrameListener *frameListener = new ApFrameListener(window_, engine_);
+    // guiSystem -parametri on ruma häcki koska JD ei keksinyt parempaa tapaa äkkiseltään.
+    ApFrameListener *frameListener = new ApFrameListener(window_, engine_, guiOverlay->getSystemPtr());
     root_->addFrameListener(frameListener);
     return true;
 }
 
 bool Graphics::loadTerrain()
 {
-    sceneMgr_= root_->createSceneManager(ST_EXTERIOR_CLOSE);
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     sceneMgr_->setWorldGeometry(macBundlePath() + "/Contents/Resources/Media/terrain.cfg");
 #else
@@ -154,7 +162,7 @@ bool Graphics::updateGraphics(GameObject *gameObject)
     if (!gameObject->isVisible())
         return false;
 
-    node = gameObject->getGraphics();
+    node = gameObject->getSceneNode();
 
     if (node == NULL) {
 
@@ -165,7 +173,7 @@ bool Graphics::updateGraphics(GameObject *gameObject)
         node = corner->createChildSceneNode(gameObject->id_s);
         node->attachObject(robotEntity);
         // entities.push_back(robotEntity);
-        gameObject->setGraphics(node);
+        gameObject->setSceneNode(node);
     }
 
 
@@ -184,20 +192,6 @@ bool Graphics::load()
     std::vector<Entity*> entities;
     std::vector<Entity*>::iterator entityIterator;
 
-
-    // mech.setLocation(0, 0, 0);
-#if 0
-
-    SceneNode *terrainCenterNode = sceneMgr_->getRootSceneNode()->createChildSceneNode("terrainCenter", Vector3(750, 0, 750));
-    Entity *robotEntity = sceneMgr_->createEntity("Robot", "robot.mesh");
-    SceneNode *robotNode = terrainCenterNode->createChildSceneNode("RobotNode");
-    robotNode->attachObject( robotEntity );
-    entities.push_back(robotEntity);
-
-    for(entityIterator = entities.begin(); entityIterator != entities.end(); ++entityIterator) {
-        (*entityIterator)->setCastShadows(true);
-    }
-#endif
 
     Light *light;
     light = sceneMgr_->createLight("Light3");

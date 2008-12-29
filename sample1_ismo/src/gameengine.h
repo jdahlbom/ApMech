@@ -4,8 +4,11 @@
 class Graphics;
 class GameObject;
 class GameWorld;
+class ApEventHandler;
 
 class GameEngine {
+
+ friend class ApEventHandler;
 
  private:
     // player
@@ -15,6 +18,7 @@ class GameEngine {
     // graphics
     Graphics *graphics;
     // network connection to server
+    ApEventHandler *eventHandler_;
 
     bool keepRendering;
 
@@ -32,8 +36,12 @@ class GameEngine {
     bool syncWorld();
 
     bool processKbEvent(int event);
-    bool processNetworkEvent(GameObject *o);
+
+    bool quitEvent();
+
+    bool processNetworkEvent(GameObject *gameObject);
     bool run();
 
+    ApEventHandler *getEventHandler() const;
 };
 #endif
