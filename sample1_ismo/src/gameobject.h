@@ -4,6 +4,8 @@
 #include <map>
 #include <Ogre.h>
 
+using namespace Ogre;
+
 class GameObject {
 
     /* Here we add data about the properties that are common to all
@@ -13,25 +15,7 @@ class GameObject {
     static void initMaps();
     static void deinitMaps();
 
- private:
-
-    Ogre::SceneNode *node;
-
-    // is the object visible in the game world
-    bool visible;
-
-    // does the object need syncing with the network server?
-    bool dirty;
-
-    // is the player currently controlling this object?
-    bool player;
-
-    int x;
-    int y;
-    int z;
-
  public:
-
     int id;
 
     // maps for changing mapping the game objects to ints and vice versa
@@ -53,18 +37,31 @@ class GameObject {
     void setVisible(bool state);
     bool isPlayer() const;
     void setPlayer(bool state);
-    bool isWorld() const;
 
     Ogre::SceneNode *getSceneNode() const;
     void setSceneNode(Ogre::SceneNode *node);
 
-    void setLocation(int x, int y, int z) { this->x = x; this->y = y; this->z = z; }
-    int getX() { return this->x; }
-    int getY() { return this->y; }
-    int getZ() { return this->z; }
+    void setLocation(Vector3 location);
+    Vector3 getLocation() const;
 
     // only the world overrides this
-    virtual bool isWorld();
+    virtual bool isWorld() const;
+
+ protected:
+    Ogre::SceneNode *node;
+
+    // is the object visible in the game world
+    bool visible;
+
+    // does the object need syncing with the network server?
+    bool dirty;
+
+    // is the player currently controlling this object?
+    bool player;
+
+    Ogre::Vector3 location_;
+    Ogre::Vector3 velocity_;
+
 };
 
 class GameObjectId {

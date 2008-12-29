@@ -79,13 +79,11 @@ bool Graphics::initialize(GameEngine *engine)
 
     sceneMgr_= root_->createSceneManager(ST_EXTERIOR_CLOSE);
 
-    // get event handler for the engine
-    ApEventHandler *eventHandler = engine_->getEventHandler();
     // add the GUI
-    ApGui *guiOverlay = new ApGui(window_, sceneMgr_, eventHandler);
+    guiOverlay_ = new ApGui(window_, sceneMgr_, engine_->getEventHandler());
     // add the event listener
-    // guiSystem -parametri on ruma häcki koska JD ei keksinyt parempaa tapaa äkkiseltään.
-    ApFrameListener *frameListener = new ApFrameListener(window_, engine_, guiOverlay->getSystemPtr());
+    // Should pass the eventhandler to framelistener as well..?
+    ApFrameListener *frameListener = new ApFrameListener(window_, engine_);
     root_->addFrameListener(frameListener);
     return true;
 }
@@ -157,6 +155,7 @@ bool Graphics::updateGraphics(GameObject *gameObject)
     SceneNode *node;
 
     std::cout << "updateGraphics" << std::endl;
+    std::cout << "Object location: " << gameObject->getLocation() << std::endl;
 
     /* get the graphical representation from the object */
     if (!gameObject->isVisible())
@@ -167,7 +166,7 @@ bool Graphics::updateGraphics(GameObject *gameObject)
     if (node == NULL) {
 
         // draw this object
-        SceneNode *corner = sceneMgr_->getRootSceneNode()->createChildSceneNode("terrainCorner", Vector3(0, 0, 0));
+        SceneNode *corner = sceneMgr_->getRootSceneNode()->createChildSceneNode("terrainCorner", Vector3::ZERO);
         Entity *robotEntity = sceneMgr_->createEntity(gameObject->id_s, "robot.mesh");
 
         node = corner->createChildSceneNode(gameObject->id_s);
@@ -176,8 +175,7 @@ bool Graphics::updateGraphics(GameObject *gameObject)
         gameObject->setSceneNode(node);
     }
 
-
-    node->setPosition(Vector3(gameObject->getX(), 0, gameObject->getY()));
+    node->setPosition(gameObject->getLocation());
 
     return true;
 }
@@ -189,10 +187,6 @@ bool Graphics::load()
     sceneMgr_->setAmbientLight( ColourValue( 1.0, 1.0, 0.9 ) );
     sceneMgr_->setShadowTechnique(SHADOWTYPE_STENCIL_ADDITIVE);
 
-    std::vector<Entity*> entities;
-    std::vector<Entity*>::iterator entityIterator;
-
-
     Light *light;
     light = sceneMgr_->createLight("Light3");
     light->setType(Light::LT_DIRECTIONAL);
@@ -201,11 +195,9 @@ bool Graphics::load()
     light->setDirection(Vector3(0, -1, 1) );
 
     Camera *mCamera = sceneMgr_->createCamera("PlayerCam");
-    Vector3 robotLocation = Vector3((int)1500/2, 0,(int)1500/2);
-    //mCamera->setPosition(robotLocation + Vector3(0,100,0));
-    mCamera->setPosition(Vector3(850, 300, 750));
-    mCamera->lookAt(Vector3(750, 20, 750));
-    //mCamera->lookAt(robotLocation);
+    Vector3 camGroundOrigin = Vector3(750, 0, 750);
+    mCamera->setPosition(camGroundOrigin + Vector3(0, 200, 0));
+    mCamera->lookAt(camGroundOrigin + Vector3(1, 0, 0));
     mCamera->setNearClipDistance(5);
 
     Viewport* vp = window_->addViewport(mCamera);

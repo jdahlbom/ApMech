@@ -43,8 +43,9 @@ void GameObject::deinitMaps()
 }
 
 
-GameObject::GameObject(int id): visible(false), x(0), y(0), z(0), id(id), node(NULL) {
-
+GameObject::GameObject(int id): visible(false), id(id), node(NULL) {
+    //location_ = Vector3(Real(750.0), Real(0.0), Real(750.0));
+    location_ = Vector3::ZERO;
     GameObject::initMaps();
     std::stringstream stream;
 
@@ -71,10 +72,13 @@ void GameObject::setVisible(bool state) { visible = state; }
 bool GameObject::isPlayer() const { return player; }
 void GameObject::setPlayer(bool state) { player = state; }
 
-bool GameObject::isWorld() { return false; }
+bool GameObject::isWorld() const { return false; }
 
 Ogre::SceneNode *GameObject::getSceneNode() const { return node; }
 void GameObject::setSceneNode(Ogre::SceneNode *node) { this->node = node; }
+
+void GameObject::setLocation(Vector3 location) { this->location_ = location; }
+Vector3 GameObject::getLocation() const { return this->location_; }
 
 
 GameObject * GameObjectId::get() {

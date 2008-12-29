@@ -1,6 +1,6 @@
 #include "apeventhandler.h"
 
-#include <ostream.h>
+#include <iostream>
 
 #include <CEGUI/CEGUI.h>
 
@@ -10,7 +10,7 @@ ApEventHandler::~ApEventHandler() {}
 
 bool ApEventHandler::quit(const CEGUI::EventArgs &arg)
 {
-    ostream::cout << "ApEventHandler::quit\n";
+    std::cout << "ApEventHandler::quit"<< std::endl;
     engine_->keepRendering = false;
     return true;
 }

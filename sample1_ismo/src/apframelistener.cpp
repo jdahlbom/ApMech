@@ -8,11 +8,10 @@
 #include "gameengine.h"
 
 ApFrameListener::ApFrameListener(RenderWindow *window,
-                                GameEngine *engine,
-                                CEGUI::System *guiSystem) :
-                                    engine_(engine), window_(window),
-                                    guiSystem_(guiSystem)
+                                GameEngine *engine) :
+                                    engine_(engine), window_(window)
 {
+    guiSystem_ = CEGUI::System::getSingletonPtr();
     this->_initializeOIS(window);
 }
 
@@ -30,17 +29,21 @@ void ApFrameListener::_initializeOIS(RenderWindow *window)
     pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
 
     mInputManager_ = OIS::InputManager::createInputSystem( pl );
+    mMouse_ = static_cast<OIS::Mouse*>(mInputManager_->createInputObject(OIS::OISMouse, true));
     mKeyboard_ = static_cast<OIS::Keyboard*>(mInputManager_->createInputObject( OIS::OISKeyboard, true ));
     // mInputManager->addKeyListener(this, "game");
+    mMouse_->setEventCallback(this);
     mKeyboard_->setEventCallback(this);
 }
 
 bool ApFrameListener::keyPressed(const OIS::KeyEvent &arg)
 {
-    std::cout << "Key pressed!\n";
+    std::cout << "Key pressed: " << (char)arg.text << std::endl;
 
-    guiSystem_->injectKeyDown(arg.key);
-    guiSystem_->injectChar(arg.text);
+    if (guiSystem_->injectKeyDown(arg.key))
+        std::cout << "injectKeyDown processed by CEGUI" << std::endl;
+    if (guiSystem_->injectChar(arg.text))
+        std::cout << "injectChar processed by CEGUI" << std::endl;
 
     return engine_->processKbEvent(arg.key);
 }
@@ -57,7 +60,7 @@ bool ApFrameListener::keyReleased(const OIS::KeyEvent &arg)
 
 bool ApFrameListener::mouseMoved(const OIS::MouseEvent &arg)
 {
-    CEGUI::System::getSingleton().injectMouseMove(arg.state.X.rel, arg.state.Y.rel);
+    guiSystem_->injectMouseMove(arg.state.X.rel, arg.state.Y.rel);
     return true;
 }
 
@@ -65,7 +68,8 @@ bool ApFrameListener::mouseMoved(const OIS::MouseEvent &arg)
 bool ApFrameListener::mousePressed(const OIS::MouseEvent &arg,
                                     OIS::MouseButtonID id)
 {
-    CEGUI::System::getSingleton().injectMouseButtonDown(_convertButton(id));
+    if( guiSystem_->injectMouseButtonDown(_convertButton(id)) )
+        std::cout << "injectMouseButtonDown processed by CEGUI!";
     return true;
 }
 
@@ -73,7 +77,8 @@ bool ApFrameListener::mousePressed(const OIS::MouseEvent &arg,
 bool ApFrameListener::mouseReleased(const OIS::MouseEvent &arg,
                                     OIS::MouseButtonID id)
 {
-    CEGUI::System::getSingleton().injectMouseButtonUp(_convertButton(id));
+    if( guiSystem_->injectMouseButtonUp(_convertButton(id)) )
+        std::cout << "injectMouseButtonmUp processed by CEGUI!";
     return true;
 }
 
@@ -81,6 +86,7 @@ bool ApFrameListener::mouseReleased(const OIS::MouseEvent &arg,
 bool ApFrameListener::frameStarted(const FrameEvent &evt)
 {
     // std::cout << "frame!\n";
+    mMouse_->capture();
     mKeyboard_->capture();
     return true;
 }

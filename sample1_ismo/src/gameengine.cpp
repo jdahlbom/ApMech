@@ -22,7 +22,7 @@ bool GameEngine::connectToServer()
     GameWorld *gw = new GameWorld(1);
     GameObject *mech = new Mech(2);
 
-    mech->setLocation(750,750,0);
+    mech->setLocation(Vector3(750, 0, 750));
     mech->setPlayer(true);
     mech->setVisible(true);
 
@@ -57,8 +57,6 @@ bool GameEngine::syncWorld()
 
 bool GameEngine::processKbEvent(int key) {
 
-    int x, y, z;
-
     // give 'quitting' priority
     if (key == OIS::KC_ESCAPE) {
         this->keepRendering = false;
@@ -70,30 +68,31 @@ bool GameEngine::processKbEvent(int key) {
         return true;
     }
 
-    x = player->getX();
-    y = player->getY();
-    z = player->getZ();
+    Vector3 playerLocation = player->getLocation();
+    float x=0.0, z=0.0;
 
     switch (key) {
         case OIS::KC_UP:
-            std::cout << "up key\n";
-            player->setLocation(x, y+1, z);
+            std::cout << "up key" << std::endl;
+            x += 1.0;
             break;
         case OIS::KC_DOWN:
-            std::cout << "down key\n";
-            player->setLocation(x, y-1, z);
+            std::cout << "down key" << std::endl;
+            x += -1.0;
             break;
         case OIS::KC_LEFT:
-            std::cout << "left key\n";
-            player->setLocation(x-1, y, z);
+            std::cout << "left key" << std::endl;
+            z += 1.0;
             break;
         case OIS::KC_RIGHT:
-            std::cout << "right key\n";
-            player->setLocation(x+1, y, z);
+            std::cout << "right key" << std::endl;
+            z += -1.0;
             break;
         default:
-            std::cout << "unknown key\n";
+            //std::cout << "unknown key\n";
+            break;
     }
+    player->setLocation(playerLocation + Vector3(Real(x),Real(0.0), Real(z)));
 
     player->setDirty(true);
 

@@ -14,7 +14,7 @@ class ApFrameListener : public FrameListener, public OIS::KeyListener, public OI
 {
  public:
 
-    ApFrameListener(RenderWindow *window, GameEngine *engine, CEGUI::System *guiSystem);
+    ApFrameListener(RenderWindow *window, GameEngine *engine);
     virtual ~ApFrameListener();
 
     bool keyPressed(const OIS::KeyEvent &arg);
@@ -31,6 +31,7 @@ class ApFrameListener : public FrameListener, public OIS::KeyListener, public OI
  protected:
 
     OIS::Keyboard *mKeyboard_;
+    OIS::Mouse *mMouse_;
     OIS::InputManager *mInputManager_;
 
  private:
