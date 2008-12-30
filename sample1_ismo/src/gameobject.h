@@ -4,6 +4,8 @@
 #include <map>
 #include <Ogre.h>
 
+using namespace Ogre;
+
 class GameObject {
 
     /* Here we add data about the properties that are common to all
@@ -13,25 +15,7 @@ class GameObject {
     static void initMaps();
     static void deinitMaps();
 
- private:
-
-    Ogre::SceneNode *node;
-
-    // is the object visible in the game world
-    bool visible;
-
-    // does the object need syncing with the network server?
-    bool dirty;
-
-    // is the player currently controlling this object?
-    bool player;
-
-    int x;
-    int y;
-    int z;
-
  public:
-
     int id;
 
     // maps for changing mapping the game objects to ints and vice versa
@@ -47,23 +31,37 @@ class GameObject {
     // any class that inherits GameObject must be ready to serialize!
     virtual int serialize(uint8_t buffer[], int start, int buflength) = 0;
 
-    bool isDirty() { return dirty; }
-    void setDirty(bool state) { dirty = state; }
-    bool isVisible() { return visible; }
-    void setVisible(bool state) { visible = state; }
-    bool isPlayer() { return player; }
-    void setPlayer(bool state) { player = state; }
+    bool isDirty() const;
+    void setDirty(bool state);
+    bool isVisible() const;
+    void setVisible(bool state);
+    bool isPlayer() const;
+    void setPlayer(bool state);
 
-    Ogre::SceneNode *getGraphics() { return node; }
-    void setGraphics(Ogre::SceneNode *node) { this->node = node; }
+    Ogre::SceneNode *getSceneNode() const;
+    void setSceneNode(Ogre::SceneNode *node);
 
-    void setLocation(int x, int y, int z) { this->x = x; this->y = y; this->z = z; }
-    int getX() { return this->x; }
-    int getY() { return this->y; }
-    int getZ() { return this->z; }
+    void setLocation(Vector3 location);
+    Vector3 getLocation() const;
 
     // only the world overrides this
-    virtual bool isWorld();
+    virtual bool isWorld() const;
+
+ protected:
+    Ogre::SceneNode *node;
+
+    // is the object visible in the game world
+    bool visible;
+
+    // does the object need syncing with the network server?
+    bool dirty;
+
+    // is the player currently controlling this object?
+    bool player;
+
+    Ogre::Vector3 location_;
+    Ogre::Vector3 velocity_;
+
 };
 
 class GameObjectId {

@@ -2,6 +2,8 @@
 #include "gameengine.h"
 #include "gameobject.h"
 #include "apframelistener.h"
+#include "apeventhandler.h"
+#include "apgui.h"
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 // This function will locate the path to our application on OS X,
@@ -70,12 +72,17 @@ bool Graphics::initialize(GameEngine *engine)
 
     root_->showConfigDialog();
 
-    root_->initialise(true, "test window");
+    root_->initialise(true, "Achtung Panzer! (test window)");
     window_ = root_->getAutoCreatedWindow();
 
     loadResources();
 
+    sceneMgr_= root_->createSceneManager(ST_EXTERIOR_CLOSE);
+
+    // add the GUI
+    guiOverlay_ = new ApGui(window_, sceneMgr_, engine_->getEventHandler());
     // add the event listener
+    // Should pass the eventhandler to framelistener as well..?
     ApFrameListener *frameListener = new ApFrameListener(window_, engine_);
     root_->addFrameListener(frameListener);
     return true;
@@ -83,7 +90,6 @@ bool Graphics::initialize(GameEngine *engine)
 
 bool Graphics::loadTerrain()
 {
-    sceneMgr_= root_->createSceneManager(ST_EXTERIOR_CLOSE);
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     sceneMgr_->setWorldGeometry(macBundlePath() + "/Contents/Resources/Media/terrain.cfg");
 #else
@@ -149,27 +155,27 @@ bool Graphics::updateGraphics(GameObject *gameObject)
     SceneNode *node;
 
     std::cout << "updateGraphics" << std::endl;
+    std::cout << "Object location: " << gameObject->getLocation() << std::endl;
 
     /* get the graphical representation from the object */
     if (!gameObject->isVisible())
         return false;
 
-    node = gameObject->getGraphics();
+    node = gameObject->getSceneNode();
 
     if (node == NULL) {
 
         // draw this object
-        SceneNode *corner = sceneMgr_->getRootSceneNode()->createChildSceneNode("terrainCorner", Vector3(0, 0, 0));
+        SceneNode *corner = sceneMgr_->getRootSceneNode()->createChildSceneNode("terrainCorner", Vector3::ZERO);
         Entity *robotEntity = sceneMgr_->createEntity(gameObject->id_s, "robot.mesh");
 
         node = corner->createChildSceneNode(gameObject->id_s);
         node->attachObject(robotEntity);
         // entities.push_back(robotEntity);
-        gameObject->setGraphics(node);
+        gameObject->setSceneNode(node);
     }
 
-
-    node->setPosition(Vector3(gameObject->getX(), 0, gameObject->getY()));
+    node->setPosition(gameObject->getLocation());
 
     return true;
 }
@@ -181,24 +187,6 @@ bool Graphics::load()
     sceneMgr_->setAmbientLight( ColourValue( 1.0, 1.0, 0.9 ) );
     sceneMgr_->setShadowTechnique(SHADOWTYPE_STENCIL_ADDITIVE);
 
-    std::vector<Entity*> entities;
-    std::vector<Entity*>::iterator entityIterator;
-
-
-    // mech.setLocation(0, 0, 0);
-#if 0
-
-    SceneNode *terrainCenterNode = sceneMgr_->getRootSceneNode()->createChildSceneNode("terrainCenter", Vector3(750, 0, 750));
-    Entity *robotEntity = sceneMgr_->createEntity("Robot", "robot.mesh");
-    SceneNode *robotNode = terrainCenterNode->createChildSceneNode("RobotNode");
-    robotNode->attachObject( robotEntity );
-    entities.push_back(robotEntity);
-
-    for(entityIterator = entities.begin(); entityIterator != entities.end(); ++entityIterator) {
-        (*entityIterator)->setCastShadows(true);
-    }
-#endif
-
     Light *light;
     light = sceneMgr_->createLight("Light3");
     light->setType(Light::LT_DIRECTIONAL);
@@ -207,11 +195,9 @@ bool Graphics::load()
     light->setDirection(Vector3(0, -1, 1) );
 
     Camera *mCamera = sceneMgr_->createCamera("PlayerCam");
-    Vector3 robotLocation = Vector3((int)1500/2, 0,(int)1500/2);
-    //mCamera->setPosition(robotLocation + Vector3(0,100,0));
-    mCamera->setPosition(Vector3(850, 300, 750));
-    mCamera->lookAt(Vector3(750, 20, 750));
-    //mCamera->lookAt(robotLocation);
+    Vector3 camGroundOrigin = Vector3(750, 0, 750);
+    mCamera->setPosition(camGroundOrigin + Vector3(0, 200, 0));
+    mCamera->lookAt(camGroundOrigin + Vector3(1, 0, 0));
     mCamera->setNearClipDistance(5);
 
     Viewport* vp = window_->addViewport(mCamera);

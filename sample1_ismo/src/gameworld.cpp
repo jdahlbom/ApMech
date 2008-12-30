@@ -38,7 +38,7 @@ int GameWorld::serialize(uint8_t buffer[], int start, int buflength) {
     return 0;
 }
 
-bool GameWorld::isWorld()
+bool GameWorld::isWorld() const
 {
     std::cout << "Is a game world!" << std::endl;
     return true;

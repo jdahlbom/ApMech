@@ -12,7 +12,7 @@ OBJDIR = obj
 BIN = Ismon
 
 ## Files to include in yourApp project
-OBJS = gameobject.o gameworld.o mech.o gameengine.o apframelistener.o graphics.o apmech.o
+OBJS = gameobject.o gameworld.o mech.o gameengine.o apgui.o apframelistener.o apeventhandler.o graphics.o apmech.o 
 
 ## Compilation and linking occurs here
 all: tempDirectories application

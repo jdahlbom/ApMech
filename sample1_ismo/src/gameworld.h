@@ -31,7 +31,7 @@ class GameWorld: public GameObject {
 
     int serialize(uint8_t buffer[], int start, int buflength);
 
-    bool isWorld();
+    bool isWorld() const;
 
 };
 #endif

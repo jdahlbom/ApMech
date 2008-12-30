@@ -9,6 +9,7 @@ using namespace Ogre;
 class GameEngine;
 class GameObject;
 class GameWorld;
+class ApGui;
 
 class Graphics {
 
@@ -23,6 +24,9 @@ class Graphics {
     // for game logic
     GameWorld *world_;
     GameEngine *engine_;
+
+    // for GUI
+    ApGui *guiOverlay_;
 
     void setupResources(void);
     bool loadResources(void);
