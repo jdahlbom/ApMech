@@ -1,5 +1,7 @@
 #include "netdata.h"
 
+// TODO: Stop sending the users map to all users, perhaps! OR, think over if that should be done or not.
+
 map<enet_uint8, NetObject *>& netobjectprototypes()
 {
     static map<enet_uint8, NetObject *> * objectprotomap = new map<enet_uint8, NetObject *>;

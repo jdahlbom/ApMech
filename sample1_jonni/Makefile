@@ -5,7 +5,7 @@ CXXFLAGS = $(shell sdl-config --cflags) -g
 LDFLAGS = $(shell sdl-config --libs) -L/usr/local/lib -lenet
 SRCDIR = src
 OBJDIR = obj
-OBJS = netdata.o main.o functions.o netuser.o
+OBJS = netdata.o main.o functions.o netuser.o netgameobject.o
 
 ## Compilation and linking occurs here
 all: netdata

@@ -13,7 +13,7 @@ class NetGameObject : public NetObject {
 
     int id;
     int color;
-    float x, y, z, v, xvel, yvel, zvel, heading;
+    float x, y, z, xvel, yvel, zvel, heading;
 
     NetGameObject(int _id, int _uid = -1);
 

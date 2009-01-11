@@ -21,16 +21,18 @@ using namespace std;
 
 int main ( int argc, char** argv )
 {
+
     SDL_Surface *screen;
     SDL_Rect dstrect;
-
     NetData *netdata;
+
     srand(time(NULL));
 
     if ((argc == 2) && (strcmp(argv[1], "-server") == 0)) { // ********* SERVER CODE
         map<int,NetObject *>::iterator p;
         NetUser *ptrUser;
-        long int dt, oldticks, newticks;
+        long int oldticks, newticks;
+        float dt;
 
         cout << "Created a server."<<endl;
         netdata = new NetData(NetData::SERVER);
@@ -41,19 +43,24 @@ int main ( int argc, char** argv )
 
         while (1) {             // Server main loop
             netdata->service();
-            oldticks = newticks; newticks = getTicks(); dt = (newticks - oldticks) * 0.001;
+            oldticks = newticks; newticks = getTicks(); dt = float(newticks - oldticks) * 0.001;
 
             p = netdata->netobjects.begin();
             while (p != netdata->netobjects.end()) {
-//                cout << "object from user "<<p->second->uid <<", type "<< endl;
                 ptrUser = &netdata->users[p->second->uid];
 
                 if (typeid(*p->second) == typeid(NetGameObject)) {
                     NetGameObject *ptrObj = (NetGameObject *)(p->second);
-                    ptrObj->v += ptrUser->a * dt;
                     ptrObj->heading += ptrUser->turning * dt;
-                    ptrObj->x += sin(ptrObj->heading) * ptrObj->v * dt;
-                    ptrObj->y += cos(ptrObj->heading) * ptrObj->v * dt;
+                    ptrObj->xvel += sin(ptrObj->heading) * ptrUser->a * dt;
+                    ptrObj->yvel += cos(ptrObj->heading) * ptrUser->a * dt;
+                    ptrObj->x += ptrObj->xvel * dt;
+                    ptrObj->y += ptrObj->yvel * dt;
+                    ptrObj->color = ptrUser->color;
+                    if (ptrObj->x > 390.0) ptrObj->x -= 780.0;          // bounds checking
+                    if (ptrObj->x < -390.0) ptrObj->x += 780.0;
+                    if (ptrObj->y > 290.0) ptrObj->y -= 580.0;
+                    if (ptrObj->y < -290.0) ptrObj->y += 580.0;
                 }
 
                 p++;
@@ -64,10 +71,10 @@ int main ( int argc, char** argv )
 
 
     } else {                  // *************************************** CLIENT CODE
+        map<int,NetUser>::iterator p;
+        map<int,NetObject *>::iterator po;
         string ip;  // where to connect
         if (argc == 2) ip = argv[1]; else ip = "127.0.0.1";
-        map<int,NetUser>::iterator p = netdata->users.begin();
-        map<int,NetObject *>::iterator po = netdata->netobjects.begin();
 
         netdata = new NetData(NetData::CLIENT);
         netdata->connect(ip, 5074);
@@ -88,7 +95,6 @@ int main ( int argc, char** argv )
             printf("Unable to set 800x600 video: %s\n", SDL_GetError());
             return 1;
         }
-        SDL_EnableKeyRepeat(10,10);
 
         dstrect.x = (screen->w)/2; dstrect.y = (screen->h)/2;
         dstrect.w = 10; dstrect.h = 10;
@@ -118,13 +124,13 @@ int main ( int argc, char** argv )
                         netdata->me.changed = true;
                         break;
                      case SDLK_w:
-                        netdata->me.a = 1; netdata->me.changed = true;
+                        netdata->me.a = 300; netdata->me.changed = true;
                         break;
                      case SDLK_a:
-                        netdata->me.turning -= .1; netdata->me.changed = true;
+                        netdata->me.turning -= 5.5; netdata->me.changed = true;
                         break;
                      case SDLK_d:
-                        netdata->me.turning += .1; netdata->me.changed = true;
+                        netdata->me.turning += 5.5; netdata->me.changed = true;
                         break;
                      default:
                         break;
@@ -138,10 +144,10 @@ int main ( int argc, char** argv )
                         netdata->me.a = 0; netdata->me.changed = true;
                         break;
                      case SDLK_a:
-                        netdata->me.turning += .1; netdata->me.changed = true;
+                        netdata->me.turning += 5.5; netdata->me.changed = true;
                         break;
                      case SDLK_d:
-                        netdata->me.turning -= .1; netdata->me.changed = true;
+                        netdata->me.turning -= 5.5; netdata->me.changed = true;
                         break;
                      default:
                         break;
@@ -151,17 +157,22 @@ int main ( int argc, char** argv )
 
             SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 0, 0, 0)); // clear screen
 
-            p = netdata->users.begin();
-            while (p != netdata->users.end()) {
-                dstrect.x = (screen->w)/2 + p->second.x;
-                dstrect.y = (screen->h)/2 + p->second.y;
-                SDL_FillRect(screen, &dstrect, p->second.color);
-                p++;
-            }
-
             po = netdata->netobjects.begin();
             while (po != netdata->netobjects.end()) {
-                dstrect.x = (screen->w)/2 + (NetGameObject &)(po->second)->x;
+                if (typeid(*po->second) == typeid(NetGameObject))
+                {
+                    NetGameObject *ptrObj = (NetGameObject *)(po->second);
+                    dstrect.w = dstrect.h = 10;
+                    dstrect.x = (screen->w)/2 + ptrObj->x - 5;
+                    dstrect.y = (screen->h)/2 - ptrObj->y + 5;
+                    SDL_FillRect(screen, &dstrect, ptrObj->color);
+                    dstrect.w = dstrect.h = 6;
+                    dstrect.x += sin(ptrObj->heading) * 8. + 3;
+                    dstrect.y -= cos(ptrObj->heading) * 8. - 3;
+                    SDL_FillRect(screen, &dstrect, ptrObj->color);
+
+                    cout << "("<<ptrObj->x<<","<<ptrObj->y<<"), color "<<ptrObj->color<<", heading "<<ptrObj->heading<<endl;
+                }
                 po++;
             }
 

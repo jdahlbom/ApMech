@@ -13,7 +13,7 @@
 NetGameObject::NetGameObject(int _id, int _uid)
 {
     id = _id;   uid = _uid;
-    x = y = z = v = xvel = yvel = zvel = heading = 0.0;
+    x = y = z = xvel = yvel = zvel = heading = 0.0;
     color = 0x00FFFFFF;
     changed = false;
 }
@@ -28,7 +28,6 @@ int NetGameObject::serialize(enet_uint8 buffer[], int start, int buflength)
     *(float *)(buffer+start+length) = x;                    length += 4;
     *(float *)(buffer+start+length) = y;                    length += 4;
     *(float *)(buffer+start+length) = z;                    length += 4;
-    *(float *)(buffer+start+length) = v;                    length += 4;
     *(float *)(buffer+start+length) = xvel;                 length += 4;
     *(float *)(buffer+start+length) = yvel;                 length += 4;
     *(float *)(buffer+start+length) = zvel;                 length += 4;
@@ -49,7 +48,6 @@ int NetGameObject::unserialize(enet_uint8 buffer[], int start)
         x = *(float *)(buffer+start+length);                  length += 4;
         y = *(float *)(buffer+start+length);                  length += 4;
         z = *(float *)(buffer+start+length);                  length += 4;
-        v = *(float *)(buffer+start+length);                  length += 4;
         xvel = *(float *)(buffer+start+length);               length += 4;
         yvel = *(float *)(buffer+start+length);               length += 4;
         zvel = *(float *)(buffer+start+length);               length += 4;
