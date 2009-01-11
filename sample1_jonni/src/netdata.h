@@ -1,11 +1,21 @@
+#ifndef __netdata_h__
+#define __netdata_h__
+
 #include <enet/enet.h>
 #include <iostream>
 #include <string>
 #include <map>
+
 #include "netuser.h"
+#include "netobject.h"
 #include "functions.h"
 
+#include "netgameobject.h"  // Temporary solution. Optimally, netdata core sources shouldn't
+                            // have to know about served objects.
+
 using namespace std;
+
+map<enet_uint8, NetObject *>& netobjectprototypes();
 
 class NetData {
  public:
@@ -22,7 +32,10 @@ class NetData {
     static const int SERVERFULL = -3;
 
     static const enet_uint8 PACKET_NETUSER = 40;
+    static const enet_uint8 PACKET_NETOBJECT = 41;
     static const enet_uint8 PACKET_DISCONNECT = 9;
+
+    static const enet_uint8 OBJECT_TYPE_NETGAMEOBJECT = 50;
 
  private:
     enum status_type { enet_error, offline, connected, server };
@@ -31,8 +44,13 @@ class NetData {
     ENetHost *enethost;     // this is my own host struct
     ENetPeer *enetserver;   // this is my server's peer struct
 
+    int serviceServer();
+    int serviceClient();
+
  public:
     map <int, NetUser> users;
+    map <int, NetObject *> netobjects;
+
     NetUser me;
 
     NetData(int type = NetData::CLIENT, int _port = DEFAULTPORT);
@@ -43,3 +61,6 @@ class NetData {
     int service();
 
 };
+
+
+#endif

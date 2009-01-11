@@ -10,9 +10,12 @@
 #endif
 
 #include <iostream>
+#include <cstdlib>  // for random
+#include <cmath>    // for sin,cos in the server
+
 #include "netdata.h"
-#include <cstdlib> // for random
-#include <cstdio> // getchar
+#include "netgameobject.h"
+#include "functions.h"
 
 using namespace std;
 
@@ -24,23 +27,50 @@ int main ( int argc, char** argv )
     NetData *netdata;
     srand(time(NULL));
 
-    if (argc == 2) {
+    if ((argc == 2) && (strcmp(argv[1], "-server") == 0)) { // ********* SERVER CODE
+        map<int,NetObject *>::iterator p;
+        NetUser *ptrUser;
+        long int dt, oldticks, newticks;
+
         cout << "Created a server."<<endl;
         netdata = new NetData(NetData::SERVER);
 
+        cout << "Serving "<< netobjectprototypes().size()<<" objects."<<endl;
+
+        newticks = getTicks();
+
         while (1) {             // Server main loop
             netdata->service();
-            SDL_Delay(5);
+            oldticks = newticks; newticks = getTicks(); dt = (newticks - oldticks) * 0.001;
 
+            p = netdata->netobjects.begin();
+            while (p != netdata->netobjects.end()) {
+//                cout << "object from user "<<p->second->uid <<", type "<< endl;
+                ptrUser = &netdata->users[p->second->uid];
+
+                if (typeid(*p->second) == typeid(NetGameObject)) {
+                    NetGameObject *ptrObj = (NetGameObject *)(p->second);
+                    ptrObj->v += ptrUser->a * dt;
+                    ptrObj->heading += ptrUser->turning * dt;
+                    ptrObj->x += sin(ptrObj->heading) * ptrObj->v * dt;
+                    ptrObj->y += cos(ptrObj->heading) * ptrObj->v * dt;
+                }
+
+                p++;
+            }
+
+            SDL_Delay(20);
         }
 
 
-    } else {                  // ************************ Client code
-
+    } else {                  // *************************************** CLIENT CODE
+        string ip;  // where to connect
+        if (argc == 2) ip = argv[1]; else ip = "127.0.0.1";
         map<int,NetUser>::iterator p = netdata->users.begin();
+        map<int,NetObject *>::iterator po = netdata->netobjects.begin();
 
         netdata = new NetData(NetData::CLIENT);
-        netdata->connect("88.115.124.42", 5074);
+        netdata->connect(ip, 5074);
         netdata->me.nick = "Test";
         netdata->me.changed = true; // Mark all info for transmission
 
@@ -52,10 +82,10 @@ int main ( int argc, char** argv )
         atexit(SDL_Quit);// make sure SDL cleans up before exit
 
         // create a new window
-        screen = SDL_SetVideoMode(640, 480, 24, SDL_HWSURFACE|SDL_DOUBLEBUF);
+        screen = SDL_SetVideoMode(800, 600, 24, SDL_HWSURFACE|SDL_DOUBLEBUF);
         if ( !screen )
         {
-            printf("Unable to set 640x480 video: %s\n", SDL_GetError());
+            printf("Unable to set 800x600 video: %s\n", SDL_GetError());
             return 1;
         }
         SDL_EnableKeyRepeat(10,10);
@@ -73,10 +103,10 @@ int main ( int argc, char** argv )
                 // check for messages
                 switch (event.type)
                 {
-                case SDL_QUIT:
+                 case SDL_QUIT:
                     done = true;
                     break;
-                case SDL_KEYDOWN:
+                 case SDL_KEYDOWN:
                     switch (event.key.keysym.sym)
                     {
                      case SDLK_ESCAPE:
@@ -88,22 +118,34 @@ int main ( int argc, char** argv )
                         netdata->me.changed = true;
                         break;
                      case SDLK_w:
-                        netdata->me.y--; netdata->me.changed = true;
-                        break;
-                     case SDLK_s:
-                        netdata->me.y++; netdata->me.changed = true;
+                        netdata->me.a = 1; netdata->me.changed = true;
                         break;
                      case SDLK_a:
-                        netdata->me.x--; netdata->me.changed = true;
+                        netdata->me.turning -= .1; netdata->me.changed = true;
                         break;
                      case SDLK_d:
-                        netdata->me.x++; netdata->me.changed = true;
+                        netdata->me.turning += .1; netdata->me.changed = true;
                         break;
                      default:
                         break;
                     } // inner switch
 
                     break;
+                 case SDL_KEYUP:
+                    switch (event.key.keysym.sym)
+                    {
+                     case SDLK_w:
+                        netdata->me.a = 0; netdata->me.changed = true;
+                        break;
+                     case SDLK_a:
+                        netdata->me.turning += .1; netdata->me.changed = true;
+                        break;
+                     case SDLK_d:
+                        netdata->me.turning -= .1; netdata->me.changed = true;
+                        break;
+                     default:
+                        break;
+                    }
                 }
             } // end of message processing
 
@@ -115,6 +157,12 @@ int main ( int argc, char** argv )
                 dstrect.y = (screen->h)/2 + p->second.y;
                 SDL_FillRect(screen, &dstrect, p->second.color);
                 p++;
+            }
+
+            po = netdata->netobjects.begin();
+            while (po != netdata->netobjects.end()) {
+                dstrect.x = (screen->w)/2 + (NetGameObject &)(po->second)->x;
+                po++;
             }
 
             SDL_Flip(screen);        // finally, update the screen :)
