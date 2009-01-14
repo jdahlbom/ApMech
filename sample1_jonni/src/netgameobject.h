@@ -2,6 +2,7 @@
 #define __netgameobject_h__
 
 #include <map>
+#include <cmath>     // for sin and cos, for advance
 #include "netdata.h"
 #include "netobject.h"
 
@@ -14,6 +15,7 @@ class NetGameObject : public NetObject {
     int id;
     int color;
     float x, y, z, xvel, yvel, zvel, heading;
+    float a, turning; // These are needed here ONLY for a smooth advance function.
 
     NetGameObject(int _id, int _uid = -1);
 
@@ -26,6 +28,8 @@ class NetGameObject : public NetObject {
     int serialize(enet_uint8 buffer[], int start, int buflength);
     int unserialize(enet_uint8 buffer[], int start);
     NetObject *create(int id);
+
+    void advance(float dt);
 };
 
 #endif

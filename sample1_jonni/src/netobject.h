@@ -8,8 +8,9 @@ class NetObject {
  public:
 
     int id;
-    int uid;        // owner
-    bool changed;   // Whether the object was updated since last serialization
+    int uid;            // owner
+    unsigned int age;   // age of the object, in milliseconds. Loops in 49 days! Careful if that matters.
+    bool changed;       // Whether the object was updated since last serialization
 
     NetObject(int _id = -1) { id = _id; }
     inline bool isChanged() { return changed; }
@@ -19,7 +20,8 @@ class NetObject {
     virtual int serialize(enet_uint8 buffer[], int start, int buflength) = 0;
     virtual int unserialize(enet_uint8 buffer[], int start) = 0;
     virtual NetObject *create(int id) = 0;
-//    virtual int advance(float seconds) = 0;      // Predictably update the object // Not necessary to overwrite
+
+    virtual void advance(float dt) {};      // Predictably update the object // Not necessary to overwrite
 };
 
 #endif

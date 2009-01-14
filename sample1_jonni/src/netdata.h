@@ -48,7 +48,7 @@ class NetData {
     int serviceClient();
 
  public:
-    map <int, NetUser> users;
+    map <int, NetUser> users;   // This is, users contacted to US! Should be empty unless we're server.
     map <int, NetObject *> netobjects;
 
     NetUser me;
@@ -59,7 +59,6 @@ class NetData {
     int connect(std::string ip, int port);
     int disconnect();
     int service();
-
 };
 
 

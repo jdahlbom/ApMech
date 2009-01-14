@@ -1,6 +1,5 @@
 #include "netdata.h"
 
-// TODO: Stop sending the users map to all users, perhaps! OR, think over if that should be done or not.
 
 map<enet_uint8, NetObject *>& netobjectprototypes()
 {
@@ -131,7 +130,8 @@ int NetData::serviceServer()
                 event.peer->data = new int(newuid);
                 ENetPacket *packet = enet_packet_create(&newuid, 4, ENET_PACKET_FLAG_RELIABLE); // OBS! Bad way to do this!
                 enet_peer_send(event.peer, 0, packet);
-                cout << "Received a connection from "<< uint2ipv4(event.peer->address.host) <<", uid "<<newuid<<endl;
+                cout << "Received a connection from "<< uint2ipv4(event.peer->address.host) <<", uid "<<newuid;
+                cout << ". We now have "<<users.size()<<" users."<<endl;
             }
             break;
 
@@ -154,8 +154,13 @@ int NetData::serviceServer()
          case ENET_EVENT_TYPE_DISCONNECT:
             if (status == server) {
                 users.erase(int(event.data));
-                delete (int *)event.peer->data;
+                delete (int *)event.peer->data;     // I wonder why I wrote this line
                 cout << "Client " << event.data << " has disconnected" << endl;
+
+                map<int, NetObject *>::iterator iObj;
+                for (iObj = netobjects.begin(); iObj != netobjects.end(); iObj++) {
+                    if (iObj->second->uid == int(event.data)) iObj->second->uid = -1;
+                }
 
                 enet_uint8 buffer[6]; buffer[0] = 1; buffer[1] = NetData::PACKET_DISCONNECT;    // Let clients know!
                 *(int *)(buffer + 2) = int(event.data);
@@ -188,26 +193,19 @@ int NetData::serviceClient()
             parts = data[0], h=1;
             for (int i=0; i<parts; i++)
             {
-                if (data[h] == NetData::PACKET_NETUSER) {
-                    h++; uid = *(int *)(data+h);  // this means, read an int from data[h] onwards
-                    if (users.find(uid) != users.end()) h += users.find(uid)->second.unserialize(data, h);
-                    else {
-                        users.insert(make_pair(uid, NetUser(uid, *event.peer)));
-                        h += users.find(uid)->second.unserialize(data, h);
-                    }
-                } else if (data[h] == NetData::PACKET_NETOBJECT) {   // OBS! UNFINISHED, NOT WORKING
+                if (data[h] == NetData::PACKET_NETOBJECT) {
                     h++; id = *(int *)(data+h);  // this means, read an int from data[h] onwards
                     if (netobjects.find(id) != netobjects.end()) h+= netobjects.find(id)->second->unserialize(data, h);
                     else {
                         objtype = *(enet_uint8 *)(data+h+4);
-//                        cout << "object. id: "<<id<<", type: "<<int(objtype)<<endl;
                         netobjects.insert(make_pair(id, netobjectprototypes()[objtype]->create(id)));
                         h += netobjects.find(id)->second->unserialize(data, h);
                     }
                 } else if (data[h] == NetData::PACKET_DISCONNECT) {
                     h++; uid = *(int *)(data+h); h+=4;
-                    cout << users.find(uid)->second.nick << " (uid "<<uid<<") has disconnected."<<endl;
-                    users.erase(uid);
+
+                    // TODO: DO SOMETHING TO INDICATE THIS!
+                    // That, in addition to adding some class for player info, to give users
                 }
             }
             enet_packet_destroy(event.packet);
@@ -235,7 +233,6 @@ int NetData::service()
     else if (status == connected) items += serviceClient();
 
     if ((status == connected) && (me.changed)) { // Do we have updated things to send!
-
         enet_uint8 buffer[10000];
         int length=1;
 
@@ -254,18 +251,11 @@ int NetData::service()
         map<int,NetUser>::iterator p = users.begin();
         map<int,NetObject *>::iterator po = netobjects.begin();
 
-        while (p != users.end()) {
-            buffer[length++] = NetData::PACKET_NETUSER;
-            p->second.ping = p->second.peer.roundTripTime; // Set ping so that correct ping gets sent
-            length += p->second.serialize(buffer, length, 10000);
-            packetstosend++; p++;
-        }
         while (po != netobjects.end()) {
             buffer[length++] = NetData::PACKET_NETOBJECT;
             length += po->second->serialize(buffer, length, 10000);
             packetstosend++; po++;
         }
-
         buffer[0] = packetstosend;
 
         if (packetstosend > 0) {
