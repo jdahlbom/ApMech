@@ -123,7 +123,7 @@ int NetData::serviceServer()
                 for (newuid = 1; users.find(newuid) != users.end(); newuid++); // find first unused uid
                 users.insert(make_pair(newuid, NetUser(newuid, *event.peer)));
 
-                for (newid = 1; netobjects.find(newid) != netobjects.end(); newid++); // and first unused object id
+                newid = getUniqueObjectID();                                    // and an unused object id
                 netobjects.insert(make_pair(newid, new NetGameObject(newid, newuid)));
                 // FIXME: Not the proper place to insert objects. Has to do, until I build an event system..
 
@@ -226,12 +226,18 @@ int NetData::serviceClient()
     return items;
 }
 
-int NetData::service()
+int NetData::receiveChanges()
 {
     int items = 0;
     if (status == server) items += serviceServer();
     else if (status == connected) items += serviceClient();
 
+    return items;
+}
+
+int NetData::sendChanges()
+{
+    int items = 0;
     if ((status == connected) && (me.changed)) { // Do we have updated things to send!
         enet_uint8 buffer[10000];
         int length=1;
@@ -267,4 +273,11 @@ int NetData::service()
     }
 
     return items;
+}
+
+int NetData::getUniqueObjectID()
+{
+    int newid;
+    for (newid = 1; netobjects.find(newid) != netobjects.end(); newid++); // and first unused object id
+    return newid;
 }

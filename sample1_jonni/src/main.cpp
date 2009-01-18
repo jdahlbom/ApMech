@@ -34,48 +34,61 @@ int main ( int argc, char** argv )
     if ((argc == 2) && (strcmp(argv[1], "-server") == 0)) { // ********* SERVER CODE
         map<int,NetObject *>::iterator p;
         map<int, NetUser>::iterator iUser;
+        long int nextupdate;    // When we will send updates to clients the next time
 
         cout << "Created a server."<<endl;
         netdata = new NetData(NetData::SERVER);
 
         cout << "Serving "<< netobjectprototypes().size()<<" objects."<<endl;
 
-        newticks = getTicks();
+        newticks = nextupdate = getTicks();
+
+
 
         while (1) {             // Server main loop
-            netdata->service();
+            netdata->receiveChanges();
             oldticks = newticks; newticks = getTicks(); dt = float(newticks - oldticks) * 0.001;
 
             p = netdata->netobjects.begin();
             while (p != netdata->netobjects.end()) {
                 iUser = netdata->users.find(p->second->uid);
 
-                if (typeid(*p->second) == typeid(NetGameObject))
+                NetGameObject *ptrObj = dynamic_cast<NetGameObject *>(p->second);
+                if (ptrObj) // if the dynamic cast succeeded, then p->second is a NetGameObject!
                 {
-                    NetGameObject *ptrObj = (NetGameObject *)(p->second);
-
                     if (iUser != netdata->users.end()) // That means the object's owner is still logged in
                     {
-                        ptrObj->a = iUser->second.a;
-                        ptrObj->turning = iUser->second.turning;
-                        ptrObj->color = iUser->second.color;
+                        vector<NetObject *> *vObjs = ptrObj->control(iUser->second);
+                        if (vObjs != NULL) {            // if control returns objects, insert them to netobjects map
+                            vector<NetObject *>::iterator ivObj;
+                            for (ivObj = vObjs->begin(); ivObj != vObjs->end(); ivObj++)
+                            {
+                                int newid = netdata->getUniqueObjectID();
+                                (*ivObj)->id = newid;
+                                netdata->netobjects.insert(make_pair(newid, *ivObj));
+                            }
+                        }
                     } else {                            // That means owner's disconnected, so paint it gray!
                         ptrObj->color = 0x00666666;
                     }
-                    ptrObj->advance(dt);
+                }
 
-                    if (ptrObj->x > 390.0) ptrObj->x -= 780.0;          // bounds checking
-                    if (ptrObj->x < -390.0) ptrObj->x += 780.0;
-                    if (ptrObj->y > 290.0) ptrObj->y -= 580.0;
-                    if (ptrObj->y < -290.0) ptrObj->y += 580.0;
+                if (p->second->advance(dt) == -1) {
+                    delete p->second;
+                    netdata->netobjects.erase(p);
                 }
 
                 p++;
             }
 
-            while (getTicks() < newticks + 40) SDL_Delay(1);    // take 40 ms per frame
-//            SDL_Delay(40);                                    // alternative sleep, 40 + x ms
+            if (newticks >= nextupdate) {
+                netdata->sendChanges();
+                nextupdate = newticks + 40; // 40 ms between updates, that's 25 network fps.
+            }                               // Seems to me that up to 100 is still okay!
+            SDL_Delay(1);       // sleep even a little bit so that dt is never 0
         }
+
+
 
 
     } else {                  // *************************************** CLIENT CODE
@@ -125,13 +138,19 @@ int main ( int argc, char** argv )
                         netdata->me.changed = true;
                         break;
                      case SDLK_w:
+                     case SDLK_UP:
                         netdata->me.a = 300; netdata->me.changed = true;
                         break;
                      case SDLK_a:
+                     case SDLK_LEFT:
                         netdata->me.turning -= 5.5; netdata->me.changed = true;
                         break;
                      case SDLK_d:
+                     case SDLK_RIGHT:
                         netdata->me.turning += 5.5; netdata->me.changed = true;
+                        break;
+                     case SDLK_SPACE:
+                        netdata->me.controls |= NetUser::SHOOT_MG; netdata->me.changed = true;
                         break;
                      default:
                         break;
@@ -142,13 +161,19 @@ int main ( int argc, char** argv )
                     switch (event.key.keysym.sym)
                     {
                      case SDLK_w:
+                     case SDLK_UP:
                         netdata->me.a = 0; netdata->me.changed = true;
                         break;
                      case SDLK_a:
+                     case SDLK_LEFT:
                         netdata->me.turning += 5.5; netdata->me.changed = true;
                         break;
                      case SDLK_d:
+                     case SDLK_RIGHT:
                         netdata->me.turning -= 5.5; netdata->me.changed = true;
+                        break;
+                     case SDLK_SPACE:
+                        netdata->me.controls &= ~NetUser::SHOOT_MG; netdata->me.changed = true;
                         break;
                      default:
                         break;
@@ -156,14 +181,26 @@ int main ( int argc, char** argv )
                 }
             } // end of SDL message processing
 
-
             oldticks = newticks; newticks = getTicks(); dt = float(newticks - oldticks) * 0.001;
             po = netdata->netobjects.begin();           // This part for linearly predicting where the objects
             while (po != netdata->netobjects.end()) {   // will be if they continued straight during one
-                po->second->advance(dt);                // graphical frame.
+                if (po->second->advance(dt) == -1) {    // graphical frame.
+                    delete po->second;
+                    netdata->netobjects.erase(po);
+                }
+                // If .. this is our ship, then advance it according to our input state.
+                // NOTICE that whenever we get the ship status from server, server's version
+                // overwrites our version, so this here is merely for the comfort of the controls.
+                else if ((po->second->uid == netdata->me.uid) && (typeid(*po->second) == typeid(NetGameObject)))
+                {
+                    NetGameObject *myobj = dynamic_cast<NetGameObject *>(po->second);
+                    if (myobj) myobj->control(netdata->me);
+                }
                 po++;                                   //
             }
-            netdata->service();                         // IF we get an update from server, the previous work was in vain
+
+            netdata->sendChanges();
+            netdata->receiveChanges();                  // IF we get an update from server, the previous work was in vain
 
             SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 0, 0, 0)); // clear screen
 
@@ -171,15 +208,23 @@ int main ( int argc, char** argv )
             while (po != netdata->netobjects.end()) {
                 if (typeid(*po->second) == typeid(NetGameObject))
                 {
-                    NetGameObject *ptrObj = (NetGameObject *)(po->second);
+                    NetGameObject *ptrObj = dynamic_cast<NetGameObject *>(po->second);
                     dstrect.w = dstrect.h = 10;
-                    dstrect.x = (screen->w)/2 + ptrObj->x - 5;
-                    dstrect.y = (screen->h)/2 - ptrObj->y + 5;
+                    dstrect.x = (screen->w)/2 + ptrObj->loc.x - 5;
+                    dstrect.y = (screen->h)/2 - ptrObj->loc.y + 5;
                     SDL_FillRect(screen, &dstrect, ptrObj->color);
                     dstrect.w = dstrect.h = 6;
-                    dstrect.x += sin(ptrObj->heading) * 8. + 3;
-                    dstrect.y -= cos(ptrObj->heading) * 8. - 3;
+                    dstrect.x += sin(ptrObj->loc.heading) * 8. + 3;
+                    dstrect.y -= cos(ptrObj->loc.heading) * 8. - 3;
                     SDL_FillRect(screen, &dstrect, ptrObj->color);
+                }
+                else if (typeid(*po->second) == typeid(Projectile))
+                {
+                    Projectile *ptrProj = dynamic_cast<Projectile *>(po->second);
+                    dstrect.w = dstrect.h = 3;
+                    dstrect.x = (screen->w)/2 + ptrProj->loc.x - 1;
+                    dstrect.y = (screen->h)/2 - ptrProj->loc.y + 1;
+                    SDL_FillRect(screen, &dstrect, 0x00FFAA00);
                 }
                 po++;
             }

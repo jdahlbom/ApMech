@@ -11,8 +11,8 @@ NetUser::NetUser(int _uid, ENetPeer _peer)
 {
     x = y = 0;  nick = "uninitialized";
     color = 0x00FFFFFF; ping = 0;
-    uid = _uid;
-    peer = _peer;
+    uid = _uid;    peer = _peer;
+    controls = 0;
     changed = false;
 }
 
@@ -27,6 +27,7 @@ int NetUser::serialize(enet_uint8 buffer[], int start, int buflength)
     *(int *)(buffer+start+length) = ping;                   length += 4;
     *(float *)(buffer+start+length) = a;                    length += 4;
     *(float *)(buffer+start+length) = turning;              length += 4;
+    *(unsigned int *)(buffer+start+length) = controls;      length += 4;
     strcpy( (char *)buffer + start+length, nick.c_str());   length += nick.length()+1;
 
     return length;
@@ -44,6 +45,7 @@ int NetUser::unserialize(enet_uint8 buffer[], int start)
         ping = *(int *)(buffer+start+length);               length += 4;
         a = *(float *)(buffer+start+length);                length += 4;
         turning = *(float *)(buffer+start+length);          length += 4;
+        controls = *(unsigned int *)(buffer+start+length);  length += 4;
         nick.assign((char *)buffer+start+length);           length += nick.length()+1;
 
 //        cout << uid << ": x "<<x<<", y "<<y<<" nick "<<nick<<endl;

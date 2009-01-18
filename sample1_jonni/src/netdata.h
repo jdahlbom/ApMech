@@ -36,6 +36,7 @@ class NetData {
     static const enet_uint8 PACKET_DISCONNECT = 9;
 
     static const enet_uint8 OBJECT_TYPE_NETGAMEOBJECT = 50;
+    static const enet_uint8 OBJECT_TYPE_PROJECTILE = 51;
 
  private:
     enum status_type { enet_error, offline, connected, server };
@@ -58,7 +59,11 @@ class NetData {
 
     int connect(std::string ip, int port);
     int disconnect();
-    int service();
+
+    int sendChanges();
+    int receiveChanges();
+
+    int getUniqueObjectID();
 };
 
 

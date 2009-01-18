@@ -9,7 +9,6 @@ class NetObject {
 
     int id;
     int uid;            // owner
-    unsigned int age;   // age of the object, in milliseconds. Loops in 49 days! Careful if that matters.
     bool changed;       // Whether the object was updated since last serialization
 
     NetObject(int _id = -1) { id = _id; }
@@ -21,7 +20,8 @@ class NetObject {
     virtual int unserialize(enet_uint8 buffer[], int start) = 0;
     virtual NetObject *create(int id) = 0;
 
-    virtual void advance(float dt) {};      // Predictably update the object // Not necessary to overwrite
+    virtual int advance(float dt) { return 0; };    // Predictably update the object // Not necessary to overwrite
+                                                    // 0: OK. -1: Object requests destruction.
 };
 
 #endif

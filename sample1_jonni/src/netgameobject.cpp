@@ -19,9 +19,10 @@
 NetGameObject::NetGameObject(int _id, int _uid)
 {
     id = _id;   uid = _uid;
-    x = y = z = xvel = yvel = zvel = heading = 0.0;
+//    x = y = z = xvel = yvel = zvel = heading = 0.0;
     color = 0x00FFFFFF;
     changed = false;
+    mg_delay = 0;
 }
 
 int NetGameObject::serialize(enet_uint8 buffer[], int start, int buflength)
@@ -31,17 +32,8 @@ int NetGameObject::serialize(enet_uint8 buffer[], int start, int buflength)
     *(int *)(buffer+start+length) = id;                     length += 4;
     *(enet_uint8 *)(buffer+start+length) = NetData::OBJECT_TYPE_NETGAMEOBJECT; length++;
     *(int *)(buffer+start+length) = uid;                    length += 4;
-//    *(unsigned int *)(buffer+start+length) = age;           length += 4;
-    *(float *)(buffer+start+length) = x;                    length += 4;
-    *(float *)(buffer+start+length) = y;                    length += 4;
-    *(float *)(buffer+start+length) = z;                    length += 4;
-    *(float *)(buffer+start+length) = xvel;                 length += 4;
-    *(float *)(buffer+start+length) = yvel;                 length += 4;
-    *(float *)(buffer+start+length) = zvel;                 length += 4;
-    *(float *)(buffer+start+length) = heading;              length += 4;
-    *(float *)(buffer+start+length) = a;                    length += 4;
-    *(float *)(buffer+start+length) = turning;              length += 4;
     *(int *)(buffer+start+length) = color;                  length += 4;
+    length += loc.serialize(buffer, start+length, buflength);
 
     return length;
 }
@@ -54,18 +46,9 @@ int NetGameObject::unserialize(enet_uint8 buffer[], int start)
     if (id == *(int *)(buffer+start)) {                     length += 4;
         objtype = *(enet_uint8 *)(buffer+start+length);     length++;
         uid = *(int *)(buffer+start+length);                length += 4;
-//        age = *(unsigned int*)(buffer+start+length);        length += 4;
-        x = *(float *)(buffer+start+length);                length += 4;
-        y = *(float *)(buffer+start+length);                length += 4;
-        z = *(float *)(buffer+start+length);                length += 4;
-        xvel = *(float *)(buffer+start+length);             length += 4;
-        yvel = *(float *)(buffer+start+length);             length += 4;
-        zvel = *(float *)(buffer+start+length);             length += 4;
-        heading = *(float *)(buffer+start+length);          length += 4;
-        a = *(float *)(buffer+start+length);                length += 4;
-        turning = *(float *)(buffer+start+length);          length += 4;
         color = *(int *)(buffer+start+length);              length += 4;
-    } else cout << "FOULED!" << endl;
+        length += loc.unserialize(buffer, start+length);
+    } else cout << "FOULED in NetGameObject::unserialize!" << endl;
 
     return length;
 }
@@ -73,11 +56,33 @@ int NetGameObject::unserialize(enet_uint8 buffer[], int start)
 
 
 
-void NetGameObject::advance(float dt)
+int NetGameObject::advance(float dt)
 {
-    heading += turning * dt;
-    xvel += sin(heading) * a * dt;
-    yvel += cos(heading) * a * dt;
-    x += xvel * dt;
-    y += yvel * dt;
+    loc.advance(dt);
+    mg_delay -= dt; if (mg_delay < 0) mg_delay = 0;
+    return 0;
+}
+
+vector<NetObject *> *NetGameObject::control(NetUser &user)
+{
+    loc.a = user.a;
+    loc.turning = user.turning;
+    color = user.color;
+    if ((user.controls & NetUser::SHOOT_MG) && (mg_delay == 0)) {
+        vector<NetObject *> *result = new vector<NetObject *>();
+
+        Projectile *pProj;
+        mg_delay = 0.2;
+        pProj = new Projectile(-1);
+        pProj->loc = loc;
+        pProj->loc.a = 0;
+        pProj->loc.xvel += sin(pProj->loc.heading) * 500.0;
+        pProj->loc.yvel += cos(pProj->loc.heading) * 500.0;
+        result->push_back(dynamic_cast<NetObject *>(pProj));
+
+//        cout << "Ship "<<loc<<", Projectile "<<pProj->loc<<endl;
+
+        return result;
+    }
+    return NULL;
 }

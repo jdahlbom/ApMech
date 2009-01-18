@@ -11,6 +11,7 @@ using namespace std;
 class NetUser : public NetObject
 {
  public:
+    static const unsigned int SHOOT_MG = 1;
 
     ENetPeer peer;
     int uid;
@@ -18,6 +19,7 @@ class NetUser : public NetObject
 
     int x, y, color, ping;
     float a, turning;       // m/s², and rad/s
+    unsigned int controls;
 
     NetUser();
     NetUser(int uid, ENetPeer _peer);
