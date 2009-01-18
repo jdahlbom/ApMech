@@ -32,7 +32,7 @@ int main ( int argc, char** argv )
     srand(time(NULL));
 
     if ((argc == 2) && (strcmp(argv[1], "-server") == 0)) { // ********* SERVER CODE
-        map<int,NetObject *>::iterator p;
+        map<int,NetObject *>::iterator p, p2;
         map<int, NetUser>::iterator iUser;
         long int nextupdate;    // When we will send updates to clients the next time
 
@@ -134,7 +134,7 @@ int main ( int argc, char** argv )
                         done = true;
                         break;
                      case SDLK_c:
-                        netdata->me.color = 63+ 64*(rand()%4) + 256*64*(rand()%4) + 65536*64*(rand()%4);
+                        netdata->me.color = 63+64*(rand()%4) + 256*64*(rand()%4) + 65536*64*(rand()%4);
                         netdata->me.changed = true;
                         break;
                      case SDLK_w:
@@ -150,6 +150,7 @@ int main ( int argc, char** argv )
                         netdata->me.turning += 5.5; netdata->me.changed = true;
                         break;
                      case SDLK_SPACE:
+                     case SDLK_PERIOD:
                         netdata->me.controls |= NetUser::SHOOT_MG; netdata->me.changed = true;
                         break;
                      default:
@@ -173,6 +174,7 @@ int main ( int argc, char** argv )
                         netdata->me.turning -= 5.5; netdata->me.changed = true;
                         break;
                      case SDLK_SPACE:
+                     case SDLK_PERIOD:
                         netdata->me.controls &= ~NetUser::SHOOT_MG; netdata->me.changed = true;
                         break;
                      default:
@@ -211,12 +213,17 @@ int main ( int argc, char** argv )
                     NetGameObject *ptrObj = dynamic_cast<NetGameObject *>(po->second);
                     dstrect.w = dstrect.h = 10;
                     dstrect.x = (screen->w)/2 + ptrObj->loc.x - 5;
-                    dstrect.y = (screen->h)/2 - ptrObj->loc.y + 5;
+                    dstrect.y = (screen->h)/2 - ptrObj->loc.y - 5;
                     SDL_FillRect(screen, &dstrect, ptrObj->color);
                     dstrect.w = dstrect.h = 6;
                     dstrect.x += sin(ptrObj->loc.heading) * 8. + 3;
                     dstrect.y -= cos(ptrObj->loc.heading) * 8. - 3;
                     SDL_FillRect(screen, &dstrect, ptrObj->color);
+                    dstrect.w = dstrect.h = 1;
+                    dstrect.x = (screen->w)/2 + ptrObj->loc.x;
+                    dstrect.y = (screen->h)/2 - ptrObj->loc.y;
+                    SDL_FillRect(screen, &dstrect, 0x00FFFFFF);
+
                 }
                 else if (typeid(*po->second) == typeid(Projectile))
                 {

@@ -76,11 +76,9 @@ vector<NetObject *> *NetGameObject::control(NetUser &user)
         pProj = new Projectile(-1);
         pProj->loc = loc;
         pProj->loc.a = 0;
-        pProj->loc.xvel += sin(pProj->loc.heading) * 500.0;
-        pProj->loc.yvel += cos(pProj->loc.heading) * 500.0;
+        pProj->loc.xvel += sin(pProj->loc.heading) * 400.0;
+        pProj->loc.yvel += cos(pProj->loc.heading) * 400.0;
         result->push_back(dynamic_cast<NetObject *>(pProj));
-
-//        cout << "Ship "<<loc<<", Projectile "<<pProj->loc<<endl;
 
         return result;
     }
