@@ -32,3 +32,20 @@ template <class T> inline std::string to_string (const T &t)
     ss << t;
     return ss.str();
 }
+
+long int getTicks()
+{
+    static long int startticks = -1;
+    static time_t starttime_t;
+    static timeval now;
+
+    gettimeofday(&now, NULL);
+
+    if (startticks != -1) { // then the function is initialized already
+        return (now.tv_sec - starttime_t)*1000 + (now.tv_usec - startticks)*0.001;
+    } else {
+        starttime_t = now.tv_sec;
+        startticks = now.tv_usec*0.001;
+        return 0;
+    }
+}
