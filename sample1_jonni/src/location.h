@@ -10,6 +10,7 @@ class Location {
 
     float x, y, z, xvel, yvel, zvel, heading;
     float a, turning; // These are needed here ONLY for a smooth advance function.
+    float radius; // For simple collision detection
 
     Location();
 
@@ -20,11 +21,12 @@ class Location {
     int unserialize(enet_uint8 buffer[], int start);
 
     void advance(float dt);
+    bool collision(Location &b);
 
     Location operator=(Location proto);
-    friend std::ostream &operator<<(std::ostream &stream, Location l);
+    friend std::ostream &operator<<(std::ostream &stream, Location &l);
 };
 
-std::ostream &operator<<(std::ostream &stream, Location l);
+std::ostream &operator<<(std::ostream &stream, Location &l);
 
 #endif

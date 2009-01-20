@@ -49,7 +49,7 @@ int NetData::connect(std::string ip, int port)
 
     if (enetserver == NULL) {
         cout << (errorstring = "Connect to server failed") << endl;
-        return ERROR;
+        return NETERROR;
     }
 
     if ((enet_host_service(enethost, &event, 5000) > 0) && (event.type == ENET_EVENT_TYPE_CONNECT))

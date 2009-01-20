@@ -23,6 +23,7 @@ NetGameObject::NetGameObject(int _id, int _uid)
     color = 0x00FFFFFF;
     changed = false;
     mg_delay = 0;
+    loc.radius = 11.0;
 }
 
 int NetGameObject::serialize(enet_uint8 buffer[], int start, int buflength)
@@ -76,6 +77,8 @@ vector<NetObject *> *NetGameObject::control(NetUser &user)
         pProj = new Projectile(-1);
         pProj->loc = loc;
         pProj->loc.a = 0;
+        pProj->loc.x += sin(pProj->loc.heading) * 16.0;
+        pProj->loc.y += cos(pProj->loc.heading) * 16.0;
         pProj->loc.xvel += sin(pProj->loc.heading) * 400.0;
         pProj->loc.yvel += cos(pProj->loc.heading) * 400.0;
         result->push_back(dynamic_cast<NetObject *>(pProj));

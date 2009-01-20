@@ -27,7 +27,7 @@ class NetData {
     static const int CLIENT = 0;
     static const int SERVER = 1;
 
-    static const int ERROR = -1;
+    static const int NETERROR = -1;     // This can't be "ERROR". Doesn't compile on windows mingw if it is.
     static const int TIMEOUT = -2;
     static const int SERVERFULL = -3;
 

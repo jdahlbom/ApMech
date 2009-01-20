@@ -19,6 +19,7 @@
 Projectile::Projectile(int _id, int _uid)
 {
     id = _id;   uid = _uid; age = 0.0;
+    loc.radius = 2;
     changed = false;
 }
 

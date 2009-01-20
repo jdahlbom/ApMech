@@ -42,17 +42,28 @@ int Location::unserialize(enet_uint8 buffer[], int start)
 
 void Location::advance(float dt)
 {
+    float r = 0.0001+sqrt((x-10)*(x-10) + y*y), rx, ry, fx, fy; // rx,ry is the unit vector to r direction
+    rx = -(x-10); ry = -y;
+    fx = rx/(r*r*r); fy = ry/(r*r*r);
+
     heading += turning * dt;
     xvel += sin(heading) * a * dt;
     yvel += cos(heading) * a * dt;
     x += xvel * dt;
     y += yvel * dt;
 
-    if (x > 390.0) x -= 780.0;          // bounds checking
-    else if (x < -390.0) x += 780.0;
-    if (y > 290.0) y -= 580.0;
-    else if (y < -290.0) y += 580.0;
+    if (x > 400.0) x -= 800.0;          // bounds checking
+    else if (x < -400.0) x += 800.0;
+    if (y > 300.0) y -= 600.0;
+    else if (y < -300.0) y += 600.0;
 }
+
+bool Location::collision(Location &b)
+{
+    if ((x-b.x)*(x-b.x) + (y-b.y)*(y-b.y) <= (radius+b.radius)*(radius+b.radius)) return true;
+    return false;
+}
+
 
 Location Location::operator=(Location proto)
 {
@@ -62,7 +73,7 @@ Location Location::operator=(Location proto)
     return *this;
 }
 
-std::ostream &operator<<(std::ostream &stream, Location l)
+std::ostream &operator<<(std::ostream &stream, Location &l)
 {
     stream << "Location: [r=("<<l.x<<","<<l.y<<","<<l.z<<") v=("<<l.xvel<<","<<l.yvel<<","<<l.zvel<<") ";
     stream << "heading="<<(l.heading*180./3.141592)<<", a="<<l.a<<"]";
