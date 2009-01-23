@@ -33,6 +33,7 @@ class NetData {
 
     static const enet_uint8 PACKET_NETUSER = 40;
     static const enet_uint8 PACKET_NETOBJECT = 41;
+    static const enet_uint8 PACKET_DELOBJECT = 42;
     static const enet_uint8 PACKET_DISCONNECT = 9;
 
     static const enet_uint8 OBJECT_TYPE_NETGAMEOBJECT = 50;
@@ -51,6 +52,7 @@ class NetData {
  public:
     map <int, NetUser> users;   // This is, users contacted to US! Should be empty unless we're server.
     map <int, NetObject *> netobjects;
+    vector <int> objectDeleteQueue;
 
     NetUser me;
 
@@ -63,7 +65,10 @@ class NetData {
     int sendChanges();
     int receiveChanges();
 
+    // Functions below here are meant for server's use. Undefined consequences for clients. Maybe.
+
     int getUniqueObjectID();
+    void delObject(int id);
 };
 
 

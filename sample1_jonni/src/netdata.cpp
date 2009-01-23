@@ -201,6 +201,10 @@ int NetData::serviceClient()
                         netobjects.insert(make_pair(id, netobjectprototypes()[objtype]->create(id)));
                         h += netobjects.find(id)->second->unserialize(data, h);
                     }
+                } else if (data[h] == NetData::PACKET_DELOBJECT) {
+                    h++; id = *(int *)(data+h);
+                    netobjects.erase(id);
+                    h += 4;
                 } else if (data[h] == NetData::PACKET_DISCONNECT) {
                     h++; uid = *(int *)(data+h); h+=4;
 
@@ -254,9 +258,15 @@ int NetData::sendChanges()
     } else if ((status == server) ) {          // 1st iteration: send anyway, even if no updates.
         enet_uint8 buffer[10000];
         int length=1, packetstosend = 0;
-        map<int,NetUser>::iterator p = users.begin();
         map<int,NetObject *>::iterator po = netobjects.begin();
+        vector<int>::iterator iDelPkg = objectDeleteQueue.begin();
 
+        while (iDelPkg != objectDeleteQueue.end()) {
+            buffer[length++] = NetData::PACKET_DELOBJECT;
+            *(int *)(buffer+length) = *iDelPkg;     length += 4;
+            iDelPkg = objectDeleteQueue.erase(iDelPkg);
+        }
+        po = netobjects.begin();
         while (po != netobjects.end()) {
             buffer[length++] = NetData::PACKET_NETOBJECT;
             length += po->second->serialize(buffer, length, 10000);
@@ -280,4 +290,11 @@ int NetData::getUniqueObjectID()
     int newid;
     for (newid = 1; netobjects.find(newid) != netobjects.end(); newid++); // and first unused object id
     return newid;
+}
+
+void NetData::delObject(int id)
+{
+    objectDeleteQueue.push_back(id);
+    delete netobjects.find(id)->second;
+    netobjects.erase(id);
 }

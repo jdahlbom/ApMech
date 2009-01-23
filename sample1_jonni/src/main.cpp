@@ -24,6 +24,8 @@ SDL_Surface *screen;
 const int WIDTH = 800;
 const int HEIGHT = 600;
 
+int servermain(int argc, char* argv[]);
+
 void putpixel(int x, int y, int r, int g, int b)
 {
 	int *scr = (int *)(screen->pixels);
@@ -207,76 +209,7 @@ int main ( int argc, char** argv )
     srand(time(NULL));
 
     if ((argc == 2) && (strcmp(argv[1], "-server") == 0)) { // ********* SERVER CODE
-        map<int,NetObject *>::iterator p, pProj;
-        map<int, NetUser>::iterator iUser;
-        long int nextupdate;    // When we will send updates to clients the next time
-
-        cout << "Created a server."<<endl;
-        netdata = new NetData(NetData::SERVER);
-
-        cout << "Serving "<< netobjectprototypes().size()<<" objects."<<endl;
-
-        newticks = nextupdate = getTicks();
-
-
-
-        while (1) {             // Server main loop
-            netdata->receiveChanges();
-            oldticks = newticks; newticks = getTicks(); dt = float(newticks - oldticks) * 0.001;
-
-            p = netdata->netobjects.begin();
-            while (p != netdata->netobjects.end()) {
-                iUser = netdata->users.find(p->second->uid);
-
-                NetGameObject *ptrObj = dynamic_cast<NetGameObject *>(p->second);
-                if (ptrObj) // if the dynamic cast succeeded, then p->second is a NetGameObject!
-                {
-                    if (iUser != netdata->users.end()) // That means the object's owner is still logged in
-                    {
-                        vector<NetObject *> *vObjs = ptrObj->control(iUser->second);
-                        if (vObjs != NULL) {            // if control returns objects, insert them to netobjects map
-                            vector<NetObject *>::iterator ivObj;
-                            for (ivObj = vObjs->begin(); ivObj != vObjs->end(); ivObj++)
-                            {
-                                int newid = netdata->getUniqueObjectID();
-                                (*ivObj)->id = newid;
-                                netdata->netobjects.insert(make_pair(newid, *ivObj));
-                            }
-                        }
-                    } else {                            // That means owner's disconnected, so paint it gray!
-                        ptrObj->color = 0x00666666;
-                    }
-
-                    pProj = netdata->netobjects.begin();
-                    while (pProj != netdata->netobjects.end())
-                    {
-                        Projectile *proj = dynamic_cast<Projectile *>(pProj->second);
-                        if ((proj) && (proj->loc.collision(ptrObj->loc))) {
-                            ptrObj->loc.x = 0; ptrObj->loc.y = 0;
-
-                        }
-                        pProj++;
-                    }
-                }
-
-                if (p->second->advance(dt) == -1) {
-                    delete p->second;
-                    netdata->netobjects.erase(p);
-                }
-
-                p++;
-            }
-
-            if (newticks >= nextupdate) {
-                netdata->sendChanges();
-                nextupdate = newticks + 40; // 40 ms between updates, that's 25 network fps.
-            }                               // Seems to me that up to 100 is still okay!
-            SDL_Delay(1);       // sleep even a little bit so that dt is never 0
-        }
-
-
-
-
+        exit (servermain(argc, argv));
     } else {                  // *************************************** CLIENT CODE
         map<int,NetObject *>::iterator po;
         string ip;
@@ -397,18 +330,6 @@ int main ( int argc, char** argv )
                 if (typeid(*po->second) == typeid(NetGameObject))
                 {
                     NetGameObject *ptrObj = dynamic_cast<NetGameObject *>(po->second);
-/*                    dstrect.w = dstrect.h = 10;
-                    dstrect.x = (screen->w)/2 + ptrObj->loc.x - 5;
-                    dstrect.y = (screen->h)/2 - ptrObj->loc.y - 5;
-                    SDL_FillRect(screen, &dstrect, ptrObj->color);
-                    dstrect.w = dstrect.h = 6;
-                    dstrect.x += sin(ptrObj->loc.heading) * 8. + 3;
-                    dstrect.y -= cos(ptrObj->loc.heading) * 8. - 3;
-                    SDL_FillRect(screen, &dstrect, ptrObj->color);
-                    dstrect.w = dstrect.h = 1;
-                    dstrect.x = (screen->w)/2 + ptrObj->loc.x;
-                    dstrect.y = (screen->h)/2 - ptrObj->loc.y;
-                    SDL_FillRect(screen, &dstrect, 0x00FFFFFF);*/
                     putsputnik((screen->w)/2 + ptrObj->loc.x, (screen->h)/2 - ptrObj->loc.y,
                         15.0, ptrObj->loc.heading - PI/2,
                         (ptrObj->color >> 16), (ptrObj->color >> 8)&255, ptrObj->color&255);
