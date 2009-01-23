@@ -3,6 +3,13 @@
 set SDLDIR=c:\programming\SDL-1.2.13
 set CXX=g++
 
+if /i not [%1] == [distclean] goto WORK0
+
+rd /s/q obj bin
+goto END
+
+:WORK0
+
 if not exist %SDLDIR%\bin\SDL.dll set SDLDIR=%1
 if exist %SDLDIR%\bin\SDL.dll goto WORK1
 
@@ -16,14 +23,15 @@ if exist %SDLDIR%\bin\SDL.dll goto WORK1
 set CXXFLAGS=-I. -I..\src -I%SDLDIR%\include\SDL
 set LDFLAGS=-L. -L%SDLDIR%\lib -lmingw32 -lSDLmain -lSDL -lenet -lws2_32 -lwinmm
 %CXX% -dumpversion
-if %ERRORLEVEL% == 1 goto WORK2
+if NOT %ERRORLEVEL% == 9009 goto WORK2
 
  echo No compiler found. You need to have mingw binaries in path.
  goto :END
 
 :WORK2
 
-rd /s/q obj bin
+if exist obj rd /s/q obj
+if exist bin rd /s/q bin
 md bin obj
 
 xcopy /e winlibs\* obj
