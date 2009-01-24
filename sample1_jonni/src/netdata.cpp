@@ -66,9 +66,10 @@ int NetData::connect(std::string ip, int port)
     while (enet_host_service(enethost, &event, 3000) > 0) {
         switch (event.type) {
          case ENET_EVENT_TYPE_RECEIVE:
-            if (event.packet->dataLength == 4) {  // Ha! It seems we just connected, and now we get our UID.
+            if (event.packet->dataLength == 8) {  // Ha! It seems we just connected, and now we get our UID.
                 me.uid = int(*event.packet->data);
-                cout << "I received an UID! It is "<<me.uid<<endl;
+                myAvatarID = int(*(event.packet->data+4));
+                cout << "I received an UID! It is "<<me.uid<<". myAvatarID is "<<myAvatarID<<endl;
                 enet_packet_destroy(event.packet);
                 return 1;
             }
@@ -128,7 +129,8 @@ int NetData::serviceServer()
                 // FIXME: Not the proper place to insert objects. Has to do, until I build an event system..
 
                 event.peer->data = new int(newuid);
-                ENetPacket *packet = enet_packet_create(&newuid, 4, ENET_PACKET_FLAG_RELIABLE); // OBS! Bad way to do this!
+                enet_uint8 buffer[8]; *(int *)(buffer) = newuid; *(int *)(buffer+4) = newid;
+                ENetPacket *packet = enet_packet_create(buffer, 8, ENET_PACKET_FLAG_RELIABLE); // OBS! Bad way to do this!
                 enet_peer_send(event.peer, 0, packet);
                 cout << "Received a connection from "<< uint2ipv4(event.peer->address.host) <<", uid "<<newuid;
                 cout << ". We now have "<<users.size()<<" users."<<endl;

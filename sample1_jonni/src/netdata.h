@@ -38,6 +38,7 @@ class NetData {
 
     static const enet_uint8 OBJECT_TYPE_NETGAMEOBJECT = 50;
     static const enet_uint8 OBJECT_TYPE_PROJECTILE = 51;
+    static const enet_uint8 OBJECT_TYPE_STARFIELD = 52;
 
  private:
     enum status_type { enet_error, offline, connected, server };
@@ -55,6 +56,7 @@ class NetData {
     vector <int> objectDeleteQueue;
 
     NetUser me;
+    int myAvatarID;             // if >0, tells which object in the map represents me!
 
     NetData(int type = NetData::CLIENT, int _port = DEFAULTPORT);
     ~NetData();

@@ -15,192 +15,20 @@
 
 #include "netdata.h"
 #include "netgameobject.h"
+#include "starfield.h"
 #include "functions.h"
 
 using namespace std;
 
-SDL_Surface *screen;
-#define PI 3.141592653589793238462643383279
 const int WIDTH = 800;
 const int HEIGHT = 600;
 
 int servermain(int argc, char* argv[]);
 
-void putpixel(int x, int y, int r, int g, int b)
-{
-	int *scr = (int *)(screen->pixels);
-	if ((x >= 0) && (x < WIDTH) && (y >= 0) && (y < HEIGHT))
-		scr[x + y*WIDTH] = SDL_MapRGB(screen->format, r, g, b); // Red, Green, Blue
-}
-
-void putline2(int _x, int _y, int _x2, int _y2, int r, int g, int b)
-{
-	float vali, x = _x, y = _y, x2 = _x2, y2 = _y2;
-
-	float k;
-
-    if ((_x == _x2) && (_y == _y2)) {
-        putpixel(_x, _y, r, g, b);
-        return;
-    }
-
-	if (abs (x2-x) > abs(y2-y))
-	{
-		if (x2<x)
-		{
-			vali = x;   x = x2;     x2 = vali;  // switch x
-			vali = y;   y = y2;     y2 = vali;  // switch y
-		}
-
-        k = (y2-y)/(x2-x);
-
-		for (x=x; x<=x2; x++)
-		{
-			putpixel (round(x), round(y), r, g, b);
-			y=y+k;
-		}
-	} else 	{
-		k = (x2-x)/(y2-y);
-
-		if (y2<y)
-		{
-			vali = x;   x = x2;     x2 = vali;  // switch x
-			vali = y;   y = y2;     y2 = vali;  // switch y
-		}
-		for (y=y; y<=y2; y++)
-		{
-			putpixel (round(x), round(y), r, g, b);
-			x=x+k;
-		}
-	}
-}
-
-void puttriangle(int x, int y, int x2, int y2, int x3, int y3, int r, int g, int b)
-{
-	putline2 (x, y, x2, y2, r, g, b);
-	putline2 (x2, y2, x3, y3, r, g, b);
-	putline2 (x3, y3, x, y, r, g, b);
-}
-
-void puttriangle_c(int x, int y, int x2, int y2, int x3, int y3, int r, int g, int b)
-{
-	float x_, y_, x2_, y2_, x3_, y3_;
-	if ((y <= y2) && (y <= y3))
-	{
-		y_ = y;
-		x_ = x;
-
-		if (y2 < y3)
-		{
-			y2_ = y2;
-			x2_ = x2;
-			y3_ = y3;
-			x3_ = x3;
-		}
-		else
-		{
-			y2_ = y3;
-			x2_ = x3;
-			y3_ = y2;
-			x3_ = x2;
-		}
-	}
-
-
-	else if ((y2 < y) && (y2 <= y3))
-	{
-		y_ = y2;
-		x_ = x2;
-
-		if (y < y3)
-		{
-			y2_ = y;
-			x2_ = x;
-			y3_ = y3;
-			x3_ = x3;
-		}
-		else
-		{
-            y2_ = y3;
-			x2_ = x3;
-			y3_ = y;
-			x3_ = x;
-		}
-	}
-
-	else if ((y3 < y) && (y3 < y2))
-		{
-		y_ = y3;
-		x_ = x3;
-
-		if (y2 < y)
-		{
-			y2_ = y2;
-			x2_ = x2;
-			y3_ = y;
-			x3_ = x;
-		}
-		else
-		{
-			y2_ = y;
-			x2_ = x;
-			y3_ = y2;
-			x3_ = x2;
-		}
-	}
-
-	float k1, k2, k3, k4;
-	if (y2_!=y_) k1 = (x2_-x_)/(y2_-y_);
-	if (y3_!=y_)
-	{
-		k2 = (x3_-x_)/(y3_-y_);
-		k4 = (x_-x3_)/(y_-y3_);
-	}
-	if (y2_!=y3_) k3 = (x2_-x3_)/(y2_-y3_);
-
-	float xa, xb;
-	xa = x_;
-	xb = x_;
-
-	for (y_=y_; y_<=y2_; y_++)
-	{
-		putline2(round(xa), round(y_), round(xb), round(y_), r, g, b);
-		xa=xa+k1;
-		xb=xb+k2;
-	}
-	xa = x3_;
-	xb = x3_;
-
-	for (y3_=y3_; y3_>y2_; y3_=y3_-1)
-	{
-		putline2(round(xa), round(y3_), round(xb), round(y3_), r, g, b);
-		xa=xa-k4;
-		xb=xb-k3;
-	}
-
-}
-
-void putsputnik(int x, int y, int size, float angle, int r, int g, int b)
-{
-	float kulma1x, kulma1y, kulma2x, kulma2y, kulma3x, kulma3y, keskix, keskiy;
-	kulma1x = float(x) + size * cos (angle);
-	kulma1y = float(y) + size * sin (angle);
-	keskix = float(x) - size/2 * cos (angle);
-	keskiy = float(y) - size/2 * sin (angle);
-	kulma2x = keskix + size/2 * cos (PI/2 + angle);
-	kulma2y = keskiy + size/2 * sin (PI/2 + angle);
-	kulma3x = keskix - size/2 * cos (PI/2 + angle);
-	kulma3y = keskiy - size/2 * sin (PI/2 + angle);
-
-	puttriangle_c (kulma1x, kulma1y, kulma2x, kulma2y, kulma3x, kulma3y, r, g, b);
-}
-
-
 int main ( int argc, char** argv )
 {
 
-//    SDL_Surface *screen;
-    SDL_Rect dstrect;
+    SDL_Surface *screen;
     NetData *netdata;
 
     long int oldticks, newticks;    // These here for tracking time
@@ -303,47 +131,28 @@ int main ( int argc, char** argv )
             } // end of SDL message processing
 
             oldticks = newticks; newticks = getTicks(); dt = float(newticks - oldticks) * 0.001;
-            po = netdata->netobjects.begin();           // This part for linearly predicting where the objects
-            while (po != netdata->netobjects.end()) {   // will be if they continued straight during one
-                if (po->second->advance(dt) == -1) {    // graphical frame.
-                    delete po->second;
+
+            // Now, advance all objects. That means, let them predict where they will be after dt.
+            for (po = netdata->netobjects.begin() ; po != netdata->netobjects.end() ; po++)
+                if (po->second->advance(dt) == -1) {    // If somebody wants to be deleted,
+                    delete po->second;                  // show no mercy!
                     netdata->netobjects.erase(po);
                 }
-                // If .. this is our ship, then advance it according to our input state.
-                // NOTICE that whenever we get the ship status from server, server's version
-                // overwrites our version, so this here is merely for the comfort of the controls.
-                else if ((po->second->uid == netdata->me.uid) && (typeid(*po->second) == typeid(NetGameObject)))
-                {
-                    NetGameObject *myobj = dynamic_cast<NetGameObject *>(po->second);
-                    if (myobj) myobj->control(netdata->me);
-                }
-                po++;                                   //
-            }
+
+            // Advance our avatar according to our input state!
+            // NOTICE that this is merely for more comfortable controls. Server is king, and overwrites when he wants.
+            NetGameObject *myobj = dynamic_cast<NetGameObject *>(netdata->netobjects.find(netdata->myAvatarID)->second);
+            if (myobj) myobj->control(netdata->me);
 
             netdata->sendChanges();
-            netdata->receiveChanges();                  // IF we get an update from server, the previous work was in vain
+            netdata->receiveChanges(); // IF we get an update from server, that overwrites previous advances
 
             SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 0, 0, 0)); // clear screen
 
-            po = netdata->netobjects.begin();
-            while (po != netdata->netobjects.end()) {
-                if (typeid(*po->second) == typeid(NetGameObject))
-                {
-                    NetGameObject *ptrObj = dynamic_cast<NetGameObject *>(po->second);
-                    putsputnik((screen->w)/2 + ptrObj->loc.x, (screen->h)/2 - ptrObj->loc.y,
-                        15.0, ptrObj->loc.heading - PI/2,
-                        (ptrObj->color >> 16), (ptrObj->color >> 8)&255, ptrObj->color&255);
-                }
-                else if (typeid(*po->second) == typeid(Projectile))
-                {
-                    Projectile *ptrProj = dynamic_cast<Projectile *>(po->second);
-                    dstrect.w = dstrect.h = 3;
-                    dstrect.x = (screen->w)/2 + ptrProj->loc.x - 1;
-                    dstrect.y = (screen->h)/2 - ptrProj->loc.y + 1;
-                    SDL_FillRect(screen, &dstrect, 0x00FFAA00);
-                }
-                po++;
-            }
+            for (po = netdata->netobjects.begin() ; po != netdata->netobjects.end() ; po++)
+                po->second->draw(screen, 0, 0);
+
+            // if (typeid(*po->second) == typeid(Projectile)) // if you need to discriminate
 
             SDL_Flip(screen);       // finally, update the screen :)
             SDL_Delay(1);           // and delay. Could be removed, most probably. Maybe this allows some multiprocessing on single core systems though!

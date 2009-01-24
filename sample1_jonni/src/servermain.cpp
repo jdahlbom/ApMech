@@ -15,6 +15,7 @@
 
 #include "netdata.h"
 #include "netgameobject.h"
+#include "starfield.h"
 #include "functions.h"
 
 using namespace std;
@@ -36,7 +37,8 @@ int servermain(int argc, char* argv[])
 
     newticks = nextupdate = getTicks();
 
-
+    int newid = netdata->getUniqueObjectID();
+    netdata->netobjects.insert(make_pair(newid, new StarField(newid, 0)));
 
     while (1) {             // Server main loop
         netdata->receiveChanges();
@@ -51,7 +53,7 @@ int servermain(int argc, char* argv[])
             {
                 if (iUser != netdata->users.end()) // That means the object's owner is still logged in
                 {
-                    vector<NetObject *> *vObjs = ptrObj->control(iUser->second);
+                    vector<NetObject *> *vObjs = ptrObj->control(iUser->second, true);
                     if (vObjs != NULL) {            // if control returns objects, insert them to netobjects map
                         vector<NetObject *>::iterator ivObj;
                         for (ivObj = vObjs->begin(); ivObj != vObjs->end(); ivObj++)
