@@ -198,7 +198,7 @@ NetGameObject::NetGameObject(int _id, int _uid)
     color = 0x00FFFFFF;
     changed = false;
     mg_delay = 0;
-    loc.radius = 11.0;
+    loc.radius = 11.0; loc.x = loc.y = 50;
 }
 
 int NetGameObject::serialize(enet_uint8 buffer[], int start, int buflength)
@@ -241,7 +241,12 @@ int NetGameObject::advance(float dt)
 
 int NetGameObject::draw(SDL_Surface *s, float x, float y)
 {
-    putsputnik(s, (s->w)/2 + loc.x, (s->h)/2 - loc.y,
+    int sx, sy;
+    sx = fmod(loc.x + 6000.0 -x + s->w/2.0, 4000.0) - 2000.0;
+    sy = fmod(-loc.y + 6000.0 +y + s->h/2.0, 4000.0) - 2000.0;
+
+//    putsputnik(s, (s->w)/2 + loc.x - x, (s->h)/2 - loc.y + y,
+    putsputnik(s, sx, sy,
         15.0, loc.heading - PI/2, (color >> 16), (color >> 8)&255, color&255);
     return 1;
 }

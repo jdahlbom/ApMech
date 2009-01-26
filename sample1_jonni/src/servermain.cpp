@@ -72,7 +72,9 @@ int servermain(int argc, char* argv[])
                 {
                     Projectile *proj = dynamic_cast<Projectile *>(pProj->second);
                     if ((proj) && (proj->loc.collision(ptrObj->loc))) {
-                        ptrObj->loc.x = 0; ptrObj->loc.y = 0;
+                        ptrObj->loc.x = 500 + (rand()%4)*1000;
+                        ptrObj->loc.y = 500 + (rand()%4)*1000;
+                        ptrObj->loc.xvel = ptrObj->loc.yvel = 0.0;
                         netdata->delObject(pProj->second->id);  // This erases a pair from netobjects map,
                     }                                           // (hope this doesn't do harm),
                     pProj++;                                    // and this still uses an iterator to the one.

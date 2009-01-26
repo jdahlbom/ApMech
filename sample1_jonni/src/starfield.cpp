@@ -54,16 +54,25 @@ int StarField::draw(SDL_Surface *s, float x, float y)
 
     for (int i=0; i<stars; i++)
     {
-        starx = (seed >> 16) % 4000;
+        starx = fmod((seed >> 16) % 4000 + 2000.0 - x + s->w/2, 4000.0) - 2000.0;
         seed = ((214013*seed) + 2531011) & 0x7FFFFFFF;      // Step random func
-        stary = (seed >> 16) % 4000;
+        stary = fmod((seed >> 16) % 4000 + 2000.0 + y + s->h/2, 4000.0) - 2000.0;
         seed = ((214013*seed) + 2531011) & 0x7FFFFFFF;      // Step random func
         brightness = (seed >> 16) % 256;
         seed = ((214013*seed) + 2531011) & 0x7FFFFFFF;      // Step random func
 
         if ((starx >= 0) && (stary >= 0) && (starx < s->w) && (stary < s->h))
             scr[starx + stary*s->w] = brightness + brightness*256 + brightness*65536;
-
+/*        else if ((starx >= 0) && (stary+4000.0 >= 0) && (starx < s->w) && (stary+4000.0 < s->h))
+            scr[starx + (stary+4000)*s->w] = brightness + brightness*256 + brightness*65536;
+        else if ((starx >= 0) && (stary-4000.0 >= 0) && (starx < s->w) && (stary-4000.0 < s->h))
+            scr[starx + (stary-4000)*s->w] = brightness + brightness*256 + brightness*65536;
+            */
+/*        else if ((starx+4000.0 >= 0) && (stary >= 0) && (starx+4000.0 < s->w) && (stary < s->h))
+            scr[starx + 4000 + stary*s->w] = brightness + brightness*256 + brightness*65536;
+        else if ((starx-4000.0 >= 0) && (stary >= 0) && (starx-4000.0 < s->w) && (stary < s->h))
+            scr[starx - 4000 + stary*s->w] = brightness + brightness*256 + brightness*65536;
+*/
     }
 
     return 1;

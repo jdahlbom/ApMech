@@ -42,9 +42,9 @@ int Location::unserialize(enet_uint8 buffer[], int start)
 
 void Location::advance(float dt)
 {
-    float r = 0.0001+sqrt((x-10)*(x-10) + y*y), rx, ry, fx, fy; // rx,ry is the unit vector to r direction
-    rx = -(x-10); ry = -y;
-    fx = rx/(r*r*r); fy = ry/(r*r*r);
+//    float r2 = 10+x*x + y*y, rx, ry, ax, ay; // rx,ry is the unit vector to r direction
+//    rx = -x/sqrt(r2); ry = -y/sqrt(r2);
+//    ax = (100.0*rx)/r2; ay = (100.0*ry)/r2;
 
     heading += turning * dt;
     xvel += sin(heading) * a * dt;
@@ -52,10 +52,10 @@ void Location::advance(float dt)
     x += xvel * dt;
     y += yvel * dt;
 
-    if (x > 400.0) x -= 800.0;          // bounds checking
-    else if (x < -400.0) x += 800.0;
-    if (y > 300.0) y -= 600.0;
-    else if (y < -300.0) y += 600.0;
+    if (x > 2000.0) x -= 4000.0;          // bounds checking
+    else if (x < -2000.0) x += 4000.0;
+    if (y > 2000.0) y -= 4000.0;
+    else if (y < -2000.0) y += 4000.0;
 }
 
 bool Location::collision(Location &b)
