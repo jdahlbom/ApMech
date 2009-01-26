@@ -30,6 +30,7 @@ int main ( int argc, char** argv )
 
     SDL_Surface *screen;
     NetData *netdata;
+    float xoffset = 0, yoffset = 0;
 
     long int oldticks, newticks;    // These here for tracking time
     float dt;                       //
@@ -149,9 +150,11 @@ int main ( int argc, char** argv )
 
             SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 0, 0, 0)); // clear screen
 
-            for (po = netdata->netobjects.begin() ; po != netdata->netobjects.end() ; po++)
-                po->second->draw(screen, 0, 0);
+            if (myobj) { xoffset = myobj->loc.x; yoffset = myobj->loc.y; }
 
+            for (po = netdata->netobjects.begin() ; po != netdata->netobjects.end() ; po++)
+                po->second->draw(screen, xoffset, yoffset);
+//            if (myobj) cout << "("<<floor(myobj->loc.x)<<","<<floor(myobj->loc.y)<<")"<<endl;
             // if (typeid(*po->second) == typeid(Projectile)) // if you need to discriminate
 
             SDL_Flip(screen);       // finally, update the screen :)

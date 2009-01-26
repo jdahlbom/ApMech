@@ -67,10 +67,14 @@ int Projectile::advance(float dt)
 
 int Projectile::draw(SDL_Surface *s, float x, float y)
 {
+    int sx, sy;
+    sx = fmod(loc.x + 6000.0 -x + s->w/2.0, 4000.0) - 2000.0;
+    sy = fmod(-loc.y + 6000.0 +y + s->h/2.0, 4000.0) - 2000.0;
+
     SDL_Rect dstrect;
     dstrect.w = dstrect.h = 3;
-    dstrect.x = (s->w)/2 + loc.x - 1;
-    dstrect.y = (s->h)/2 - loc.y + 1;
+    dstrect.x = sx; //(s->w)/2 + loc.x - 1 - x;
+    dstrect.y = sy; //(s->h)/2 - loc.y + 1 + y;
     SDL_FillRect(s, &dstrect, 0x00FFAA00);
     return 1;
 }
