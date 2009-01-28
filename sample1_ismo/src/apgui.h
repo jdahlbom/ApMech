@@ -16,17 +16,23 @@ class ApGui
     ApGui(RenderWindow *window, SceneManager *sceneManager, ApEventHandler *eventHandler);
     virtual ~ApGui();
     CEGUI::System *getSystemPtr() const;
+    void toggleMainMenu();
 
     protected:
-    void _initialize(RenderWindow *window, SceneManager *sceneManager);
-    void _setLookAndFeel();
-    void _createGUIWindow();
-    void _registerEventCallbacks(ApEventHandler *eventHandler);
+    void initialize(RenderWindow *window, SceneManager *sceneManager);
+    void setLookAndFeel();
+    void createGUIWindow();
+    void registerEventCallbacks();
+
+    CEGUI::OgreCEGUIRenderer *mRenderer;
+    CEGUI::System *mSystem;
+    ApEventHandler *mEventHandler;
+    CEGUI::WindowManager *mWin;
+    CEGUI::Window *mRoot;
 
     private:
-    CEGUI::OgreCEGUIRenderer *mRenderer_;
-    CEGUI::System *mSystem_;
-
+    bool quit(const CEGUI::EventArgs &arg);
+    bool returnToGame(const CEGUI::EventArgs &arg);
 
 };
 

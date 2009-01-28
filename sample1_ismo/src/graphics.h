@@ -16,17 +16,17 @@ class Graphics {
  private:
 
     // for Ogre 3D
-    Root *root_;
-    RenderWindow *window_;
-    RenderSystem *rSys_;
-    SceneManager *sceneMgr_;
+    Root *mRoot;
+    RenderWindow *mWindow;
+    RenderSystem *mRenderSystem;
+    SceneManager *mSceneMgr;
 
     // for game logic
-    GameWorld *world_;
-    GameEngine *engine_;
+    GameWorld *mWorld;
+    GameEngine *mEngine;
 
     // for GUI
-    ApGui *guiOverlay_;
+    ApGui *mGuiOverlay;
 
     void setupResources(void);
     bool loadResources(void);

@@ -7,14 +7,14 @@
 
 using namespace Ogre;
 
-class GameEngine;
+class ApEventHandler;
 
 
 class ApFrameListener : public FrameListener, public OIS::KeyListener, public OIS::MouseListener
 {
  public:
 
-    ApFrameListener(RenderWindow *window, GameEngine *engine);
+    ApFrameListener(RenderWindow *window, ApEventHandler *handler);
     virtual ~ApFrameListener();
 
     bool keyPressed(const OIS::KeyEvent &arg);
@@ -25,23 +25,20 @@ class ApFrameListener : public FrameListener, public OIS::KeyListener, public OI
     bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
     bool mouseMoved(const OIS::MouseEvent &arg);
 
-    // CEGUIn testausta varten luotu tilapäisfunktio.
-    bool quit(const CEGUI::EventArgs&);
-
  protected:
 
-    OIS::Keyboard *mKeyboard_;
-    OIS::Mouse *mMouse_;
-    OIS::InputManager *mInputManager_;
+    OIS::Keyboard *mKeyboard;
+    OIS::Mouse *mMouse;
+    OIS::InputManager *mInputManager;
 
  private:
 
-    GameEngine *engine_;
-    RenderWindow *window_;
-    CEGUI::System *guiSystem_;
+    ApEventHandler *mHandler;
+    RenderWindow *mWindow;
+    CEGUI::System *mGuiSystem;
 
-    void _initializeOIS(RenderWindow *window);
-    CEGUI::MouseButton _convertButton(OIS::MouseButtonID buttonID);
+    void initializeOIS(RenderWindow *window);
+    CEGUI::MouseButton convertButton(OIS::MouseButtonID buttonID);
 
 };
 

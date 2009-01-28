@@ -12,13 +12,13 @@ class GameEngine {
 
  private:
     // player
-    GameObject *player;
+    GameObject *mPlayer;
     // world
-    GameWorld *world;
+    GameWorld *mWorld;
     // graphics
-    Graphics *graphics;
+    Graphics *mGraphics;
     // network connection to server
-    ApEventHandler *eventHandler_;
+    ApEventHandler *mEventHandler;
 
     bool keepRendering;
 

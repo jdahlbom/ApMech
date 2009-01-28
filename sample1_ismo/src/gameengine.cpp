@@ -5,12 +5,12 @@
 
 GameEngine::GameEngine(): keepRendering(true)
 {
-    this->eventHandler_ = new ApEventHandler(this);
+    mEventHandler = new ApEventHandler(this);
 }
 GameEngine::~GameEngine()
 {
-    if(this->eventHandler_)
-        delete(this->eventHandler_);
+    if(mEventHandler)
+        delete(mEventHandler);
 }
 
 bool GameEngine::connectToServer()
@@ -39,10 +39,10 @@ bool GameEngine::syncWorld()
 {
     std::list<GameObject *>::iterator i;
 
-    if (world == NULL)
+    if (mWorld == NULL)
         return false;
 
-    std::list<GameObject *> objects = this->world->getObjects();
+    std::list<GameObject *> objects = mWorld->getObjects();
 
     for (i = objects.begin(); i != objects.end(); ++i) {
         GameObject *object = *i;
@@ -57,47 +57,17 @@ bool GameEngine::syncWorld()
 
 bool GameEngine::processKbEvent(int key) {
 
-    // give 'quitting' priority
-    if (key == OIS::KC_ESCAPE) {
-        this->keepRendering = false;
-        return false;
-    }
-
-    if (world == NULL || player == NULL) {
+    if (mWorld == NULL || mPlayer == NULL) {
         /* not yet initialized */
+        std::cout << "Not initialized!";
         return true;
     }
 
-    Vector3 playerLocation = player->getLocation();
-    float x=0.0, z=0.0;
 
-    switch (key) {
-        case OIS::KC_UP:
-            std::cout << "up key" << std::endl;
-            x += 1.0;
-            break;
-        case OIS::KC_DOWN:
-            std::cout << "down key" << std::endl;
-            x += -1.0;
-            break;
-        case OIS::KC_LEFT:
-            std::cout << "left key" << std::endl;
-            z += 1.0;
-            break;
-        case OIS::KC_RIGHT:
-            std::cout << "right key" << std::endl;
-            z += -1.0;
-            break;
-        default:
-            //std::cout << "unknown key\n";
-            break;
-    }
-    player->setLocation(playerLocation + Vector3(Real(x),Real(0.0), Real(z)));
-
-    player->setDirty(true);
+    mPlayer->setDirty(true);
 
     // FIXME: a hack to simulate network processing here
-    processNetworkEvent(player);
+    processNetworkEvent(mPlayer);
 
     return true;
 }
@@ -108,15 +78,15 @@ bool GameEngine::processNetworkEvent(GameObject *gameObject) {
 
     if (gameObject->isWorld()) {
         std::cout << "Received a world!" << std::endl;
-        this->world = (GameWorld *) gameObject;
+        mWorld = (GameWorld *) gameObject;
     }
 
     if (gameObject->isPlayer()) {
         std::cout << "Received a player!" << std::endl;
-        this->player = gameObject;
+        mPlayer = gameObject;
     }
 
-    graphics->updateGraphics(gameObject);
+    mGraphics->updateGraphics(gameObject);
 
     return true;
 }
@@ -129,18 +99,18 @@ bool GameEngine::quitEvent()
 
 bool GameEngine::initialize(Graphics *graphics)
 {
-    this->graphics = graphics;
+    mGraphics = graphics;
     return this->connectToServer();
 }
 
-ApEventHandler *GameEngine::getEventHandler() const { return this->eventHandler_; }
+ApEventHandler *GameEngine::getEventHandler() const { return mEventHandler; }
 
 bool GameEngine::run()
 {
     while (this->keepRendering) {
         // std::cout << "Render frame " << i++ << "\n";
 
-        graphics->render();
+        mGraphics->render();
     }
 
     return true;
