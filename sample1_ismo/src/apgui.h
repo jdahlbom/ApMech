@@ -31,8 +31,11 @@ class ApGui
     CEGUI::Window *mRoot;
 
     private:
-    bool quit(const CEGUI::EventArgs &arg);
-    bool returnToGame(const CEGUI::EventArgs &arg);
+    bool buttonQuit(const CEGUI::EventArgs &arg);
+    bool buttonReturnToGame(const CEGUI::EventArgs &arg);
+    bool buttonOptions(const CEGUI::EventArgs &arg);
+    bool buttonBack(const CEGUI::EventArgs &arg);
+    void switchSheets(const char *fromName, const char *toName);
 
 };
 
