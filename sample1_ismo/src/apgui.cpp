@@ -202,8 +202,11 @@ bool ApGui::buttonBack(const CEGUI::EventArgs &arg)
  */
 void ApGui::switchSheets(const char *fromName, const char *toName)
 {
-    CEGUI::Window *previousSheet = mRoot->getChildRecursive(fromName);
-    CEGUI::Window *newSheet = mRoot->getChildRecursive(toName);
+    CEGUI::String *prevName = new CEGUI::String(fromName);
+    CEGUI::String *nextName = new CEGUI::String(toName);
+
+    CEGUI::Window *previousSheet = mRoot->getChildRecursive(*prevName);
+    CEGUI::Window *newSheet = mRoot->getChildRecursive(*nextName);
     assert( 0 != previousSheet );
     assert( 0 != newSheet );
 
