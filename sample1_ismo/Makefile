@@ -2,7 +2,7 @@
 INCLUDES = lib/
 DEFINES = -g
 LIBS = OGRE CEGUI-OGRE CEGUI OIS
-CXX = gcc
+CXX = g++
 CXXFLAGS = $(shell pkg-config --cflags $(LIBS)) $(DEFINES) -I$(INCLUDES)
 LD = gcc
 LDFLAGS = $(shell pkg-config --libs $(LIBS))
