@@ -7,7 +7,7 @@
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 // This function will locate the path to our application on OS X,
-// unlike windows you can not rely on the curent working directory
+// unlike windows you can not rely on the current working directory
 // for locating your configuration files and resources.
 std::string macBundlePath()
 {
@@ -42,58 +42,58 @@ Graphics::~Graphics()
 
 bool Graphics::initialize(GameEngine *engine)
 {
-    this->engine_ = engine;
+    mEngine = engine;
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     Ogre::String resourcePath;
     resourcePath = macBundlePath() + "/Contents/Resources/";
-    root_ = new Ogre::Root(resourcePath + "plugins.cfg",
+    mRoot = new Ogre::Root(resourcePath + "plugins.cfg",
                           resourcePath + "ogre.cfg", resourcePath + "Ogre.log");
 #else
-    root_ = new Root();
+    mRoot = new Root();
 #endif
 
     // OpenGL
-    rSys_ = root_->getRenderSystemByName("OpenGL Rendering Subsystem");
-    rSys_->setConfigOption("Full Screen", "No");
-    root_->setRenderSystem(rSys_);
+    mRenderSystem = mRoot->getRenderSystemByName("OpenGL Rendering Subsystem");
+    mRenderSystem->setConfigOption("Full Screen", "No");
+    mRoot->setRenderSystem(mRenderSystem);
 
     setupResources();
     // loadResources();
 
     // end gracelessly if the preferred renderer is not available
-    if (root_->getRenderSystem() == NULL) {
+    if (mRoot->getRenderSystem() == NULL) {
         std::cout << "ERROR: render system is NULL\n";
-        delete root_;
+        delete mRoot;
         return 1;
     }
 
-    root_->restoreConfig();
+    mRoot->restoreConfig();
 
-    root_->showConfigDialog();
+    mRoot->showConfigDialog();
 
-    root_->initialise(true, "Achtung Panzer! (test window)");
-    window_ = root_->getAutoCreatedWindow();
+    mRoot->initialise(true, "Achtung Panzer! (test window)");
+    mWindow = mRoot->getAutoCreatedWindow();
 
     loadResources();
 
-    sceneMgr_= root_->createSceneManager(ST_EXTERIOR_CLOSE);
+    mSceneMgr= mRoot->createSceneManager(ST_EXTERIOR_CLOSE);
 
     // add the GUI
-    guiOverlay_ = new ApGui(window_, sceneMgr_, engine_->getEventHandler());
+    mGuiOverlay = new ApGui(mWindow, mSceneMgr, mEngine->getEventHandler());
     // add the event listener
     // Should pass the eventhandler to framelistener as well..?
-    ApFrameListener *frameListener = new ApFrameListener(window_, engine_);
-    root_->addFrameListener(frameListener);
+    ApFrameListener *frameListener = new ApFrameListener(mWindow, mEngine->getEventHandler());
+    mRoot->addFrameListener(frameListener);
     return true;
 }
 
 bool Graphics::loadTerrain()
 {
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-    sceneMgr_->setWorldGeometry(macBundlePath() + "/Contents/Resources/Media/terrain.cfg");
+    mSceneMgr->setWorldGeometry(macBundlePath() + "/Contents/Resources/Media/terrain.cfg");
 #else
-    sceneMgr_->setWorldGeometry("terrain.cfg");
+    mSceneMgr->setWorldGeometry("terrain.cfg");
 #endif
     return true;
 }
@@ -166,8 +166,8 @@ bool Graphics::updateGraphics(GameObject *gameObject)
     if (node == NULL) {
 
         // draw this object
-        SceneNode *corner = sceneMgr_->getRootSceneNode()->createChildSceneNode("terrainCorner", Vector3::ZERO);
-        Entity *robotEntity = sceneMgr_->createEntity(gameObject->id_s, "robot.mesh");
+        SceneNode *corner = mSceneMgr->getRootSceneNode()->createChildSceneNode("terrainCorner", Vector3::ZERO);
+        Entity *robotEntity = mSceneMgr->createEntity(gameObject->id_s, "robot.mesh");
 
         node = corner->createChildSceneNode(gameObject->id_s);
         node->attachObject(robotEntity);
@@ -184,23 +184,23 @@ bool Graphics::load()
 {
     loadTerrain();
 
-    sceneMgr_->setAmbientLight( ColourValue( 1.0, 1.0, 0.9 ) );
-    sceneMgr_->setShadowTechnique(SHADOWTYPE_STENCIL_ADDITIVE);
+    mSceneMgr->setAmbientLight( ColourValue( 1.0, 1.0, 0.9 ) );
+    mSceneMgr->setShadowTechnique(SHADOWTYPE_STENCIL_ADDITIVE);
 
     Light *light;
-    light = sceneMgr_->createLight("Light3");
+    light = mSceneMgr->createLight("Light3");
     light->setType(Light::LT_DIRECTIONAL);
     light->setDiffuseColour(ColourValue(1, 0, 0));
     light->setSpecularColour(ColourValue(1, 0, 0));
     light->setDirection(Vector3(0, -1, 1) );
 
-    Camera *mCamera = sceneMgr_->createCamera("PlayerCam");
+    Camera *mCamera = mSceneMgr->createCamera("PlayerCam");
     Vector3 camGroundOrigin = Vector3(750, 0, 750);
     mCamera->setPosition(camGroundOrigin + Vector3(0, 200, 0));
     mCamera->lookAt(camGroundOrigin + Vector3(1, 0, 0));
     mCamera->setNearClipDistance(5);
 
-    Viewport* vp = window_->addViewport(mCamera);
+    Viewport* vp = mWindow->addViewport(mCamera);
     vp->setBackgroundColour(ColourValue(0,0,0));
     mCamera->setAspectRatio(Real(vp->getActualWidth()) / Real(vp->getActualHeight()));
 
@@ -209,8 +209,8 @@ bool Graphics::load()
 
 bool Graphics::render()
 {
-    if (root_) {
-        root_->renderOneFrame();
+    if (mRoot) {
+        mRoot->renderOneFrame();
         return true;
     }
     return false;

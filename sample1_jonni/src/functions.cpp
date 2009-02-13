@@ -42,10 +42,10 @@ long int getTicks()
     gettimeofday(&now, NULL);
 
     if (startticks != -1) { // then the function is initialized already
-        return (now.tv_sec - starttime_t)*1000 + (now.tv_usec - startticks)*0.001;
+        return (now.tv_sec - starttime_t)*1000 + (now.tv_usec - startticks)/1000;
     } else {
         starttime_t = now.tv_sec;
-        startticks = now.tv_usec*0.001;
+        startticks = now.tv_usec/1000;
         return 0;
     }
 }

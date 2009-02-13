@@ -3,6 +3,10 @@
 
 #include <enet/enet.h>
 
+#include <SDL.h>        // Damn! I was hoping this file would have no extra dependencies. There goes.
+                        // Couldn't think of a better way to let objects say something about how they're
+                        // drawn.
+
 class NetObject {
 
  public:
@@ -22,6 +26,7 @@ class NetObject {
 
     virtual int advance(float dt) { return 0; };    // Predictably update the object // Not necessary to overwrite
                                                     // 0: OK. -1: Object requests destruction.
+    virtual int draw(SDL_Surface *s, float x, float y) { return 0; } // Draw, if necessary! Return nonzero if something drawn
 };
 
 #endif

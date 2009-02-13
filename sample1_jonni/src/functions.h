@@ -18,3 +18,4 @@ void hexprint(enet_uint8 *buffer, int length); // Cout a random buffer and maybe
 template <class T> inline std::string to_string (const T &t); // generic to_string() for any pipeable thing
 
 long int getTicks(); // milliseconds since approx program start. OBS! Not C-standard, but POSIX
+

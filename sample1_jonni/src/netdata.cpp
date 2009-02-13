@@ -49,7 +49,7 @@ int NetData::connect(std::string ip, int port)
 
     if (enetserver == NULL) {
         cout << (errorstring = "Connect to server failed") << endl;
-        return ERROR;
+        return NETERROR;
     }
 
     if ((enet_host_service(enethost, &event, 5000) > 0) && (event.type == ENET_EVENT_TYPE_CONNECT))
@@ -66,9 +66,10 @@ int NetData::connect(std::string ip, int port)
     while (enet_host_service(enethost, &event, 3000) > 0) {
         switch (event.type) {
          case ENET_EVENT_TYPE_RECEIVE:
-            if (event.packet->dataLength == 4) {  // Ha! It seems we just connected, and now we get our UID.
+            if (event.packet->dataLength == 8) {  // Ha! It seems we just connected, and now we get our UID.
                 me.uid = int(*event.packet->data);
-                cout << "I received an UID! It is "<<me.uid<<endl;
+                myAvatarID = int(*(event.packet->data+4));
+                cout << "I received an UID! It is "<<me.uid<<". myAvatarID is "<<myAvatarID<<endl;
                 enet_packet_destroy(event.packet);
                 return 1;
             }
@@ -128,7 +129,8 @@ int NetData::serviceServer()
                 // FIXME: Not the proper place to insert objects. Has to do, until I build an event system..
 
                 event.peer->data = new int(newuid);
-                ENetPacket *packet = enet_packet_create(&newuid, 4, ENET_PACKET_FLAG_RELIABLE); // OBS! Bad way to do this!
+                enet_uint8 buffer[8]; *(int *)(buffer) = newuid; *(int *)(buffer+4) = newid;
+                ENetPacket *packet = enet_packet_create(buffer, 8, ENET_PACKET_FLAG_RELIABLE); // OBS! Bad way to do this!
                 enet_peer_send(event.peer, 0, packet);
                 cout << "Received a connection from "<< uint2ipv4(event.peer->address.host) <<", uid "<<newuid;
                 cout << ". We now have "<<users.size()<<" users."<<endl;
@@ -201,6 +203,10 @@ int NetData::serviceClient()
                         netobjects.insert(make_pair(id, netobjectprototypes()[objtype]->create(id)));
                         h += netobjects.find(id)->second->unserialize(data, h);
                     }
+                } else if (data[h] == NetData::PACKET_DELOBJECT) {
+                    h++; id = *(int *)(data+h);
+                    netobjects.erase(id);
+                    h += 4;
                 } else if (data[h] == NetData::PACKET_DISCONNECT) {
                     h++; uid = *(int *)(data+h); h+=4;
 
@@ -254,9 +260,15 @@ int NetData::sendChanges()
     } else if ((status == server) ) {          // 1st iteration: send anyway, even if no updates.
         enet_uint8 buffer[10000];
         int length=1, packetstosend = 0;
-        map<int,NetUser>::iterator p = users.begin();
         map<int,NetObject *>::iterator po = netobjects.begin();
+        vector<int>::iterator iDelPkg = objectDeleteQueue.begin();
 
+        while (iDelPkg != objectDeleteQueue.end()) {
+            buffer[length++] = NetData::PACKET_DELOBJECT;
+            *(int *)(buffer+length) = *iDelPkg;     length += 4;
+            iDelPkg = objectDeleteQueue.erase(iDelPkg);
+        }
+        po = netobjects.begin();
         while (po != netobjects.end()) {
             buffer[length++] = NetData::PACKET_NETOBJECT;
             length += po->second->serialize(buffer, length, 10000);
@@ -280,4 +292,11 @@ int NetData::getUniqueObjectID()
     int newid;
     for (newid = 1; netobjects.find(newid) != netobjects.end(); newid++); // and first unused object id
     return newid;
+}
+
+void NetData::delObject(int id)
+{
+    objectDeleteQueue.push_back(id);
+    delete netobjects.find(id)->second;
+    netobjects.erase(id);
 }

@@ -15,16 +15,22 @@
 
 #include "netdata.h"
 #include "netgameobject.h"
+#include "starfield.h"
 #include "functions.h"
 
 using namespace std;
+
+const int WIDTH = 800;
+const int HEIGHT = 600;
+
+int servermain(int argc, char* argv[]);
 
 int main ( int argc, char** argv )
 {
 
     SDL_Surface *screen;
-    SDL_Rect dstrect;
     NetData *netdata;
+    float xoffset = 0, yoffset = 0;
 
     long int oldticks, newticks;    // These here for tracking time
     float dt;                       //
@@ -32,65 +38,7 @@ int main ( int argc, char** argv )
     srand(time(NULL));
 
     if ((argc == 2) && (strcmp(argv[1], "-server") == 0)) { // ********* SERVER CODE
-        map<int,NetObject *>::iterator p, p2;
-        map<int, NetUser>::iterator iUser;
-        long int nextupdate;    // When we will send updates to clients the next time
-
-        cout << "Created a server."<<endl;
-        netdata = new NetData(NetData::SERVER);
-
-        cout << "Serving "<< netobjectprototypes().size()<<" objects."<<endl;
-
-        newticks = nextupdate = getTicks();
-
-
-
-        while (1) {             // Server main loop
-            netdata->receiveChanges();
-            oldticks = newticks; newticks = getTicks(); dt = float(newticks - oldticks) * 0.001;
-
-            p = netdata->netobjects.begin();
-            while (p != netdata->netobjects.end()) {
-                iUser = netdata->users.find(p->second->uid);
-
-                NetGameObject *ptrObj = dynamic_cast<NetGameObject *>(p->second);
-                if (ptrObj) // if the dynamic cast succeeded, then p->second is a NetGameObject!
-                {
-                    if (iUser != netdata->users.end()) // That means the object's owner is still logged in
-                    {
-                        vector<NetObject *> *vObjs = ptrObj->control(iUser->second);
-                        if (vObjs != NULL) {            // if control returns objects, insert them to netobjects map
-                            vector<NetObject *>::iterator ivObj;
-                            for (ivObj = vObjs->begin(); ivObj != vObjs->end(); ivObj++)
-                            {
-                                int newid = netdata->getUniqueObjectID();
-                                (*ivObj)->id = newid;
-                                netdata->netobjects.insert(make_pair(newid, *ivObj));
-                            }
-                        }
-                    } else {                            // That means owner's disconnected, so paint it gray!
-                        ptrObj->color = 0x00666666;
-                    }
-                }
-
-                if (p->second->advance(dt) == -1) {
-                    delete p->second;
-                    netdata->netobjects.erase(p);
-                }
-
-                p++;
-            }
-
-            if (newticks >= nextupdate) {
-                netdata->sendChanges();
-                nextupdate = newticks + 40; // 40 ms between updates, that's 25 network fps.
-            }                               // Seems to me that up to 100 is still okay!
-            SDL_Delay(1);       // sleep even a little bit so that dt is never 0
-        }
-
-
-
-
+        exit (servermain(argc, argv));
     } else {                  // *************************************** CLIENT CODE
         map<int,NetObject *>::iterator po;
         string ip;
@@ -102,12 +50,12 @@ int main ( int argc, char** argv )
             return 1;                                               //
         }                                                           //
         atexit(SDL_Quit);                                           //
-        screen = SDL_SetVideoMode(800, 600, 24, SDL_HWSURFACE|SDL_DOUBLEBUF);
+        screen = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE|SDL_DOUBLEBUF);
         if ( !screen ) {                                            //
             printf("Unable to set 800x600 video: %s\n", SDL_GetError());
             return 1;                                               //
         }                                                           // SDL initialized!
-
+        SDL_SetClipRect(screen, NULL);                              //
 
         netdata = new NetData(NetData::CLIENT);
         netdata->connect(ip, 5074);
@@ -184,57 +132,30 @@ int main ( int argc, char** argv )
             } // end of SDL message processing
 
             oldticks = newticks; newticks = getTicks(); dt = float(newticks - oldticks) * 0.001;
-            po = netdata->netobjects.begin();           // This part for linearly predicting where the objects
-            while (po != netdata->netobjects.end()) {   // will be if they continued straight during one
-                if (po->second->advance(dt) == -1) {    // graphical frame.
-                    delete po->second;
+
+            // Now, advance all objects. That means, let them predict where they will be after dt.
+            for (po = netdata->netobjects.begin() ; po != netdata->netobjects.end() ; po++)
+                if (po->second->advance(dt) == -1) {    // If somebody wants to be deleted,
+                    delete po->second;                  // show no mercy!
                     netdata->netobjects.erase(po);
                 }
-                // If .. this is our ship, then advance it according to our input state.
-                // NOTICE that whenever we get the ship status from server, server's version
-                // overwrites our version, so this here is merely for the comfort of the controls.
-                else if ((po->second->uid == netdata->me.uid) && (typeid(*po->second) == typeid(NetGameObject)))
-                {
-                    NetGameObject *myobj = dynamic_cast<NetGameObject *>(po->second);
-                    if (myobj) myobj->control(netdata->me);
-                }
-                po++;                                   //
-            }
+
+            // Advance our avatar according to our input state!
+            // NOTICE that this is merely for more comfortable controls. Server is king, and overwrites when he wants.
+            NetGameObject *myobj = dynamic_cast<NetGameObject *>(netdata->netobjects.find(netdata->myAvatarID)->second);
+            if (myobj) myobj->control(netdata->me);
 
             netdata->sendChanges();
-            netdata->receiveChanges();                  // IF we get an update from server, the previous work was in vain
+            netdata->receiveChanges(); // IF we get an update from server, that overwrites previous advances
 
             SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 0, 0, 0)); // clear screen
 
-            po = netdata->netobjects.begin();
-            while (po != netdata->netobjects.end()) {
-                if (typeid(*po->second) == typeid(NetGameObject))
-                {
-                    NetGameObject *ptrObj = dynamic_cast<NetGameObject *>(po->second);
-                    dstrect.w = dstrect.h = 10;
-                    dstrect.x = (screen->w)/2 + ptrObj->loc.x - 5;
-                    dstrect.y = (screen->h)/2 - ptrObj->loc.y - 5;
-                    SDL_FillRect(screen, &dstrect, ptrObj->color);
-                    dstrect.w = dstrect.h = 6;
-                    dstrect.x += sin(ptrObj->loc.heading) * 8. + 3;
-                    dstrect.y -= cos(ptrObj->loc.heading) * 8. - 3;
-                    SDL_FillRect(screen, &dstrect, ptrObj->color);
-                    dstrect.w = dstrect.h = 1;
-                    dstrect.x = (screen->w)/2 + ptrObj->loc.x;
-                    dstrect.y = (screen->h)/2 - ptrObj->loc.y;
-                    SDL_FillRect(screen, &dstrect, 0x00FFFFFF);
+            if (myobj) { xoffset = myobj->loc.x; yoffset = myobj->loc.y; }
 
-                }
-                else if (typeid(*po->second) == typeid(Projectile))
-                {
-                    Projectile *ptrProj = dynamic_cast<Projectile *>(po->second);
-                    dstrect.w = dstrect.h = 3;
-                    dstrect.x = (screen->w)/2 + ptrProj->loc.x - 1;
-                    dstrect.y = (screen->h)/2 - ptrProj->loc.y + 1;
-                    SDL_FillRect(screen, &dstrect, 0x00FFAA00);
-                }
-                po++;
-            }
+            for (po = netdata->netobjects.begin() ; po != netdata->netobjects.end() ; po++)
+                po->second->draw(screen, xoffset, yoffset);
+//            if (myobj) cout << "("<<floor(myobj->loc.x)<<","<<floor(myobj->loc.y)<<")"<<endl;
+            // if (typeid(*po->second) == typeid(Projectile)) // if you need to discriminate
 
             SDL_Flip(screen);       // finally, update the screen :)
             SDL_Delay(1);           // and delay. Could be removed, most probably. Maybe this allows some multiprocessing on single core systems though!

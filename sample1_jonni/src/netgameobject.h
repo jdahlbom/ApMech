@@ -10,6 +10,8 @@
 #include "projectile.h"
 #include <iostream>
 
+#include <SDL.h>        // for draw()
+
 class NetGameObject : public NetObject {
 
  public:
@@ -26,7 +28,8 @@ class NetGameObject : public NetObject {
     NetObject *create(int id);
 
     int advance(float dt);
-    vector<NetObject *> *control(NetUser &user);
+    int draw(SDL_Surface *s, float x, float y);
+    vector<NetObject *> *control(NetUser &user, bool createobjects = false);
 };
 
 #endif
