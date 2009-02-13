@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <vector>
 
 #include "netuser.h"
 #include "netobject.h"

@@ -42,13 +42,14 @@ int Location::unserialize(enet_uint8 buffer[], int start)
 
 void Location::advance(float dt)
 {
-//    float r2 = 10+x*x + y*y, rx, ry, ax, ay; // rx,ry is the unit vector to r direction
-//    rx = -x/sqrt(r2); ry = -y/sqrt(r2);
-//    ax = (100.0*rx)/r2; ay = (100.0*ry)/r2;
-
+    float r2 = x*x + y*y, rx, ry, ax, ay; // rx,ry is the unit vector to r direction
+/*    rx = -x/sqrt(r2); ry = -y/sqrt(r2);
+    if (r2 > 10000) { ax = (10000000.0*rx)/r2; ay = (10000000.0*ry)/r2; }
+    else ax = ay = 0.0;
+*/
     heading += turning * dt;
-    xvel += sin(heading) * a * dt;
-    yvel += cos(heading) * a * dt;
+    xvel += sin(heading) * a * dt + ax*dt;
+    yvel += cos(heading) * a * dt + ay*dt;
     x += xvel * dt;
     y += yvel * dt;
 

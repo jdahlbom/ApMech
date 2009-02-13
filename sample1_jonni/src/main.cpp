@@ -157,6 +157,22 @@ int main ( int argc, char** argv )
 //            if (myobj) cout << "("<<floor(myobj->loc.x)<<","<<floor(myobj->loc.y)<<")"<<endl;
             // if (typeid(*po->second) == typeid(Projectile)) // if you need to discriminate
 
+
+
+            for (po = netdata->netobjects.begin() ; po != netdata->netobjects.end() ; po++)
+            {
+                NetGameObject *radarobj = dynamic_cast<NetGameObject *>(po->second);
+                if (radarobj != NULL)
+                {
+                    SDL_Rect dstrect;
+                    dstrect.w = dstrect.h = 3;
+                    dstrect.x = 750 + radarobj->loc.x / 50;
+                    dstrect.y = 550 - radarobj->loc.y / 50;
+                    SDL_FillRect(screen, &dstrect, radarobj->color);
+                }
+            }
+
+
             SDL_Flip(screen);       // finally, update the screen :)
             SDL_Delay(1);           // and delay. Could be removed, most probably. Maybe this allows some multiprocessing on single core systems though!
         } // end of MAIN LOOP
