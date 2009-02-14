@@ -4,6 +4,10 @@
 #include <map>
 #include <Ogre.h>
 
+#ifdef _WINDOWS
+#include "pstdint.h"
+#endif
+
 using namespace Ogre;
 
 class GameObject {

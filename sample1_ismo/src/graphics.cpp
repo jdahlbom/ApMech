@@ -4,6 +4,7 @@
 #include "apframelistener.h"
 #include "apeventhandler.h"
 #include "apgui.h"
+#include "Ogre.h"
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 // This function will locate the path to our application on OS X,
@@ -51,10 +52,17 @@ bool Graphics::initialize(GameEngine *engine)
                           resourcePath + "ogre.cfg", resourcePath + "Ogre.log");
 #else
     mRoot = new Root();
+
 #endif
+
+	RenderSystemList* rlist = mRoot->getAvailableRenderers();
 
     // OpenGL
     mRenderSystem = mRoot->getRenderSystemByName("OpenGL Rendering Subsystem");
+	
+	if(mRenderSystem == NULL)
+		throw ("null render system!");
+
     mRenderSystem->setConfigOption("Full Screen", "No");
     mRoot->setRenderSystem(mRenderSystem);
 
