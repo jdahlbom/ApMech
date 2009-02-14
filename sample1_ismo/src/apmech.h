@@ -10,7 +10,6 @@ class GameWorld;
 #include <iostream>
 #include <OIS/OIS.h>
 
-
 #include "gameengine.h"
 #include "graphics.h"
 
