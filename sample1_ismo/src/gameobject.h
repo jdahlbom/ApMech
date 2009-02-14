@@ -4,6 +4,10 @@
 #include <map>
 #include <Ogre.h>
 
+#ifdef _WINDOWS
+#include "pstdint.h"
+#endif
+
 using namespace Ogre;
 
 class GameObject {
@@ -29,7 +33,7 @@ class GameObject {
     virtual ~GameObject();
 
     // any class that inherits GameObject must be ready to serialize!
-    virtual int serialize(uint8_t buffer[], int start, int buflength) = 0;
+    virtual int serialize(unsigned char buffer[], int start, int buflength) = 0;
 
     bool isDirty() const;
     void setDirty(bool state);
