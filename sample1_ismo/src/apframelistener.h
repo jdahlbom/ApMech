@@ -1,14 +1,18 @@
 #ifndef AP_FRAMELISTENER_H
 #define AP_FRAMELISTENER_H
 
+#include <CEGUI/CEGUI.h>
+
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+#include <Carbon/Carbon.h>
+#endif
+
 #include <Ogre.h>
 #include <OIS/OIS.h>
-#include <CEGUI/CEGUI.h>
 
 using namespace Ogre;
 
 class ApEventHandler;
-
 
 class ApFrameListener : public FrameListener, public OIS::KeyListener, public OIS::MouseListener
 {

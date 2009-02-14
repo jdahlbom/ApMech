@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		8D0C4E8D0486CD37000505A6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0867D6AAFE840B52C02AAC07 /* InfoPlist.strings */; };
 		8D0C4E920486CD37000505A6 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20286C33FDCF999611CA2CEA /* Carbon.framework */; };
+		DE1EF0EC0F46452B00A790AC /* CEGUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE1EF0EB0F46452B00A790AC /* CEGUI.framework */; };
+		DE1EF1E00F464A8700A790AC /* OgreCEGUIRenderer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE1EF1DF0F464A8700A790AC /* OgreCEGUIRenderer.framework */; };
+		DE1EF1E20F464A8B00A790AC /* OgreCEGUIRenderer.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = DE1EF1DF0F464A8700A790AC /* OgreCEGUIRenderer.framework */; };
+		DE1EF28C0F464ABD00A790AC /* CEGUI.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = DE1EF0EB0F46452B00A790AC /* CEGUI.framework */; };
 		DE38A1C40F065CDE00B29D90 /* apframelistener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DE38A1C30F065CDE00B29D90 /* apframelistener.cpp */; };
 		DE86D3A10EFED27100B72F7D /* graphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DE86D3A00EFED27100B72F7D /* graphics.cpp */; };
 		DEA81CB30EFD9EF200E5A09B /* gameworld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEA81CB00EFD9EF200E5A09B /* gameworld.cpp */; };
@@ -26,6 +30,8 @@
 		DED3E7A10EFC84A100B36728 /* Media in Resources */ = {isa = PBXBuildFile; fileRef = DED3E5EB0EFC84A000B36728 /* Media */; };
 		DEEE0A850EFD90B80093C3AD /* terrain.png in Resources */ = {isa = PBXBuildFile; fileRef = DEEE0A840EFD90B80093C3AD /* terrain.png */; };
 		DEF01D0E0EFDA9B200E18C05 /* Cg.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = DED3E57C0EFC79C500B36728 /* Cg.framework */; };
+		DEF6A8FE0F4613CD004E7B34 /* apgui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEF6A8FA0F4613CD004E7B34 /* apgui.cpp */; };
+		DEF6A8FF0F4613CD004E7B34 /* apeventhandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEF6A8FD0F4613CD004E7B34 /* apeventhandler.cpp */; };
 		DEFB66BC0EFDC9F400E2CB86 /* gameengine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEFB66BA0EFDC9F400E2CB86 /* gameengine.cpp */; };
 /* End PBXBuildFile section */
 
@@ -36,6 +42,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				DE1EF28C0F464ABD00A790AC /* CEGUI.framework in CopyFiles */,
+				DE1EF1E20F464A8B00A790AC /* OgreCEGUIRenderer.framework in CopyFiles */,
 				DEF01D0E0EFDA9B200E18C05 /* Cg.framework in CopyFiles */,
 				DED3E5B20EFC7DD000B36728 /* Ogre.framework in CopyFiles */,
 			);
@@ -49,6 +57,8 @@
 		8D0C4E960486CD37000505A6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D0C4E970486CD37000505A6 /* sample1_ismo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sample1_ismo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE06A8000EFEFB290003C317 /* network_strategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = network_strategy.h; path = src/network_strategy.h; sourceTree = "<group>"; };
+		DE1EF0EB0F46452B00A790AC /* CEGUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CEGUI.framework; path = ../../../Desktop/OgreSDK/Dependencies/CEGUI.framework; sourceTree = SOURCE_ROOT; };
+		DE1EF1DF0F464A8700A790AC /* OgreCEGUIRenderer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OgreCEGUIRenderer.framework; path = ../../../Desktop/OgreCEGUIRenderer.framework; sourceTree = SOURCE_ROOT; };
 		DE38A1C30F065CDE00B29D90 /* apframelistener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = apframelistener.cpp; path = src/apframelistener.cpp; sourceTree = "<group>"; };
 		DE86D39F0EFED27100B72F7D /* graphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = graphics.h; path = src/graphics.h; sourceTree = "<group>"; };
 		DE86D3A00EFED27100B72F7D /* graphics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = graphics.cpp; path = src/graphics.cpp; sourceTree = "<group>"; };
@@ -69,6 +79,11 @@
 		DED3E5B60EFC7E6400B36728 /* media.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = media.cfg; sourceTree = "<group>"; };
 		DED3E5EB0EFC84A000B36728 /* Media */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Media; path = ../Media; sourceTree = SOURCE_ROOT; };
 		DEEE0A840EFD90B80093C3AD /* terrain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = terrain.png; path = ../Media/materials/textures/terrain.png; sourceTree = SOURCE_ROOT; };
+		DEF6A8F90F4613CD004E7B34 /* apgui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = apgui.h; path = src/apgui.h; sourceTree = "<group>"; };
+		DEF6A8FA0F4613CD004E7B34 /* apgui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = apgui.cpp; path = src/apgui.cpp; sourceTree = "<group>"; };
+		DEF6A8FB0F4613CD004E7B34 /* apframelistener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = apframelistener.h; path = src/apframelistener.h; sourceTree = "<group>"; };
+		DEF6A8FC0F4613CD004E7B34 /* apeventhandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = apeventhandler.h; path = src/apeventhandler.h; sourceTree = "<group>"; };
+		DEF6A8FD0F4613CD004E7B34 /* apeventhandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = apeventhandler.cpp; path = src/apeventhandler.cpp; sourceTree = "<group>"; };
 		DEFB66BA0EFDC9F400E2CB86 /* gameengine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.cpp.cpp; name = gameengine.cpp; path = src/gameengine.cpp; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; };
 		DEFB66BB0EFDC9F400E2CB86 /* gameengine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gameengine.h; path = src/gameengine.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -82,7 +97,9 @@
 				DED3E57E0EFC79C500B36728 /* Cg.framework in Frameworks */,
 				DED3E57F0EFC79C600B36728 /* Ogre.framework in Frameworks */,
 				DED3E5850EFC7A0600B36728 /* libois.a in Frameworks */,
+				DE1EF0EC0F46452B00A790AC /* CEGUI.framework in Frameworks */,
 				DED3E5910EFC7BF700B36728 /* IOKit.framework in Frameworks */,
+				DE1EF1E00F464A8700A790AC /* OgreCEGUIRenderer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,6 +117,8 @@
 		20286C29FDCF999611CA2CEA /* sample1_ismo */ = {
 			isa = PBXGroup;
 			children = (
+				DE1EF1DF0F464A8700A790AC /* OgreCEGUIRenderer.framework */,
+				DE1EF0EB0F46452B00A790AC /* CEGUI.framework */,
 				DED3E5900EFC7BF700B36728 /* IOKit.framework */,
 				DED3E5840EFC7A0600B36728 /* libois.a */,
 				DED3E57C0EFC79C500B36728 /* Cg.framework */,
@@ -115,6 +134,11 @@
 		20286C2AFDCF999611CA2CEA /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				DEF6A8F90F4613CD004E7B34 /* apgui.h */,
+				DEF6A8FA0F4613CD004E7B34 /* apgui.cpp */,
+				DEF6A8FB0F4613CD004E7B34 /* apframelistener.h */,
+				DEF6A8FC0F4613CD004E7B34 /* apeventhandler.h */,
+				DEF6A8FD0F4613CD004E7B34 /* apeventhandler.cpp */,
 				DE38A1C30F065CDE00B29D90 /* apframelistener.cpp */,
 				DEFB66BA0EFDC9F400E2CB86 /* gameengine.cpp */,
 				DEFB66BB0EFDC9F400E2CB86 /* gameengine.h */,
@@ -222,6 +246,8 @@
 				DECAC3040EFE5D68001EEFCB /* gameobject.cpp in Sources */,
 				DE86D3A10EFED27100B72F7D /* graphics.cpp in Sources */,
 				DE38A1C40F065CDE00B29D90 /* apframelistener.cpp in Sources */,
+				DEF6A8FE0F4613CD004E7B34 /* apgui.cpp in Sources */,
+				DEF6A8FF0F4613CD004E7B34 /* apeventhandler.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,27 +273,38 @@
 					ppc,
 				);
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Desktop/OgreSDK/Dependencies\"",
+					"\"$(SRCROOT)/../../../Desktop\"",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../../Desktop/OgreSDK/build/Release\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/lib\"",
+					"\"$(SRCROOT)/../../../Desktop/OgreSDK/Samples/include\"",
 					"\"$(SRCROOT)/../../../Desktop/OgreSDK/Dependencies/Ogre.framework/Headers\"",
 					"\"$(SRCROOT)/../../../Desktop/OgreSDK/Dependencies/Cg.framework/Headers\"",
 					"\"$(SRCROOT)/../../../Desktop/OgreSDK/Dependencies/include\"",
+					"\"$(SRCROOT)/../../../Desktop/OgreSDK/Dependencies/Cegui.framework/Headers\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Desktop/OgreSDK/Dependencies/lib/Release\"",
+					"\"$(SRCROOT)\"",
+				);
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
 				);
 				PRODUCT_NAME = sample1_ismo;
 				VALID_ARCHS = i386;
@@ -283,25 +320,35 @@
 					i386,
 					ppc,
 				);
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Desktop/OgreSDK/Dependencies\"",
+					"\"$(SRCROOT)/../../../Desktop\"",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../../Desktop/OgreSDK/build/Release\"",
 				);
 				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/lib\"",
+					"\"$(SRCROOT)/../../../Desktop/OgreSDK/Samples/include\"",
 					"\"$(SRCROOT)/../../../Desktop/OgreSDK/Dependencies/Ogre.framework/Headers\"",
 					"\"$(SRCROOT)/../../../Desktop/OgreSDK/Dependencies/Cg.framework/Headers\"",
 					"\"$(SRCROOT)/../../../Desktop/OgreSDK/Dependencies/include\"",
+					"\"$(SRCROOT)/../../../Desktop/OgreSDK/Dependencies/Cegui.framework/Headers\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Desktop/OgreSDK/Dependencies/lib/Release\"",
+					"\"$(SRCROOT)\"",
+				);
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
 				);
 				PRODUCT_NAME = sample1_ismo;
 				VALID_ARCHS = i386;
@@ -316,6 +363,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
 			};
 			name = Debug;
@@ -330,6 +378,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
 			};
 			name = Release;

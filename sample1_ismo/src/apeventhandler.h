@@ -1,6 +1,7 @@
 #ifndef AP_EVENTHANDLER_H
 #define AP_EVENTHANDLER_H
 
+#include <CEGUI/CEGUI.h>
 #include "gameengine.h"
 #include "apgui.h"
 

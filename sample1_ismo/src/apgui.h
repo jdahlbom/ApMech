@@ -1,14 +1,18 @@
 #ifndef AP_GUI_H
 #define AP_GUI_H
 
-#include <Ogre.h>
 #include <CEGUI/CEGUI.h>
+
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+#include <Carbon/Carbon.h>
+#endif
+
+#include <Ogre.h>
 #include <OgreCEGUIRenderer.h>
 
-class ApEventHandler;
-
-
 using namespace Ogre;
+
+class ApEventHandler;
 
 class ApGui
 {

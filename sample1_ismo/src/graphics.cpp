@@ -1,9 +1,10 @@
+#include "apgui.h"
+
 #include "graphics.h"
 #include "gameengine.h"
 #include "gameobject.h"
 #include "apframelistener.h"
 #include "apeventhandler.h"
-#include "apgui.h"
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 // This function will locate the path to our application on OS X,
