@@ -39,7 +39,7 @@ int StarField::unserialize(enet_uint8 buffer[], int start)
 
     if (id == *(int *)(buffer+start)) {                     length += 4;
         objtype = *(enet_uint8 *)(buffer+start+length);     length++;
-    } else cout << "FOULED!" << endl;
+    } else cout << "FOULED in StarField::unserialize!" << endl;
 
     return length;
 }

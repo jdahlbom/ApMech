@@ -46,7 +46,7 @@ int Projectile::unserialize(enet_uint8 buffer[], int start)
         uid = *(int *)(buffer+start+length);                length += 4;
         age = *(unsigned int*)(buffer+start+length);        length += 4;
         length += loc.unserialize(buffer, start+length);
-    } else cout << "FOULED!" << endl;
+    } else cout << "FOULED in Projectile::unserialize!" << endl;
 
     return length;
 }

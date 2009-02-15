@@ -219,7 +219,7 @@ int NetGameObject::unserialize(enet_uint8 buffer[], int start)
     int length = 0;
     enet_uint8 objtype;
 
-    if (id == *(int *)(buffer+start)) {                     length += 4;
+    if (id == *(int *)(buffer+start+length)) {              length += 4;
         objtype = *(enet_uint8 *)(buffer+start+length);     length++;
         uid = *(int *)(buffer+start+length);                length += 4;
         color = *(int *)(buffer+start+length);              length += 4;
@@ -251,7 +251,7 @@ int NetGameObject::draw(SDL_Surface *s, float x, float y)
     return 1;
 }
 
-vector<NetObject *> *NetGameObject::control(NetUser &user, bool createobjects)
+list<NetObject *> *NetGameObject::control(NetUser &user, bool createobjects)
 {
     loc.a = user.a;
     loc.turning = user.turning;
@@ -259,7 +259,7 @@ vector<NetObject *> *NetGameObject::control(NetUser &user, bool createobjects)
     if (createobjects)
     {
         if ((user.controls & NetUser::SHOOT_MG) && (mg_delay == 0)) {
-            vector<NetObject *> *result = new vector<NetObject *>();
+            list<NetObject *> *result = new list<NetObject *>();
 
             Projectile *pProj;
             mg_delay = 0.2;

@@ -7,14 +7,30 @@ map<enet_uint8, NetObject *>& netobjectprototypes()
     return *objectprotomap;
 }
 
+
+void NetData::addEvent(NetEvent *event)
+{
+    neteventlist.push_back(event);
+}
+bool NetData::pollEvent(NetEvent *event)
+{
+    if (!neteventlist.empty()) {
+        *event = *neteventlist.front(); // Copy what's in there
+        delete neteventlist.front();
+        neteventlist.pop_front();
+        return true;
+    } else return false;
+}
+
 NetData::NetData(int type, int _port) {
     if (enet_initialize() != 0) {
         status = enet_error;
         errorstring = "Error in enet_initialize()";
     } else if (type == NetData::SERVER) {
         status = server;
-        me.peer.address.host = ENET_HOST_ANY; me.peer.address.port = _port;
-        enethost = enet_host_create(&me.peer.address, MAXCLIENTS+1, 0, 0); // Assuming any in/out bandwidth
+        me.peer = new ENetPeer();
+        me.peer->address.host = ENET_HOST_ANY; me.peer->address.port = _port;
+        enethost = enet_host_create(&me.peer->address, MAXCLIENTS+1, 0, 0); // Assuming any in/out bandwidth
         me.uid = 0; // The server is Net-UID 0!
     } else if (type == NetData::CLIENT) {
         status = offline;
@@ -25,8 +41,7 @@ NetData::NetData(int type, int _port) {
         status = enet_error;
         errorstring = "Error using enet_host_create in NetData constructor";
     }
-
-    me.uid = -1; enetserver = NULL;
+    me.uid = -1; myAvatarID = 0; enetserver = NULL;
     return;
 }
 
@@ -36,7 +51,17 @@ NetData::~NetData() {
     return;
 }
 
-
+void NetData::setAvatarID(int uid, int avatarid)
+{
+    enet_uint8 buffer[6];
+    buffer[0] = NetData::PACKET_SETAVATAR;
+    *(int *)(buffer+1) = avatarid; buffer[5] = NetData::PACKET_EOF;
+    ENetPacket *packet = enet_packet_create(buffer, 6, ENET_PACKET_FLAG_RELIABLE);
+    map<int,NetUser>::iterator ui;
+    ui = users.find(uid);
+    if (ui == users.end()) cout << "FOULED in NetData::setAvatarID: Uid not found!"<<endl;
+    else enet_peer_send(ui->second.peer, 0, packet);
+}
 
 int NetData::connect(std::string ip, int port)
 {
@@ -66,12 +91,14 @@ int NetData::connect(std::string ip, int port)
     while (enet_host_service(enethost, &event, 3000) > 0) {
         switch (event.type) {
          case ENET_EVENT_TYPE_RECEIVE:
-            if (event.packet->dataLength == 8) {  // Ha! It seems we just connected, and now we get our UID.
+            if (event.packet->dataLength == 4) {  // Ha! It seems we just connected, and now we get our UID.
                 me.uid = int(*event.packet->data);
-                myAvatarID = int(*(event.packet->data+4));
-                cout << "I received an UID! It is "<<me.uid<<". myAvatarID is "<<myAvatarID<<endl;
+                cout << "I received an UID! It is "<<me.uid<<"."<<endl;
                 enet_packet_destroy(event.packet);
                 return 1;
+            } else {
+                cout << "FOULED in NetData::connect! Bad or wrong packet received after connection!"<<endl;
+                enet_packet_destroy(event.packet);
             }
          default:
             break;
@@ -120,33 +147,30 @@ int NetData::serviceServer()
             if (users.size() == MAXCLIENTS) {   // If server is full..
                 enet_peer_disconnect(event.peer, NetData::SERVERFULL);
             } else {
-                int newuid, newid;
+                int newuid;
                 for (newuid = 1; users.find(newuid) != users.end(); newuid++); // find first unused uid
-                users.insert(make_pair(newuid, NetUser(newuid, *event.peer)));
-
-                newid = getUniqueObjectID();                                    // and an unused object id
-                netobjects.insert(make_pair(newid, new NetGameObject(newid, newuid)));
-                // FIXME: Not the proper place to insert objects. Has to do, until I build an event system..
-
+                users.insert(make_pair(newuid, NetUser(newuid, event.peer)));
                 event.peer->data = new int(newuid);
-                enet_uint8 buffer[8]; *(int *)(buffer) = newuid; *(int *)(buffer+4) = newid;
-                ENetPacket *packet = enet_packet_create(buffer, 8, ENET_PACKET_FLAG_RELIABLE); // OBS! Bad way to do this!
+
+                enet_uint8 buffer[4]; *(int *)(buffer) = newuid;
+                ENetPacket *packet = enet_packet_create(buffer, 4, ENET_PACKET_FLAG_RELIABLE); // OBS! Bad way to do this!
                 enet_peer_send(event.peer, 0, packet);
-                cout << "Received a connection from "<< uint2ipv4(event.peer->address.host) <<", uid "<<newuid;
-                cout << ". We now have "<<users.size()<<" users."<<endl;
+
+                addEvent(new NetEvent(NetData::EVENT_CONNECT, newuid));
             }
             break;
 
          case ENET_EVENT_TYPE_RECEIVE:
             if (status == server) {                      // Server action. Update a user
                 enet_uint8 *data = event.packet->data;
-                int parts = data[0], h=1;
-                int uid;
-                for (int i=0; i<parts; i++)
+                int uid, h=0;
+                while (data[h] != NetData::PACKET_EOF)
                 {
                     if (data[h] == NetData::PACKET_NETUSER) {
                         h++; uid = *(int *)(data+h);  // this means, read an int from data[h] onwards
                         h += users.find(uid)->second.unserialize(data, h);
+                    } else {
+                        cout << "Received an unknown packet! Error in NetData::serviceClient!" << endl;
                     }
                 }
                 enet_packet_destroy(event.packet);
@@ -159,13 +183,12 @@ int NetData::serviceServer()
                 delete (int *)event.peer->data;     // I wonder why I wrote this line
                 cout << "Client " << event.data << " has disconnected" << endl;
 
-                map<int, NetObject *>::iterator iObj;
-                for (iObj = netobjects.begin(); iObj != netobjects.end(); iObj++) {
+                for (map<int, NetObject *>::iterator iObj = netobjects.begin() ; iObj != netobjects.end() ; iObj++)
                     if (iObj->second->uid == int(event.data)) iObj->second->uid = -1;
-                }
 
-                enet_uint8 buffer[6]; buffer[0] = 1; buffer[1] = NetData::PACKET_DISCONNECT;    // Let clients know!
-                *(int *)(buffer + 2) = int(event.data);
+                enet_uint8 buffer[6]; buffer[0] = NetData::PACKET_DISCONNECT;    // Let clients know!
+                *(int *)(buffer + 1) = int(event.data);
+                buffer[5] = NetData::PACKET_EOF;
                 ENetPacket *packet = enet_packet_create(buffer, 6, ENET_PACKET_FLAG_RELIABLE);
                 enet_host_broadcast(enethost, 0, packet);
                 // Not detecting if we get disconnect messages from users who weren't connected in the first place. Oh well.
@@ -183,7 +206,7 @@ int NetData::serviceClient()
 {
     ENetEvent event;
     enet_uint8 *data, objtype;
-    int items = 0, parts, h, uid, id;
+    int items = 0, h, uid, id;
 
     while (enet_host_service(enethost, &event, 0))
     {
@@ -192,8 +215,8 @@ int NetData::serviceClient()
 
          case ENET_EVENT_TYPE_RECEIVE:{        // We're a user, server's sending us stuff!
             data = event.packet->data;
-            parts = data[0], h=1;
-            for (int i=0; i<parts; i++)
+            h=0;
+            while (data[h] != NetData::PACKET_EOF)
             {
                 if (data[h] == NetData::PACKET_NETOBJECT) {
                     h++; id = *(int *)(data+h);  // this means, read an int from data[h] onwards
@@ -207,11 +230,17 @@ int NetData::serviceClient()
                     h++; id = *(int *)(data+h);
                     netobjects.erase(id);
                     h += 4;
+                } else if (data[h] == NetData::PACKET_SETAVATAR) {
+                    h++; myAvatarID = *(int *)(data+h);
+                    h += 4;
                 } else if (data[h] == NetData::PACKET_DISCONNECT) {
                     h++; uid = *(int *)(data+h); h+=4;
-
+                    cout << "Player "<<uid<<" disconnected!"<<endl;
                     // TODO: DO SOMETHING TO INDICATE THIS!
                     // That, in addition to adding some class for player info, to give users
+                } else {
+                    cout << "Received an unknown packet! Error in NetData::serviceClient!" << endl;
+                    h++;
                 }
             }
             enet_packet_destroy(event.packet);
@@ -237,20 +266,19 @@ int NetData::receiveChanges()
     int items = 0;
     if (status == server) items += serviceServer();
     else if (status == connected) items += serviceClient();
-
     return items;
 }
 
 int NetData::sendChanges()
 {
     int items = 0;
-    if ((status == connected) && (me.changed)) { // Do we have updated things to send!
+    if ((status == connected) && (me.changed) && (me.uid > 0)) { // Do we have updated things to send!
         enet_uint8 buffer[10000];
-        int length=1;
+        int length=0;
 
         buffer[length++] = NetData::PACKET_NETUSER;
         length += me.serialize(buffer, length, 10000);
-        buffer[0] = 1;
+        buffer[length++] = NetData::PACKET_EOF;
 
         ENetPacket *packet = enet_packet_create(buffer, length, 0);//ENET_PACKET_FLAG_RELIABLE);
         enet_peer_send(enetserver, 0, packet);
@@ -259,9 +287,9 @@ int NetData::sendChanges()
 
     } else if ((status == server) ) {          // 1st iteration: send anyway, even if no updates.
         enet_uint8 buffer[10000];
-        int length=1, packetstosend = 0;
+        int length=0, packetstosend = 0;
         map<int,NetObject *>::iterator po = netobjects.begin();
-        vector<int>::iterator iDelPkg = objectDeleteQueue.begin();
+        list<int>::iterator iDelPkg = objectDeleteQueue.begin();
 
         while (iDelPkg != objectDeleteQueue.end()) {
             buffer[length++] = NetData::PACKET_DELOBJECT;
@@ -274,7 +302,7 @@ int NetData::sendChanges()
             length += po->second->serialize(buffer, length, 10000);
             packetstosend++; po++;
         }
-        buffer[0] = packetstosend;
+        buffer[length++] = NetData::PACKET_EOF;
 
         if (packetstosend > 0) {
             ENetPacket *packet = enet_packet_create(buffer, length, 0);//ENET_PACKET_FLAG_RELIABLE);

@@ -48,8 +48,8 @@ void Location::advance(float dt)
     else ax = ay = 0.0;
 */
     heading += turning * dt;
-    xvel += sin(heading) * a * dt + ax*dt;
-    yvel += cos(heading) * a * dt + ay*dt;
+    xvel += sin(heading) * a * dt;// + ax*dt;
+    yvel += cos(heading) * a * dt;// + ay*dt;
     x += xvel * dt;
     y += yvel * dt;
 

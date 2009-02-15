@@ -13,16 +13,16 @@ class NetUser : public NetObject
  public:
     static const unsigned int SHOOT_MG = 1;
 
-    ENetPeer peer;
+    ENetPeer *peer;
     int uid;
     std::string nick;
 
-    int x, y, color, ping;
+    int color, ping;
     float a, turning;       // m/s², and rad/s
     unsigned int controls;
 
     NetUser();
-    NetUser(int uid, ENetPeer _peer);
+    NetUser(int uid, ENetPeer *_peer);
 
     int serialize(enet_uint8 buffer[], int start, int buflength);
     int unserialize(enet_uint8 buffer[], int start);

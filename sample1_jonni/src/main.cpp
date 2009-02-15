@@ -142,7 +142,9 @@ int main ( int argc, char** argv )
 
             // Advance our avatar according to our input state!
             // NOTICE that this is merely for more comfortable controls. Server is king, and overwrites when he wants.
-            NetGameObject *myobj = dynamic_cast<NetGameObject *>(netdata->netobjects.find(netdata->myAvatarID)->second);
+            NetGameObject *myobj = NULL;
+            if ((netdata->myAvatarID > 0) && (netdata->netobjects.find(netdata->myAvatarID) != netdata->netobjects.end()))
+                myobj = dynamic_cast<NetGameObject *>(netdata->netobjects.find(netdata->myAvatarID)->second);
             if (myobj) myobj->control(netdata->me);
 
             netdata->sendChanges();

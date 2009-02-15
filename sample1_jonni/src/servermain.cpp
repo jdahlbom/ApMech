@@ -12,6 +12,7 @@
 #include <iostream>
 #include <cstdlib>  // for random
 #include <cmath>    // for sin,cos in the server
+#include <list>
 
 #include "netdata.h"
 #include "netgameobject.h"
@@ -26,6 +27,7 @@ int servermain(int argc, char* argv[])
     map<int,NetObject *>::iterator p, pProj;
     map<int, NetUser>::iterator iUser;
     NetData *netdata;
+    NetEvent event;
     long int nextupdate;    // When we will send updates to clients the next time
     long int oldticks, newticks;    // These here for tracking time
     float dt;                       //
@@ -53,14 +55,14 @@ int servermain(int argc, char* argv[])
             {
                 if (iUser != netdata->users.end()) // That means the object's owner is still logged in
                 {
-                    vector<NetObject *> *vObjs = ptrObj->control(iUser->second, true);
-                    if (vObjs != NULL) {            // if control returns objects, insert them to netobjects map
-                        vector<NetObject *>::iterator ivObj;
-                        for (ivObj = vObjs->begin(); ivObj != vObjs->end(); ivObj++)
+                    list<NetObject *> *lObjs = ptrObj->control(iUser->second, true);
+                    if (lObjs != NULL) {            // if control returns objects, insert them to netobjects map
+                        list<NetObject *>::iterator ilObj;
+                        for (ilObj = lObjs->begin(); ilObj != lObjs->end(); ilObj++)
                         {
                             int newid = netdata->getUniqueObjectID();
-                            (*ivObj)->id = newid;
-                            netdata->netobjects.insert(make_pair(newid, *ivObj));
+                            (*ilObj)->id = newid;
+                            netdata->netobjects.insert(make_pair(newid, *ilObj));
                         }
                     }
                 } else {                            // That means owner's disconnected, so paint it gray!
@@ -94,6 +96,22 @@ int servermain(int argc, char* argv[])
             nextupdate = newticks + 40; // 40 ms between updates, that's 25 network fps.
         }                               // Seems to me that up to 100 is still okay!
         SDL_Delay(1);       // sleep even a little bit so that dt is never 0
-    }
+
+        while (netdata->pollEvent(&event)) {
+            switch (event.type)
+            {
+             case NetData::EVENT_CONNECT:
+                cout << "Received a connection from "<< uint2ipv4(netdata->users[event.uid].peer->address.host) <<", uid "<<event.uid;
+                cout << ". We now have "<<netdata->users.size()<<" users."<<endl;
+
+                int newid = netdata->getUniqueObjectID();                                    // and an unused object id
+                netdata->netobjects.insert(make_pair(newid, new NetGameObject(newid, event.uid)));
+
+                netdata->setAvatarID(event.uid, newid);
+                break;
+            }
+        }
+
+    } // Main loop
 
 }

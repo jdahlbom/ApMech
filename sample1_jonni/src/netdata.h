@@ -5,14 +5,13 @@
 #include <iostream>
 #include <string>
 #include <map>
-#include <vector>
+#include <list>
 
 #include "netuser.h"
 #include "netobject.h"
+#include "netevent.h"
 #include "functions.h"
 
-#include "netgameobject.h"  // Temporary solution. Optimally, netdata core sources shouldn't
-                            // have to know about served objects.
 
 using namespace std;
 
@@ -35,11 +34,17 @@ class NetData {
     static const enet_uint8 PACKET_NETUSER = 40;
     static const enet_uint8 PACKET_NETOBJECT = 41;
     static const enet_uint8 PACKET_DELOBJECT = 42;
-    static const enet_uint8 PACKET_DISCONNECT = 9;
+    static const enet_uint8 PACKET_SETAVATAR = 43;
+    static const enet_uint8 PACKET_DISCONNECT = 44;
+    static const enet_uint8 PACKET_EOF = 49;
 
     static const enet_uint8 OBJECT_TYPE_NETGAMEOBJECT = 50;
     static const enet_uint8 OBJECT_TYPE_PROJECTILE = 51;
     static const enet_uint8 OBJECT_TYPE_STARFIELD = 52;
+
+    static const enet_uint8 EVENT_NOEVENT = 19;
+    static const enet_uint8 EVENT_CONNECT = 20;
+    static const enet_uint8 EVENT_DISCONNECT = 21;
 
  private:
     enum status_type { enet_error, offline, connected, server };
@@ -51,13 +56,17 @@ class NetData {
     int serviceServer();
     int serviceClient();
 
+    list <int> objectDeleteQueue;
+    list <NetEvent *> neteventlist;
+    void addEvent(NetEvent *event); // Almost useless, if you can push_back stuff to a list
+
  public:
     map <int, NetUser> users;   // This is, users contacted to US! Should be empty unless we're server.
     map <int, NetObject *> netobjects;
-    vector <int> objectDeleteQueue;
 
     NetUser me;
-    int myAvatarID;             // if >0, tells which object in the map represents me!
+    int myAvatarID;             // if >0, tells which object in the map represents me! (if client)
+    void setAvatarID(int uid, int avatarid);
 
     NetData(int type = NetData::CLIENT, int _port = DEFAULTPORT);
     ~NetData();
@@ -67,11 +76,15 @@ class NetData {
 
     int sendChanges();
     int receiveChanges();
+    bool pollEvent(NetEvent *event);
 
     // Functions below here are meant for server's use. Undefined consequences for clients. Maybe.
 
     int getUniqueObjectID();
     void delObject(int id);
+
+//    int save(string filename);
+//    int load(string filename);
 };
 
 

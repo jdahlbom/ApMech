@@ -1,7 +1,7 @@
 #ifndef __netgameobject_h__
 #define __netgameobject_h__
 
-#include <vector>
+#include <list>
 #include <cmath>     // for sin and cos, for advance
 #include "netdata.h"
 #include "netobject.h"
@@ -29,7 +29,7 @@ class NetGameObject : public NetObject {
 
     int advance(float dt);
     int draw(SDL_Surface *s, float x, float y);
-    vector<NetObject *> *control(NetUser &user, bool createobjects = false);
+    list<NetObject *> *control(NetUser &user, bool createobjects = false);
 };
 
 #endif
