@@ -20,6 +20,7 @@ class Graphics {
     RenderWindow *mWindow;
     RenderSystem *mRenderSystem;
     SceneManager *mSceneMgr;
+	Camera *mCamera;
 
     // for game logic
     GameWorld *mWorld;

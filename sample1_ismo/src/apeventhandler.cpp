@@ -41,8 +41,32 @@ bool ApEventHandler::moveLeft()
 
 void ApEventHandler::move(float forward, float right)
 {
-    Vector3 playerLocation = mEngine->mPlayer->getLocation();
-    mEngine->mPlayer->setLocation(playerLocation + Vector3(Real(forward), Real(0.0), Real(right)));
+	SceneNode *trgnode = mEngine->mPlayer->getSceneNode();
+	Matrix3 axes = mEngine->mPlayer->getSceneNode()->getLocalAxes();
+
+	switch((int)forward) {
+		case 1:
+			trgnode->translate(axes, Vector3(1,0,0)); //forward in local object space
+			break;
+		case -1:
+			trgnode->translate(axes, Vector3(-1,0,0)); //back in local object space
+			break;
+		default:
+			break;
+	}
+	switch((int)right) {
+		case -1:
+			trgnode->yaw(Radian(Degree(5)));
+			break;
+		case 1:
+			trgnode->yaw(Radian(Degree(-5)));
+			break;
+		default:
+			break;
+	}
+
+	mEngine->mPlayer->setLocation(trgnode->getPosition());
+
     markAsChanged();
 }
 

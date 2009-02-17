@@ -205,6 +205,7 @@ void ApGui::switchSheets(const char *fromName, const char *toName)
     const CEGUI::String prevName = CEGUI::String(fromName);
     const CEGUI::String nextName = CEGUI::String(toName);
 
+#ifndef _WINDOWS
     CEGUI::Window *previousSheet = mRoot->getChildRecursive(prevName);
     CEGUI::Window *newSheet = mRoot->getChildRecursive(nextName);
     assert( 0 != previousSheet );
@@ -213,6 +214,8 @@ void ApGui::switchSheets(const char *fromName, const char *toName)
     previousSheet->hide();
     newSheet->show();
     newSheet->activate();
+#endif
+
 }
 
 void ApGui::toggleMainMenu()

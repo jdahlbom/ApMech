@@ -183,6 +183,19 @@ bool Graphics::updateGraphics(GameObject *gameObject)
         gameObject->setSceneNode(node);
     }
 
+	if (mCamera != NULL && node != NULL) {
+
+		Vector3 mechloc = node->getPosition();
+		mCamera->setPosition(mechloc + (Vector3(-150, 125, 25)));
+		mCamera->setAutoTracking(true, node, Vector3(300, 0, 0));
+
+		//gameObject->getSceneNode()->attachObject(mCamera);
+
+		//Vector3 mechloc = node->getPosition();
+		//mCamera->setPosition(mechloc + (Vector3(-150, 125, 25)));
+		//mCamera->setAutoTracking(true, node, Vector3(300, 0, 0));
+	}
+
     node->setPosition(gameObject->getLocation());
 
     return true;
@@ -202,9 +215,9 @@ bool Graphics::load()
     light->setSpecularColour(ColourValue(1, 0, 0));
     light->setDirection(Vector3(0, -1, 1) );
 
-    Camera *mCamera = mSceneMgr->createCamera("PlayerCam");
+    mCamera = mSceneMgr->createCamera("PlayerCam");
     Vector3 camGroundOrigin = Vector3(750, 0, 750);
-    mCamera->setPosition(camGroundOrigin + Vector3(0, 200, 0));
+    mCamera->setPosition(camGroundOrigin + Vector3(0, 250, 0));
     mCamera->lookAt(camGroundOrigin + Vector3(1, 0, 0));
     mCamera->setNearClipDistance(5);
 
@@ -217,6 +230,7 @@ bool Graphics::load()
 
 bool Graphics::render()
 {
+
     if (mRoot) {
         mRoot->renderOneFrame();
         return true;
