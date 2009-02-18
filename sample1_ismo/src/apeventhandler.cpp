@@ -5,6 +5,12 @@
 ApEventHandler::ApEventHandler(GameEngine *engine): mEngine(engine)
 {
     mApGui = 0;
+
+    mControlForward = 0.0f;
+    mControlLeft = 0.0f;
+
+    mMovementSpeed = 100;
+    mTurningSpeed = 50;
 }
 
 ApEventHandler::~ApEventHandler() {}
@@ -17,57 +23,46 @@ bool ApEventHandler::quit()
 
 bool ApEventHandler::moveUp()
 {
-    move(1.0f, 0.0f);
+    mControlForward = 1.0f;
     return true;
 }
 
 bool ApEventHandler::moveDown()
 {
-    move(-1.0f, 0.0f);
+    mControlForward = -0.9f;
     return true;
 }
 
 bool ApEventHandler::moveRight()
 {
-    move(0.0f, 1.0f);
+    mControlLeft = -1.0f;
     return true;
 }
 
 bool ApEventHandler::moveLeft()
 {
-    move(0.0f, -1.0f);
+    mControlLeft = 1.0f;
     return true;
 }
 
-void ApEventHandler::move(float forward, float right)
+void ApEventHandler::move(float msTimeSinceLast)
 {
-	SceneNode *trgnode = mEngine->mPlayer->getSceneNode();
-	Matrix3 axes = mEngine->mPlayer->getSceneNode()->getLocalAxes();
+    if ( (0 != mControlForward) || (0 != mControlLeft) ) {
+        SceneNode *trgnode = mEngine->mPlayer->getSceneNode();
+        Matrix3 axes = mEngine->mPlayer->getSceneNode()->getLocalAxes();
 
-	switch((int)forward) {
-		case 1:
-			trgnode->translate(axes, Vector3(1,0,0)); //forward in local object space
-			break;
-		case -1:
-			trgnode->translate(axes, Vector3(-1,0,0)); //back in local object space
-			break;
-		default:
-			break;
-	}
-	switch((int)right) {
-		case -1:
-			trgnode->yaw(Radian(Degree(5)));
-			break;
-		case 1:
-			trgnode->yaw(Radian(Degree(-5)));
-			break;
-		default:
-			break;
-	}
+        if ( 0 != mControlForward ) {
+            trgnode->translate(axes, Vector3( mControlForward * mMovementSpeed * msTimeSinceLast,0,0));
+        }
 
-	mEngine->mPlayer->setLocation(trgnode->getPosition());
+        if ( 0 != mControlLeft ) {
+            trgnode->yaw(Radian(Degree(mControlLeft * mTurningSpeed * msTimeSinceLast)));
+        }
 
-    markAsChanged();
+        mEngine->mPlayer->setLocation(trgnode->getPosition());
+
+        markAsChanged();
+    }
 }
 
 void ApEventHandler::markAsChanged()

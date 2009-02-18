@@ -20,14 +20,18 @@ class ApEventHandler
     bool moveLeft();
     bool moveRight();
     void toggleMainMenu();
-
- protected:
-    void move(float forward, float right);
+    void move(float msTimeSinceLast);
 
  private:
     GameEngine *mEngine;
     ApGui *mApGui;
     void markAsChanged();
+
+    float mControlForward;
+    float mControlLeft;
+
+    float mMovementSpeed;
+    float mTurningSpeed;
 
 };
 

@@ -26,6 +26,21 @@ void ApFrameListener::initializeOIS(RenderWindow *window)
     mWindow->getCustomAttribute("WINDOW", &windowHnd);
     windowHndStr << windowHnd;
     pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
+/*
+    * http://www.ogre3d.org/wiki/index.php/Using_OIS
+    *if defined OIS_WIN32_PLATFORM
+    pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_FOREGROUND" )));
+    pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_NONEXCLUSIVE")));
+    pl.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_FOREGROUND")));
+    pl.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_NONEXCLUSIVE")));
+    *elif defined OIS_LINUX_PLATFORM
+    pl.insert(std::make_pair(std::string("x11_mouse_grab"), std::string("false")));
+    pl.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("false")));
+    pl.insert(std::make_pair(std::string("x11_keyboard_grab"), std::string("false")));
+    pl.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
+    *elif defined MAC_OSX_EXAMPLE_WAS_MISSING___BOOHOO_t_Jukka_
+    *endif
+*/
 
     mInputManager = OIS::InputManager::createInputSystem( pl );
     mMouse = static_cast<OIS::Mouse*>(mInputManager->createInputObject(OIS::OISMouse, true));
@@ -107,6 +122,8 @@ bool ApFrameListener::frameStarted(const FrameEvent &evt)
     // std::cout << "frame!\n";
     mMouse->capture();
     mKeyboard->capture();
+
+    mHandler->move(evt.timeSinceLastFrame);
     return true;
 }
 
@@ -135,4 +152,3 @@ CEGUI::MouseButton ApFrameListener::convertButton(OIS::MouseButtonID buttonID)
         return CEGUI::LeftButton;
     }
 }
-
