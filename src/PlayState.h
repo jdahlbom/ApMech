@@ -27,13 +27,13 @@ public:
     void createGUIWindow();
 
 private:
-    Ogre::Root           *mRoot;
+    Ogre::Root           *pRoot;
     Ogre::Camera         *mCamera;
     Ogre::Viewport       *mViewport;
-
     Ogre::SceneManager   *pSceneManager;
-
     CEGUI::Window       *mStateOverlay;
+
+    Ogre::SceneNode     *mRobotNode;
 };
 
 } // namespace Ap

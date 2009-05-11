@@ -1,3 +1,5 @@
+#include <Ogre.h>
+
 #include "PlayState.h"
 
 
@@ -10,27 +12,56 @@ PlayState::PlayState( GameStateManager *gameStateManager,
 {
     initStateManager(gameStateManager);
 
+    pRoot = Ogre::Root::getSingletonPtr();
     createGUIWindow();
 }
 PlayState::~PlayState() {}
 
 void PlayState::enter( void ) {
-/*
     // Create the terrain
+    /*
     #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
         pSceneManager->setWorldGeometry(macBundlePath() + "/Contents/Resources/Media/terrain.cfg");
     #else
         pSceneManager->setWorldGeometry("terrain.cfg");
     #endif
-*/
+    */
+
+    mCamera           = pSceneManager->createCamera( "PlayerCamera" );
+    // REQUIRES for the RenderTarget named "ApMech" to exist..
+    Ogre::RenderTarget *renderWindow = pRoot->getRenderTarget("ApMech");
+    renderWindow->addViewport( mCamera )->setBackgroundColour(Ogre::ColourValue(0.4f,0.0f,0.4f));
 
     // Create the player character
+    Ogre::Entity *myRobot = pSceneManager->createEntity("PlayerMech", "robot.mesh");
+    myRobot->setVisible(true);
+    Ogre::SceneNode *rootNode = pSceneManager->getRootSceneNode();
+    mRobotNode = rootNode->createChildSceneNode("Node/MyRobot");
+    mRobotNode->attachObject(myRobot);
+    mRobotNode->setPosition(Ogre::Vector3::ZERO);
 
     // Attach a camera to the player model
+    Ogre::SceneNode *cameraNode = rootNode->createChildSceneNode("Node/MyCamera");
+    cameraNode->setPosition(mRobotNode->getPosition() + Ogre::Vector3(0, 350, 125));
+    cameraNode->pitch(Ogre::Radian(-1.5f), Ogre::Node::TS_LOCAL);
+
+    // Create lighting
+    pSceneManager->setAmbientLight(Ogre::ColourValue(1,1,1));
+    Ogre::Light *myLight= pSceneManager->createLight("MyLight");
+    myLight->setType(Ogre::Light::LT_DIRECTIONAL);
+    myLight->setDiffuseColour(Ogre::ColourValue(0.5f, 0.5f, 0.5f));
+    myLight->setSpecularColour(Ogre::ColourValue(0.5f, 0.5f, 0.5f));
+    myLight->setDirection(Ogre::Vector3(0,-1,1));
+    Ogre::Light *myLight2= pSceneManager->createLight("MyLight2");
+    myLight2->setType(Ogre::Light::LT_DIRECTIONAL);
+    myLight2->setDiffuseColour(Ogre::ColourValue(0.5f, 0.5f, 0.5f));
+    myLight2->setSpecularColour(Ogre::ColourValue(0.5f, 0.5f, 0.5f));
+    myLight2->setDirection(Ogre::Vector3(1,0,-1));
 
     // Show GUI
     mStateOverlay->show();
     mStateOverlay->activate();
+
     std::cout << "Entering PlayState" << std::endl;
 }
 
@@ -62,12 +93,13 @@ void PlayState::createGUIWindow()
     // Menu main page
 
     mStateOverlay = winMgr->createWindow("TaharezLook/Button", "root/playState/Button");
+    mStateOverlay->setAlpha(0.5f);
     mStateOverlay->setText("Play");
     mStateOverlay->setSize(buttonSize);
     mStateOverlay->setPosition(CEGUI::UVector2(CEGUI::UDim(0.2, 0), CEGUI::UDim(0.6, 0)));
-/*
+
     mStateOverlay->deactivate();
-    mStateOverlay->hide(); */
+    mStateOverlay->hide();
     ceguiRoot->addChildWindow(mStateOverlay);
 
     std::cout << "PlayState::createGUIWindow finished" << std::endl;

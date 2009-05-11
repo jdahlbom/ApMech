@@ -132,7 +132,7 @@ Plugin=Plugin_OctreeSceneManager.so
 //with the window we created with SDL and make OGRE render to that:
 
 //RenderWindow *renderWindow = root->createRenderWindow("MainRenderWindow", 640, 480, false, &misc);
-    Ogre::RenderWindow *renderWindow = root->createRenderWindow("ApOOInputWindow",
+    Ogre::RenderWindow *renderWindow = root->createRenderWindow("ApMech",
                                                             1280, 720,
                                                             false,
                                                             &misc);
@@ -143,8 +143,7 @@ Plugin=Plugin_OctreeSceneManager.so
     root->createSceneManager( Ogre::ST_EXTERIOR_CLOSE, "ST_EXTERIOR_CLOSE" );
     Ogre::SceneManager *mSceneMgr   = root->getSceneManager( "ST_EXTERIOR_CLOSE" );
 
-    Ogre::Camera *mCamera           = mSceneMgr->createCamera( "IntroCamera" );
-    renderWindow->addViewport( mCamera );
+    Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
         /*
      * Setup CEGUI System and default GUI sheet.
@@ -230,5 +229,4 @@ void setupResources(void)
     }
 
     Ogre::LogManager::getSingleton().logMessage( "Resource directories setup" );
-
 }
