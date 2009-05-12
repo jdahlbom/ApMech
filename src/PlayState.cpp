@@ -19,13 +19,14 @@ PlayState::~PlayState() {}
 
 void PlayState::enter( void ) {
     // Create the terrain
-    /*
+
+    Ogre::Vector3 terrainCenter = Ogre::Vector3(750, 0, 750);
+
     #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
         pSceneManager->setWorldGeometry(macBundlePath() + "/Contents/Resources/Media/terrain.cfg");
     #else
         pSceneManager->setWorldGeometry("terrain.cfg");
     #endif
-    */
 
     mCamera           = pSceneManager->createCamera( "PlayerCamera" );
     // REQUIRES for the RenderTarget named "ApMech" to exist..
@@ -35,15 +36,18 @@ void PlayState::enter( void ) {
     // Create the player character
     Ogre::Entity *myRobot = pSceneManager->createEntity("PlayerMech", "robot.mesh");
     myRobot->setVisible(true);
+    myRobot->setCastShadows(true);
     Ogre::SceneNode *rootNode = pSceneManager->getRootSceneNode();
     mRobotNode = rootNode->createChildSceneNode("Node/MyRobot");
     mRobotNode->attachObject(myRobot);
-    mRobotNode->setPosition(Ogre::Vector3::ZERO);
+    mRobotNode->setPosition(terrainCenter);
 
     // Attach a camera to the player model
     Ogre::SceneNode *cameraNode = rootNode->createChildSceneNode("Node/MyCamera");
-    cameraNode->setPosition(mRobotNode->getPosition() + Ogre::Vector3(0, 350, 125));
-    cameraNode->pitch(Ogre::Radian(-1.5f), Ogre::Node::TS_LOCAL);
+    cameraNode->setPosition(mRobotNode->getPosition() + Ogre::Vector3(0, 250,0));
+    cameraNode->lookAt(mRobotNode->getPosition() + Ogre::Vector3(0,0,-1), Ogre::Node::TS_WORLD);
+    cameraNode->attachObject(mCamera);
+    mCamera->setNearClipDistance(5);
 
     // Create lighting
     pSceneManager->setAmbientLight(Ogre::ColourValue(1,1,1));

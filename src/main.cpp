@@ -140,8 +140,7 @@ Plugin=Plugin_OctreeSceneManager.so
 
 
     // Create needed scenemanagers
-    root->createSceneManager( Ogre::ST_EXTERIOR_CLOSE, "ST_EXTERIOR_CLOSE" );
-    Ogre::SceneManager *mSceneMgr   = root->getSceneManager( "ST_EXTERIOR_CLOSE" );
+    Ogre::SceneManager *mSceneMgr = root->createSceneManager( Ogre::ST_EXTERIOR_CLOSE, "ST_EXTERIOR_CLOSE" );
 
     Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
