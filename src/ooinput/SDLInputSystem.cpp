@@ -55,6 +55,15 @@ KeySymbol SDLInputSystem::mapKey(SDLKey key)
         case SDLK_a:
             return AP_K_a;
             break;
+        case SDLK_w:
+            return AP_K_w;
+            break;
+        case SDLK_s:
+            return AP_K_s;
+            break;
+        case SDLK_d:
+            return AP_K_d;
+            break;
         case SDLK_SPACE:
             return AP_K_SPACE;
             break;

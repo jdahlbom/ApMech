@@ -102,6 +102,10 @@ void GameStateManager::startGame() {
 
         // Deal with platform specific issues
         Ogre::WindowEventUtilities::messagePump();
+
+        if(lTimeSinceLastFrame < 10) {
+            usleep( (10.0f - lTimeSinceLastFrame) * 1000.0f);
+        }
     }
 }
 

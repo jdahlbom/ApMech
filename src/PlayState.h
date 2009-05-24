@@ -5,6 +5,7 @@
 #include <CEGUI.h>
 
 #include "GameState.h"
+#include "MovingObject.hpp"
 
 namespace Ap {
 
@@ -34,6 +35,8 @@ private:
     CEGUI::Window       *mStateOverlay;
 
     Ogre::SceneNode     *mRobotNode;
+
+    MovingObject        *mObject;
 };
 
 } // namespace Ap

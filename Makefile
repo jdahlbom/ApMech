@@ -21,7 +21,7 @@ vpath %.cpp src
 vpath %.cpp src/ooinput
 
 ## Files to include in yourApp project
-OBJS = InputSystem.o SDLInputSystem.o GameState.o PlayState.o GameStateManager.o main.o
+OBJS = InputSystem.o SDLInputSystem.o GameState.o PlayState.o GameStateManager.o main.o MovingObject.o
 
 ## Compilation and linking occurs here
 all: tempDirectories application

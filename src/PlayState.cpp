@@ -39,13 +39,18 @@ void PlayState::enter( void ) {
     myRobot->setCastShadows(true);
     Ogre::SceneNode *rootNode = pSceneManager->getRootSceneNode();
     mRobotNode = rootNode->createChildSceneNode("Node/MyRobot");
-    mRobotNode->attachObject(myRobot);
     mRobotNode->setPosition(terrainCenter);
+    mRobotNode->attachObject(myRobot);
+
+    mObject = new MovingObject();
+    mObject->setPosition(terrainCenter);
+    mObject->setOwnerNode(mRobotNode);
+    mObject->setWorldBoundaries(1500.0f,0.0f,0.0f,1500.0f);
 
     // Attach a camera to the player model
-    Ogre::SceneNode *cameraNode = rootNode->createChildSceneNode("Node/MyCamera");
-    cameraNode->setPosition(mRobotNode->getPosition() + Ogre::Vector3(0, 250,0));
-    cameraNode->lookAt(mRobotNode->getPosition() + Ogre::Vector3(0,0,-1), Ogre::Node::TS_WORLD);
+    Ogre::SceneNode *cameraNode = mRobotNode->createChildSceneNode("Node/MyCamera");
+    cameraNode->setPosition(Ogre::Vector3(0, 250,10));
+    cameraNode->lookAt(mRobotNode->getPosition(), Ogre::Node::TS_WORLD);
     cameraNode->attachObject(mCamera);
     mCamera->setNearClipDistance(5);
 
@@ -82,7 +87,7 @@ void PlayState::resume( void ) {
 }
 
 void PlayState::update( unsigned long lTimeElapsed ) {
-
+    mObject->update(lTimeElapsed);
 }
 
 //-----------------------------------------------------------------------------
@@ -115,6 +120,18 @@ bool PlayState::keyPressed( const Ap::KeyEvent &e ) {
             std::cout << "Space pressed, quitting." << std::endl;
             this->requestShutdown();
             break;
+        case AP_K_a:
+            mObject->addClockwiseTurningSpeed(5);
+            break;
+        case AP_K_w:
+            mObject->addForwardAcceleration(15);
+            break;
+        case AP_K_s:
+            mObject->addForwardAcceleration(-9);
+            break;
+        case AP_K_d:
+            mObject->addClockwiseTurningSpeed(-5);
+            break;
         default:
             std::cout << e.unicode << " pressed, not doing anything." << std::endl;
             break;
@@ -123,6 +140,23 @@ bool PlayState::keyPressed( const Ap::KeyEvent &e ) {
 }
 
 bool PlayState::keyReleased( const Ap::KeyEvent &e ) {
+    switch( e.key ) {
+        case AP_K_a:
+            mObject->addClockwiseTurningSpeed(-5);
+            break;
+        case AP_K_w:
+            mObject->addForwardAcceleration(-15);
+            break;
+        case AP_K_s:
+            mObject->addForwardAcceleration(9);
+            break;
+        case AP_K_d:
+            mObject->addClockwiseTurningSpeed(5);
+            break;
+        default:
+            break;
+    }
+
   return false;
 }
 
