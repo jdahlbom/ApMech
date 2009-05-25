@@ -28,15 +28,19 @@ public:
     void createGUIWindow();
 
 private:
-    Ogre::Root           *pRoot;
-    Ogre::Camera         *mCamera;
-    Ogre::Viewport       *mViewport;
-    Ogre::SceneManager   *pSceneManager;
-    CEGUI::Window       *mStateOverlay;
+    Ogre::Root                  *pRoot;
+    Ogre::Camera                *mCamera;
+    Ogre::Viewport              *mViewport;
+    Ogre::SceneManager          *pSceneManager;
+    CEGUI::Window               *mStateOverlay;
 
-    Ogre::SceneNode     *mRobotNode;
+    Ogre::SceneNode             *mRobotNode;
 
-    MovingObject        *mObject;
+    MovingObject                *mObject;
+    std::map<unsigned int, MovingObject*>     objectsMap;
+    unsigned long               currentObjectIndex;
+
+    void fireGun();
 };
 
 } // namespace Ap

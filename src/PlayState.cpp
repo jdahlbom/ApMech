@@ -8,7 +8,8 @@ namespace Ap {
 
 PlayState::PlayState( GameStateManager *gameStateManager,
                       Ogre::SceneManager *sceneManager) :
-                      pSceneManager(sceneManager)
+                      pSceneManager(sceneManager),
+                      currentObjectIndex(0)
 {
     initStateManager(gameStateManager);
 
@@ -46,6 +47,9 @@ void PlayState::enter( void ) {
     mObject->setPosition(terrainCenter);
     mObject->setOwnerNode(mRobotNode);
     mObject->setWorldBoundaries(1500.0f,0.0f,0.0f,1500.0f);
+    mObject->setMaxSpeed(25.0f);
+
+    objectsMap.insert(std::pair<unsigned int, MovingObject *>(++currentObjectIndex, mObject));
 
     // Attach a camera to the player model
     Ogre::SceneNode *cameraNode = mRobotNode->createChildSceneNode("Node/MyCamera");
@@ -78,6 +82,13 @@ void PlayState::exit( void ) {
     mStateOverlay->deactivate();
     mStateOverlay->hide();
     std::cout << "Exiting PlayState" << std::endl;
+
+    // Delete the moving objects
+    std::map<unsigned int, MovingObject*>::iterator it = objectsMap.begin();
+    for( ; it != objectsMap.end(); ++it) {
+        delete(it->second);
+    }
+    objectsMap.erase( objectsMap.begin(), objectsMap.end() );
 }
 
 void PlayState::pause( void ) {
@@ -87,7 +98,10 @@ void PlayState::resume( void ) {
 }
 
 void PlayState::update( unsigned long lTimeElapsed ) {
-    mObject->update(lTimeElapsed);
+    for( std::map<unsigned int, MovingObject*>::iterator it = objectsMap.begin(); it!=objectsMap.end(); ++it) {
+        it->second->update(lTimeElapsed);
+    }
+
 }
 
 //-----------------------------------------------------------------------------
@@ -116,8 +130,8 @@ void PlayState::createGUIWindow()
 
 bool PlayState::keyPressed( const Ap::KeyEvent &e ) {
     switch( e.key ) {
-        case AP_K_SPACE:
-            std::cout << "Space pressed, quitting." << std::endl;
+        case AP_K_ESCAPE:
+            std::cout << "Escape pressed, quitting." << std::endl;
             this->requestShutdown();
             break;
         case AP_K_a:
@@ -131,6 +145,9 @@ bool PlayState::keyPressed( const Ap::KeyEvent &e ) {
             break;
         case AP_K_d:
             mObject->addClockwiseTurningSpeed(-5);
+            break;
+        case AP_K_SPACE:
+            fireGun();
             break;
         default:
             std::cout << e.unicode << " pressed, not doing anything." << std::endl;
@@ -158,6 +175,32 @@ bool PlayState::keyReleased( const Ap::KeyEvent &e ) {
     }
 
   return false;
+}
+
+
+void PlayState::fireGun()
+{
+    std::stringstream ss;
+    ss << ++currentObjectIndex;
+
+    Ogre::Entity* bullet = pSceneManager->createEntity( ss.str(), "ninja.mesh" );
+    Ogre::SceneNode* rootNode = pSceneManager->getRootSceneNode();
+
+    ss << "-scenenode";
+    Ogre::SceneNode* bulletNode = rootNode->createChildSceneNode( ss.str() );
+    Ogre::Real realSmall = Ogre::Real(0.4f);
+    bulletNode->scale( realSmall, realSmall, realSmall);
+    bulletNode->setPosition( mObject->getOwnerNode()->getPosition());
+    bulletNode->attachObject(bullet);
+
+    Ogre::Vector3 fireDir = mObject->getFacing();
+    MovingObject *bulletObject = new MovingObject(0.0f, fireDir * 5.0f + mObject->getVelocity() * 1.0f);
+    bulletObject->setPosition(bulletNode->getPosition());
+    bulletObject->setOwnerNode(bulletNode);
+    bulletObject->setWorldBoundaries(1500.0f,0.0f,0.0f,1500.0f);
+    bulletObject->setMaxSpeed(50.0f);
+
+    objectsMap.insert(std::pair<unsigned int, MovingObject *>(++currentObjectIndex, bulletObject));
 }
 
 } // namespace Ap
