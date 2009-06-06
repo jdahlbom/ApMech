@@ -11,6 +11,8 @@
 #include "ooinput/SDLInputSystem.h"
 
 void setupResources(void);
+std::string macBundlePath(void);
+
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 #define WIN32_LEAN_AND_MEAN
@@ -49,6 +51,7 @@ Video Mode=640 x 480
 
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+
     Ogre::String resourcePath;
     resourcePath = macBundlePath() + "/Contents/Resources/";
     root = new Ogre::Root(resourcePath + "plugins.cfg",

@@ -1,8 +1,36 @@
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+#include <Carbon/Carbon.h>
+#endif
+
 #include <Ogre.h>
 
 #include "PlayState.h"
 
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 
+// This function will locate the path to our application on OS X,
+// unlike windows you can not rely on the current working directory
+// for locating your configuration files and resources.
+std::string macBundlePath()
+{
+    char path[1024];
+    CFBundleRef mainBundle = CFBundleGetMainBundle();
+    assert(mainBundle);
+
+    CFURLRef mainBundleURL = CFBundleCopyBundleURL(mainBundle);
+    assert(mainBundleURL);
+
+    CFStringRef cfStringRef = CFURLCopyFileSystemPath( mainBundleURL, kCFURLPOSIXPathStyle);
+    assert(cfStringRef);
+
+    CFStringGetCString(cfStringRef, path, 1024, kCFStringEncodingASCII);
+
+    CFRelease(mainBundleURL);
+    CFRelease(cfStringRef);
+
+    return std::string(path);
+}
+#endif
 
 namespace Ap {
 
@@ -110,12 +138,16 @@ void PlayState::createGUIWindow()
 {
     CEGUI::System *ceguiSystem= CEGUI::System::getSingletonPtr();
     CEGUI::Window *ceguiRoot = ceguiSystem->getGUISheet();
-    CEGUI::WindowManager *winMgr = CEGUI::WindowManager::getSingletonPtr();
+    CEGUI::WindowManager winMgr = CEGUI::WindowManager::getSingleton();
     CEGUI::UVector2 buttonSize = CEGUI::UVector2(CEGUI::UDim(0.6, 0), CEGUI::UDim(0.1, 0));
 
     // Menu main page
 
-    mStateOverlay = winMgr->createWindow("TaharezLook/Button", "root/playState/Button");
+    mStateOverlay = winMgr.createWindow(
+            (CEGUI::utf8*) "TaharezLook/Button",
+            (CEGUI::utf8*) "root/playState/Button",
+            (CEGUI::utf8*) "");
+
     mStateOverlay->setAlpha(0.5f);
     mStateOverlay->setText("Play");
     mStateOverlay->setSize(buttonSize);
