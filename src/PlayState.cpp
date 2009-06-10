@@ -1,8 +1,8 @@
+#include <Ogre.h>
+
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 #include <Carbon/Carbon.h>
 #endif
-
-#include <Ogre.h>
 
 #include "PlayState.h"
 
@@ -138,12 +138,12 @@ void PlayState::createGUIWindow()
 {
     CEGUI::System *ceguiSystem= CEGUI::System::getSingletonPtr();
     CEGUI::Window *ceguiRoot = ceguiSystem->getGUISheet();
-    CEGUI::WindowManager winMgr = CEGUI::WindowManager::getSingleton();
+    CEGUI::WindowManager *winMgr = CEGUI::WindowManager::getSingletonPtr();
     CEGUI::UVector2 buttonSize = CEGUI::UVector2(CEGUI::UDim(0.6, 0), CEGUI::UDim(0.1, 0));
 
     // Menu main page
 
-    mStateOverlay = winMgr.createWindow(
+    mStateOverlay = winMgr->createWindow(
             (CEGUI::utf8*) "TaharezLook/Button",
             (CEGUI::utf8*) "root/playState/Button",
             (CEGUI::utf8*) "");

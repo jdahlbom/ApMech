@@ -16,7 +16,7 @@ if env['PLATFORM'] == 'darwin':
             '/Users/ipuustin/Desktop/OgreSDK/Samples/include',
             '/opt/local/include/boost-1_35/'
         ]
-elif env['PLATFORM'] == 'linux':
+elif env['PLATFORM'] == 'posix':
     env['CPPPATH'] = '/usr/local/boost_1_39_0'
     env.ParseConfig('pkg-config --cflags --libs OGRE CEGUI-OGRE CEGUI')
 
@@ -32,7 +32,6 @@ src/main.cpp
 src/ooinput/InputSystem.cpp
 src/ooinput/TestListener.cpp
 src/ooinput/SDLInputSystem.cpp
-src/ooinput/main.cpp
 """)
 
 t = env.Program(target='apmech', source=sources)
