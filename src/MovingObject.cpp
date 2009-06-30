@@ -1,3 +1,5 @@
+#include "MovingObject.hpp"
+
 #include <assert.h>
 #include <Ogre.h>
 
@@ -5,8 +7,7 @@
 #include <Carbon/Carbon.h>
 #endif
 
-#include "MovingObject.hpp"
-
+#include "Serializer.hpp"
 
 namespace Ap {
 
@@ -18,10 +19,7 @@ MovingObject::MovingObject(float nFriction, Ogre::Vector3 startingVelocity):
     accelerationFwd(0),
     velocityCWiseTurning(0),
     friction(nFriction),
-    limitTop(0),
-    limitBottom(0),
-    limitLeft(0),
-    limitRight(0),
+    worldBoundaries(0.0f, 0.0f, 0.0f, 0.0f),
     maxSpeedSquared(625.0),
     pOwnerNode(0)
 {}
@@ -30,10 +28,7 @@ MovingObject::~MovingObject() {}
 
 void MovingObject::setWorldBoundaries(float top, float bottom, float left, float right)
 {
-    limitTop = top;
-    limitBottom = bottom;
-    limitLeft = left;
-    limitRight = right;
+    worldBoundaries = RectBoundaries(top, bottom, left, right);
 }
 
 void MovingObject::setMaxSpeed(float speed)
@@ -125,16 +120,16 @@ void MovingObject::updatePosition(unsigned long msSinceLast)
     assert( 0 != pOwnerNode );
 
     location = location + velocity * msSinceLast * 0.001f;
-    if( location.x < limitLeft ) {
-        location.x = limitLeft;
-    } else if (location.x > limitRight) {
-        location.x = limitRight;
+    if( location.x < worldBoundaries.left ) {
+        location.x = worldBoundaries.left;
+    } else if (location.x > worldBoundaries.right) {
+        location.x = worldBoundaries.right;
     }
 
-    if (location.z < limitBottom) {
-        location.z = limitBottom;
-    } else if (location.z > limitTop) {
-        location.z = limitTop;
+    if (location.z < worldBoundaries.bottom) {
+        location.z = worldBoundaries.bottom;
+    } else if (location.z > worldBoundaries.top) {
+        location.z = worldBoundaries.top;
     }
     pOwnerNode->setPosition(location);
 }

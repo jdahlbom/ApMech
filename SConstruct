@@ -28,6 +28,8 @@ src/GameState.cpp
 src/PlayState.cpp
 src/MovingObject.cpp
 src/GameStateManager.cpp
+src/RectBoundaries.cpp
+src/Serializer.cpp
 src/main.cpp
 src/ooinput/InputSystem.cpp
 src/ooinput/TestListener.cpp

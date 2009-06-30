@@ -3,9 +3,12 @@
 
 #include <Ogre.h>
 
+#include "NetObject.h"
+#include "RectBoundaries.hpp"
+
 namespace Ap {
 
-class MovingObject {
+class MovingObject : public NetObject {
     public:
     MovingObject(float nFriction = 0.05f, Ogre::Vector3 startingSpeed = Ogre::Vector3::ZERO);
     virtual ~MovingObject();
@@ -41,10 +44,7 @@ class MovingObject {
     float               velocityCWiseTurning;
     float               friction;
 
-    float               limitTop;
-    float               limitBottom;
-    float               limitLeft;
-    float               limitRight;
+    RectBoundaries      worldBoundaries;
     float               maxSpeedSquared;
 
     Ogre::SceneNode     *pOwnerNode;
@@ -54,6 +54,6 @@ class MovingObject {
     void updatePosition(unsigned long msSinceLast);
 };
 
-}
+} // namespace Ap
 
 #endif
