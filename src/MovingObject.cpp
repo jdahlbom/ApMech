@@ -12,12 +12,9 @@
 namespace Ap {
 
 MovingObject::MovingObject(float nFriction, Ogre::Vector3 startingVelocity):
-    location(Ogre::Vector3::ZERO),
-    orientation(Ogre::Vector3::UNIT_X, Ogre::Vector3::UNIT_Y, Ogre::Vector3::UNIT_Z),
     initialFacing(Ogre::Vector3::UNIT_X),
-    velocity(startingVelocity),
-    accelerationFwd(0),
-    velocityCWiseTurning(0),
+    state(MovableState(startingVelocity)),
+    control(MovableControl()),
     friction(nFriction),
     worldBoundaries(0.0f, 0.0f, 0.0f, 0.0f),
     maxSpeedSquared(625.0),
@@ -44,24 +41,24 @@ void MovingObject::setMaxSpeed(float speed)
  */
 void MovingObject::setVelocity(Ogre::Vector3 newVelocity)
 {
-    velocity = newVelocity;
+    state.velocity = newVelocity;
 }
 
 void MovingObject::addForwardAcceleration(float amount)
 {
     float maxAbsAcceleration = 25;
-    accelerationFwd += amount;
+    control.accelerationFwd += amount;
 
-    if(accelerationFwd > maxAbsAcceleration) {
-        accelerationFwd = maxAbsAcceleration;
-    } else if (accelerationFwd < (-maxAbsAcceleration)) {
-        accelerationFwd = 0-maxAbsAcceleration;
+    if(control.accelerationFwd > maxAbsAcceleration) {
+        control.accelerationFwd = maxAbsAcceleration;
+    } else if (control.accelerationFwd < (-maxAbsAcceleration)) {
+        control.accelerationFwd = 0-maxAbsAcceleration;
     }
 }
 
 void MovingObject::addClockwiseTurningSpeed(float amount)
 {
-    velocityCWiseTurning += amount;
+    control.velocityCWiseTurning += amount;
 }
 
 
@@ -73,7 +70,7 @@ void MovingObject::addClockwiseTurningSpeed(float amount)
  *
  * return   Ogre::Vector3
  */
-Ogre::Vector3 MovingObject::getFacing() const { return orientation * initialFacing; }
+Ogre::Vector3 MovingObject::getFacing() const { return state.orientation * initialFacing; }
 
 void MovingObject::update(unsigned long msSinceLast)
 {
@@ -83,11 +80,6 @@ void MovingObject::update(unsigned long msSinceLast)
     updateFacing(msSinceLast);
     updateVelocity(msSinceLast);
     updatePosition(msSinceLast);
-
-/*
-    std::cout << "[VELOCITY] x=" << velocity.x << ", z=" << velocity.z << std::endl;
-    std::cout << "[POSITION] x=" << location.x << ", y=" << location.y << ", z="<<location.z << std::endl;
-    std::cout << "[ACCELERATION] " << accelerationFwd << std::endl; */
 }
 
 void MovingObject::updateVelocity(unsigned long msSinceLast)
@@ -95,11 +87,11 @@ void MovingObject::updateVelocity(unsigned long msSinceLast)
     assert (0 != pOwnerNode);
 
     // Friction
-    velocity = velocity * (1.0f -friction * msSinceLast * 0.001f);
+    state.velocity = state.velocity - (friction * msSinceLast * 0.001f);
 
-    velocity += accelerationFwd * msSinceLast * 0.001f * getFacing();
-    if ( velocity.squaredLength() > maxSpeedSquared ) {
-        velocity = velocity / velocity.squaredLength() * maxSpeedSquared;
+    state.velocity += control.accelerationFwd * msSinceLast * 0.001f * getFacing();
+    if ( state.velocity.squaredLength() > maxSpeedSquared ) {
+        state.velocity = state.velocity / state.velocity.squaredLength() * maxSpeedSquared;
     }
 
 }
@@ -108,10 +100,10 @@ void MovingObject::updateFacing(unsigned long msSinceLast)
 {
     assert( 0 != pOwnerNode );
 
-    if(velocityCWiseTurning != 0) {
-        Ogre::Radian turning = Ogre::Radian(velocityCWiseTurning * msSinceLast * 0.001f);
+    if(control.velocityCWiseTurning != 0) {
+        Ogre::Radian turning = Ogre::Radian(control.velocityCWiseTurning * msSinceLast * 0.001f);
         pOwnerNode->rotate(Ogre::Vector3::UNIT_Y, turning, Ogre::Node::TS_LOCAL);
-        orientation = pOwnerNode->getOrientation();
+        state.orientation = pOwnerNode->getOrientation();
     }
 }
 
@@ -119,19 +111,72 @@ void MovingObject::updatePosition(unsigned long msSinceLast)
 {
     assert( 0 != pOwnerNode );
 
-    location = location + velocity * msSinceLast * 0.001f;
-    if( location.x < worldBoundaries.left ) {
-        location.x = worldBoundaries.left;
-    } else if (location.x > worldBoundaries.right) {
-        location.x = worldBoundaries.right;
-    }
-
-    if (location.z < worldBoundaries.bottom) {
-        location.z = worldBoundaries.bottom;
-    } else if (location.z > worldBoundaries.top) {
-        location.z = worldBoundaries.top;
-    }
-    pOwnerNode->setPosition(location);
+    state.location = state.location + state.velocity * msSinceLast * 0.001f;
+    worldBoundaries.clamp(state.location.z, state.location.x);
+    pOwnerNode->setPosition(state.location);
 }
 
+int MovingObject::serialize(enet_uint8 *buffer, int start, int buflength) const
+{
+    int length = 0;
+    length += state.serialize( buffer, start+length, buflength-length);
+    length += control.serialize( buffer, start+length, buflength-length);
+    length += worldBoundaries.serialize(buffer, start+length, buflength-length);
+    return length;
 }
+
+int MovingObject::unserialize(enet_uint8 *buffer, int start)
+{
+    int length = 0;
+    length += state.unserialize(buffer, start+length);
+    length += control.unserialize(buffer, start+length);
+    length += worldBoundaries.unserialize(buffer, start+length);
+    return length;
+}
+
+NetObject *MovingObject::create(int id) {}
+
+// MovableState ---------------------------------------------------------------
+MovableState::MovableState(Ogre::Vector3 startingVelocity):
+    location(Ogre::Vector3::ZERO),
+    orientation(Ogre::Vector3::UNIT_X, Ogre::Vector3::UNIT_Y, Ogre::Vector3::UNIT_Z),
+    velocity(startingVelocity) {}
+
+int MovableState::serialize(enet_uint8 *buffer, int start, int buflength) const {
+    int length = 0;
+    length += serializer::serialize(location, buffer, start+length, buflength-length);
+    length += serializer::serialize(orientation, buffer, start+length, buflength-length);
+    length += serializer::serialize(velocity, buffer, start+length, buflength-length);
+    return length;
+}
+
+int MovableState::unserialize(enet_uint8 *buffer, int start) {
+    int length = 0;
+    int bytesRead = 0;
+    length += serializer::unserialize(location, buffer, start+length);
+    length += serializer::unserialize(orientation, buffer, start+length);
+    length += serializer::unserialize(velocity, buffer, start+length);
+    return length;
+}
+
+// MovableControl--------------------------------------------------------------
+MovableControl::MovableControl():
+    accelerationFwd(0),
+    velocityCWiseTurning(0) {}
+
+int MovableControl::serialize(enet_uint8 *buffer, int start, int buflength) const {
+    int length = 0;
+    length += serializer::serialize(accelerationFwd, buffer, start+length, buflength-length);
+    length += serializer::serialize(velocityCWiseTurning, buffer, start+length, buflength-length);
+    return length;
+}
+
+int MovableControl::unserialize(enet_uint8 *buffer, int start) {
+    int length = 0;
+    length += serializer::unserialize(accelerationFwd, buffer, start+length);
+    length += serializer::unserialize(velocityCWiseTurning, buffer, start+length);
+    return length;
+}
+
+} // namespace Ap
+

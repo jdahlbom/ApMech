@@ -16,7 +16,7 @@ class NetObject {
     inline void setChanged() { changed = true; }
 
     // any class that inherits GameObject must be ready to serialize!
-    virtual int serialize(enet_uint8 buffer[], int start, int buflength) = 0;
+    virtual int serialize(enet_uint8 buffer[], int start, int buflength) const = 0;
     virtual int unserialize(enet_uint8 buffer[], int start) = 0;
     // What does this create do??
     virtual NetObject *create(int id) = 0;

@@ -8,6 +8,33 @@
 
 namespace Ap {
 
+class MovableState : public NetObject {
+    public:
+    Ogre::Vector3       location;
+    Ogre::Quaternion    orientation;
+    Ogre::Vector3       velocity;
+
+    MovableState(Ogre::Vector3  startingVelocity);
+    ~MovableState() { /* Do nothing */ }
+    int serialize(enet_uint8 *buffer, int start, int buflength) const;
+    int unserialize(enet_uint8 *buffer, int start);
+
+    NetObject *create(int id) { /* Do nothing */ }
+};
+
+class MovableControl : public NetObject {
+    public:
+    float               accelerationFwd;
+    float               velocityCWiseTurning;
+
+    MovableControl();
+    ~MovableControl() { /* Do nothing */ }
+    int serialize(enet_uint8 *buffer, int start, int buflength) const;
+    int unserialize(enet_uint8 *buffer, int start);
+
+    NetObject *create(int id) { /* Do nothing */ }
+};
+
 class MovingObject : public NetObject {
     public:
     MovingObject(float nFriction = 0.05f, Ogre::Vector3 startingSpeed = Ogre::Vector3::ZERO);
@@ -17,15 +44,15 @@ class MovingObject : public NetObject {
 
     void setMaxSpeed(float speed);
     void setVelocity(Ogre::Vector3 velocity);
-    Ogre::Vector3 getVelocity() const { return velocity; };
+    Ogre::Vector3 getVelocity() const { return state.velocity; };
 
-    void setPosition(Ogre::Vector3 pos) { location = pos; };
+    void setPosition(Ogre::Vector3 pos) { state.location = pos; };
 
     void addForwardAcceleration(float amount);
     void addClockwiseTurningSpeed(float amountRad);
 
-    void setForwardAcceleration(float amount) { accelerationFwd = amount; }
-    void setClockwiseTurningSpeed(float amount) { velocityCWiseTurning = amount; }
+    void setForwardAcceleration(float amount) { control.accelerationFwd = amount; }
+    void setClockwiseTurningSpeed(float amount) { control.velocityCWiseTurning = amount; }
 
     Ogre::Vector3 getFacing() const;
 
@@ -35,13 +62,15 @@ class MovingObject : public NetObject {
 
     void update(unsigned long msSinceLast);
 
+    //NetObject serialization
+    int serialize(enet_uint8 *buffer, int start, int buflength) const;
+    int unserialize(enet_uint8 *buffer, int start);
+    NetObject *create(int id);
+
     private:
-    Ogre::Vector3       location;
-    Ogre::Quaternion    orientation;
     Ogre::Vector3       initialFacing;
-    Ogre::Vector3       velocity;
-    float               accelerationFwd;
-    float               velocityCWiseTurning;
+    MovableState        state;
+    MovableControl      control;
     float               friction;
 
     RectBoundaries      worldBoundaries;
