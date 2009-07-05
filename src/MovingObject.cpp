@@ -152,7 +152,6 @@ int MovableState::serialize(enet_uint8 *buffer, int start, int buflength) const 
 
 int MovableState::unserialize(enet_uint8 *buffer, int start) {
     int length = 0;
-    int bytesRead = 0;
     length += serializer::unserialize(location, buffer, start+length);
     length += serializer::unserialize(orientation, buffer, start+length);
     length += serializer::unserialize(velocity, buffer, start+length);

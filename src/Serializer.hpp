@@ -2,12 +2,12 @@
 #define AP_SERIALIZER
 
 #include <Ogre.h>
-#include <enet/enet.h>
-
-typedef unsigned char uint8;
 
 namespace Ap {
 namespace serializer {
+
+typedef unsigned char uint8;
+
 int serialize(const Ogre::Vector3 &vect, uint8 *buffer, int start, int buflength);
 int serialize(const Ogre::Quaternion &quat, uint8 *buffer, int start, int buflength);
 int serialize(float f, uint8 *buffer, int start, int buflength);

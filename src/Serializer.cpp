@@ -29,7 +29,7 @@ int serialize(const Ogre::Quaternion &quat, uint8 *buffer, int start, int buflen
 
 // FIXME! Floating point numbers will really cause interoperability issues between platforms!
 // http://www.parashift.com/c++-faq-lite/serialization.html#faq-36.6
-int serialize(float f, uint8 *buffer, int start)
+int serialize(float f, uint8 *buffer, int start, int buflength)
 {
     *(reinterpret_cast<float *>(buffer+start)) = f;
     return 4; // Size of float is 4 bytes
