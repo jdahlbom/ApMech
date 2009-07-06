@@ -5,7 +5,7 @@ LIBS = OGRE CEGUI-OGRE CEGUI
 CXX = g++
 CXXFLAGS = $(shell pkg-config --cflags $(LIBS)) $(DEFINES) -I$(INCLUDES) $(shell sdl-config --cflags) -I/usr/local/boost_1_39_0 -Wall
 LD = gcc
-LDFLAGS = $(shell pkg-config --libs $(LIBS)) $(shell sdl-config --libs)
+LDFLAGS = $(shell pkg-config --libs $(LIBS)) $(shell sdl-config --libs) -lenet
 OBJDIR = obj
 
 ## Files in subdirectories
@@ -24,7 +24,7 @@ vpath %.cpp src/ooinput
 vpath %.cpp src/net
 
 ## Files to include in yourApp project
-OBJS = InputSystem.o SDLInputSystem.o GameState.o PlayState.o GameStateManager.o main.o MovingObject.o serializer.o RectBoundaries.o netdata.o functions.o
+OBJS = InputSystem.o SDLInputSystem.o GameState.o PlayState.o GameStateManager.o main.o MovingObject.o serializer.o RectBoundaries.o netdata.o functions.o NetUser.o NetEvent.o
 ## Compilation and linking occurs here
 all: tempDirectories application
 

@@ -2,7 +2,7 @@
 
 #include "serializer.hpp"
 
-namespace ap {
+namespace ap {
 namespace net {
 
 NetUser::NetUser()
@@ -23,6 +23,7 @@ NetUser::NetUser(int _uid, ENetPeer *_peer)
 
 int NetUser::serialize(enet_uint8 buffer[], int start, int buflength) const
 {
+    using ap::net::serialize;
     int length = 0;
 
     length += serialize(uid, buffer, start+length, buflength-length);
@@ -38,8 +39,9 @@ int NetUser::serialize(enet_uint8 buffer[], int start, int buflength) const
 
 int NetUser::unserialize(enet_uint8 buffer[], int start)
 {
+    using ap::net::unserialize;
     int length = 0;
-    length += unserialize(uid, buffer, start+length, buflength-length);
+    length += unserialize(uid, buffer, start+length);
 
     if (uid) {
         length += unserialize(ping, buffer, start+length);

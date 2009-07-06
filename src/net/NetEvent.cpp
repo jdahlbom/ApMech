@@ -1,5 +1,8 @@
-#include "netevent.h"
+#include "NetEvent.h"
 #include "netdata.h"
+
+namespace ap {
+namespace net {
 
 NetEvent::NetEvent() {
     type = NetData::EVENT_NOEVENT;
@@ -17,3 +20,6 @@ NetEvent::NetEvent(enet_uint8 _type, int a) {
         break;
     }
 }
+
+} // namespace net
+} // namespace net
