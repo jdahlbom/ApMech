@@ -19,6 +19,7 @@ if env['PLATFORM'] == 'darwin':
 elif env['PLATFORM'] == 'posix':
     env['CPPPATH'] = '/usr/local/boost_1_39_0'
     env.ParseConfig('pkg-config --cflags --libs OGRE CEGUI-OGRE CEGUI')
+    env.ParseConfig('pkg-config --libs enet')
 
 env.ParseConfig('sdl-config --cflags')
 env.ParseConfig('sdl-config --libs')
@@ -31,6 +32,8 @@ src/GameStateManager.cpp
 src/RectBoundaries.cpp
 src/net/serializer.cpp
 src/net/netdata.cpp
+src/net/NetUser.cpp
+src/net/NetEvent.cpp
 src/functions.cpp
 src/main.cpp
 src/ooinput/InputSystem.cpp
