@@ -1,12 +1,13 @@
-#ifndef AP_SDLINPUTSYSTEM
-#define AP_SDLINPUTSYSTEM
+#ifndef AP_OOINPUT_SDLINPUTSYSTEM
+#define AP_OOINPUT_SDLINPUTSYSTEM
 
 #include <SDL.h>
 
 #include "InputSystem.h"
 #include "KeyEvent.h"
 
-namespace Ap {
+namespace ap {
+namespace ooinput {
 
 class SDLInputSystem: public InputSystem
 {
@@ -22,6 +23,7 @@ class SDLInputSystem: public InputSystem
 
 };
 
-} // namespace Ap
+} //namespace ooinput
+} //namespace ap
 
 #endif

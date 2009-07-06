@@ -8,6 +8,7 @@
 #include <boost/shared_ptr.hpp>
 
 #include "GameStateManager.h"
+#include "ooinput/InputSystem.h"
 #include "ooinput/SDLInputSystem.h"
 
 void setupResources(void);
@@ -171,9 +172,9 @@ Plugin=Plugin_OctreeSceneManager.so
      * CEGUI initialization complete
      */
 
-    Ap::InputSystem *inputSystem = new Ap::SDLInputSystem();
+    ap::ooinput::InputSystem *inputSystem = new ap::ooinput::SDLInputSystem();
 
-    Ap::GameStateManager * gameManager = new Ap::GameStateManager(root, renderWindow, inputSystem, mSceneMgr);
+    ap::GameStateManager * gameManager = new ap::GameStateManager(root, renderWindow, inputSystem, mSceneMgr);
 //    boost::shared_ptr<Ap::GameStateManager> gameManager(new Ap::GameStateManager(root, renderWindow, inputSystem, mSceneMgr));
 
     try {

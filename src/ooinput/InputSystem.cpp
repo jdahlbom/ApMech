@@ -3,7 +3,8 @@
 
 #include <list>
 
-namespace Ap {
+namespace ap {
+namespace ooinput {
 
 InputSystem::InputSystem()
 {
@@ -53,4 +54,5 @@ void InputSystem::fireKeyReleasedEvent(const KeyEvent &event)
     }
 }
 
-} // namespace Ap
+} //namespace ooinput
+} //namespace ap

@@ -1,12 +1,13 @@
-#ifndef AP_INPUTSYSTEM
-#define AP_INPUTSYSTEM
+#ifndef AP_OOINPUT_INPUTSYSTEM
+#define AP_OOINPUT_INPUTSYSTEM
 
 #include <list>
 
 #include "KeyboardListener.h"
 #include "KeyEvent.h"
 
-namespace Ap {
+namespace ap {
+namespace ooinput {
 
 class InputSystem
 {
@@ -27,6 +28,7 @@ class InputSystem
 
 };
 
-} // namespace Ap
+} // namespace ooinput
+} // namespace ap
 
 #endif

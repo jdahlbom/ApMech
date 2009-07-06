@@ -1,11 +1,11 @@
 #ifndef AP_RECTBOUNDARIES
 #define AP_RECTBOUNDARIES
 
-#include "NetObject.h"
+#include "net/NetObject.h"
 
-namespace Ap {
+namespace ap {
 
-class RectBoundaries : public NetObject {
+class RectBoundaries : public net::NetObject {
   public:
     float   top;
     float   bottom;
@@ -23,5 +23,5 @@ class RectBoundaries : public NetObject {
     int unserialize(enet_uint8 buffer[], int start) ;
     NetObject *create(int id) { /*TODO: should there be anything here anyways? */}
 };
-} // namespace Ap
+} // namespace ap
 #endif

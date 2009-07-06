@@ -1,7 +1,8 @@
-#ifndef AP_KEYEVENT
-#define AP_KEYEVENT
+#ifndef AP_OOINPUT_KEYEVENT
+#define AP_OOINPUT_KEYEVENT
 
-namespace Ap {
+namespace ap {
+namespace ooinput {
 
 typedef unsigned short Uint16;
 
@@ -269,6 +270,7 @@ typedef struct{
     Uint16        unicode;
 } KeyEvent;
 
-} // namespace Ap
+} //namespace ooinput
+} //namespace ap
 
 #endif

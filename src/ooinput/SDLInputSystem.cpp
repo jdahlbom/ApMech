@@ -5,7 +5,8 @@
 #include "SDLInputSystem.h"
 #include "KeyEvent.h"
 
-namespace Ap {
+namespace ap {
+namespace ooinput {
 
 SDLInputSystem::SDLInputSystem()
 {
@@ -73,4 +74,5 @@ KeySymbol SDLInputSystem::mapKey(SDLKey key)
     }
 }
 
-} // namespace Ap
+} //namespace ooinput
+} //namespace ap

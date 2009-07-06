@@ -1,9 +1,9 @@
-#include "Serializer.hpp"
+#include "serializer.hpp"
 
 #include <Ogre.h>
 
-namespace Ap {
-namespace serializer {
+namespace ap {
+namespace net {
 int serialize(const Ogre::Vector3 &vect, uint8 *buffer, int start, int buflength)
 {
     // TODO: Vector3 is composed of 3 Real:s. Real is by default a float, but with DOUBLE_PRECISION-flag
@@ -71,5 +71,5 @@ int unserialize(float &f, uint8 *buffer, int start)
     return 4; // 4 is the length of float in bytes
 }
 
-} // namespace serializer
-} // namespace Ap
+} // namespace net
+} // namespace ap

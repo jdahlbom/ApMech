@@ -20,14 +20,14 @@
 #include "GameState.h"
 #include "PlayState.h"
 
-namespace Ap {
+namespace ap {
 
 typedef std::map<GameStateManager::GAMESTATE, GameState *> StateMap;
 typedef std::pair<GameStateManager::GAMESTATE, GameState *> StatePair;
 
 GameStateManager::GameStateManager( Ogre::Root *root,
                     Ogre::RenderWindow *renderWindow,
-                    Ap::InputSystem *inputSystem,
+                    ooinput::InputSystem *inputSystem,
                     Ogre::SceneManager *sceneManager) :
     mRoot( root ),
     mRenderWindow( renderWindow ),
@@ -176,18 +176,18 @@ void GameStateManager::requestShutdown( void ) {
     bShutdown = true;
 }
 
-  bool GameStateManager::keyPressed( const Ap::KeyEvent &e ) {
+  bool GameStateManager::keyPressed( const ap::ooinput::KeyEvent &e ) {
     // Call keyPressed of current state
     mStates.back()->keyPressed( e );
 
     return true;
 }
 
-  bool GameStateManager::keyReleased( const Ap::KeyEvent &e ) {
+  bool GameStateManager::keyReleased( const ap::ooinput::KeyEvent &e ) {
     // Call keyReleased of current state
     mStates.back()->keyReleased( e );
 
     return true;
 }
 
-} // namespace Ap
+} // namespace ap

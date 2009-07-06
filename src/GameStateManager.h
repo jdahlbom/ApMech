@@ -4,8 +4,8 @@
  * http://dev.neoharmonix.net/ois-example.zip
  **/
 
-#ifndef APGAMESTATEMANAGER_H
-#define APGAMESTATEMANAGER_H
+#ifndef AP_GAMESTATEMANAGER_H
+#define AP_GAMESTATEMANAGER_H
 
 #include <OgreRoot.h>
 #include <OgreConfigFile.h>
@@ -13,18 +13,18 @@
 
 #include "ooinput/InputSystem.h"
 
-namespace Ap {
+namespace ap {
 
 class GameState;
 //class IntroState;
 class PlayState;
 
 //-----------------------------------------------------------------------------
-class GameStateManager : public KeyboardListener {
+class GameStateManager : public ooinput::KeyboardListener {
 public:
     GameStateManager( Ogre::Root *root,
                 Ogre::RenderWindow *renderWindow,
-                Ap::InputSystem *inputSystem,
+                ooinput::InputSystem *inputSystem,
                 Ogre::SceneManager *sceneManager);
     ~GameStateManager( void );
 
@@ -43,19 +43,18 @@ private:
     bool configureGame( void );
     void setupResources( void );
 
-    bool keyPressed( const Ap::KeyEvent &e );
-    bool keyReleased( const Ap::KeyEvent &e );
+    bool keyPressed( const ooinput::KeyEvent &e );
+    bool keyReleased( const ooinput::KeyEvent &e );
 
     /*    bool mouseMoved( const OIS::MouseEvent &e );
     bool mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id );
     bool mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id );
     */
-    Ogre::Root          *mRoot;
-    Ogre::RenderWindow  *mRenderWindow;
-    Ogre::SceneManager  *mSceneMgr;
-    InputSystem         *mInputMgr;
+    Ogre::Root              *mRoot;
+    Ogre::RenderWindow      *mRenderWindow;
+    Ogre::SceneManager      *mSceneMgr;
+    ooinput::InputSystem    *mInputMgr;
 
-    //IntroState        *mIntroState;
     PlayState           *mPlayState;
 
     bool bShutdown;
@@ -63,6 +62,6 @@ private:
     std::map<GAMESTATE, GameState*> *mStateMap;
 };
 
-} // namespace Ap
+} // namespace ap
 
 #endif

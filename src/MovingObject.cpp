@@ -7,9 +7,9 @@
 #include <Carbon/Carbon.h>
 #endif
 
-#include "Serializer.hpp"
+#include "net/serializer.hpp"
 
-namespace Ap {
+namespace ap {
 
 MovingObject::MovingObject(float nFriction, Ogre::Vector3 startingVelocity):
     initialFacing(Ogre::Vector3::UNIT_X),
@@ -134,7 +134,7 @@ int MovingObject::unserialize(enet_uint8 *buffer, int start)
     return length;
 }
 
-NetObject *MovingObject::create(int id) {}
+net::NetObject *MovingObject::create(int id) {}
 
 // MovableState ---------------------------------------------------------------
 MovableState::MovableState(Ogre::Vector3 startingVelocity):
@@ -144,17 +144,17 @@ MovableState::MovableState(Ogre::Vector3 startingVelocity):
 
 int MovableState::serialize(enet_uint8 *buffer, int start, int buflength) const {
     int length = 0;
-    length += serializer::serialize(location, buffer, start+length, buflength-length);
-    length += serializer::serialize(orientation, buffer, start+length, buflength-length);
-    length += serializer::serialize(velocity, buffer, start+length, buflength-length);
+    length += net::serialize(location, buffer, start+length, buflength-length);
+    length += net::serialize(orientation, buffer, start+length, buflength-length);
+    length += net::serialize(velocity, buffer, start+length, buflength-length);
     return length;
 }
 
 int MovableState::unserialize(enet_uint8 *buffer, int start) {
     int length = 0;
-    length += serializer::unserialize(location, buffer, start+length);
-    length += serializer::unserialize(orientation, buffer, start+length);
-    length += serializer::unserialize(velocity, buffer, start+length);
+    length += net::unserialize(location, buffer, start+length);
+    length += net::unserialize(orientation, buffer, start+length);
+    length += net::unserialize(velocity, buffer, start+length);
     return length;
 }
 
@@ -165,17 +165,17 @@ MovableControl::MovableControl():
 
 int MovableControl::serialize(enet_uint8 *buffer, int start, int buflength) const {
     int length = 0;
-    length += serializer::serialize(accelerationFwd, buffer, start+length, buflength-length);
-    length += serializer::serialize(velocityCWiseTurning, buffer, start+length, buflength-length);
+    length += net::serialize(accelerationFwd, buffer, start+length, buflength-length);
+    length += net::serialize(velocityCWiseTurning, buffer, start+length, buflength-length);
     return length;
 }
 
 int MovableControl::unserialize(enet_uint8 *buffer, int start) {
     int length = 0;
-    length += serializer::unserialize(accelerationFwd, buffer, start+length);
-    length += serializer::unserialize(velocityCWiseTurning, buffer, start+length);
+    length += net::unserialize(accelerationFwd, buffer, start+length);
+    length += net::unserialize(velocityCWiseTurning, buffer, start+length);
     return length;
 }
 
-} // namespace Ap
+} // namespace ap
 

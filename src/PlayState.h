@@ -7,7 +7,7 @@
 #include "GameState.h"
 #include "MovingObject.hpp"
 
-namespace Ap {
+namespace ap {
 
 class PlayState : public GameState {
 public:
@@ -22,8 +22,8 @@ public:
     void resume( void );
     void update( unsigned long lTimeElapsed );
 
-    bool keyPressed( const Ap::KeyEvent &e );
-    bool keyReleased( const Ap::KeyEvent &e );
+    bool keyPressed( const ooinput::KeyEvent &e );
+    bool keyReleased( const ooinput::KeyEvent &e );
 
     void createGUIWindow();
 
@@ -35,6 +35,7 @@ private:
     CEGUI::Window               *mStateOverlay;
 
     Ogre::SceneNode             *mRobotNode;
+    //net::NetData                *netdata;
 
     MovingObject                *mObject;
     std::map<unsigned int, MovingObject*>     objectsMap;
@@ -43,5 +44,5 @@ private:
     void fireGun();
 };
 
-} // namespace Ap
+} // namespace ap
 #endif

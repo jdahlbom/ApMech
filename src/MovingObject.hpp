@@ -3,12 +3,12 @@
 
 #include <Ogre.h>
 
-#include "NetObject.h"
+#include "net/NetObject.h"
 #include "RectBoundaries.hpp"
 
-namespace Ap {
+namespace ap {
 
-class MovableState : public NetObject {
+class MovableState : public net::NetObject {
     public:
     Ogre::Vector3       location;
     Ogre::Quaternion    orientation;
@@ -22,7 +22,7 @@ class MovableState : public NetObject {
     NetObject *create(int id) { /* Do nothing */ }
 };
 
-class MovableControl : public NetObject {
+class MovableControl : public net::NetObject {
     public:
     float               accelerationFwd;
     float               velocityCWiseTurning;
@@ -35,7 +35,7 @@ class MovableControl : public NetObject {
     NetObject *create(int id) { /* Do nothing */ }
 };
 
-class MovingObject : public NetObject {
+class MovingObject : public net::NetObject {
     public:
     MovingObject(float nFriction = 0.05f, Ogre::Vector3 startingSpeed = Ogre::Vector3::ZERO);
     virtual ~MovingObject();
@@ -83,6 +83,6 @@ class MovingObject : public NetObject {
     void updatePosition(unsigned long msSinceLast);
 };
 
-} // namespace Ap
+} // namespace ap
 
 #endif

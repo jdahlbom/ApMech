@@ -4,8 +4,8 @@
  * http://dev.neoharmonix.net/ois-example.zip
  **/
 
-#ifndef APGAMESTATE_H
-#define APGAMESTATE_H
+#ifndef AP_GAMESTATE_H
+#define AP_GAMESTATE_H
 
 #include "ooinput/KeyboardListener.h"
 
@@ -15,11 +15,11 @@
 #include <OgreOverlayManager.h>
 #include <OgreStringConverter.h>
 
-namespace Ap {
+namespace ap {
 
 class GameStateManager;
 
-class GameState: public Ap::KeyboardListener{
+class GameState: public ooinput::KeyboardListener{
 public:
     virtual ~GameState( void ) { }
 
@@ -32,8 +32,8 @@ public:
     virtual void resume( void ) = 0;
     virtual void update( unsigned long lTimeElapsed ) = 0;
 
-    virtual bool keyPressed( const Ap::KeyEvent &e )  = 0;
-    virtual bool keyReleased( const Ap::KeyEvent &e ) = 0;
+    virtual bool keyPressed( const ooinput::KeyEvent &e )  = 0;
+    virtual bool keyReleased( const ooinput::KeyEvent &e ) = 0;
 
     void changeState( GameState *state );
     void pushState( GameState *state );
@@ -45,6 +45,6 @@ protected:
 
 };
 
-} // namespace Ap
+} // namespace ap
 
 #endif

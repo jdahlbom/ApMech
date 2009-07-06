@@ -3,15 +3,18 @@
 
 #include "KeyEvent.h"
 
-namespace Ap {
+namespace ap {
+namespace ooinput {
 
 class KeyboardListener
 {
     public:
     virtual ~KeyboardListener() { }
-    virtual bool keyPressed(const Ap::KeyEvent &event)=0;
-    virtual bool keyReleased(const Ap::KeyEvent &event)=0;
+    virtual bool keyPressed(const KeyEvent &event)=0;
+    virtual bool keyReleased(const KeyEvent &event)=0;
 };
 
-} // namespace Ap
+} //namespace ooinput
+} //namespace ap
+
 #endif

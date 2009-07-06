@@ -1,8 +1,8 @@
 #include "RectBoundaries.hpp"
 
-#include "Serializer.hpp"
+#include "net/serializer.hpp"
 
-namespace Ap {
+namespace ap {
 
 RectBoundaries::RectBoundaries(float _top, float _bottom, float _left, float _right) :
     top(_top),
@@ -38,10 +38,10 @@ void RectBoundaries::clamp(float &vert, float &horiz) const
  */
 int RectBoundaries::serialize(enet_uint8 buffer[], int start, int buflength) const {
     int length = 0;
-    length += serializer::serialize(top, buffer, start+length, buflength-length);
-    length += serializer::serialize(bottom, buffer, start+length, buflength-length);
-    length += serializer::serialize(left, buffer, start+length, buflength-length);
-    length += serializer::serialize(right, buffer, start+length, buflength-length);
+    length += net::serialize(top, buffer, start+length, buflength-length);
+    length += net::serialize(bottom, buffer, start+length, buflength-length);
+    length += net::serialize(left, buffer, start+length, buflength-length);
+    length += net::serialize(right, buffer, start+length, buflength-length);
     return length;
 }
 
@@ -50,10 +50,10 @@ int RectBoundaries::serialize(enet_uint8 buffer[], int start, int buflength) con
  */
 int RectBoundaries::unserialize(enet_uint8 buffer[], int start) {
     int length = 0;
-    length += serializer::unserialize(top, buffer, start+length);
-    length += serializer::unserialize(bottom, buffer, start+length);
-    length += serializer::unserialize(left, buffer, start+length);
-    length += serializer::unserialize(right, buffer, start+length);
+    length += net::unserialize(top, buffer, start+length);
+    length += net::unserialize(bottom, buffer, start+length);
+    length += net::unserialize(left, buffer, start+length);
+    length += net::unserialize(right, buffer, start+length);
     return length;
 }
-} // namespace Ap
+} // namespace ap

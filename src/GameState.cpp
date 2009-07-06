@@ -7,7 +7,7 @@
 #include "GameState.h"
 #include "GameStateManager.h"
 
-namespace Ap {
+namespace ap {
 
 void GameState::initStateManager(GameStateManager *gameStateManager) {
     pGameStateManager = gameStateManager;
@@ -29,4 +29,4 @@ void GameState::requestShutdown( void ) {
     pGameStateManager->requestShutdown();
 }
 
-} // namespace Ap
+} // namespace ap

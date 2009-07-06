@@ -3,7 +3,8 @@
 
 #include <enet/enet.h>
 
-namespace Ap {
+namespace ap {
+namespace net {
 
 class NetObject {
  public:
@@ -25,5 +26,6 @@ class NetObject {
                                                     // 0: OK. -1: Object requests destruction.
 };
 
-}
+} // namespace net
+} // namespace ap
 #endif

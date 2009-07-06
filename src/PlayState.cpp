@@ -32,7 +32,7 @@ std::string macBundlePath()
 }
 #endif
 
-namespace Ap {
+namespace ap {
 
 PlayState::PlayState( GameStateManager *gameStateManager,
                       Ogre::SceneManager *sceneManager) :
@@ -43,6 +43,12 @@ PlayState::PlayState( GameStateManager *gameStateManager,
 
     pRoot = Ogre::Root::getSingletonPtr();
     createGUIWindow();
+
+// TODO: Refaktoroi, kopioitu nablasta.
+    /*netdata = new NetData(NetData::CLIENT);
+    netdata->connect("127.0.0.1", 5074);
+    netdata->me.nick = "Test";
+    netdata->me.changed = true;         // Mark this info for transmission */
 }
 PlayState::~PlayState() {}
 
@@ -149,7 +155,7 @@ void PlayState::createGUIWindow()
             (CEGUI::utf8*) "");
 
     mStateOverlay->setAlpha(0.5f);
-    mStateOverlay->setText("Play");
+    mStateOverlay->setText("ESC to quit, WASD to move");
     mStateOverlay->setSize(buttonSize);
     mStateOverlay->setPosition(CEGUI::UVector2(CEGUI::UDim(0.2, 0), CEGUI::UDim(0.6, 0)));
 
@@ -160,25 +166,25 @@ void PlayState::createGUIWindow()
     std::cout << "PlayState::createGUIWindow finished" << std::endl;
 }
 
-bool PlayState::keyPressed( const Ap::KeyEvent &e ) {
+bool PlayState::keyPressed( const ap::ooinput::KeyEvent &e ) {
     switch( e.key ) {
-        case AP_K_ESCAPE:
+        case ooinput::AP_K_ESCAPE:
             std::cout << "Escape pressed, quitting." << std::endl;
             this->requestShutdown();
             break;
-        case AP_K_a:
+        case ooinput::AP_K_a:
             mObject->addClockwiseTurningSpeed(5);
             break;
-        case AP_K_w:
+        case ooinput::AP_K_w:
             mObject->addForwardAcceleration(15);
             break;
-        case AP_K_s:
+        case ooinput::AP_K_s:
             mObject->addForwardAcceleration(-9);
             break;
-        case AP_K_d:
+        case ooinput::AP_K_d:
             mObject->addClockwiseTurningSpeed(-5);
             break;
-        case AP_K_SPACE:
+        case ooinput::AP_K_SPACE:
             fireGun();
             break;
         default:
@@ -188,18 +194,18 @@ bool PlayState::keyPressed( const Ap::KeyEvent &e ) {
   return false;
 }
 
-bool PlayState::keyReleased( const Ap::KeyEvent &e ) {
+bool PlayState::keyReleased( const ap::ooinput::KeyEvent &e ) {
     switch( e.key ) {
-        case AP_K_a:
+        case ooinput::AP_K_a:
             mObject->addClockwiseTurningSpeed(-5);
             break;
-        case AP_K_w:
+        case ooinput::AP_K_w:
             mObject->addForwardAcceleration(-15);
             break;
-        case AP_K_s:
+        case ooinput::AP_K_s:
             mObject->addForwardAcceleration(9);
             break;
-        case AP_K_d:
+        case ooinput::AP_K_d:
             mObject->addClockwiseTurningSpeed(5);
             break;
         default:
@@ -235,4 +241,4 @@ void PlayState::fireGun()
     objectsMap.insert(std::pair<unsigned int, MovingObject *>(++currentObjectIndex, bulletObject));
 }
 
-} // namespace Ap
+} // namespace ap
