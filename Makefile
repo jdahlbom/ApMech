@@ -17,11 +17,14 @@ BIN = apmech
 ## Files to compile
 vpath %.h src
 vpath %.h src/ooinput
+vpath %.h src/net
+vpath %.hpp src/net
 vpath %.cpp src
 vpath %.cpp src/ooinput
+vpath %.cpp src/net
 
 ## Files to include in yourApp project
-OBJS = InputSystem.o SDLInputSystem.o GameState.o PlayState.o GameStateManager.o main.o MovingObject.o Serializer.o RectBoundaries.o
+OBJS = InputSystem.o SDLInputSystem.o GameState.o PlayState.o GameStateManager.o main.o MovingObject.o serializer.o RectBoundaries.o netdata.o functions.o
 ## Compilation and linking occurs here
 all: tempDirectories application
 
