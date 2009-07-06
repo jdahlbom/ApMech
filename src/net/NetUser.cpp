@@ -2,7 +2,7 @@
 
 #include "serializer.hpp"
 
-namespace ap {
+namespace ap {   
 namespace net {
 
 NetUser::NetUser()
