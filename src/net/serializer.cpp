@@ -35,6 +35,15 @@ int serialize(float f, uint8 *buffer, int start, int buflength)
     return 4; // Size of float is 4 bytes
 }
 
+// FIXME! integers may cause interoperability issues between platforms!
+// http://www.parashift.com/c++-faq-lite/serialization.html#faq-36.6
+int serialize(int i, uint8 *buffer, int start, int buflength)
+{
+    *(reinterpret_cast<int *>(buffer+start)) = i;
+    return 4; // Size of int is 4 bytes
+}
+
+
 int unserialize(Ogre::Vector3 &vect, uint8 *buffer, int start)
 {
     // TODO: Vector3 is composed of 3 Real:s. Real is by default a float, but with DOUBLE_PRECISION-flag
@@ -68,6 +77,14 @@ int unserialize(Ogre::Quaternion &quat, uint8 *buffer, int start)
 int unserialize(float &f, uint8 *buffer, int start)
 {
     f = *(reinterpret_cast<float *>(buffer+start));
+    return 4; // 4 is the length of float in bytes
+}
+
+// FIXME! integers may cause interoperability issues between platforms!
+// http://www.parashift.com/c++-faq-lite/serialization.html#faq-36.6
+int unserialize(int &i, uint8 *buffer, int start)
+{
+    i = *(reinterpret_cast<int *>(buffer+start));
     return 4; // 4 is the length of float in bytes
 }
 

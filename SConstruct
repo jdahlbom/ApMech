@@ -30,6 +30,8 @@ src/MovingObject.cpp
 src/GameStateManager.cpp
 src/RectBoundaries.cpp
 src/net/serializer.cpp
+src/net/netdata.cpp
+src/functions.cpp
 src/main.cpp
 src/ooinput/InputSystem.cpp
 src/ooinput/SDLInputSystem.cpp
