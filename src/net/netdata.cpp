@@ -174,7 +174,7 @@ int NetData::serviceServer()
                         h++; uid = *(int *)(data+h);  // this means, read an int from data[h] onwards
                         h += users.find(uid)->second.unserialize(data, h);
                     } else {
-                        cout << "Received an unknown packet! Error in NetData::serviceClient!" << endl;
+                        cout << "Received an unknown packet! Error in NetData::serviceServer!" << endl;
                     }
                 }
                 enet_packet_destroy(event.packet);
@@ -196,6 +196,8 @@ int NetData::serviceServer()
                 ENetPacket *packet = enet_packet_create(buffer, 6, ENET_PACKET_FLAG_RELIABLE);
                 enet_host_broadcast(enethost, 0, packet);
                 // Not detecting if we get disconnect messages from users who weren't connected in the first place. Oh well.
+
+                addEvent(new NetEvent(NetData::EVENT_DISCONNECT, int(event.data)));
             }
             break;
          case ENET_EVENT_TYPE_NONE:

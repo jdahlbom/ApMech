@@ -6,6 +6,7 @@
 
 #include "GameState.h"
 #include "MovingObject.hpp"
+#include "net/netdata.h"
 
 namespace ap {
 
@@ -35,7 +36,8 @@ private:
     CEGUI::Window               *mStateOverlay;
 
     Ogre::SceneNode             *mRobotNode;
-    //net::NetData                *netdata;
+
+    ap::net::NetData            *netdata;
 
     MovingObject                *mObject;
     std::map<unsigned int, MovingObject*>     objectsMap;
