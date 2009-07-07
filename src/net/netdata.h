@@ -40,9 +40,9 @@ class NetData {
     static const enet_uint8 PACKET_DISCONNECT = 44;
     static const enet_uint8 PACKET_EOF = 49;
 
-    static const enet_uint8 OBJECT_TYPE_NETGAMEOBJECT = 50;
+    static const enet_uint8 OBJECT_TYPE_MECH = 50;
     static const enet_uint8 OBJECT_TYPE_PROJECTILE = 51;
-    static const enet_uint8 OBJECT_TYPE_STARFIELD = 52;
+    //static const enet_uint8 OBJECT_TYPE_STARFIELD = 52;
 
     static const enet_uint8 EVENT_NOEVENT = 19;
     static const enet_uint8 EVENT_CONNECT = 20;

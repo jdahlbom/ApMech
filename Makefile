@@ -25,7 +25,7 @@ vpath %.cpp src/net
 
 ## Files to include in yourApp project
 
-OBJS = InputSystem.o SDLInputSystem.o GameState.o PlayState.o GameStateManager.o main.o MovingObject.o serializer.o RectBoundaries.o netdata.o functions.o NetUser.o NetEvent.o
+OBJS = InputSystem.o SDLInputSystem.o GameState.o PlayState.o GameStateManager.o main.o MovingObject.o serializer.o RectBoundaries.o netdata.o functions.o NetUser.o NetEvent.o Mech.o Projectile.o
 
 ## Compilation and linking occurs here
 all: tempDirectories application

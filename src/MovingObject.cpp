@@ -19,7 +19,10 @@ MovingObject::MovingObject(float nFriction, Ogre::Vector3 startingVelocity):
     worldBoundaries(0.0f, 0.0f, 0.0f, 0.0f),
     maxSpeedSquared(625.0),
     pOwnerNode(0)
-{}
+{
+    id = 0;
+    uid = 0;
+}
 
 MovingObject::~MovingObject() {}
 
