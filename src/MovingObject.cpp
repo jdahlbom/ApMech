@@ -116,7 +116,7 @@ void MovingObject::updatePosition(unsigned long msSinceLast)
     pOwnerNode->setPosition(state.location);
 }
 
-int MovingObject::serialize(enet_uint8 *buffer, int start, int buflength) const
+int MovingObject::serialize(uint8 *buffer, int start, int buflength) const
 {
     int length = 0;
     length += state.serialize( buffer, start+length, buflength-length);
@@ -125,7 +125,7 @@ int MovingObject::serialize(enet_uint8 *buffer, int start, int buflength) const
     return length;
 }
 
-int MovingObject::unserialize(enet_uint8 *buffer, int start)
+int MovingObject::unserialize(uint8 *buffer, int start)
 {
     int length = 0;
     length += state.unserialize(buffer, start+length);
@@ -142,7 +142,7 @@ MovableState::MovableState(Ogre::Vector3 startingVelocity):
     orientation(Ogre::Vector3::UNIT_X, Ogre::Vector3::UNIT_Y, Ogre::Vector3::UNIT_Z),
     velocity(startingVelocity) {}
 
-int MovableState::serialize(enet_uint8 *buffer, int start, int buflength) const {
+int MovableState::serialize(uint8 *buffer, int start, int buflength) const {
     int length = 0;
     length += net::serialize(location, buffer, start+length, buflength-length);
     length += net::serialize(orientation, buffer, start+length, buflength-length);
@@ -150,7 +150,7 @@ int MovableState::serialize(enet_uint8 *buffer, int start, int buflength) const 
     return length;
 }
 
-int MovableState::unserialize(enet_uint8 *buffer, int start) {
+int MovableState::unserialize(uint8 *buffer, int start) {
     int length = 0;
     length += net::unserialize(location, buffer, start+length);
     length += net::unserialize(orientation, buffer, start+length);
@@ -163,14 +163,14 @@ MovableControl::MovableControl():
     accelerationFwd(0),
     velocityCWiseTurning(0) {}
 
-int MovableControl::serialize(enet_uint8 *buffer, int start, int buflength) const {
+int MovableControl::serialize(uint8 *buffer, int start, int buflength) const {
     int length = 0;
     length += net::serialize(accelerationFwd, buffer, start+length, buflength-length);
     length += net::serialize(velocityCWiseTurning, buffer, start+length, buflength-length);
     return length;
 }
 
-int MovableControl::unserialize(enet_uint8 *buffer, int start) {
+int MovableControl::unserialize(uint8 *buffer, int start) {
     int length = 0;
     length += net::unserialize(accelerationFwd, buffer, start+length);
     length += net::unserialize(velocityCWiseTurning, buffer, start+length);

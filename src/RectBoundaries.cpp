@@ -36,7 +36,7 @@ void RectBoundaries::clamp(float &vert, float &horiz) const
 /**
  * @return  int     Number of byts written to buffer.
  */
-int RectBoundaries::serialize(enet_uint8 buffer[], int start, int buflength) const {
+int RectBoundaries::serialize(uint8 buffer[], int start, int buflength) const {
     int length = 0;
     length += net::serialize(top, buffer, start+length, buflength-length);
     length += net::serialize(bottom, buffer, start+length, buflength-length);
@@ -48,7 +48,7 @@ int RectBoundaries::serialize(enet_uint8 buffer[], int start, int buflength) con
 /**
  * @return  int     Number of byts read from buffer.
  */
-int RectBoundaries::unserialize(enet_uint8 buffer[], int start) {
+int RectBoundaries::unserialize(uint8 buffer[], int start) {
     int length = 0;
     length += net::unserialize(top, buffer, start+length);
     length += net::unserialize(bottom, buffer, start+length);

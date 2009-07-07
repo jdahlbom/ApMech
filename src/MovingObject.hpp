@@ -4,11 +4,12 @@
 #include <Ogre.h>
 
 #include "net/NetObject.h"
+#include "net/Serializable.h"
 #include "RectBoundaries.hpp"
 
 namespace ap {
 
-class MovableState : public net::NetObject {
+class MovableState : public net::Serializable {
     public:
     Ogre::Vector3       location;
     Ogre::Quaternion    orientation;
@@ -16,23 +17,19 @@ class MovableState : public net::NetObject {
 
     MovableState(Ogre::Vector3  startingVelocity);
     ~MovableState() { /* Do nothing */ }
-    int serialize(enet_uint8 *buffer, int start, int buflength) const;
-    int unserialize(enet_uint8 *buffer, int start);
-
-    NetObject *create(int id) { /* Do nothing */ }
+    int serialize(uint8 *buffer, int start, int buflength) const;
+    int unserialize(uint8 *buffer, int start);
 };
 
-class MovableControl : public net::NetObject {
+class MovableControl : public net::Serializable {
     public:
     float               accelerationFwd;
     float               velocityCWiseTurning;
 
     MovableControl();
     ~MovableControl() { /* Do nothing */ }
-    int serialize(enet_uint8 *buffer, int start, int buflength) const;
-    int unserialize(enet_uint8 *buffer, int start);
-
-    NetObject *create(int id) { /* Do nothing */ }
+    int serialize(uint8 *buffer, int start, int buflength) const;
+    int unserialize(uint8 *buffer, int start);
 };
 
 class MovingObject : public net::NetObject {
@@ -63,8 +60,8 @@ class MovingObject : public net::NetObject {
     void update(unsigned long msSinceLast);
 
     //NetObject serialization
-    int serialize(enet_uint8 *buffer, int start, int buflength) const;
-    int unserialize(enet_uint8 *buffer, int start);
+    int serialize(uint8 *buffer, int start, int buflength) const;
+    int unserialize(uint8 *buffer, int start);
     NetObject *create(int id);
 
     private:
