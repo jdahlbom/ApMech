@@ -37,10 +37,10 @@ tempDirectories:
 	- mkdir -p $(OBJDIR)
 
 application: $(OBJS)
-	$(LD) $(OBJDIR)/*.o -o $(BIN) $(LDFLAGS)
+	$(LD) $(OBJS:%=$(OBJDIR)/%) -o $(BIN) $(LDFLAGS)
 
 server: $(SERVEROBJS)
-	$(LD) $(SERVEROBJS:%.o=$(OBJDIR)/%.o) -o apserver $(LDFLAGS)
+	$(LD) $(SERVEROBJS:%=$(OBJDIR)/%) -o apserver $(LDFLAGS)
 
 %.o: %.cpp
 	$(CXX) -c $^ -o $(OBJDIR)/$@ $(CXXFLAGS)
