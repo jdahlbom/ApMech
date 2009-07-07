@@ -33,7 +33,7 @@ all: tempDirectories application
 
 
 tempDirectories:
-	- mkdir $(OBJDIR)
+	- mkdir -p $(OBJDIR)
 
 application: $(OBJS)
 	$(LD) $(OBJDIR)/*.o -o $(BIN) $(LDFLAGS)
