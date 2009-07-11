@@ -1,10 +1,11 @@
+#include "PlayState.h"
+
 #include <Ogre.h>
+#include "net/netdata.h"
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 #include <Carbon/Carbon.h>
 #endif
-
-#include "PlayState.h"
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 
@@ -68,27 +69,37 @@ void PlayState::enter( void ) {
     Ogre::RenderTarget *renderWindow = pRoot->getRenderTarget("ApMech");
     renderWindow->addViewport( mCamera )->setBackgroundColour(Ogre::ColourValue(0.4f,0.0f,0.4f));
 
+    netdata = new net::NetData(net::NetData::CLIENT);
+    netdata->connect("127.0.01", 5074);
+    netdata->me.nick = "Test";
+    netdata->me.changed = true;         // Mark this info for transmission
+
     // Create the player character
     Ogre::Entity *myRobot = pSceneManager->createEntity("PlayerMech", "robot.mesh");
     myRobot->setVisible(true);
     myRobot->setCastShadows(true);
     Ogre::SceneNode *rootNode = pSceneManager->getRootSceneNode();
-    mRobotNode = rootNode->createChildSceneNode("Node/MyRobot");
-    mRobotNode->setPosition(terrainCenter);
-    mRobotNode->attachObject(myRobot);
+
+    mSelfNode = rootNode->createChildSceneNode("Node/MyRobot");
+    mSelfNode->setPosition(terrainCenter);
+    mSelfNode->attachObject(myRobot);
 
     mObject = new MovingObject();
     mObject->setPosition(terrainCenter);
-    mObject->setOwnerNode(mRobotNode);
+    mObject->setOwnerNode(mSelfNode);
     mObject->setWorldBoundaries(1500.0f,0.0f,0.0f,1500.0f);
     mObject->setMaxSpeed(25.0f);
-
     objectsMap.insert(std::pair<unsigned int, MovingObject *>(++currentObjectIndex, mObject));
 
+    mWorldCenter = rootNode->createChildSceneNode("Node/WorldCenter");
+    mWorldCenter->setPosition(terrainCenter);
+
     // Attach a camera to the player model
-    Ogre::SceneNode *cameraNode = mRobotNode->createChildSceneNode("Node/MyCamera");
-    cameraNode->setPosition(Ogre::Vector3(0, 250,10));
-    cameraNode->lookAt(mRobotNode->getPosition(), Ogre::Node::TS_WORLD);
+    Ogre::SceneNode *cameraNode = mSelfNode->createChildSceneNode("Node/MyCamera");
+    cameraNode->setPosition(Ogre::Vector3(-25, 250,0));
+    cameraNode->yaw(Ogre::Degree(-90));  // Camera facing: Z+ --> X+
+    cameraNode->pitch(Ogre::Degree(-75)); // Camera needs to look down.
+    //cameraNode->lookAt(mSelfNode->getPosition(), Ogre::Node::TS_WORLD);
     cameraNode->attachObject(mCamera);
     mCamera->setNearClipDistance(5);
 
@@ -116,6 +127,8 @@ void PlayState::exit( void ) {
     mStateOverlay->deactivate();
     mStateOverlay->hide();
     std::cout << "Exiting PlayState" << std::endl;
+
+    delete(netdata);
 
     // Delete the moving objects
     std::map<unsigned int, MovingObject*>::iterator it = objectsMap.begin();
