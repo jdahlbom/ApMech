@@ -35,7 +35,8 @@ private:
     Ogre::SceneManager          *pSceneManager;
     CEGUI::Window               *mStateOverlay;
 
-    Ogre::SceneNode             *mRobotNode;
+    Ogre::SceneNode             *mSelfNode;
+    Ogre::SceneNode             *mWorldCenter;
 
     ap::net::NetData            *netdata;
 
