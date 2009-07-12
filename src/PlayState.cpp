@@ -69,11 +69,6 @@ void PlayState::enter( void ) {
     Ogre::RenderTarget *renderWindow = pRoot->getRenderTarget("ApMech");
     renderWindow->addViewport( mCamera )->setBackgroundColour(Ogre::ColourValue(0.4f,0.0f,0.4f));
 
-    netdata = new net::NetData(net::NetData::CLIENT);
-    netdata->connect("127.0.01", 5074);
-    netdata->me.nick = "Test";
-    netdata->me.changed = true;         // Mark this info for transmission
-
     // Create the player character
     Ogre::Entity *myRobot = pSceneManager->createEntity("PlayerMech", "robot.mesh");
     myRobot->setVisible(true);
@@ -119,6 +114,12 @@ void PlayState::enter( void ) {
     // Show GUI
     mStateOverlay->show();
     mStateOverlay->activate();
+
+
+    netdata = new net::NetData(net::NetData::CLIENT);
+    netdata->connect("127.0.0.1", 50740);
+    netdata->me.nick = "Test";
+    netdata->me.changed = true;         // Mark this info for transmission
 
     std::cout << "Entering PlayState" << std::endl;
 }

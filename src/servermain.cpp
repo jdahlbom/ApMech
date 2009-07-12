@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
     float dt;                       //
 
     cout << "Created a server."<<endl;
-    netdata = new NetData(NetData::SERVER);
+    netdata = new NetData(NetData::SERVER, 50740);
 
     cout << "Serving "<< netobjectprototypes().size()<<" objects."<<endl;
 
