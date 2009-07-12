@@ -52,6 +52,12 @@ NetData::NetData(int type, int _port) {
 NetData::~NetData() {
     if (status == connected) disconnect();
     enet_deinitialize();
+
+    std::map<int, NetObject *>::iterator objIterator;
+    for(objIterator = netobjects.begin(); objIterator!=netobjects.end(); ++objIterator) {
+        delete(objIterator->second);
+    }
+    netobjects.erase(netobjects.begin(), netobjects.end());
     return;
 }
 
@@ -226,10 +232,11 @@ int NetData::serviceClient()
             {
                 if (data[h] == NetData::PACKET_NETOBJECT) {
                     h++; id = *(int *)(data+h);  // this means, read an int from data[h] onwards
-                    if (netobjects.find(id) != netobjects.end()) h+= netobjects.find(id)->second->unserialize(data, h);
-                    else {
+                    if (netobjects.find(id) != netobjects.end()) {
+                        h+= netobjects.find(id)->second->unserialize(data, h);
+                    } else {
                         objtype = *(enet_uint8 *)(data+h+4);
-                        netobjects.insert(make_pair(id, netobjectprototypes()[objtype]->create(id)));
+                        netobjects.insert(make_pair(id, ap::net::netobjectprototypes()[objtype]->create(id)));
                         h += netobjects.find(id)->second->unserialize(data, h);
                     }
                 } else if (data[h] == NetData::PACKET_DELOBJECT) {
