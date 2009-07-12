@@ -183,21 +183,24 @@ int NetData::serviceServer()
 
          case ENET_EVENT_TYPE_DISCONNECT:
             if (status == server) {
-                users.erase(int(event.data));
-                delete (int *)event.peer->data;     // I wonder why I wrote this line
-                cout << "Client " << event.data << " has disconnected" << endl;
+                int uid = *(int *)event.peer->data;     // Who disconnected? He sent his uid too,
+                                                        // but rather trust enet's peer->data
+                users.erase(uid);
+                delete (int *)event.peer->data;     // I wonder why I wrote this line // not anymore!
+                cout << "Client " << uid << " has disconnected" << endl;
+
 
                 for (map<int, NetObject *>::iterator iObj = netobjects.begin() ; iObj != netobjects.end() ; iObj++)
-                    if (iObj->second->uid == int(event.data)) iObj->second->uid = -1;
+                    if (iObj->second->uid == uid) iObj->second->uid = -1;
 
                 enet_uint8 buffer[6]; buffer[0] = NetData::PACKET_DISCONNECT;    // Let clients know!
-                *(int *)(buffer + 1) = int(event.data);
+                *(int *)(buffer + 1) = uid;
                 buffer[5] = NetData::PACKET_EOF;
                 ENetPacket *packet = enet_packet_create(buffer, 6, ENET_PACKET_FLAG_RELIABLE);
                 enet_host_broadcast(enethost, 0, packet);
                 // Not detecting if we get disconnect messages from users who weren't connected in the first place. Oh well.
 
-                addEvent(new NetEvent(NetData::EVENT_DISCONNECT, int(event.data)));
+                addEvent(new NetEvent(NetData::EVENT_DISCONNECT, uid));
             }
             break;
          case ENET_EVENT_TYPE_NONE:

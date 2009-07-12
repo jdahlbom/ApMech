@@ -109,6 +109,12 @@ void PlayState::enter( void ) {
     mStateOverlay->show();
     mStateOverlay->activate();
 
+
+    netdata = new net::NetData(net::NetData::CLIENT);
+    netdata->connect("127.0.0.1", 50740);
+    netdata->me.nick = "Test";
+    netdata->me.changed = true;         // Mark this info for transmission
+
     std::cout << "Entering PlayState" << std::endl;
 }
 
