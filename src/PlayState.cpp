@@ -38,6 +38,7 @@ namespace ap {
 PlayState::PlayState( GameStateManager *gameStateManager,
                       Ogre::SceneManager *sceneManager) :
                       pSceneManager(sceneManager),
+                      mCameraNodeParent(0),
                       currentObjectIndex(0)
 {
     initStateManager(gameStateManager);
@@ -90,13 +91,14 @@ void PlayState::enter( void ) {
     mWorldCenter->setPosition(terrainCenter);
 
     // Attach a camera to the player model
-    Ogre::SceneNode *cameraNode = mSelfNode->createChildSceneNode("Node/MyCamera");
-    cameraNode->setPosition(Ogre::Vector3(-25, 250,0));
-    cameraNode->yaw(Ogre::Degree(-90));  // Camera facing: Z+ --> X+
-    cameraNode->pitch(Ogre::Degree(-75)); // Camera needs to look down.
+    mCameraNode = pSceneManager->createSceneNode("Node/MyCamera");
+    mCameraNode->setPosition(Ogre::Vector3(-100, 500,0));
+    mCameraNode->yaw(Ogre::Degree(-90));  // Camera facing: Z+ --> X+
+    mCameraNode->pitch(Ogre::Degree(-75)); // Camera needs to look down.
     //cameraNode->lookAt(mSelfNode->getPosition(), Ogre::Node::TS_WORLD);
-    cameraNode->attachObject(mCamera);
+    mCameraNode->attachObject(mCamera);
     mCamera->setNearClipDistance(5);
+    attachCameraNode(mWorldCenter);
 
     // Create lighting
     pSceneManager->setAmbientLight(Ogre::ColourValue(1,1,1));
@@ -146,10 +148,36 @@ void PlayState::resume( void ) {
 }
 
 void PlayState::update( unsigned long lTimeElapsed ) {
-    for( std::map<unsigned int, MovingObject*>::iterator it = objectsMap.begin(); it!=objectsMap.end(); ++it) {
+/*  for( std::map<unsigned int, MovingObject*>::iterator it = objectsMap.begin(); it!=objectsMap.end(); ++it) {
         it->second->update(lTimeElapsed);
     }
 
+    TODO: Should update the scenenodes, should not update the state data.
+    */
+    net::NetEvent *event=0;
+    while (netdata->pollEvent(event)) {
+        switch( event->type ) {
+            case net::NetData::EVENT_SETAVATAR:
+                setAvatar(event->uid);
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+void PlayState::setAvatar(int avatarId)
+{
+
+}
+
+void PlayState::attachCameraNode(Ogre::SceneNode *newParentNode)
+{
+    if (0 != mCameraNodeParent) {
+        mCameraNodeParent->removeChild(mCameraNode);
+    }
+    newParentNode->addChild(mCameraNode);
+    mCameraNodeParent = newParentNode;
 }
 
 //-----------------------------------------------------------------------------
@@ -228,7 +256,6 @@ bool PlayState::keyReleased( const ap::ooinput::KeyEvent &e ) {
 
   return false;
 }
-
 
 void PlayState::fireGun()
 {

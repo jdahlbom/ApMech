@@ -23,10 +23,11 @@ public:
     void resume( void );
     void update( unsigned long lTimeElapsed );
 
+    void createGUIWindow();
+
+//--KeyboardListener-(inherited through GameState)-----------------------------
     bool keyPressed( const ooinput::KeyEvent &e );
     bool keyReleased( const ooinput::KeyEvent &e );
-
-    void createGUIWindow();
 
 private:
     Ogre::Root                  *pRoot;
@@ -37,6 +38,8 @@ private:
 
     Ogre::SceneNode             *mSelfNode;
     Ogre::SceneNode             *mWorldCenter;
+    Ogre::SceneNode             *mCameraNode;
+    Ogre::SceneNode             *mCameraNodeParent;
 
     ap::net::NetData            *netdata;
 
@@ -45,6 +48,8 @@ private:
     unsigned long               currentObjectIndex;
 
     void fireGun();
+    void setAvatar(int avatarId);
+    void attachCameraNode(Ogre::SceneNode *newParentNode);
 };
 
 } // namespace ap
