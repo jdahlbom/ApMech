@@ -234,7 +234,8 @@ int NetData::serviceClient()
             while (data[h] != NetData::PACKET_EOF)
             {
                 if (data[h] == NetData::PACKET_NETOBJECT) {
-                    h++; id = *(int *)(data+h);  // this means, read an int from data[h] onwards
+                    h++;
+                    id = *(int *)(data+h);  // this means, read an int from data[h] onwards
                     if (netobjects.find(id) != netobjects.end()) {
                         h+= netobjects.find(id)->second->unserialize(data, h);
                     } else {
@@ -243,14 +244,20 @@ int NetData::serviceClient()
                         h += netobjects.find(id)->second->unserialize(data, h);
                     }
                 } else if (data[h] == NetData::PACKET_DELOBJECT) {
-                    h++; id = *(int *)(data+h);
+                    h++;
+                    id = *(int *)(data+h);
                     netobjects.erase(id);
                     h += 4;
                 } else if (data[h] == NetData::PACKET_SETAVATAR) {
-                    h++; myAvatarID = *(int *)(data+h);
+                    h++;
+                    myAvatarID = *(int *)(data+h);
+                    addEvent(new NetEvent(EVENT_SETAVATAR, myAvatarID));
                     h += 4;
                 } else if (data[h] == NetData::PACKET_DISCONNECT) {
-                    h++; uid = *(int *)(data+h); h+=4;
+                    h++;
+                    uid = *(int *)(data+h);
+                    addEvent(new NetEvent(EVENT_DISCONNECT, 0));
+                    h+=4;
                     cout << "Player "<<uid<<" disconnected!"<<endl;
                     // TODO: DO SOMETHING TO INDICATE THIS!
                     // That, in addition to adding some class for player info, to give users

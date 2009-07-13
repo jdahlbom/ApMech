@@ -12,6 +12,7 @@
 #include "NetEvent.h"
 #include "../functions.h"
 
+
 namespace ap {
 namespace net {
 
@@ -47,6 +48,7 @@ class NetData {
     static const enet_uint8 EVENT_NOEVENT = 19;
     static const enet_uint8 EVENT_CONNECT = 20;
     static const enet_uint8 EVENT_DISCONNECT = 21;
+    static const enet_uint8 EVENT_SETAVATAR = 22;
 
  private:
     enum status_type { enet_error, offline, connected, server };
@@ -60,6 +62,7 @@ class NetData {
 
     std::list <int> objectDeleteQueue;
     std::list <NetEvent *> neteventlist;
+
     void addEvent(NetEvent *event); // Almost useless, if you can push_back stuff to a list
 
  public:
@@ -81,7 +84,6 @@ class NetData {
     bool pollEvent(NetEvent *event);
 
     // Functions below here are meant for server's use. Undefined consequences for clients. Maybe.
-
     int getUniqueObjectID();
     void delObject(int id);
 
