@@ -49,6 +49,8 @@ class NetData {
     static const enet_uint8 EVENT_CONNECT = 20;
     static const enet_uint8 EVENT_DISCONNECT = 21;
     static const enet_uint8 EVENT_SETAVATAR = 22;
+    static const enet_uint8 EVENT_DELETEOBJECT = 23;
+    static const enet_uint8 EVENT_CREATEOBJECT = 24;
 
  private:
     enum status_type { enet_error, offline, connected, server };
@@ -67,7 +69,8 @@ class NetData {
 
  public:
     std::map <int, NetUser> users;   // This is, users contacted to US! Should be empty unless we're server.
-    std::map <int, NetObject *> netobjects;
+    typedef std::map<int, NetObject*> netObjectsType;
+    netObjectsType netobjects;
 
     NetUser me;
     int myAvatarID;             // if >0, tells which object in the map represents me! (if client)
@@ -82,6 +85,9 @@ class NetData {
     int sendChanges();
     int receiveChanges();
     bool pollEvent(NetEvent *event);
+
+    NetObject *getNetObject(int id);
+    void removeNetObject(int id);
 
     // Functions below here are meant for server's use. Undefined consequences for clients. Maybe.
     int getUniqueObjectID();

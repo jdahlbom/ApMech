@@ -242,11 +242,12 @@ int NetData::serviceClient()
                         objtype = *(enet_uint8 *)(data+h+4);
                         netobjects.insert(make_pair(id, ap::net::netobjectprototypes()[objtype]->create(id)));
                         h += netobjects.find(id)->second->unserialize(data, h);
+                        addEvent(new NetEvent(EVENT_CREATEOBJECT, id));
                     }
                 } else if (data[h] == NetData::PACKET_DELOBJECT) {
                     h++;
                     id = *(int *)(data+h);
-                    netobjects.erase(id);
+                    addEvent(new NetEvent(EVENT_DELETEOBJECT, id));
                     h += 4;
                 } else if (data[h] == NetData::PACKET_SETAVATAR) {
                     h++;
@@ -345,6 +346,24 @@ int NetData::getUniqueObjectID()
     return newid;
 }
 
+NetObject * NetData::getNetObject(int id)
+{
+    netObjectsType::iterator it = netobjects.find(id);
+    if( netobjects.end() == it ) {
+        // TODO: Should throw an exception if no object found! Or return null?
+    }
+    return it->second;
+}
+
+// Client side delete
+void NetData::removeNetObject(int id)
+{
+    NetObject *removable = netobjects.find(id)->second;
+    delete removable;
+    netobjects.erase(id); // TODO: Shouldn't erase call the destructor anyways??
+}
+
+// Server delete
 void NetData::delObject(int id)
 {
     objectDeleteQueue.push_back(id);

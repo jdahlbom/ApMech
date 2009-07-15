@@ -39,6 +39,7 @@ PlayState::PlayState( GameStateManager *gameStateManager,
                       Ogre::SceneManager *sceneManager) :
                       pSceneManager(sceneManager),
                       mCameraNodeParent(0),
+                      mAvatarId(idForNoAvatar),
                       currentObjectIndex(0)
 {
     initStateManager(gameStateManager);
@@ -148,17 +149,22 @@ void PlayState::resume( void ) {
 }
 
 void PlayState::update( unsigned long lTimeElapsed ) {
-/*  for( std::map<unsigned int, MovingObject*>::iterator it = objectsMap.begin(); it!=objectsMap.end(); ++it) {
+  //  TODO: Should update the scenenodes, should not update the state data.
+    for( std::map<unsigned int, MovingObject*>::iterator it = objectsMap.begin(); it!=objectsMap.end(); ++it) {
         it->second->update(lTimeElapsed);
     }
 
-    TODO: Should update the scenenodes, should not update the state data.
-    */
     net::NetEvent *event=0;
     while (netdata->pollEvent(event)) {
         switch( event->type ) {
             case net::NetData::EVENT_SETAVATAR:
                 setAvatar(event->uid);
+                break;
+            case net::NetData::EVENT_DELETEOBJECT:
+                deleteNetObject(event->uid);
+                break;
+            case net::NetData::EVENT_CREATEOBJECT:
+                createSceneNodeForMovable(event->uid);
                 break;
             default:
                 break;
@@ -168,7 +174,39 @@ void PlayState::update( unsigned long lTimeElapsed ) {
 
 void PlayState::setAvatar(int avatarId)
 {
+    if ( avatarId == mAvatarId )
+        return;
 
+    // FIXME: Nasty having to cast things...
+    ap::MovingObject *pAvatarObject = dynamic_cast<ap::MovingObject *>(netdata->getNetObject(avatarId));
+    if (!pAvatarObject->hasOwnerNode()) {
+        createSceneNodeForMovable(avatarId);
+    }
+    Ogre::SceneNode *pAvatarNode = pAvatarObject->getOwnerNode();
+    attachCameraNode(pAvatarNode);
+}
+
+void PlayState::createSceneNodeForMovable(int objectId)
+{
+    // FIXME: Nasty having to cast things...
+    ap::MovingObject *pAvatarObject = dynamic_cast<ap::MovingObject *>(netdata->getNetObject(objectId));
+    if (!pAvatarObject->hasOwnerNode()) {
+        std::stringstream ss;
+        ss << "Node/NetObject/"<<objectId;
+        Ogre::SceneNode *rootNode = pSceneManager->getRootSceneNode();
+        Ogre::SceneNode *objectNode = rootNode->createChildSceneNode(ss.str());
+        pAvatarObject->setOwnerNode(objectNode);
+    }
+}
+
+void PlayState::deleteNetObject(int objectId)
+{
+    // Detach camera from the object to be deleted.
+    if ( objectId == mAvatarId ) {
+        attachCameraNode(mWorldCenter);
+    }
+    // Actually delete the object.
+    netdata->removeNetObject(objectId);
 }
 
 void PlayState::attachCameraNode(Ogre::SceneNode *newParentNode)

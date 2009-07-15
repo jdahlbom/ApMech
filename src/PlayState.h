@@ -43,13 +43,19 @@ private:
 
     ap::net::NetData            *netdata;
 
+    static const int            idForNoAvatar=-1;
+    int                         mAvatarId;
+
     MovingObject                *mObject;
     std::map<unsigned int, MovingObject*>     objectsMap;
     unsigned long               currentObjectIndex;
 
     void fireGun();
     void setAvatar(int avatarId);
+    void deleteNetObject(int objectId);
     void attachCameraNode(Ogre::SceneNode *newParentNode);
+    void createSceneNodeForMovable(int objectId);
+
 };
 
 } // namespace ap
