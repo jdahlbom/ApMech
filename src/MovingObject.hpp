@@ -55,7 +55,7 @@ class MovingObject : public net::NetObject {
 
     Ogre::SceneNode* getOwnerNode() const { return pOwnerNode; }
     void setOwnerNode(Ogre::SceneNode *node) { pOwnerNode = node; }
-    bool hasOwnerNode() const { return (!pOwnerNode); }
+    bool hasOwnerNode() const { return pOwnerNode; }
 
     void update(unsigned long msSinceLast);
 
