@@ -1,3 +1,6 @@
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+#include <Carbon/Carbon.h>
+#endif
 #include "Mech.h"
 
 #include <Ogre.h>

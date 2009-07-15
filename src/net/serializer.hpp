@@ -1,6 +1,10 @@
 #ifndef AP_SERIALIZER
 #define AP_SERIALIZER
 
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+#include <Carbon/Carbon.h>
+#endif
+
 #include <Ogre.h>
 
 namespace ap {

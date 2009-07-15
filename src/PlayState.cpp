@@ -1,11 +1,11 @@
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+#include <Carbon/Carbon.h>
+#endif
+
 #include "PlayState.h"
 
 #include <Ogre.h>
 #include "net/netdata.h"
-
-#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-#include <Carbon/Carbon.h>
-#endif
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 

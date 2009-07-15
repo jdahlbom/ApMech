@@ -1,8 +1,9 @@
-#include <Ogre.h>
-
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 #include <Carbon/Carbon.h>
 #endif
+
+#include <Ogre.h>
+
 /**
  * Most of the code was lifted from a wiki-linked example application:
  * http://www.ogre3d.org/wiki/index.php/Using_OIS
