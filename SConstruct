@@ -20,6 +20,7 @@ if platform == 'darwin':
             '/opt/local/include/boost-1_35/'
         ]
     env.Append(LIBS = ['enet'])
+    env.Append(CCFLAGS = '-include Carbon/Carbon.h')
 
 elif platform == 'posix':
     env = Environment()

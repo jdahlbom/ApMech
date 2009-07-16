@@ -1,6 +1,3 @@
-#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-#include <Carbon/Carbon.h>
-#endif
 #include "Projectile.h"
 
 #include <Ogre.h>
