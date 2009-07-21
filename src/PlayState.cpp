@@ -46,13 +46,8 @@ PlayState::PlayState( GameStateManager *gameStateManager,
 
     pRoot = Ogre::Root::getSingletonPtr();
     createGUIWindow();
-
-// TODO: Refaktoroi, kopioitu nablasta.
-    /*netdata = new NetData(NetData::CLIENT);
-    netdata->connect("127.0.0.1", 5074);
-    netdata->me.nick = "Test";
-    netdata->me.changed = true;         // Mark this info for transmission */
 }
+
 PlayState::~PlayState() {}
 
 void PlayState::enter( void ) {
@@ -152,6 +147,7 @@ void PlayState::update( unsigned long lTimeElapsed ) {
   //  TODO: Should update the scenenodes, should not update the state data.
     for( std::map<unsigned int, MovingObject*>::iterator it = objectsMap.begin(); it!=objectsMap.end(); ++it) {
         it->second->update(lTimeElapsed);
+        it->second->updateNode();
     }
 
     net::NetEvent *event=0;
@@ -174,6 +170,7 @@ void PlayState::update( unsigned long lTimeElapsed ) {
 
 void PlayState::setAvatar(int avatarId)
 {
+    assert(0!=netdata);
     if ( avatarId == mAvatarId )
         return;
 

@@ -8,13 +8,14 @@
 #endif
 
 #include "net/serializer.hpp"
+#include "math/rotations.hpp"
 
 namespace ap {
 
 MovingObject::MovingObject(float nFriction, Ogre::Vector3 startingVelocity):
     initialFacing(Ogre::Vector3::UNIT_X),
-    state(MovableState(startingVelocity)),
-    control(MovableControl()),
+    state(new MovableState(startingVelocity)),
+    control(new MovableControl()),
     friction(nFriction),
     worldBoundaries(0.0f, 0.0f, 0.0f, 0.0f),
     maxSpeedSquared(625.0),
@@ -33,7 +34,8 @@ void MovingObject::setWorldBoundaries(float top, float bottom, float left, float
 
 void MovingObject::setMaxSpeed(float speed)
 {
-    assert(speed > 0);
+    if(speed < 0)
+        return;
     maxSpeedSquared = speed * speed;
 }
 
@@ -44,24 +46,24 @@ void MovingObject::setMaxSpeed(float speed)
  */
 void MovingObject::setVelocity(Ogre::Vector3 newVelocity)
 {
-    state.velocity = newVelocity;
+    state->velocity = newVelocity;
 }
 
 void MovingObject::addForwardAcceleration(float amount)
 {
     float maxAbsAcceleration = 25;
-    control.accelerationFwd += amount;
+    control->accelerationFwd += amount;
 
-    if(control.accelerationFwd > maxAbsAcceleration) {
-        control.accelerationFwd = maxAbsAcceleration;
-    } else if (control.accelerationFwd < (-maxAbsAcceleration)) {
-        control.accelerationFwd = 0-maxAbsAcceleration;
+    if(control->accelerationFwd > maxAbsAcceleration) {
+        control->accelerationFwd = maxAbsAcceleration;
+    } else if (control->accelerationFwd < (-maxAbsAcceleration)) {
+        control->accelerationFwd = 0-maxAbsAcceleration;
     }
 }
 
 void MovingObject::addClockwiseTurningSpeed(float amount)
 {
-    control.velocityCWiseTurning += amount;
+    control->velocityCWiseTurning += amount;
 }
 
 
@@ -73,7 +75,7 @@ void MovingObject::addClockwiseTurningSpeed(float amount)
  *
  * return   Ogre::Vector3
  */
-Ogre::Vector3 MovingObject::getFacing() const { return state.orientation * initialFacing; }
+Ogre::Vector3 MovingObject::getFacing() const { return state->orientation * initialFacing; }
 
 void MovingObject::update(unsigned long msSinceLast)
 {
@@ -85,45 +87,59 @@ void MovingObject::update(unsigned long msSinceLast)
     updatePosition(msSinceLast);
 }
 
+void MovingObject::updateNode()
+{
+    if(pOwnerNode) {
+        pOwnerNode->setPosition(state->location);
+        pOwnerNode->setOrientation(state->orientation);
+    }
+}
+
 void MovingObject::updateVelocity(unsigned long msSinceLast)
 {
-    assert (0 != pOwnerNode);
-
     // Friction
-    state.velocity = state.velocity - (friction * msSinceLast * 0.001f);
+    Ogre::Real length = state->velocity.length();
+    if( 0.01f > length && friction != 0.0f) {
+        state->velocity = Ogre::Vector3::ZERO;
+    } else {
+        Ogre::Vector3 unitVelocity = state->velocity / length;
+        state->velocity = state->velocity - unitVelocity*(friction * msSinceLast * 0.001f);
 
-    state.velocity += control.accelerationFwd * msSinceLast * 0.001f * getFacing();
-    if ( state.velocity.squaredLength() > maxSpeedSquared ) {
-        state.velocity = state.velocity / state.velocity.squaredLength() * maxSpeedSquared;
+        // Friction must not be able to create a backwards motion!
+        if(unitVelocity.dotProduct(state->velocity) < 0) {
+            state->velocity = Ogre::Vector3::ZERO;
+        }
     }
 
+    state->velocity += control->accelerationFwd * msSinceLast * 0.001f * getFacing();
+    Ogre::Real squaredLength = state->velocity.squaredLength();
+    if ( squaredLength > maxSpeedSquared ) {
+        state->velocity = (state->velocity / squaredLength) * maxSpeedSquared;
+    }
 }
 
 void MovingObject::updateFacing(unsigned long msSinceLast)
 {
-    assert( 0 != pOwnerNode );
-
-    if(control.velocityCWiseTurning != 0) {
-        Ogre::Radian turning = Ogre::Radian(control.velocityCWiseTurning * msSinceLast * 0.001f);
-        pOwnerNode->rotate(Ogre::Vector3::UNIT_Y, turning, Ogre::Node::TS_LOCAL);
-        state.orientation = pOwnerNode->getOrientation();
+    if(control->velocityCWiseTurning != 0) {
+        Ogre::Radian turning = Ogre::Radian(control->velocityCWiseTurning * msSinceLast * 0.001f);
+        state->ccwRotation += turning;
+        std::cout << "Turning: " << state->ccwRotation.valueDegrees() << std::endl;
+        Ogre::Matrix3 rotMatrix(ap::math::getRotationMatrixAfterYaw(state->ccwRotation));
+        state->orientation = Ogre::Quaternion(rotMatrix);
     }
 }
 
 void MovingObject::updatePosition(unsigned long msSinceLast)
 {
-    assert( 0 != pOwnerNode );
-
-    state.location = state.location + state.velocity * msSinceLast * 0.001f;
-    worldBoundaries.clamp(state.location.z, state.location.x);
-    pOwnerNode->setPosition(state.location);
+    state->location = state->location + state->velocity * msSinceLast * 0.001f;
+    worldBoundaries.clamp(state->location.z, state->location.x);
 }
 
 int MovingObject::serialize(uint8 *buffer, int start, int buflength) const
 {
     int length = 0;
-    length += state.serialize( buffer, start+length, buflength-length);
-    length += control.serialize( buffer, start+length, buflength-length);
+    length += state->serialize( buffer, start+length, buflength-length);
+    length += control->serialize( buffer, start+length, buflength-length);
     length += worldBoundaries.serialize(buffer, start+length, buflength-length);
     return length;
 }
@@ -131,8 +147,8 @@ int MovingObject::serialize(uint8 *buffer, int start, int buflength) const
 int MovingObject::unserialize(uint8 *buffer, int start)
 {
     int length = 0;
-    length += state.unserialize(buffer, start+length);
-    length += control.unserialize(buffer, start+length);
+    length += state->unserialize(buffer, start+length);
+    length += control->unserialize(buffer, start+length);
     length += worldBoundaries.unserialize(buffer, start+length);
     return length;
 }

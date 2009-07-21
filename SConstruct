@@ -38,6 +38,7 @@ src/functions.cpp
 src/main.cpp
 src/ooinput/InputSystem.cpp
 src/ooinput/SDLInputSystem.cpp
+src/math/rotations.cpp
 """)
 
 t = env.Program(target='apmech', source=sources)

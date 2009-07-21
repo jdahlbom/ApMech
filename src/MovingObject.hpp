@@ -14,6 +14,7 @@ class MovableState : public net::Serializable {
     Ogre::Vector3       location;
     Ogre::Quaternion    orientation;
     Ogre::Vector3       velocity;
+    Ogre::Radian        ccwRotation;
 
     MovableState(Ogre::Vector3  startingVelocity);
     ~MovableState() { /* Do nothing */ }
@@ -41,21 +42,22 @@ class MovingObject : public net::NetObject {
 
     void setMaxSpeed(float speed);
     void setVelocity(Ogre::Vector3 velocity);
-    Ogre::Vector3 getVelocity() const { return state.velocity; };
+    Ogre::Vector3 getVelocity() const { return state->velocity; };
 
-    void setPosition(Ogre::Vector3 pos) { state.location = pos; };
+    void setPosition(Ogre::Vector3 pos) { state->location = pos; };
 
     void addForwardAcceleration(float amount);
     void addClockwiseTurningSpeed(float amountRad);
 
-    void setForwardAcceleration(float amount) { control.accelerationFwd = amount; }
-    void setClockwiseTurningSpeed(float amount) { control.velocityCWiseTurning = amount; }
+    void setForwardAcceleration(float amount) { control->accelerationFwd = amount; }
+    void setClockwiseTurningSpeed(float amount) { control->velocityCWiseTurning = amount; }
 
     Ogre::Vector3 getFacing() const;
 
     Ogre::SceneNode* getOwnerNode() const { return pOwnerNode; }
     void setOwnerNode(Ogre::SceneNode *node) { pOwnerNode = node; }
     bool hasOwnerNode() const { return pOwnerNode; }
+    void updateNode();
 
     void update(unsigned long msSinceLast);
 
@@ -66,8 +68,8 @@ class MovingObject : public net::NetObject {
 
     private:
     Ogre::Vector3       initialFacing;
-    MovableState        state;
-    MovableControl      control;
+    MovableState        *state;
+    MovableControl      *control;
     float               friction;
 
     RectBoundaries      worldBoundaries;
