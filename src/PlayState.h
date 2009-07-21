@@ -55,6 +55,7 @@ private:
     void deleteNetObject(int objectId);
     void attachCameraNode(Ogre::SceneNode *newParentNode);
     void createSceneNodeForMovable(int objectId);
+    void setNetDataDirty() { netdata->me.changed = true; }
 
 };
 

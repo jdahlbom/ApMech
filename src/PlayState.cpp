@@ -181,6 +181,7 @@ void PlayState::setAvatar(int avatarId)
     }
     Ogre::SceneNode *pAvatarNode = pAvatarObject->getOwnerNode();
     attachCameraNode(pAvatarNode);
+    netdata->me.setControlPtr(pAvatarObject->getControlPtr());
 }
 
 void PlayState::createSceneNodeForMovable(int objectId)
@@ -201,6 +202,7 @@ void PlayState::deleteNetObject(int objectId)
     // Detach camera from the object to be deleted.
     if ( objectId == mAvatarId ) {
         attachCameraNode(mWorldCenter);
+        netdata->me.setControlPtr(0);
     }
     // Actually delete the object.
     netdata->removeNetObject(objectId);
@@ -251,18 +253,23 @@ bool PlayState::keyPressed( const ap::ooinput::KeyEvent &e ) {
             break;
         case ooinput::AP_K_a:
             mObject->addClockwiseTurningSpeed(5);
+            setNetDataDirty();
             break;
         case ooinput::AP_K_w:
             mObject->addForwardAcceleration(15);
+            setNetDataDirty();
             break;
         case ooinput::AP_K_s:
             mObject->addForwardAcceleration(-9);
+            setNetDataDirty();
             break;
         case ooinput::AP_K_d:
             mObject->addClockwiseTurningSpeed(-5);
+            setNetDataDirty();
             break;
         case ooinput::AP_K_SPACE:
             fireGun();
+            setNetDataDirty();
             break;
         default:
             std::cout << e.unicode << " pressed, not doing anything." << std::endl;
@@ -275,15 +282,19 @@ bool PlayState::keyReleased( const ap::ooinput::KeyEvent &e ) {
     switch( e.key ) {
         case ooinput::AP_K_a:
             mObject->addClockwiseTurningSpeed(-5);
+            setNetDataDirty();
             break;
         case ooinput::AP_K_w:
             mObject->addForwardAcceleration(-15);
+            setNetDataDirty();
             break;
         case ooinput::AP_K_s:
             mObject->addForwardAcceleration(9);
+            setNetDataDirty();
             break;
         case ooinput::AP_K_d:
             mObject->addClockwiseTurningSpeed(5);
+            setNetDataDirty();
             break;
         default:
             break;

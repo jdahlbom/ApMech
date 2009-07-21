@@ -2,23 +2,31 @@
 
 #include "serializer.hpp"
 
-namespace ap {   
+namespace ap {
 namespace net {
 
-NetUser::NetUser()
+NetUser::NetUser():
+    peer(0),
+    uid(-1),
+    nick("uninitialized"),
+    ping(0)
 {
-    uid = -1; nick = "uninitialized";
-    ping = 0;
     changed = false;
 }
 
-NetUser::NetUser(int _uid, ENetPeer *_peer)
+NetUser::NetUser(int _uid, ENetPeer *_peer) :
+    peer(_peer),
+    uid(_uid),
+    nick("uninitialized"),
+    ping(0),
+    controls(0)
 {
-    nick = "uninitialized";
-    ping = 0;
-    uid = _uid;    peer = _peer;
-    controls = 0;
     changed = false;
+}
+
+void NetUser::setControlPtr(MovableControl *ctrl)
+{
+    controls = ctrl;
 }
 
 int NetUser::serialize(enet_uint8 buffer[], int start, int buflength) const
@@ -28,9 +36,13 @@ int NetUser::serialize(enet_uint8 buffer[], int start, int buflength) const
 
     length += serialize(uid, buffer, start+length, buflength-length);
     length += serialize(ping, buffer, start+length, buflength-length);
-    length += serialize(a, buffer, start+length, buflength-length);
-    length += serialize(turning, buffer, start+length, buflength-length);
-  //*(unsigned int *)(buffer+start+length) = controls;      length += 4;
+
+    if(controls) {
+        *(buffer + start + length) = CONTROL_IS_SET; ++length;
+        length += controls->serialize(buffer, start+length, buflength-length);
+    } else {
+        *(buffer + start + length) = CONTROL_NOT_SET; ++length;
+    }
     strcpy( (char *)buffer + start+length, nick.c_str());   length += nick.length()+1;
 
     return length;
@@ -45,9 +57,12 @@ int NetUser::unserialize(enet_uint8 buffer[], int start)
 
     if (uid) {
         length += unserialize(ping, buffer, start+length);
-        length += unserialize(a, buffer, start+length);
-        length += unserialize(turning, buffer, start+length);
-  //    controls = *(unsigned int *)(buffer+start+length);  length += 4;
+
+        // buffer must have control set AND controls pointer must not point to null.
+        if ((CONTROL_IS_SET == *(buffer+start+(length++))) && controls) {
+            length += controls->unserialize(buffer, start+length);
+        }
+
         nick.assign((char *)buffer+start+length);           length += nick.length()+1;
 
 //        cout << uid << ": x "<<x<<", y "<<y<<" nick "<<nick<<endl;

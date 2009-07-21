@@ -59,6 +59,7 @@ class MovingObject : public net::NetObject {
     bool hasOwnerNode() const { return pOwnerNode; }
     void updateNode();
 
+    MovableControl* getControlPtr() const { return control; }
     void update(unsigned long msSinceLast);
 
     //NetObject serialization
