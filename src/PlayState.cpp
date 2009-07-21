@@ -4,10 +4,6 @@
 #include "net/netdata.h"
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-#include <Carbon/Carbon.h>
-#endif
-
-#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 
 // This function will locate the path to our application on OS X,
 // unlike windows you can not rely on the current working directory
