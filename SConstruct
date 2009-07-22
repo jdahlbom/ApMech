@@ -64,6 +64,7 @@ src/net/NetUser.cpp
 src/net/NetEvent.cpp
 src/functions.cpp
 src/math/rotations.cpp
+src/server/Server.cpp
 """)
 
 client = env.Program(target='apmech', source=clientSources)
