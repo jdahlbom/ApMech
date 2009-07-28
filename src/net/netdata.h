@@ -11,7 +11,7 @@
 #include "NetObject.h"
 #include "NetEvent.h"
 #include "../functions.h"
-
+#include "../types.h"
 
 namespace ap {
 namespace net {
@@ -71,12 +71,12 @@ class NetData {
 
  public:
     std::map <int, NetUser> users;   // This is, users contacted to US! Should be empty unless we're server.
-    typedef std::map<int, NetObject*> netObjectsType;
+    typedef std::map<uint32, NetObject*> netObjectsType;
     netObjectsType netobjects;
 
     NetUser me;
     int myAvatarID;             // if >0, tells which object in the map represents me! (if client)
-    void setAvatarID(int uid, int avatarid);
+    void setAvatarID(uint32 uid, uint32 avatarid);
 
     NetData(int type = NetData::CLIENT, int _port = DEFAULTPORT);
     ~NetData();
@@ -86,14 +86,14 @@ class NetData {
 
     int sendChanges();
     int receiveChanges();
-    bool pollEvent(NetEvent *event);
+    bool pollEvent(NetEvent &event);
 
-    NetObject *getNetObject(int id);
-    void removeNetObject(int id);
+    NetObject *getNetObject(uint32 id);
+    void removeNetObject(uint32 id);
 
     // Functions below here are meant for server's use. Undefined consequences for clients. Maybe.
     int getUniqueObjectID();
-    void delObject(int id);
+    void delObject(uint32 id);
 
 //    int save(string filename);
 //    int load(string filename);

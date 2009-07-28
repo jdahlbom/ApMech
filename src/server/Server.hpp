@@ -6,6 +6,10 @@
 #include "../net/NetUser.h"
 #include "../net/NetEvent.h"
 
+#include "../Mech.h"
+#include "../MovingObject.hpp"
+#include "../types.h"
+
 namespace ap {
 namespace server {
 
@@ -16,16 +20,17 @@ class Server
     void start();
 
     private:
-    std::map<int,net::NetObject *>::iterator    p;
-    std::map<int,net::NetObject *>::iterator    pProj;
-    std::map<int, net::NetUser>::iterator       iUser;
-    net::NetData                                *netdata;
-    net::NetEvent                               event;
-    unsigned long int                           nextupdate; // When we will send updates to clients the next time
-    unsigned long int                           oldticks;   // These here for tracking time
-    unsigned long int                           newticks;   // These here for tracking time
-    float                                       dt;
-    unsigned int                                mPort;
+    ap::net::NetData    *netdata;
+    uint64              nextupdate; // When we will send updates to clients the next time
+    uint64              oldticks;   // These here for tracking time
+    uint64              newticks;   // These here for tracking time
+    uint32              mPort;
+
+    void processEvents(ap::net::NetData *pNetData);
+    void updateObjects(uint64 dt, ap::net::NetData* pNetData) const;
+    void detectCollisions(ap::net::NetData *pNetData) const;
+    void relocateSpawnedMech(ap::Mech *mech) const;
+
 }; // class Server
 
 } // namespace server

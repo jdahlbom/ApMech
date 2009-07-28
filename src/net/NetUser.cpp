@@ -11,6 +11,7 @@ NetUser::NetUser():
     nick("uninitialized"),
     ping(0)
 {
+    controls = 0;
     changed = false;
 }
 
@@ -18,9 +19,9 @@ NetUser::NetUser(int _uid, ENetPeer *_peer) :
     peer(_peer),
     uid(_uid),
     nick("uninitialized"),
-    ping(0),
-    controls(0)
+    ping(0)
 {
+    controls = 0;
     changed = false;
 }
 
@@ -38,6 +39,7 @@ int NetUser::serialize(enet_uint8 buffer[], int start, int buflength) const
     length += serialize(ping, buffer, start+length, buflength-length);
 
     if(controls) {
+        std::cout << "[NETUSER] Controls ptr points to " << controls << std::endl;
         *(buffer + start + length) = CONTROL_IS_SET; ++length;
         length += controls->serialize(buffer, start+length, buflength-length);
     } else {
@@ -59,8 +61,14 @@ int NetUser::unserialize(enet_uint8 buffer[], int start)
         length += unserialize(ping, buffer, start+length);
 
         // buffer must have control set AND controls pointer must not point to null.
-        if ((CONTROL_IS_SET == *(buffer+start+(length++))) && controls) {
-            length += controls->unserialize(buffer, start+length);
+        if (CONTROL_IS_SET == *(buffer+start+(length++))) {
+            if (0 != controls) {
+                length += controls->unserialize(buffer, start+length);
+            } else {
+                std::cout << "[NETUSER] unserialize - this block shouldn't get executed." << std::endl;
+                MovableControl dumpControls;
+                length += dumpControls.unserialize(buffer, start+length);
+            }
         }
 
         nick.assign((char *)buffer+start+length);           length += nick.length()+1;

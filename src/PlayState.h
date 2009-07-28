@@ -7,6 +7,7 @@
 #include "GameState.h"
 #include "MovingObject.hpp"
 #include "net/netdata.h"
+#include "types.h"
 
 namespace ap {
 
@@ -47,16 +48,15 @@ private:
     int                         mAvatarId;
 
     MovingObject                *mObject;
-    std::map<unsigned int, MovingObject*>     objectsMap;
-    unsigned long               currentObjectIndex;
 
     void fireGun();
-    void setAvatar(int avatarId);
-    void deleteNetObject(int objectId);
+    void setAvatar(uint32 avatarId);
+    void deleteNetObject(uint32 objectId);
     void attachCameraNode(Ogre::SceneNode *newParentNode);
-    void createSceneNodeForMovable(int objectId);
+    void createSceneNodeForMovable(uint32 objectId);
     void createLighting(Ogre::SceneManager *sceneManager);
     void setNetDataDirty() { netdata->me.changed = true; }
+    void createNewEntity(ap::MovingObject *newObject, uint32 objectId);
 
 };
 

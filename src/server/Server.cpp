@@ -12,6 +12,9 @@
 #include <list>
 
 #include "../functions.h"
+#include "../Mech.h"
+#include "../Projectile.h"
+#include "../MovingObject.hpp"
 
 namespace ap {
 namespace server {
@@ -21,96 +24,113 @@ using namespace std;
 Server::Server(unsigned int port) :
   mPort(port)
 {
-    std::cout << "Created a server."<< std::endl;
+    std::cout << "[SERVER] Created a server."<< std::endl;
 }
 
 void Server::start() {
-    std::cout << "Started the server."<<std::endl;
+    std::cout << "[SERVER] Started the server."<<std::endl;
     netdata = new net::NetData(net::NetData::SERVER, mPort);
 
-    std::cout << "Serving "<< ap::net::netobjectprototypes().size()<<" objects."<<std::endl;
+    if( !netdata ) {
+        std::cout << "[SERVER] Error initializing NetData, exiting!" << std::endl;
+        return;
+    }
+
+    std::cout << "[SERVER] Serving "<< ap::net::netobjectprototypes().size()<<" types of objects."<<std::endl;
 
     newticks = nextupdate = getTicks();
 
     while (1) {             // Server main loop
         netdata->receiveChanges();
-        oldticks = newticks; newticks = getTicks(); dt = float(newticks - oldticks) * 0.001;
+        oldticks = newticks;
+        newticks = getTicks();
+        float dt = static_cast<float>(newticks - oldticks) * 0.001;
 
-        p = netdata->netobjects.begin();
-        while (p != netdata->netobjects.end()) {
-            iUser = netdata->users.find(p->second->uid);
 
-/*            NetGameObject *ptrObj = dynamic_cast<NetGameObject *>(p->second);
-            if (ptrObj) // if the dynamic cast succeeded, then p->second is a NetGameObject!
-            {
-                if (iUser != netdata->users.end()) // That means the object's owner is still logged in
-                {
-                    list<NetObject *> *lObjs = ptrObj->control(iUser->second, true);
-                    if (lObjs != NULL) {            // if control returns objects, insert them to netobjects map
-                        list<NetObject *>::iterator ilObj;
-                        for (ilObj = lObjs->begin(); ilObj != lObjs->end(); ilObj++)
-                        {
-                            int newid = netdata->getUniqueObjectID();
-                            (*ilObj)->id = newid;
-                            netdata->netobjects.insert(make_pair(newid, *ilObj));
-                        }
-                    }
-                }
+        updateObjects(dt, netdata);
+        detectCollisions(netdata);
 
-                pProj = netdata->netobjects.begin();
-                while (pProj != netdata->netobjects.end())
-                {
-                    Projectile *proj = dynamic_cast<Projectile *>(pProj->second);
-                    if ((proj) && (proj->loc.collision(ptrObj->loc))) {
-                        ptrObj->loc.x = 500 + (rand()%4)*1000;
-                        ptrObj->loc.y = 500 + (rand()%4)*1000;
-                        ptrObj->loc.xvel = ptrObj->loc.yvel = 0.0;
-                        netdata->delObject(pProj->second->id);  // This erases a pair from netobjects map,
-                    }                                           // (hope this doesn't do harm),
-                    pProj++;                                    // and this still uses an iterator to the one.
-                }
-            }
-*/
-            if (p->second->advance(dt) == -1) {
-                delete p->second;
-                netdata->netobjects.erase(p);
-            }
-
-            p++;
-        }
 
         if (newticks >= nextupdate) {
             netdata->sendChanges();
             nextupdate = newticks + 40; // 40 ms between updates, that's 25 network fps.
         }                               // Seems to me that up to 100 is still okay!
-        usleep(1);       // sleep even a little bit so that dt is never 0
+        // TODO: Ensure that usleep is available on Mac/Windows as well!
+        usleep(1000);       // sleep even a little bit so that dt is never 0
 
-        while (netdata->pollEvent(&event)) {
-            switch (event.type)
-            {
-             case net::NetData::EVENT_CONNECT:
-             {
-                cout << "Received a connection from "<< uint2ipv4(netdata->users[event.uid].peer->address.host) <<", uid "<<event.uid;
-                cout << ". We now have "<<netdata->users.size()<<" users."<<endl;
-
-
-                int newid = netdata->getUniqueObjectID();   // and an unused object id
-//                netdata->netobjects.insert(make_pair(newid, new NetGameObject(newid, event.uid)));
-
-                netdata->setAvatarID(event.uid, newid);
-                break;
-
-             }
-             case net::NetData::EVENT_DISCONNECT:
-                cout << "Client "<<event.uid<<" disconnected."<<endl;
-                break;
-             default:
-                break;
-            }
-        }
-
+        processEvents(netdata);
     } // Main loop
 } // void Server::start()
+
+void Server::processEvents(ap::net::NetData *pNetData) {
+    ap::net::NetEvent event;
+    while (pNetData->pollEvent(event))
+    {
+      switch (event.type)
+      {
+        case ap::net::NetData::EVENT_CONNECT:
+        {
+            cout << "[SERVER] Received a connection from "
+                << uint2ipv4(pNetData->users[event.uid].peer->address.host)
+                <<", uid " << event.uid;
+            cout << ". We now have "<< pNetData->users.size()<<" users."<<endl;
+
+            int newid = pNetData->getUniqueObjectID();   // and an unused object id
+
+            ap::MovingObject *newAvatar = new ap::Mech();
+            newAvatar->setWorldBoundaries(1500.0f,0.0f,0.0f,1500.0f);
+            newAvatar->setMaxSpeed(25.0f);
+            // newAvatar->setLocation(Ogre::Vector3(XXX, YYY, ZZZ)
+            pNetData->users[event.uid].setControlPtr(newAvatar->getControlPtr());
+            pNetData->netobjects.insert(make_pair(newid, newAvatar));
+
+            pNetData->setAvatarID(event.uid, newid);
+            break;
+        }
+        case ap::net::NetData::EVENT_DISCONNECT:
+            cout << "[SERVER] Client "<<event.uid<<" disconnected."<<endl;
+            break;
+        default:
+            break;
+        }
+    }
+} // void Server::processEvents(netdata*)
+
+
+void Server::updateObjects(uint64 dt, ap::net::NetData* pNetData) const {
+    ap::net::NetData::netObjectsType::const_iterator objIterator;
+
+    for( objIterator = pNetData->netobjects.begin(); objIterator!=pNetData->netobjects.end(); ++objIterator) {
+        objIterator->second->advance(dt);
+    }
+} // void Server::updateObjects
+
+
+void Server::detectCollisions(ap::net::NetData *pNetData) const {
+    ap::net::NetData::netObjectsType::iterator mechIter, projIter;
+    for(mechIter=pNetData->netobjects.begin(); mechIter!=pNetData->netobjects.end(); ++mechIter)
+    {
+        ap::Mech *mech = dynamic_cast<ap::Mech *>(mechIter->second);
+        if (!mech)
+            continue;
+
+        for(projIter=pNetData->netobjects.begin(); projIter!=pNetData->netobjects.end(); ++projIter)
+        {
+            ap::Projectile *proj = dynamic_cast<ap::Projectile *>(projIter->second);
+            if ((proj) && (proj->testCollision(*mech))) {
+                relocateSpawnedMech(mech);
+                netdata->delObject(projIter->second->id);  // This erases a pair from netobjects map,
+            }                                           // (hope this doesn't do harm),
+        }
+    }
+}
+
+void Server::relocateSpawnedMech(ap::Mech *mech) const
+{
+    Ogre::Vector3 newPosition = Ogre::Vector3(rand()%1500, 0, rand()%1500);
+    mech->setPosition(newPosition);
+    mech->setVelocity(Ogre::Vector3::ZERO);
+}
 
 } // namespace server
 } // namespace ap

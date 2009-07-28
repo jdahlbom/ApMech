@@ -1,5 +1,7 @@
 #include "netdata.h"
 
+#include "../types.h"
+
 namespace ap {
 namespace net {
 
@@ -12,21 +14,9 @@ map<enet_uint8, NetObject *>& netobjectprototypes()
     return *objectprotomap;
 }
 
-void NetData::addEvent(NetEvent *event)
+NetData::NetData(int type, int _port) :
+    neteventlist(std::list <NetEvent *>())
 {
-    neteventlist.push_back(event);
-}
-bool NetData::pollEvent(NetEvent *event)
-{
-    if (!neteventlist.empty()) {
-        *event = *neteventlist.front(); // Copy what's in there
-        delete neteventlist.front();
-        neteventlist.pop_front();
-        return true;
-    } else return false;
-}
-
-NetData::NetData(int type, int _port) {
     if (enet_initialize() != 0) {
         status = enet_error;
         errorstring = "Error in enet_initialize()";
@@ -53,7 +43,7 @@ NetData::~NetData() {
     if (status == connected) disconnect();
     enet_deinitialize();
 
-    std::map<int, NetObject *>::iterator objIterator;
+    netObjectsType::iterator objIterator;
     for(objIterator = netobjects.begin(); objIterator!=netobjects.end(); ++objIterator) {
         delete(objIterator->second);
     }
@@ -61,8 +51,25 @@ NetData::~NetData() {
     return;
 }
 
-void NetData::setAvatarID(int uid, int avatarid)
+void NetData::addEvent(NetEvent *event)
 {
+    neteventlist.push_back(event);
+}
+bool NetData::pollEvent(NetEvent &event)
+{
+    if (!neteventlist.empty()) {
+        event = *neteventlist.front(); // Copy what's in there
+        delete neteventlist.front();
+        neteventlist.pop_front();
+        return true;
+    } else return false;
+}
+
+
+void NetData::setAvatarID(uint32 uid, uint32 avatarid)
+{
+    std::cout << "[NETDATA] setAvatarId(" << uid << ", " << avatarid << ") sent." << std::endl;
+    std::cout << "[NETDATA] -> " << netobjects.size() << " objects in map." << std::endl;
     enet_uint8 buffer[6];
     buffer[0] = NetData::PACKET_SETAVATAR;
     *(int *)(buffer+1) = avatarid; buffer[5] = NetData::PACKET_EOF;
@@ -83,17 +90,17 @@ int NetData::connect(std::string ip, int port)
     enetserver = enet_host_connect(enethost, &address, 1);
 
     if (enetserver == NULL) {
-        cout << (errorstring = "Connect to server failed") << endl;
+        cout << (errorstring = "[NETDATA] Connect to server failed") << endl;
         return NETERROR;
     }
 
     if ((enet_host_service(enethost, &event, 5000) > 0) && (event.type == ENET_EVENT_TYPE_CONNECT))
     {
-        cout << "Connected to server!"<<endl;
+        cout << "[NETDATA] Connected to server!"<<endl;
         status = connected;
     } else {
         enet_peer_reset(enetserver);
-        errorstring = "Connect to server failed: timeout error";
+        errorstring = "[NETDATA] Connect to server failed: timeout error";
         cout << errorstring << endl;
         return TIMEOUT;
     }
@@ -103,7 +110,7 @@ int NetData::connect(std::string ip, int port)
          case ENET_EVENT_TYPE_RECEIVE:
             if (event.packet->dataLength == 4) {  // Ha! It seems we just connected, and now we get our UID.
                 me.uid = int(*event.packet->data);
-                cout << "I received an UID! It is "<<me.uid<<"."<<endl;
+                cout << "[NETDATA] I received an UID! It is "<<me.uid<<"."<<endl;
                 enet_packet_destroy(event.packet);
                 return 1;
             } else {
@@ -129,7 +136,7 @@ int NetData::disconnect()
         while (enet_host_service(enethost, &event, 3000) > 0) {
             switch (event.type) {
              case ENET_EVENT_TYPE_DISCONNECT:
-                cout << "Disconnected from server successfully" << endl;
+                cout << "[NETDATA] Disconnected from server successfully" << endl;
                 return 1;
                 break;
              default:       // We're only interested in disconnect events
@@ -180,7 +187,7 @@ int NetData::serviceServer()
                         h++; uid = *(int *)(data+h);  // this means, read an int from data[h] onwards
                         h += users.find(uid)->second.unserialize(data, h);
                     } else {
-                        cout << "Received an unknown packet! Error in NetData::serviceServer!" << endl;
+                        cout << "[NETDATA] Received an unknown packet! Error in NetData::serviceServer!" << endl;
                     }
                 }
                 enet_packet_destroy(event.packet);
@@ -192,11 +199,11 @@ int NetData::serviceServer()
                 int uid = *(int *)event.peer->data;     // Who disconnected? He sent his uid too,
                                                         // but rather trust enet's peer->data
                 users.erase(uid);
-                delete (int *)event.peer->data;     // I wonder why I wrote this line // not anymore!
-                cout << "Client " << uid << " has disconnected" << endl;
+                delete (int *)event.peer->data;
+                cout << "[NETDATA] Client " << uid << " has disconnected" << endl;
 
-
-                for (map<int, NetObject *>::iterator iObj = netobjects.begin() ; iObj != netobjects.end() ; iObj++)
+                netObjectsType::iterator iObj;
+                for (iObj=netobjects.begin() ; iObj!=netobjects.end() ; iObj++)
                     if (iObj->second->uid == uid) iObj->second->uid = -1;
 
                 enet_uint8 buffer[6]; buffer[0] = NetData::PACKET_DISCONNECT;    // Let clients know!
@@ -219,6 +226,7 @@ int NetData::serviceServer()
 
 int NetData::serviceClient()
 {
+    std::cout << "[NETDATA] Received data - " << netobjects.size() << " objects in map" << std::endl;
     ENetEvent event;
     enet_uint8 *data, objtype;
     int items = 0, h, uid, id;
@@ -259,11 +267,11 @@ int NetData::serviceClient()
                     uid = *(int *)(data+h);
                     addEvent(new NetEvent(EVENT_DISCONNECT, 0));
                     h+=4;
-                    cout << "Player "<<uid<<" disconnected!"<<endl;
+                    cout << "[NETDATA] Player "<<uid<<" disconnected!"<<endl;
                     // TODO: DO SOMETHING TO INDICATE THIS!
                     // That, in addition to adding some class for player info, to give users
                 } else {
-                    cout << "Received an unknown packet! Error in NetData::serviceClient!" << endl;
+                    cout << "[NETDATA] Received an unknown packet! Error in NetData::serviceClient!" << endl;
                     h++;
                 }
             }
@@ -272,16 +280,17 @@ int NetData::serviceClient()
 
          case ENET_EVENT_TYPE_DISCONNECT:   // that means, a client loses connection unwillingly
             me.uid = -1; status = offline;
-            if (int(event.data) == NetData::SERVERFULL) cout << "Server full, connection closed!" << endl;
-            else cout << "Connection lost!" << endl;
+            if (int(event.data) == NetData::SERVERFULL) cout << "[NETDATA] Server full, connection closed!" << endl;
+            else cout << "[NETDATA] Connection lost!" << endl;
             break;
 
          case ENET_EVENT_TYPE_CONNECT:      // Nobody should connect a client!
          case ENET_EVENT_TYPE_NONE:         // What should we do? What events are of the NONE type?
             break;
         }
-        items++;
+        ++items;
     }
+
     return items;
 }
 
@@ -309,13 +318,14 @@ void NetData::sendClientChanges()
 
 int NetData::sendChanges()
 {
+    //std::cout << "[NETDATA] Sending changes - " << netobjects.size() << " objects in map" << std::endl;
     int items = 0;
     if ((status == connected) && (me.changed) && (me.uid > 0)) { // Do we have updated things to send!
         sendClientChanges();
     } else if ((status == server) ) {          // 1st iteration: send anyway, even if no updates.
         enet_uint8 buffer[10000];
         int length=0, packetstosend = 0;
-        map<int,NetObject *>::iterator po = netobjects.begin();
+        netObjectsType::iterator po = netobjects.begin();
         list<int>::iterator iDelPkg = objectDeleteQueue.begin();
 
         while (iDelPkg != objectDeleteQueue.end()) {
@@ -349,7 +359,7 @@ int NetData::getUniqueObjectID()
     return newid;
 }
 
-NetObject * NetData::getNetObject(int id)
+NetObject * NetData::getNetObject(uint32 id)
 {
     netObjectsType::iterator it = netobjects.find(id);
     if( netobjects.end() == it ) {
@@ -359,7 +369,7 @@ NetObject * NetData::getNetObject(int id)
 }
 
 // Client side delete
-void NetData::removeNetObject(int id)
+void NetData::removeNetObject(uint32 id)
 {
     NetObject *removable = netobjects.find(id)->second;
     delete removable;
@@ -367,7 +377,7 @@ void NetData::removeNetObject(int id)
 }
 
 // Server delete
-void NetData::delObject(int id)
+void NetData::delObject(uint32 id)
 {
     objectDeleteQueue.push_back(id);
     delete netobjects.find(id)->second;

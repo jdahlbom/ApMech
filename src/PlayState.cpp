@@ -1,9 +1,11 @@
 #include "PlayState.h"
 
 #include <Ogre.h>
+
 #include "net/netdata.h"
 #include "Mech.h"
-
+#include "Projectile.h"
+#include "types.h"
 
 namespace ap {
 
@@ -12,7 +14,7 @@ PlayState::PlayState( GameStateManager *gameStateManager,
                       pSceneManager(sceneManager),
                       mCameraNodeParent(0),
                       mAvatarId(idForNoAvatar),
-                      currentObjectIndex(0)
+                      mObject(0)
 {
     initStateManager(gameStateManager);
 
@@ -39,21 +41,7 @@ void PlayState::enter( void ) {
     renderWindow->addViewport( mCamera )->setBackgroundColour(Ogre::ColourValue(0.4f,0.0f,0.4f));
 
     // Create the player character
-    Ogre::Entity *myRobot = pSceneManager->createEntity("PlayerMech", "robot.mesh");
-    myRobot->setVisible(true);
-    myRobot->setCastShadows(true);
     Ogre::SceneNode *rootNode = pSceneManager->getRootSceneNode();
-
-    mSelfNode = rootNode->createChildSceneNode("Node/MyRobot");
-    mSelfNode->setPosition(terrainCenter);
-    mSelfNode->attachObject(myRobot);
-
-    mObject = new ap::Mech();
-    mObject->setPosition(terrainCenter);
-    mObject->setOwnerNode(mSelfNode);
-    mObject->setWorldBoundaries(1500.0f,0.0f,0.0f,1500.0f);
-    mObject->setMaxSpeed(25.0f);
-    objectsMap.insert(std::pair<unsigned int, MovingObject *>(++currentObjectIndex, mObject));
 
     mWorldCenter = rootNode->createChildSceneNode("Node/WorldCenter");
     mWorldCenter->setPosition(terrainCenter);
@@ -88,13 +76,6 @@ void PlayState::exit( void ) {
     std::cout << "Exiting PlayState" << std::endl;
 
     delete(netdata);
-
-    // Delete the moving objects
-    std::map<unsigned int, MovingObject*>::iterator it = objectsMap.begin();
-    for( ; it != objectsMap.end(); ++it) {
-        delete(it->second);
-    }
-    objectsMap.erase( objectsMap.begin(), objectsMap.end() );
 }
 
 void PlayState::pause( void ) {
@@ -104,32 +85,43 @@ void PlayState::resume( void ) {
 }
 
 void PlayState::update( unsigned long lTimeElapsed ) {
+    netdata->receiveChanges();
+
   //  TODO: Should update the scenenodes, should not update the state data.
-    for( std::map<unsigned int, MovingObject*>::iterator it = objectsMap.begin(); it!=objectsMap.end(); ++it) {
-        it->second->update(lTimeElapsed);
-        it->second->updateNode();
+    ap::net::NetData::netObjectsType::iterator objectIter;
+    for(objectIter=netdata->netobjects.begin(); objectIter!=netdata->netobjects.end(); ++objectIter)
+    {
+        ap::MovingObject *obj = dynamic_cast<ap::MovingObject *>(objectIter->second);
+        if( !obj )
+            continue;
+
+        obj->updateNode();
     }
 
-    net::NetEvent *event=0;
+    net::NetEvent event;
     while (netdata->pollEvent(event)) {
-        switch( event->type ) {
+        switch( event.type ) {
             case net::NetData::EVENT_SETAVATAR:
-                setAvatar(event->uid);
+                setAvatar(event.uid);
                 break;
             case net::NetData::EVENT_DELETEOBJECT:
-                deleteNetObject(event->uid);
+                deleteNetObject(event.uid);
                 break;
             case net::NetData::EVENT_CREATEOBJECT:
-                createSceneNodeForMovable(event->uid);
+                std::cout << "[PLAYSTATE] Handled EVENT_CREATEOBJECT" << std::endl;
+                createSceneNodeForMovable(event.uid);
                 break;
             default:
                 break;
         }
     }
+
+    netdata->sendChanges();
 }
 
-void PlayState::setAvatar(int avatarId)
+void PlayState::setAvatar(uint32 avatarId)
 {
+    std::cout << "[PLAYSTATE] Set avatar to id " << avatarId << std::endl;
     assert(0!=netdata);
     if ( avatarId == mAvatarId )
         return;
@@ -142,9 +134,10 @@ void PlayState::setAvatar(int avatarId)
     Ogre::SceneNode *pAvatarNode = pAvatarObject->getOwnerNode();
     attachCameraNode(pAvatarNode);
     netdata->me.setControlPtr(pAvatarObject->getControlPtr());
+    mObject = pAvatarObject;
 }
 
-void PlayState::createSceneNodeForMovable(int objectId)
+void PlayState::createSceneNodeForMovable(uint32 objectId)
 {
     // FIXME: Nasty having to cast things...
     ap::MovingObject *pAvatarObject = dynamic_cast<ap::MovingObject *>(netdata->getNetObject(objectId));
@@ -154,16 +147,41 @@ void PlayState::createSceneNodeForMovable(int objectId)
         Ogre::SceneNode *rootNode = pSceneManager->getRootSceneNode();
         Ogre::SceneNode *objectNode = rootNode->createChildSceneNode(ss.str());
         pAvatarObject->setOwnerNode(objectNode);
+
+        createNewEntity(pAvatarObject, objectId);
     }
 }
 
-void PlayState::deleteNetObject(int objectId)
+void PlayState::createNewEntity(ap::MovingObject *newObject, uint32 objectId)
+{
+    assert(newObject->hasOwnerNode());
+
+    std::stringstream ss;
+    ss << "Entity/"<<objectId;
+
+    Ogre::SceneNode *objNode = newObject->getOwnerNode();
+
+    std::stringstream mesh;
+    if (dynamic_cast<ap::Mech *>(newObject)) {
+        mesh << "robot.mesh";
+    } else if (dynamic_cast<ap::Projectile *>(newObject)) {
+        Ogre::Real realSmall = Ogre::Real(0.4f);
+        objNode->scale( realSmall, realSmall, realSmall);
+        mesh << "ninja.mesh";
+    }
+    Ogre::Entity *newEntity = pSceneManager->createEntity(ss.str(), mesh.str());
+    objNode->attachObject(newEntity);
+}
+
+
+void PlayState::deleteNetObject(uint32 objectId)
 {
     // Detach camera from the object to be deleted.
     if ( objectId == mAvatarId ) {
         attachCameraNode(mWorldCenter);
         netdata->me.setControlPtr(0);
     }
+
     // Actually delete the object.
     netdata->removeNetObject(objectId);
 }
@@ -209,23 +227,32 @@ bool PlayState::keyPressed( const ap::ooinput::KeyEvent &e ) {
     switch( e.key ) {
         case ooinput::AP_K_ESCAPE:
             std::cout << "Escape pressed, quitting." << std::endl;
+            netdata->disconnect();
             this->requestShutdown();
             break;
         case ooinput::AP_K_a:
-            mObject->addClockwiseTurningSpeed(5);
-            setNetDataDirty();
+            if(mObject) {
+                mObject->addClockwiseTurningSpeed(5);
+                setNetDataDirty();
+            }
             break;
         case ooinput::AP_K_w:
-            mObject->addForwardAcceleration(15);
-            setNetDataDirty();
+            if(mObject) {
+                mObject->addForwardAcceleration(15);
+                setNetDataDirty();
+            }
             break;
         case ooinput::AP_K_s:
-            mObject->addForwardAcceleration(-9);
-            setNetDataDirty();
+            if(mObject) {
+                mObject->addForwardAcceleration(-9);
+                setNetDataDirty();
+            }
             break;
         case ooinput::AP_K_d:
-            mObject->addClockwiseTurningSpeed(-5);
-            setNetDataDirty();
+            if(mObject) {
+                mObject->addClockwiseTurningSpeed(-5);
+                setNetDataDirty();
+            }
             break;
         case ooinput::AP_K_SPACE:
             fireGun();
@@ -241,20 +268,28 @@ bool PlayState::keyPressed( const ap::ooinput::KeyEvent &e ) {
 bool PlayState::keyReleased( const ap::ooinput::KeyEvent &e ) {
     switch( e.key ) {
         case ooinput::AP_K_a:
-            mObject->addClockwiseTurningSpeed(-5);
-            setNetDataDirty();
+            if(mObject) {
+                mObject->addClockwiseTurningSpeed(-5);
+                setNetDataDirty();
+            }
             break;
         case ooinput::AP_K_w:
-            mObject->addForwardAcceleration(-15);
-            setNetDataDirty();
+            if(mObject) {
+                mObject->addForwardAcceleration(-15);
+                setNetDataDirty();
+            }
             break;
         case ooinput::AP_K_s:
-            mObject->addForwardAcceleration(9);
-            setNetDataDirty();
+            if(mObject) {
+                mObject->addForwardAcceleration(9);
+                setNetDataDirty();
+            }
             break;
         case ooinput::AP_K_d:
-            mObject->addClockwiseTurningSpeed(5);
-            setNetDataDirty();
+            if(mObject) {
+                mObject->addClockwiseTurningSpeed(5);
+                setNetDataDirty();
+            }
             break;
         default:
             break;
@@ -265,27 +300,7 @@ bool PlayState::keyReleased( const ap::ooinput::KeyEvent &e ) {
 
 void PlayState::fireGun()
 {
-    std::stringstream ss;
-    ss << ++currentObjectIndex;
-
-    Ogre::Entity* bullet = pSceneManager->createEntity( ss.str(), "ninja.mesh" );
-    Ogre::SceneNode* rootNode = pSceneManager->getRootSceneNode();
-
-    ss << "-scenenode";
-    Ogre::SceneNode* bulletNode = rootNode->createChildSceneNode( ss.str() );
-    Ogre::Real realSmall = Ogre::Real(0.4f);
-    bulletNode->scale( realSmall, realSmall, realSmall);
-    bulletNode->setPosition( mObject->getOwnerNode()->getPosition());
-    bulletNode->attachObject(bullet);
-
-    Ogre::Vector3 fireDir = mObject->getFacing();
-    MovingObject *bulletObject = new MovingObject(0.0f, fireDir * 5.0f + mObject->getVelocity() * 1.0f);
-    bulletObject->setPosition(bulletNode->getPosition());
-    bulletObject->setOwnerNode(bulletNode);
-    bulletObject->setWorldBoundaries(1500.0f,0.0f,0.0f,1500.0f);
-    bulletObject->setMaxSpeed(50.0f);
-
-    objectsMap.insert(std::pair<unsigned int, MovingObject *>(++currentObjectIndex, bulletObject));
+   // Do nothing for a while...
 }
 
 
