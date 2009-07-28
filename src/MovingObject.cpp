@@ -21,7 +21,11 @@ MovingObject::MovingObject(float nFriction, Ogre::Vector3 startingVelocity):
     uid = 0;
 }
 
-MovingObject::~MovingObject() {}
+MovingObject::~MovingObject()
+{
+    delete(state);
+    delete(control);
+}
 
 void MovingObject::setWorldBoundaries(float top, float bottom, float left, float right)
 {

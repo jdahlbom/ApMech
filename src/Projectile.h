@@ -1,5 +1,7 @@
-#include "MovingObject.hpp"
+#ifndef AP_PROJECTILE_H
+#define AP_PROJECTILE_H
 
+#include "MovingObject.hpp"
 
 #include <Ogre.h>
 
@@ -15,3 +17,5 @@ class Projectile : public MovingObject
 };
 
 } // namespace ap
+
+#endif

@@ -1,6 +1,6 @@
 #include "Mech.h"
 
-#include <Ogre.h>
+#include <OgreVector3.h>
 
 #include "net/netdata.h"
 
