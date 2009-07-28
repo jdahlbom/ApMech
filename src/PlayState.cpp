@@ -2,32 +2,8 @@
 
 #include <Ogre.h>
 #include "net/netdata.h"
+#include "Mech.h"
 
-#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-
-// This function will locate the path to our application on OS X,
-// unlike windows you can not rely on the current working directory
-// for locating your configuration files and resources.
-std::string macBundlePath()
-{
-    char path[1024];
-    CFBundleRef mainBundle = CFBundleGetMainBundle();
-    assert(mainBundle);
-
-    CFURLRef mainBundleURL = CFBundleCopyBundleURL(mainBundle);
-    assert(mainBundleURL);
-
-    CFStringRef cfStringRef = CFURLCopyFileSystemPath( mainBundleURL, kCFURLPOSIXPathStyle);
-    assert(cfStringRef);
-
-    CFStringGetCString(cfStringRef, path, 1024, kCFStringEncodingASCII);
-
-    CFRelease(mainBundleURL);
-    CFRelease(cfStringRef);
-
-    return std::string(path);
-}
-#endif
 
 namespace ap {
 
@@ -72,7 +48,7 @@ void PlayState::enter( void ) {
     mSelfNode->setPosition(terrainCenter);
     mSelfNode->attachObject(myRobot);
 
-    mObject = new MovingObject();
+    mObject = new ap::Mech();
     mObject->setPosition(terrainCenter);
     mObject->setOwnerNode(mSelfNode);
     mObject->setWorldBoundaries(1500.0f,0.0f,0.0f,1500.0f);
@@ -87,28 +63,16 @@ void PlayState::enter( void ) {
     mCameraNode->setPosition(Ogre::Vector3(-100, 500,0));
     mCameraNode->yaw(Ogre::Degree(-90));  // Camera facing: Z+ --> X+
     mCameraNode->pitch(Ogre::Degree(-75)); // Camera needs to look down.
-    //cameraNode->lookAt(mSelfNode->getPosition(), Ogre::Node::TS_WORLD);
     mCameraNode->attachObject(mCamera);
     mCamera->setNearClipDistance(5);
     attachCameraNode(mWorldCenter);
 
     // Create lighting
-    pSceneManager->setAmbientLight(Ogre::ColourValue(1,1,1));
-    Ogre::Light *myLight= pSceneManager->createLight("MyLight");
-    myLight->setType(Ogre::Light::LT_DIRECTIONAL);
-    myLight->setDiffuseColour(Ogre::ColourValue(0.5f, 0.5f, 0.5f));
-    myLight->setSpecularColour(Ogre::ColourValue(0.5f, 0.5f, 0.5f));
-    myLight->setDirection(Ogre::Vector3(0,-1,1));
-    Ogre::Light *myLight2= pSceneManager->createLight("MyLight2");
-    myLight2->setType(Ogre::Light::LT_DIRECTIONAL);
-    myLight2->setDiffuseColour(Ogre::ColourValue(0.5f, 0.5f, 0.5f));
-    myLight2->setSpecularColour(Ogre::ColourValue(0.5f, 0.5f, 0.5f));
-    myLight2->setDirection(Ogre::Vector3(1,0,-1));
+    createLighting(pSceneManager);
 
     // Show GUI
     mStateOverlay->show();
     mStateOverlay->activate();
-
 
     netdata = new net::NetData(net::NetData::CLIENT);
     netdata->connect("127.0.0.1", 50740);
@@ -322,6 +286,24 @@ void PlayState::fireGun()
     bulletObject->setMaxSpeed(50.0f);
 
     objectsMap.insert(std::pair<unsigned int, MovingObject *>(++currentObjectIndex, bulletObject));
+}
+
+
+void PlayState::createLighting(Ogre::SceneManager *sceneManager)
+{
+    pSceneManager->setAmbientLight(Ogre::ColourValue(1,1,1));
+
+    Ogre::Light *myLight= pSceneManager->createLight("MyLight");
+    myLight->setType(Ogre::Light::LT_DIRECTIONAL);
+    myLight->setDiffuseColour(Ogre::ColourValue(0.5f, 0.5f, 0.5f));
+    myLight->setSpecularColour(Ogre::ColourValue(0.5f, 0.5f, 0.5f));
+    myLight->setDirection(Ogre::Vector3(0,-1,1));
+
+    Ogre::Light *myLight2= pSceneManager->createLight("MyLight2");
+    myLight2->setType(Ogre::Light::LT_DIRECTIONAL);
+    myLight2->setDiffuseColour(Ogre::ColourValue(0.5f, 0.5f, 0.5f));
+    myLight2->setSpecularColour(Ogre::ColourValue(0.5f, 0.5f, 0.5f));
+    myLight2->setDirection(Ogre::Vector3(1,0,-1));
 }
 
 } // namespace ap
