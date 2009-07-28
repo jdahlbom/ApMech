@@ -99,9 +99,9 @@ void MovingObject::updateVelocity(unsigned long msSinceLast)
 {
     // Friction
     Ogre::Real length = state->velocity.length();
-    if( 0.01f > length && friction != 0.0f) {
+    if( 0.1f < length && friction != 0.0f) {
         state->velocity = Ogre::Vector3::ZERO;
-    } else {
+    } else if(length > 0.0f) {
         Ogre::Vector3 unitVelocity = state->velocity / length;
         state->velocity = state->velocity - unitVelocity*(friction * msSinceLast * 0.001f);
 
@@ -113,7 +113,7 @@ void MovingObject::updateVelocity(unsigned long msSinceLast)
 
     state->velocity += control->accelerationFwd * msSinceLast * 0.001f * getFacing();
     Ogre::Real squaredLength = state->velocity.squaredLength();
-    if ( squaredLength > maxSpeedSquared ) {
+    if ( squaredLength > maxSpeedSquared && squaredLength > 0.0f) {
         state->velocity = (state->velocity / squaredLength) * maxSpeedSquared;
     }
 }
@@ -123,7 +123,6 @@ void MovingObject::updateFacing(unsigned long msSinceLast)
     if(control->velocityCWiseTurning != 0) {
         Ogre::Radian turning = Ogre::Radian(control->velocityCWiseTurning * msSinceLast * 0.001f);
         state->ccwRotation += turning;
-        std::cout << "Turning: " << state->ccwRotation.valueDegrees() << std::endl;
         Ogre::Matrix3 rotMatrix(ap::math::getRotationMatrixAfterYaw(state->ccwRotation));
         state->orientation = Ogre::Quaternion(rotMatrix);
     }
@@ -139,7 +138,7 @@ int MovingObject::serialize(uint8 *buffer, int start, int buflength) const
 {
     int length = 0;
     length += state->serialize( buffer, start+length, buflength-length);
-    length += control->serialize( buffer, start+length, buflength-length);
+    //length += control->serialize( buffer, start+length, buflength-length);
     length += worldBoundaries.serialize(buffer, start+length, buflength-length);
     return length;
 }
@@ -148,12 +147,15 @@ int MovingObject::unserialize(uint8 *buffer, int start)
 {
     int length = 0;
     length += state->unserialize(buffer, start+length);
-    length += control->unserialize(buffer, start+length);
+    //length += control->unserialize(buffer, start+length);
     length += worldBoundaries.unserialize(buffer, start+length);
     return length;
 }
 
 net::NetObject *MovingObject::create(int id) {}
+
+bool MovingObject::testCollision(const MovingObject &other) const
+{ return this->state->testCollision(*(other.getStatePtr())); }
 
 // MovableState ---------------------------------------------------------------
 MovableState::MovableState(Ogre::Vector3 startingVelocity):
@@ -175,6 +177,16 @@ int MovableState::unserialize(uint8 *buffer, int start) {
     length += net::unserialize(orientation, buffer, start+length);
     length += net::unserialize(velocity, buffer, start+length);
     return length;
+}
+
+bool MovableState::testCollision(const MovableState &other) const {
+    // TODO: Distance is a inferior solution, func should be replaced with real collision detection
+    Ogre::Real sqDistance = location.squaredDistance(other.location);
+
+    if (sqDistance < 10.0f) {
+        return true;
+    }
+    return false;
 }
 
 // MovableControl--------------------------------------------------------------

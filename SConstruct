@@ -6,10 +6,10 @@ import sys
 platform = Platform().name
 
 if platform == 'darwin':
-    tools = ["default", "gcc", "g++"] 
+    tools = ["default", "gcc", "g++"]
     import bundlemacosx
     tools.append (bundlemacosx.TOOL_BUNDLE)
-    env = Environment(tools=tools) 
+    env = Environment(tools=tools)
 
     env['FRAMEWORKS'] = ['Carbon', 'System', 'Ogre', 'CEGUI', 'Cg', 'OgreCEGUIRenderer']
     env['CPPPATH'] = [
@@ -57,6 +57,8 @@ src/math/rotations.cpp
 serverSources = Split("""
 src/servermain.cpp
 src/MovingObject.cpp
+src/Mech.cpp
+src/Projectile.cpp
 src/RectBoundaries.cpp
 src/net/serializer.cpp
 src/net/netdata.cpp

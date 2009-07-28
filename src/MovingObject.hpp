@@ -20,6 +20,7 @@ class MovableState : public net::Serializable {
     ~MovableState() { /* Do nothing */ }
     int serialize(uint8 *buffer, int start, int buflength) const;
     int unserialize(uint8 *buffer, int start);
+    bool testCollision(const MovableState &other) const;
 };
 
 class MovableControl : public net::Serializable {
@@ -60,12 +61,17 @@ class MovingObject : public net::NetObject {
     void updateNode();
 
     MovableControl* getControlPtr() const { return control; }
+    MovableState* getStatePtr() const {return state; }
+
     void update(unsigned long msSinceLast);
+    int advance(unsigned int dt) { update(dt); return 0; }
 
     //NetObject serialization
     int serialize(uint8 *buffer, int start, int buflength) const;
     int unserialize(uint8 *buffer, int start);
     NetObject *create(int id);
+
+    bool testCollision(const MovingObject &other) const;
 
     private:
     Ogre::Vector3       initialFacing;

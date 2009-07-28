@@ -67,10 +67,10 @@ void NetData::setAvatarID(int uid, int avatarid)
     buffer[0] = NetData::PACKET_SETAVATAR;
     *(int *)(buffer+1) = avatarid; buffer[5] = NetData::PACKET_EOF;
     ENetPacket *packet = enet_packet_create(buffer, 6, ENET_PACKET_FLAG_RELIABLE);
-    map<int,NetUser>::iterator ui;
-    ui = users.find(uid);
-    if (ui == users.end()) cout << "FOULED in NetData::setAvatarID: Uid not found!"<<endl;
-    else enet_peer_send(ui->second.peer, 0, packet);
+    map<int,NetUser>::iterator userIterator;
+    userIterator = users.find(uid);
+    if (userIterator == users.end()) cout << "FOULED in NetData::setAvatarID: Uid not found!"<<endl;
+    else enet_peer_send(userIterator->second.peer, 0, packet);
 }
 
 int NetData::connect(std::string ip, int port)
@@ -293,22 +293,25 @@ int NetData::receiveChanges()
     return items;
 }
 
+void NetData::sendClientChanges()
+{
+    enet_uint8 buffer[10000];
+    int length=0;
+
+    buffer[length++] = NetData::PACKET_NETUSER;
+    length += me.serialize(buffer, length, 10000);
+    buffer[length++] = NetData::PACKET_EOF;
+
+    ENetPacket *packet = enet_packet_create(buffer, length, 0);//ENET_PACKET_FLAG_RELIABLE);
+    enet_peer_send(enetserver, 0, packet);
+    me.changed = false;
+}
+
 int NetData::sendChanges()
 {
     int items = 0;
     if ((status == connected) && (me.changed) && (me.uid > 0)) { // Do we have updated things to send!
-        enet_uint8 buffer[10000];
-        int length=0;
-
-        buffer[length++] = NetData::PACKET_NETUSER;
-        length += me.serialize(buffer, length, 10000);
-        buffer[length++] = NetData::PACKET_EOF;
-
-        ENetPacket *packet = enet_packet_create(buffer, length, 0);//ENET_PACKET_FLAG_RELIABLE);
-        enet_peer_send(enetserver, 0, packet);
-        me.changed = false;
-
-
+        sendClientChanges();
     } else if ((status == server) ) {          // 1st iteration: send anyway, even if no updates.
         enet_uint8 buffer[10000];
         int length=0, packetstosend = 0;

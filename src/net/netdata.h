@@ -62,6 +62,8 @@ class NetData {
     int serviceServer();
     int serviceClient();
 
+    void sendClientChanges();
+
     std::list <int> objectDeleteQueue;
     std::list <NetEvent *> neteventlist;
 

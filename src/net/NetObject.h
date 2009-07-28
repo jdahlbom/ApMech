@@ -22,7 +22,7 @@ class NetObject : public Serializable {
     // What does this create do??
     virtual NetObject *create(int id) = 0;
 
-    virtual int advance(float dt) { return 0; };    // Predictably update the object // Not necessary to overwrite
+    virtual int advance(unsigned int dt) { return 0; };    // Predictably update the object // Not necessary to overwrite
                                                     // 0: OK. -1: Object requests destruction.
 };
 

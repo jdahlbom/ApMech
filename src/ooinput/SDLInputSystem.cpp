@@ -41,9 +41,6 @@ KeyEvent SDLInputSystem::createEvent(SDL_keysym &keysym, KeyEventType type)
     event.unicode = keysym.unicode;
     event.key = mapKey(keysym.sym);
 
-    //TODO: Poista tämä kun testailut on testailtu.
-    std::cout << "Event: type: " << type << ", unicode: " << event.unicode << ", key: " << event.key << std::endl;
-
     return event;
 }
 
