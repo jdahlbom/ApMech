@@ -5,11 +5,6 @@
 #else
     #include <stdlib.h>
 #endif
-#ifdef __APPLE__
-#include <SDL/SDL.h>
-#else
-#include <SDL.h>
-#endif
 
 #include <iostream>
 #include <cstdlib>  // for random
@@ -88,7 +83,7 @@ void Server::start() {
             netdata->sendChanges();
             nextupdate = newticks + 40; // 40 ms between updates, that's 25 network fps.
         }                               // Seems to me that up to 100 is still okay!
-        SDL_Delay(1);       // sleep even a little bit so that dt is never 0
+        usleep(1);       // sleep even a little bit so that dt is never 0
 
         while (netdata->pollEvent(&event)) {
             switch (event.type)
