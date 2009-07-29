@@ -13,14 +13,15 @@ if platform == 'darwin':
 
     env['FRAMEWORKS'] = ['Carbon', 'System', 'Ogre', 'CEGUI', 'Cg', 'OgreCEGUIRenderer']
     env['CPPPATH'] = [
-            '/Library/Frameworks/Ogre.framework/Headers',
-            '/Library/Frameworks/CEGUI.framework/Headers',
-            '/Library/Frameworks/Cg.framework/Headers',
+            '/Users/ipuustin/Desktop/OgreSDK/Dependencies/Ogre.framework/Headers',
+            '/Users/ipuustin/Desktop/OgreSDK/Dependencies/Cg.framework/Headers',
+            '/Users/ipuustin/Desktop/OgreSDK/Dependencies/CEGUI.framework/Headers',
             '/Users/ipuustin/Desktop/OgreSDK/Samples/include',
             '/opt/local/include/boost-1_35/'
         ]
     env.Append(LIBS = ['enet'])
     env.Append(CCFLAGS = '-include Carbon/Carbon.h')
+    env.Append(LINKFLAGS = '-F/Users/ipuustin/Desktop/OgreSDK/build/Release -F/Users/ipuustin/Desktop/OgreSDK/Dependencies')
 
 elif platform == 'posix':
     env = Environment()
