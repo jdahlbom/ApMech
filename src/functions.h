@@ -26,7 +26,7 @@ long int getTicks(); // milliseconds since approx program start. OBS! Not C-stan
 // This function will locate the path to our application on OS X,
 // unlike windows you can not rely on the current working directory
 // for locating your configuration files and resources.
-std::string macBundlePath():
+std::string macBundlePath();
 #endif
 
 } // namespace ap

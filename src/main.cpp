@@ -10,10 +10,9 @@
 #include "GameStateManager.h"
 #include "ooinput/InputSystem.h"
 #include "ooinput/SDLInputSystem.h"
+#include "functions.h"
 
 void setupResources(void);
-std::string macBundlePath(void);
-
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 #define WIN32_LEAN_AND_MEAN
@@ -54,7 +53,7 @@ Video Mode=640 x 480
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 
     Ogre::String resourcePath;
-    resourcePath = macBundlePath() + "/Contents/Resources/";
+    resourcePath = ap::macBundlePath() + "/Contents/Resources/";
     root = new Ogre::Root(resourcePath + "plugins.cfg",
                           resourcePath + "ogre.cfg", resourcePath + "Ogre.log");
 #else
@@ -199,7 +198,7 @@ void setupResources(void)
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     Ogre::String mResourcePath;
-    mResourcePath = macBundlePath() + "/Contents/Resources/";
+    mResourcePath = ap::macBundlePath() + "/Contents/Resources/";
     cf.load(mResourcePath + "resources.cfg");
 #else
     cf.load("resources.cfg");
@@ -223,7 +222,7 @@ void setupResources(void)
             // In order to make things portable on OS X we need to provide
             // the loading with it's own bundle path location
             Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
-                    Ogre::String(macBundlePath() + "/" + archName), typeName, secName);
+                    Ogre::String(ap::macBundlePath() + "/" + archName), typeName, secName);
 #else
             Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
                     archName, typeName, secName);
