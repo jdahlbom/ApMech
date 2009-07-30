@@ -1,7 +1,7 @@
 #ifndef AP_NET_SERIALIZABLE_H
 #define AP_NET_SERIALIZABLE_H
 
-typedef unsigned char uint8;
+#include "../types.h"
 
 namespace ap {
 namespace net {
