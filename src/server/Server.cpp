@@ -45,7 +45,7 @@ void Server::start() {
         netdata->receiveChanges();
         oldticks = newticks;
         newticks = getTicks();
-        float dt = static_cast<float>(newticks - oldticks) * 0.001;
+        ap::uint64 dt = newticks - oldticks;
 
 
         updateObjects(dt, netdata);

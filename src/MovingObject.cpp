@@ -82,9 +82,6 @@ Ogre::Vector3 MovingObject::getFacing() const { return state->orientation * init
 
 void MovingObject::update(unsigned long msSinceLast)
 {
-    if (!pOwnerNode)
-        return;
-
     updateFacing(msSinceLast);
     updateVelocity(msSinceLast);
     updatePosition(msSinceLast);
@@ -95,6 +92,8 @@ void MovingObject::updateNode()
     if(pOwnerNode) {
         pOwnerNode->setPosition(state->location);
         pOwnerNode->setOrientation(state->orientation);
+    } else {
+        std::cout << "[MOVINGOBJECT:updateNode] No pOwnerNode!" << std::endl;
     }
 }
 
@@ -196,6 +195,12 @@ bool MovableState::testCollision(const MovableState &other) const {
     return false;
 }
 
+void MovableState::dump() {
+    std::cout << "[MOVABLESTATE:dump] location: " << location.x <<"|"<<location.y<<"|"<<location.z
+                                << ", velocity: " << velocity.x<<"|"<<velocity.y<<"|"<<velocity.z
+                                << std::endl;
+}
+
 // MovableControl--------------------------------------------------------------
 MovableControl::MovableControl():
     accelerationFwd(0),
@@ -213,6 +218,11 @@ int MovableControl::unserialize(uint8 *buffer, int start) {
     length += net::unserialize(accelerationFwd, buffer, start+length);
     length += net::unserialize(velocityCWiseTurning, buffer, start+length);
     return length;
+}
+
+void MovableControl::dump() {
+    std::cout << "[MOVABLECONTROL::dump] Acceleration: " << accelerationFwd
+                                    << "Turning: " << velocityCWiseTurning << std::endl;
 }
 
 } // namespace ap

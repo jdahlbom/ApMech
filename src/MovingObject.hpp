@@ -25,6 +25,7 @@ class MovableState : public net::Serializable {
     int serialize(uint8 *buffer, int start, int buflength) const;
     int unserialize(uint8 *buffer, int start);
     bool testCollision(const MovableState &other) const;
+    void dump();
 };
 
 class MovableControl : public Controller {
@@ -36,6 +37,8 @@ class MovableControl : public Controller {
     ~MovableControl() { /* Do nothing */ }
     int serialize(uint8 *buffer, int start, int buflength) const;
     int unserialize(uint8 *buffer, int start);
+    void dump();
+
 };
 
 class MovingObject : public net::NetObject {

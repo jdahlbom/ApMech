@@ -41,7 +41,6 @@ int NetUser::serialize(enet_uint8 buffer[], int start, int buflength) const
     length += serialize(ping, buffer, start+length, buflength-length);
 
     if(controls) {
-        std::cout << "[NETUSER] Controls ptr points to " << controls << std::endl;
         *(buffer + start + length) = CONTROL_IS_SET; ++length;
         length += controls->serialize(buffer, start+length, buflength-length);
     } else {
@@ -66,7 +65,6 @@ int NetUser::unserialize(enet_uint8 buffer[], int start)
         // buffer must have control set AND controls pointer must not point to null.
         if (CONTROL_IS_SET == *(buffer+start+(length++))) {
             if (0 != controls) {
-                std::cout << "[NETUSER] Controls points to " << controls << " and gets unserialized. " << std::endl;
                 length += controls->unserialize(buffer, start+length);
                 ++length; // For the CONTROL_BLOCK_FINISHED byte.
             } else {
