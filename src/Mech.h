@@ -13,7 +13,7 @@ class Mech : public MovingObject
     Mech(Ogre::Vector3 velocity = Ogre::Vector3::ZERO);
     ~Mech() {}
 
-    net::NetObject *create(int id);
+    net::NetObject *create(uint32 id);
 };
 
 } // namespace ap

@@ -2,6 +2,8 @@
 
 #include <OgreVector3.h>
 
+#include "types.h"
+#include "constants.h"
 #include "net/netdata.h"
 
 namespace ap {
@@ -11,18 +13,21 @@ namespace ap {
 /**/  public:
 /**/    MechInject() {
 /**/      ap::net::netobjectprototypes().insert(
-/**/        std::make_pair(net::NetData::OBJECT_TYPE_MECH, new Mech(Ogre::Vector3::ZERO)));
+/**/        std::make_pair(ap::OBJECT_TYPE_MECH, new Mech(Ogre::Vector3::ZERO)));
 /**/    }
 /**/};
 /**/static MechInject __projectileinject;
 
 Mech::Mech(Ogre::Vector3 velocity) :
-    MovingObject(0.0f, velocity) {}
+    MovingObject(0.0f, velocity)
+{
+    objectType = ap::OBJECT_TYPE_MECH;
+}
 
-net::NetObject *Mech::create(int id)
+net::NetObject *Mech::create(uint32 _id)
 {
     Mech *mech = new Mech(Ogre::Vector3::ZERO);
-    mech->id = id;
+    mech->id = _id;
     return mech;
 }
 

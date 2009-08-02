@@ -6,6 +6,7 @@
 #include "net/NetObject.h"
 #include "net/Serializable.h"
 #include "RectBoundaries.hpp"
+#include "types.h"
 
 namespace ap {
 
@@ -69,9 +70,12 @@ class MovingObject : public net::NetObject {
     //NetObject serialization
     int serialize(uint8 *buffer, int start, int buflength) const;
     int unserialize(uint8 *buffer, int start);
-    NetObject *create(int id);
+    NetObject *create(uint32 id);
 
     bool testCollision(const MovingObject &other) const;
+
+    protected:
+    uint8              objectType;
 
     private:
     Ogre::Vector3       initialFacing;

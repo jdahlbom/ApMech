@@ -1,7 +1,9 @@
 #include "Projectile.h"
 
-#include <Ogre.h>
+#include <OgreVector3.h>
 
+#include "types.h"
+#include "constants.h"
 #include "net/netdata.h"
 
 namespace ap {
@@ -10,15 +12,18 @@ namespace ap {
 /**/class ProjectileInject {
 /**/  public: ProjectileInject() {
 /**/    ap::net::netobjectprototypes().insert(
-/**/      std::make_pair(net::NetData::OBJECT_TYPE_PROJECTILE, new Projectile(Ogre::Vector3::ZERO)));
+/**/      std::make_pair(ap::OBJECT_TYPE_PROJECTILE, new Projectile(Ogre::Vector3::ZERO)));
 /**/    }
 /**/};
 /**/static ProjectileInject __projectileinject;
 
 Projectile::Projectile(Ogre::Vector3 velocity) :
-    MovingObject(0.0f, velocity) {}
+    MovingObject(0.0f, velocity)
+{
+    objectType = ap::OBJECT_TYPE_PROJECTILE;
+}
 
-net::NetObject *Projectile::create(int id)
+net::NetObject *Projectile::create(uint32 id)
 {
     Projectile *proj = new Projectile(Ogre::Vector3::ZERO);
     proj->id = id;

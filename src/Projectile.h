@@ -3,7 +3,7 @@
 
 #include "MovingObject.hpp"
 
-#include <Ogre.h>
+#include <OgreVector3.h>
 
 namespace ap {
 
@@ -13,7 +13,7 @@ class Projectile : public MovingObject
     Projectile(Ogre::Vector3 velocity);
     ~Projectile() {}
 
-    net::NetObject *create(int id);
+    net::NetObject *create(uint32 id);
 };
 
 } // namespace ap
