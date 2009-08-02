@@ -1,7 +1,7 @@
 #ifndef AP_NET_NETEVENT_H
 #define AP_NET_NETEVENT_H
 
-#include <enet/enet.h>
+#include "../types.h"
 
 namespace ap {
 namespace net {
@@ -9,11 +9,11 @@ namespace net {
 class NetEvent
 {
  public:
-    enet_uint8 type;
-    int uid;
+    ap::uint8 type;
+    ap::int64 uid;
 
     NetEvent();
-    NetEvent(enet_uint8 _type, int a);
+    NetEvent(ap::uint8 _type, ap::int64 a);
 
 };
 

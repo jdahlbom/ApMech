@@ -35,7 +35,7 @@ class NetUser : public NetObject
 
     int serialize(enet_uint8 buffer[], int start, int buflength) const;
     int unserialize(enet_uint8 buffer[], int start);
-    NetObject *create(int id);
+    NetObject *create(uint32 id);
 };
 
 } // namespace net

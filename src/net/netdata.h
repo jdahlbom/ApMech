@@ -12,7 +12,7 @@
 #include "NetEvent.h"
 #include "../functions.h"
 #include "../types.h"
-
+#include "../constants.h"
 namespace ap {
 namespace net {
 
@@ -41,10 +41,6 @@ class NetData {
     static const enet_uint8 PACKET_DISCONNECT = 44;
     static const enet_uint8 PACKET_EOF = 49;
 
-    static const enet_uint8 OBJECT_TYPE_MECH = 50;
-    static const enet_uint8 OBJECT_TYPE_PROJECTILE = 51;
-    //static const enet_uint8 OBJECT_TYPE_STARFIELD = 52;
-
     static const enet_uint8 EVENT_NOEVENT = 19;
     static const enet_uint8 EVENT_CONNECT = 20;
     static const enet_uint8 EVENT_DISCONNECT = 21;
@@ -68,6 +64,7 @@ class NetData {
     std::list <NetEvent *> neteventlist;
 
     void addEvent(NetEvent *event); // Almost useless, if you can push_back stuff to a list
+    uint32 processPacketNetObject(enet_uint8 *data);
 
  public:
     std::map <int, NetUser> users;   // This is, users contacted to US! Should be empty unless we're server.
@@ -78,10 +75,10 @@ class NetData {
     int myAvatarID;             // if >0, tells which object in the map represents me! (if client)
     void setAvatarID(uint32 uid, uint32 avatarid);
 
-    NetData(int type = NetData::CLIENT, int _port = DEFAULTPORT);
+    NetData(int type = NetData::CLIENT, uint32 _port = DEFAULTPORT);
     ~NetData();
 
-    int connect(std::string ip, int port);
+    int connect(std::string ip, uint32 port);
     int disconnect();
 
     int sendChanges();
@@ -92,7 +89,7 @@ class NetData {
     void removeNetObject(uint32 id);
 
     // Functions below here are meant for server's use. Undefined consequences for clients. Maybe.
-    int getUniqueObjectID();
+    uint32 getUniqueObjectID();
     void delObject(uint32 id);
 
 //    int save(string filename);

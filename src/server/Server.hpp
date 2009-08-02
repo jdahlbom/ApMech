@@ -16,7 +16,7 @@ namespace server {
 class Server
 {
     public:
-    Server(unsigned int port);
+    Server(uint32 port);
     void start();
 
     private:

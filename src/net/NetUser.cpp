@@ -80,7 +80,7 @@ int NetUser::unserialize(enet_uint8 buffer[], int start)
 }
 
 
-NetObject *NetUser::create(int id) // OBS! FIXME! A rather dummy method. NetUser without uid is baddy.
+NetObject *NetUser::create(uint32 id) // OBS! FIXME! A rather dummy method. NetUser without uid is baddy.
 {
     NetObject *ptr = new NetUser();
     return ptr;

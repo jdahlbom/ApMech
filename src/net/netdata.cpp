@@ -1,6 +1,7 @@
 #include "netdata.h"
 
 #include "../types.h"
+#include "serializer.hpp"
 
 namespace ap {
 namespace net {
@@ -14,7 +15,7 @@ map<enet_uint8, NetObject *>& netobjectprototypes()
     return *objectprotomap;
 }
 
-NetData::NetData(int type, int _port) :
+NetData::NetData(int type, uint32 _port) :
     neteventlist(std::list <NetEvent *>())
 {
     if (enet_initialize() != 0) {
@@ -80,7 +81,7 @@ void NetData::setAvatarID(uint32 uid, uint32 avatarid)
     else enet_peer_send(userIterator->second.peer, 0, packet);
 }
 
-int NetData::connect(std::string ip, int port)
+int NetData::connect(std::string ip, uint32 port)
 {
     ENetAddress address;
     ENetEvent event;
@@ -226,10 +227,10 @@ int NetData::serviceServer()
 
 int NetData::serviceClient()
 {
-    std::cout << "[NETDATA] Received data - " << netobjects.size() << " objects in map" << std::endl;
     ENetEvent event;
-    enet_uint8 *data, objtype;
-    int items = 0, h, uid, id;
+    enet_uint8 *data;
+    int items = 0, h;
+    uint32 uid, id;
 
     while (enet_host_service(enethost, &event, 0))
     {
@@ -242,16 +243,8 @@ int NetData::serviceClient()
             while (data[h] != NetData::PACKET_EOF)
             {
                 if (data[h] == NetData::PACKET_NETOBJECT) {
-                    h++;
-                    id = *(int *)(data+h);  // this means, read an int from data[h] onwards
-                    if (netobjects.find(id) != netobjects.end()) {
-                        h+= netobjects.find(id)->second->unserialize(data, h);
-                    } else {
-                        objtype = *(enet_uint8 *)(data+h+4);
-                        netobjects.insert(make_pair(id, ap::net::netobjectprototypes()[objtype]->create(id)));
-                        h += netobjects.find(id)->second->unserialize(data, h);
-                        addEvent(new NetEvent(EVENT_CREATEOBJECT, id));
-                    }
+                    ++h;
+                    h += processPacketNetObject(data+h);
                 } else if (data[h] == NetData::PACKET_DELOBJECT) {
                     h++;
                     id = *(int *)(data+h);
@@ -292,6 +285,26 @@ int NetData::serviceClient()
     }
 
     return items;
+}
+
+uint32 NetData::processPacketNetObject(enet_uint8 *data)
+{
+    ap::uint8 objtype;
+    ap::uint32 id;
+
+    int length = 0;
+    length = ap::net::unserialize(id, data, length);
+
+    if (netobjects.find(id) != netobjects.end()) {
+        length = netobjects.find(id)->second->unserialize(data, 0);
+    } else {
+        length += ap::net::unserialize(objtype, data, length);
+        netobjects.insert(make_pair(id, ap::net::netobjectprototypes()[objtype]->create(id)));
+        length = netobjects.find(id)->second->unserialize(data, 0);
+        addEvent(new NetEvent(EVENT_CREATEOBJECT, id));
+    }
+
+    return length;
 }
 
 int NetData::receiveChanges()
@@ -352,9 +365,9 @@ int NetData::sendChanges()
     return items;
 }
 
-int NetData::getUniqueObjectID()
+uint32 NetData::getUniqueObjectID()
 {
-    int newid;
+    uint32 newid;
     for (newid = 1; netobjects.find(newid) != netobjects.end(); newid++); // and first unused object id
     return newid;
 }

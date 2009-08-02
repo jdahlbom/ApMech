@@ -108,7 +108,7 @@ void PlayState::update( unsigned long lTimeElapsed ) {
                 deleteNetObject(event.uid);
                 break;
             case net::NetData::EVENT_CREATEOBJECT:
-                std::cout << "[PLAYSTATE] Handled EVENT_CREATEOBJECT" << std::endl;
+                std::cout << "[PLAYSTATE] Handled EVENT_CREATEOBJECT, uid: " << event.uid << std::endl;
                 createSceneNodeForMovable(event.uid);
                 break;
             default:
@@ -140,6 +140,7 @@ void PlayState::setAvatar(uint32 avatarId)
 void PlayState::createSceneNodeForMovable(uint32 objectId)
 {
     // FIXME: Nasty having to cast things...
+    std::cout << "[PLAYSTATE]<createSceneNodeForMovable> object id: " << objectId << " [eol] " << std::endl;
     ap::MovingObject *pAvatarObject = dynamic_cast<ap::MovingObject *>(netdata->getNetObject(objectId));
     if (!pAvatarObject->hasOwnerNode()) {
         std::stringstream ss;

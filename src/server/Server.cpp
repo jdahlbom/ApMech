@@ -15,13 +15,14 @@
 #include "../Mech.h"
 #include "../Projectile.h"
 #include "../MovingObject.hpp"
+#include "../types.h"
 
 namespace ap {
 namespace server {
 
 using namespace std;
 
-Server::Server(unsigned int port) :
+Server::Server(uint32 port) :
   mPort(port)
 {
     std::cout << "[SERVER] Created a server."<< std::endl;
@@ -78,13 +79,23 @@ void Server::processEvents(ap::net::NetData *pNetData) {
             int newid = pNetData->getUniqueObjectID();   // and an unused object id
 
             ap::MovingObject *newAvatar = new ap::Mech();
+            newAvatar->id = newid;
             newAvatar->setWorldBoundaries(1500.0f,0.0f,0.0f,1500.0f);
             newAvatar->setMaxSpeed(25.0f);
             // newAvatar->setLocation(Ogre::Vector3(XXX, YYY, ZZZ)
             pNetData->users[event.uid].setControlPtr(newAvatar->getControlPtr());
             pNetData->netobjects.insert(make_pair(newid, newAvatar));
 
+            pNetData->sendChanges();
             pNetData->setAvatarID(event.uid, newid);
+
+            // TODO: Remove this check when object passing is working.
+            ap::net::NetData::netObjectsType::const_iterator objIterator;
+            for( objIterator = pNetData->netobjects.begin();
+                    objIterator!=pNetData->netobjects.end();
+                    ++objIterator) {
+                std::cout << "[SERVER]<EVENT_CONNECT> Objects, id: " << objIterator->second->id << std::endl;
+            }
             break;
         }
         case ap::net::NetData::EVENT_DISCONNECT:
