@@ -8,6 +8,9 @@
 #include "RectBoundaries.hpp"
 #include "types.h"
 
+// For MovableControl
+#include "Controller.h"
+
 namespace ap {
 
 class MovableState : public net::Serializable {
@@ -24,7 +27,7 @@ class MovableState : public net::Serializable {
     bool testCollision(const MovableState &other) const;
 };
 
-class MovableControl : public net::Serializable {
+class MovableControl : public Controller {
     public:
     float               accelerationFwd;
     float               velocityCWiseTurning;
@@ -61,7 +64,7 @@ class MovingObject : public net::NetObject {
     bool hasOwnerNode() const { return pOwnerNode; }
     void updateNode();
 
-    MovableControl* getControlPtr() const { return control; }
+    Controller* getControlPtr() const { return control; }
     MovableState* getStatePtr() const {return state; }
 
     void update(unsigned long msSinceLast);

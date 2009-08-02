@@ -2,6 +2,8 @@
 
 #include "serializer.hpp"
 
+#include "../Controller.h"
+
 namespace ap {
 namespace net {
 
@@ -25,7 +27,7 @@ NetUser::NetUser(int _uid, ENetPeer *_peer) :
     changed = false;
 }
 
-void NetUser::setControlPtr(MovableControl *ctrl)
+void NetUser::setControlPtr(Controller *ctrl)
 {
     controls = ctrl;
 }
@@ -45,6 +47,7 @@ int NetUser::serialize(enet_uint8 buffer[], int start, int buflength) const
     } else {
         *(buffer + start + length) = CONTROL_NOT_SET; ++length;
     }
+    *(buffer+start+length) = CONTROL_BLOCK_FINISHED; ++length;
     strcpy( (char *)buffer + start+length, nick.c_str());   length += nick.length()+1;
 
     return length;
@@ -63,11 +66,20 @@ int NetUser::unserialize(enet_uint8 buffer[], int start)
         // buffer must have control set AND controls pointer must not point to null.
         if (CONTROL_IS_SET == *(buffer+start+(length++))) {
             if (0 != controls) {
+                std::cout << "[NETUSER] Controls points to " << controls << " and gets unserialized. " << std::endl;
                 length += controls->unserialize(buffer, start+length);
+                ++length; // For the CONTROL_BLOCK_FINISHED byte.
             } else {
                 std::cout << "[NETUSER] unserialize - this block shouldn't get executed." << std::endl;
-                MovableControl dumpControls;
-                length += dumpControls.unserialize(buffer, start+length);
+                // TODO: What if the CONTROL_BLOCK_FINISHED goes missing in transit? (kaboom?)
+                // TODO: And hmm, yeah. the CONTROL_BLOCK_FINISHED just might not be very unique as a byte...
+                while( 1==1 ) {
+                    if (CONTROL_BLOCK_FINISHED == buffer[start+length]) {
+                        ++length;
+                        break;
+                    }
+                    ++length;
+                }
             }
         }
 

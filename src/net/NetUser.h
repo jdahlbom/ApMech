@@ -6,7 +6,7 @@
 #include <iostream>
 
 #include "NetObject.h"
-#include "../MovingObject.hpp"
+#include "../Controller.h"
 
 namespace ap {
 namespace net {
@@ -20,18 +20,19 @@ class NetUser : public NetObject
 
     static const enet_uint8 CONTROL_IS_SET = 4;
     static const enet_uint8 CONTROL_NOT_SET = 5;
+    static const enet_uint8 CONTROL_BLOCK_FINISHED=6;
 
     ENetPeer *peer;
     int uid;
     std::string nick;
 
     int ping;
-    MovableControl *controls;
+    Controller *controls;
 
     NetUser();
     NetUser(int uid, ENetPeer *_peer);
 
-    void setControlPtr(MovableControl *ctrl);
+    void setControlPtr(Controller *ctrl);
 
     int serialize(enet_uint8 buffer[], int start, int buflength) const;
     int unserialize(enet_uint8 buffer[], int start);
