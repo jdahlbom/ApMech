@@ -45,7 +45,7 @@ int serialize(int32 i, uint8 *buffer, int start, int buflength)
 
 int serialize(uint8 i, uint8 *buffer, int start, int buflength) {
     *(reinterpret_cast<uint8 *>(buffer+start)) = i;
-    return 1; // Size of int is 4 bytes
+    return 1; // Size of unsigned char is 1 byte
 }
 
 int serialize(uint32 i, uint8 *buffer, int start, int buflength) {
