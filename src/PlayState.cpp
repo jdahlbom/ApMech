@@ -209,8 +209,7 @@ void PlayState::createGUIWindow()
 
     mStateOverlay = winMgr->createWindow(
             (CEGUI::utf8*) "TaharezLook/Button",
-            (CEGUI::utf8*) "root/playState/Button",
-            (CEGUI::utf8*) "");
+            (CEGUI::utf8*) "root/playState/Button");
 
     mStateOverlay->setAlpha(0.5f);
     mStateOverlay->setText("ESC to quit, WASD to move");

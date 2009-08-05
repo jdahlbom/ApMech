@@ -6,6 +6,17 @@ import sys
 platform = Platform().name
 
 if platform == 'darwin':
+
+    # Ogre SDK location is given as a parameter to the build script:
+    #
+    # scons ogre="/path/to/ogreSDK"
+    
+    ogresdkLocation = ARGUMENTS.get('ogre')
+
+    # if it's not defined, here's a good default value ;-)
+    if not ogresdkLocation:
+        ogresdkLocation = '/Users/ipuustin/Desktop/OgreSDK'
+    
     tools = ["default", "gcc", "g++"]
     import bundlemacosx
     tools.append (bundlemacosx.TOOL_BUNDLE)
@@ -13,14 +24,15 @@ if platform == 'darwin':
 
     env['FRAMEWORKS'] = ['Carbon', 'System', 'Ogre', 'CEGUI', 'Cg', 'OgreCEGUIRenderer']
     env['CPPPATH'] = [
-            '/Library/Frameworks/Ogre.framework/Headers',
-            '/Library/Frameworks/CEGUI.framework/Headers',
-            '/Library/Frameworks/Cg.framework/Headers',
-            '/Users/ipuustin/Desktop/OgreSDK/Samples/include',
+            ogresdkLocation + '/Dependencies/Ogre.framework/Headers',
+            ogresdkLocation + '/Dependencies/Cg.framework/Headers',
+            ogresdkLocation + '/Dependencies/CEGUI.framework/Headers',
+            ogresdkLocation + '/Samples/include',
             '/opt/local/include/boost-1_35/'
         ]
     env.Append(LIBS = ['enet'])
     env.Append(CCFLAGS = '-include Carbon/Carbon.h')
+    env.Append(LINKFLAGS = '-F' + ogresdkLocation + '/build/Release -F' + ogresdkLocation + '/Dependencies')
 
 elif platform == 'posix':
     env = Environment()

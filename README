@@ -1,0 +1,14 @@
+README and instructions for building APMech for different platforms
+
+
+OS X:
+
+You need to create symbolic link in Ogre and CEGUI framework 
+header folders. This is because otherwise includes to files such 
+as Ogre/OgrePrerequisites.h don't work. This is done for instance 
+by saying in the Ogre framework "Headers" directory: "ln -s . Ogre"
+
+Start compilation by saying "scons ogre='/path/to/OgreSDK'". 
+After compilation, you currently need to manually copy the 
+necessary frameworks (Ogre, CEGUI, OgreCEGUIRendeder) to the 
+Contents/Frameworks directory in the application bundle.
