@@ -28,6 +28,8 @@ class Server
 
     void processEvents(ap::net::NetData *pNetData);
     void updateObjects(uint64 dt, ap::net::NetData* pNetData) const;
+    void fireWeapons(uint64 tstamp, ap::net::NetData *pNetData);
+    void weaponFired(ap::net::NetData *pNetData, ap::MovingObject *source);
     void detectCollisions(ap::net::NetData *pNetData) const;
     void relocateSpawnedMech(ap::Mech *mech) const;
 

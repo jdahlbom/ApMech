@@ -39,6 +39,9 @@ clientSources = Split("""
 src/GameState.cpp
 src/PlayState.cpp
 src/MovingObject.cpp
+src/CombinedControls.cpp
+src/MovableControl.cpp
+src/WeaponControl.cpp
 src/GameStateManager.cpp
 src/RectBoundaries.cpp
 src/net/serializer.cpp
@@ -57,6 +60,9 @@ src/math/rotations.cpp
 serverSources = Split("""
 src/servermain.cpp
 src/MovingObject.cpp
+src/MovableControl.cpp
+src/CombinedControls.cpp
+src/WeaponControl.cpp
 src/Mech.cpp
 src/Projectile.cpp
 src/RectBoundaries.cpp

@@ -49,6 +49,7 @@ void Server::start() {
 
 
         updateObjects(dt, netdata);
+        fireWeapons(newticks, netdata);
         detectCollisions(netdata);
 
 
@@ -116,6 +117,34 @@ void Server::updateObjects(uint64 dt, ap::net::NetData* pNetData) const {
     }
 } // void Server::updateObjects
 
+void Server::fireWeapons(uint64 tstamp, ap::net::NetData *pNetData) {
+    ap::net::NetData::netObjectsType::const_iterator objIterator;
+
+    for( objIterator = pNetData->netobjects.begin(); objIterator!=pNetData->netobjects.end(); ++objIterator) {
+        ap::Mech *mech = dynamic_cast<ap::Mech *>(objIterator->second);
+        if (!mech)
+            continue;
+        bool mechFired = mech->fireGun(tstamp);
+
+        if(mechFired) {
+            weaponFired(pNetData, mech);
+        }
+    }
+}
+
+void Server::weaponFired(ap::net::NetData *pNetData, ap::MovingObject *source) {
+    int newid = pNetData->getUniqueObjectID();   // and an unused object id
+
+    Ogre::Vector3 facing = source->getFacing();
+
+    ap::Projectile *bullet = new ap::Projectile(facing * 50.0f);
+    bullet->id = newid;
+    bullet->setWorldBoundaries(1500.0f,0.0f,0.0f,1500.0f);
+    bullet->setMaxSpeed(625.0f);
+
+    bullet->setPosition(source->getPosition() + facing*10.0f);
+    pNetData->netobjects.insert(make_pair(newid, bullet));
+}
 
 void Server::detectCollisions(ap::net::NetData *pNetData) const {
     ap::net::NetData::netObjectsType::iterator mechIter, projIter;

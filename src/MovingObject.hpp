@@ -10,36 +10,11 @@
 
 // For MovableControl
 #include "Controller.h"
+#include "MovableControl.h"
+#include "WeaponControl.h"
+#include "CombinedControls.h"
 
 namespace ap {
-
-class MovableState : public net::Serializable {
-    public:
-    Ogre::Vector3       location;
-    Ogre::Quaternion    orientation;
-    Ogre::Vector3       velocity;
-    Ogre::Radian        ccwRotation;
-
-    MovableState(Ogre::Vector3  startingVelocity);
-    ~MovableState() { /* Do nothing */ }
-    int serialize(uint8 *buffer, int start, int buflength) const;
-    int unserialize(uint8 *buffer, int start);
-    bool testCollision(const MovableState &other) const;
-    void dump();
-};
-
-class MovableControl : public Controller {
-    public:
-    float               accelerationFwd;
-    float               velocityCWiseTurning;
-
-    MovableControl();
-    ~MovableControl() { /* Do nothing */ }
-    int serialize(uint8 *buffer, int start, int buflength) const;
-    int unserialize(uint8 *buffer, int start);
-    void dump();
-
-};
 
 class MovingObject : public net::NetObject {
     public:
@@ -50,9 +25,10 @@ class MovingObject : public net::NetObject {
 
     void setMaxSpeed(float speed);
     void setVelocity(Ogre::Vector3 velocity);
-    Ogre::Vector3 getVelocity() const { return state->velocity; };
+    Ogre::Vector3 getVelocity() const { return state->velocity; }
 
-    void setPosition(Ogre::Vector3 pos) { state->location = pos; };
+    void setPosition(Ogre::Vector3 pos) { state->location = pos; }
+    Ogre::Vector3 getPosition() const { return state->location; }
 
     void addForwardAcceleration(float amount);
     void addClockwiseTurningSpeed(float amountRad);
@@ -67,11 +43,15 @@ class MovingObject : public net::NetObject {
     bool hasOwnerNode() const { return pOwnerNode; }
     void updateNode();
 
-    Controller* getControlPtr() const { return control; }
+    Controller* getControlPtr() const { return combinedControls; }
     MovableState* getStatePtr() const {return state; }
 
     void update(unsigned long msSinceLast);
     int advance(unsigned int dt) { update(dt); return 0; }
+
+    // WeaponControl methods
+    void setFiring(bool firingStatus);
+    bool fireGun(uint64 tstamp);
 
     //NetObject serialization
     int serialize(uint8 *buffer, int start, int buflength) const;
@@ -87,6 +67,10 @@ class MovingObject : public net::NetObject {
     Ogre::Vector3       initialFacing;
     MovableState        *state;
     MovableControl      *control;
+
+    WeaponControl       *weaponControl;
+    CombinedControls    *combinedControls;
+
     float               friction;
 
     RectBoundaries      worldBoundaries;

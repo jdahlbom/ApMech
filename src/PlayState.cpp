@@ -256,7 +256,7 @@ bool PlayState::keyPressed( const ap::ooinput::KeyEvent &e ) {
             }
             break;
         case ooinput::AP_K_SPACE:
-            fireGun();
+            mObject->setFiring(true);
             setNetDataDirty();
             break;
         default:
@@ -292,18 +292,15 @@ bool PlayState::keyReleased( const ap::ooinput::KeyEvent &e ) {
                 setNetDataDirty();
             }
             break;
+        case ooinput::AP_K_SPACE:
+            mObject->setFiring(false);
+            setNetDataDirty();
         default:
             break;
     }
 
   return false;
 }
-
-void PlayState::fireGun()
-{
-   // Do nothing for a while...
-}
-
 
 void PlayState::createLighting(Ogre::SceneManager *sceneManager)
 {
