@@ -49,7 +49,7 @@ void PlayState::enter( void ) {
     // Attach a camera to the player model
     mCameraNode = pSceneManager->createSceneNode("Node/MyCamera");
     mCameraNode->setPosition(Ogre::Vector3(-100, 500,0));
-    mCameraNode->yaw(Ogre::Degree(-90));  // Camera facing: Z+ --> X+
+    //mCameraNode->yaw(Ogre::Degree(-90));  // Camera facing: Z- --> X+
     mCameraNode->pitch(Ogre::Degree(-75)); // Camera needs to look down.
     mCameraNode->attachObject(mCamera);
     mCamera->setNearClipDistance(5);
@@ -164,11 +164,9 @@ void PlayState::createNewEntity(ap::MovingObject *newObject, uint32 objectId)
 
     std::stringstream mesh;
     if (dynamic_cast<ap::Mech *>(newObject)) {
-        mesh << "robot.mesh";
+        mesh << "CrudeMech.mesh";
     } else if (dynamic_cast<ap::Projectile *>(newObject)) {
-        Ogre::Real realSmall = Ogre::Real(0.4f);
-        objNode->scale( realSmall, realSmall, realSmall);
-        mesh << "ninja.mesh";
+        mesh << "CrudeMissile.mesh";
     }
     Ogre::Entity *newEntity = pSceneManager->createEntity(ss.str(), mesh.str());
     objNode->attachObject(newEntity);

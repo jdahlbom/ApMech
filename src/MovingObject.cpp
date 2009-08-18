@@ -16,7 +16,7 @@ namespace ap {
 
 MovingObject::MovingObject(float nFriction, Ogre::Vector3 startingVelocity):
     objectType(ap::OBJECT_TYPE_UNDEFINED),
-    initialFacing(Ogre::Vector3::UNIT_X),
+    initialFacing(-Ogre::Vector3::UNIT_Z),
     state(new MovableState(startingVelocity)),
     control(new MovableControl()),
     weaponControl(new WeaponControl()),

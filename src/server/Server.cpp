@@ -142,7 +142,7 @@ void Server::weaponFired(ap::net::NetData *pNetData, ap::MovingObject *source) {
     bullet->setWorldBoundaries(1500.0f,0.0f,0.0f,1500.0f);
     bullet->setMaxSpeed(625.0f);
 
-    bullet->setPosition(source->getPosition() + facing*10.0f);
+    bullet->setPosition(source->getPosition() + facing*10.0f + Ogre::Vector3(0.0f, 40.0f, 0.0f));
     pNetData->netobjects.insert(make_pair(newid, bullet));
 }
 
