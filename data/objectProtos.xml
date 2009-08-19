@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE objectProtos SYSTEM "objectProtos.dtd">
+
+<objectProtos>
+  <object type="mech">
+    <id>1</id>
+    <name>Crude Mech</name>
+    <mesh>CrudeMesh.mesh</mesh>
+    <materials>
+      <script>CrudeMesh.material</script>
+    </materials>
+  </object>
+  <object type="projectile">
+    <id>1</id>
+    <name>Crude Missile</name>
+    <mesh>CrudeMissile.mesh</mesh>
+    <materials>
+      <script>CrudeMissile.material</script>
+    </materials>
+  </object>
+</objectProtos>

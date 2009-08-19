@@ -1,0 +1,11 @@
+<!ELEMENT objectProtos (object+)>
+
+<!ELEMENT object (id,name,mesh,materials)>
+<!ATTLIST object type (mech|projectile) #REQUIRED>
+<!ELEMENT id (#PCDATA)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT mesh (#PCDATA)>
+<!ELEMENT materials (script*,texture*)>
+<!ELEMENT script (#PCDATA)>
+<!ELEMENT texture (#PCDATA)>
+
