@@ -2,11 +2,13 @@
 #define __projectile_h__
 
 #include <cmath>     // for sin and cos, for advance
-#include "netdata.h"
-#include "netobject.h"
+#include "net/netdata.h"
 #include "location.h"
 
 #include <SDL.h>
+
+using namespace ap;
+using namespace ap::net;
 
 class Projectile : public NetObject {
  public:
@@ -16,12 +18,13 @@ class Projectile : public NetObject {
 
     Projectile(int _id, int _uid = -1);
 
-    int serialize(enet_uint8 buffer[], int start, int buflength);
-    int unserialize(enet_uint8 buffer[], int start);
-    NetObject *create(int id);
+    uint8 getObjectType();
+
+    int serialize(ap::uint8 buffer[], int start, int buflength) const;
+    int unserialize(ap::uint8 buffer[], int start);
+    NetObject *create(ap::uint32 id);
 
     int advance(float dt);
-    int draw(SDL_Surface *s, float x, float y);
 };
 
 #endif

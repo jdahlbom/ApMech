@@ -9,7 +9,7 @@
 /**/};
 /**/static ProjectileInject __projectileinject;
 /**//* A create method like this is also ABSOLUTELY REQUIRED in descendants of NetObject. */
-/**/NetObject *Projectile::create(int id)
+/**/NetObject *Projectile::create(ap::uint32 id)
 /**/{
 /**/    NetObject *ptr = new Projectile(id);
 /**/    return ptr;
@@ -23,7 +23,12 @@ Projectile::Projectile(int _id, int _uid)
     changed = false;
 }
 
-int Projectile::serialize(enet_uint8 buffer[], int start, int buflength)
+uint8 Projectile::getObjectType()
+{
+    return NetData::OBJECT_TYPE_PROJECTILE;
+}
+
+int Projectile::serialize(enet_uint8 buffer[], int start, int buflength) const
 {
     int length = 0;
 
@@ -41,7 +46,7 @@ int Projectile::unserialize(enet_uint8 buffer[], int start)
     int length = 0;
     enet_uint8 objtype;
 
-    if (id == *(int *)(buffer+start)) {                     length += 4;
+    if (id == *(ap::uint32 *)(buffer+start)) {                     length += 4;
         objtype = *(enet_uint8 *)(buffer+start+length);     length++;
         uid = *(int *)(buffer+start+length);                length += 4;
         age = *(unsigned int*)(buffer+start+length);        length += 4;
@@ -63,18 +68,4 @@ int Projectile::advance(float dt)
         return -1;      // request deletion
     }
     return 0;
-}
-
-int Projectile::draw(SDL_Surface *s, float x, float y)
-{
-    int sx, sy;
-    sx = fmod(loc.x + 6000.0 -x + s->w/2.0, 4000.0) - 2000.0;
-    sy = fmod(-loc.y + 6000.0 +y + s->h/2.0, 4000.0) - 2000.0;
-
-    SDL_Rect dstrect;
-    dstrect.w = dstrect.h = 3;
-    dstrect.x = sx; //(s->w)/2 + loc.x - 1 - x;
-    dstrect.y = sy; //(s->h)/2 - loc.y + 1 + y;
-    SDL_FillRect(s, &dstrect, 0x00FFAA00);
-    return 1;
 }

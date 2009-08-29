@@ -1,5 +1,8 @@
 @ECHO OFF
 
+REM probably outdated, as this is not modified for the subdir src/net/
+REM MAYBE fixed by copy src/net/* src/
+
 set SDLDIR=c:\programming\SDL-1.2.13
 set CXX=g++
 

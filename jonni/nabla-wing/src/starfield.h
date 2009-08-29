@@ -2,21 +2,22 @@
 #define __starfield_h__
 
 #include <cmath>     // for sin and cos, for advance
-#include "netdata.h"
-#include "netobject.h"
+#include "net/netdata.h"
 #include "location.h"
 
 #include <SDL.h>
 
+using namespace ap::net;
+
 class StarField : public NetObject {
  public:
-    StarField(int _id, int _uid = -1);
+    StarField(int _id = -1, int _uid = -1);
 
-    int serialize(enet_uint8 buffer[], int start, int buflength);
-    int unserialize(enet_uint8 buffer[], int start);
-    NetObject *create(int id);
+    uint8 getObjectType();
 
-    int draw(SDL_Surface *s, float x, float y);
+    int serialize(ap::uint8 buffer[], int start, int buflength) const;
+    int unserialize(ap::uint8 buffer[], int start);
+    NetObject *create(ap::uint32 id);
 };
 
 #endif

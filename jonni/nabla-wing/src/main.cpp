@@ -8,17 +8,20 @@
 #else
 #include <SDL.h>
 #endif
+#include "SDL_ttf.h"
 
 #include <iostream>
 #include <cstdlib>  // for random
 #include <cmath>    // for sin,cos in the server
 
-#include "netdata.h"
+#include "net/netdata.h"
 #include "netgameobject.h"
 #include "starfield.h"
 #include "functions.h"
+#include "NablaControl.h"
 
 using namespace std;
+using namespace ap::net;
 
 const int WIDTH = 800;
 const int HEIGHT = 600;
@@ -27,11 +30,9 @@ int servermain(int argc, char* argv[]);
 
 int main ( int argc, char** argv )
 {
-
     SDL_Surface *screen;
     NetData *netdata;
     float xoffset = 0, yoffset = 0;
-
     long int oldticks, newticks;    // These here for tracking time
     float dt;                       //
 
@@ -40,10 +41,18 @@ int main ( int argc, char** argv )
     if ((argc == 2) && (strcmp(argv[1], "-server") == 0)) { // ********* SERVER CODE
         exit (servermain(argc, argv));
     } else {                  // *************************************** CLIENT CODE
-        map<int,NetObject *>::iterator po;
         string ip;
-        if (argc == 2) ip = argv[1]; else ip = "127.0.0.1";         // server to connect to
+        ap::NablaControl control;   // For controlling a ship!
+        TTF_Font *font;
 
+        TTF_Init() || cout <<"Error initializing SDL_ttf"<<endl;
+        font = TTF_OpenFont("forgotten.ttf", 22);
+        if (!font) {
+            cout << "Error loading font: "<<TTF_GetError()<<endl;
+            return 0;
+        }
+
+        if (argc == 2) ip = argv[1]; else ip = "127.0.0.1";         // server to connect to
 
         if ( SDL_Init( SDL_INIT_VIDEO ) < 0 )  {                    // initialize SDL
             printf( "Unable to init SDL: %s\n", SDL_GetError() );   //
@@ -61,7 +70,7 @@ int main ( int argc, char** argv )
         netdata->connect(ip, 5074);
         netdata->me.nick = "Test";
         netdata->me.changed = true;         // Mark this info for transmission
-
+        netdata->me.setControlPtr(&control);
 
         bool done = false;
         while (!done)                       // MAIN LOOP **********************************************
@@ -82,24 +91,24 @@ int main ( int argc, char** argv )
                         done = true;
                         break;
                      case SDLK_c:
-                        netdata->me.color = 63+64*(rand()%4) + 256*64*(rand()%4) + 65536*64*(rand()%4);
+                        control.color = 63+64*(rand()%4) + 256*64*(rand()%4) + 65536*64*(rand()%4);
                         netdata->me.changed = true;
                         break;
                      case SDLK_w:
                      case SDLK_UP:
-                        netdata->me.a = 300; netdata->me.changed = true;
+                        control.a = 300; netdata->me.changed = true;
                         break;
                      case SDLK_a:
                      case SDLK_LEFT:
-                        netdata->me.turning -= 5.5; netdata->me.changed = true;
+                        control.turning -= 5.5; netdata->me.changed = true;
                         break;
                      case SDLK_d:
                      case SDLK_RIGHT:
-                        netdata->me.turning += 5.5; netdata->me.changed = true;
+                        control.turning += 5.5; netdata->me.changed = true;
                         break;
                      case SDLK_SPACE:
                      case SDLK_PERIOD:
-                        netdata->me.controls |= NetUser::SHOOT_MG; netdata->me.changed = true;
+                        control.controls |= NetUser::SHOOT_MG; netdata->me.changed = true;
                         break;
                      default:
                         break;
@@ -111,19 +120,19 @@ int main ( int argc, char** argv )
                     {
                      case SDLK_w:
                      case SDLK_UP:
-                        netdata->me.a = 0; netdata->me.changed = true;
+                        control.a = 0; netdata->me.changed = true;
                         break;
                      case SDLK_a:
                      case SDLK_LEFT:
-                        netdata->me.turning += 5.5; netdata->me.changed = true;
+                        control.turning += 5.5; netdata->me.changed = true;
                         break;
                      case SDLK_d:
                      case SDLK_RIGHT:
-                        netdata->me.turning -= 5.5; netdata->me.changed = true;
+                        control.turning -= 5.5; netdata->me.changed = true;
                         break;
                      case SDLK_SPACE:
                      case SDLK_PERIOD:
-                        netdata->me.controls &= ~NetUser::SHOOT_MG; netdata->me.changed = true;
+                        control.controls &= ~NetUser::SHOOT_MG; netdata->me.changed = true;
                         break;
                      default:
                         break;
@@ -131,20 +140,25 @@ int main ( int argc, char** argv )
                 }
             } // end of SDL message processing
 
+            ap::net::NetEvent netevent;
+            while (netdata->pollEvent(netevent)) {
+                switch (netevent.type)
+                {
+                 case NetData::EVENT_DELETEOBJECT:
+                    netdata->removeNetObject(netevent.uid);
+                    break;
+                }
+            }
+
             oldticks = newticks; newticks = getTicks(); dt = float(newticks - oldticks) * 0.001;
 
             // Now, advance all objects. That means, let them predict where they will be after dt.
-            for (po = netdata->netobjects.begin() ; po != netdata->netobjects.end() ; po++)
-                if (po->second->advance(dt) == -1) {    // If somebody wants to be deleted,
-                    delete po->second;                  // show no mercy!
-                    netdata->netobjects.erase(po);
-                }
+            while (NetObject *nop = netdata->eachObject())
+                if (nop->advance(dt) == -1) netdata->removeNetObject(nop->id);
 
             // Advance our avatar according to our input state!
             // NOTICE that this is merely for more comfortable controls. Server is king, and overwrites when he wants.
-            NetGameObject *myobj = NULL;
-            if ((netdata->myAvatarID > 0) && (netdata->netobjects.find(netdata->myAvatarID) != netdata->netobjects.end()))
-                myobj = dynamic_cast<NetGameObject *>(netdata->netobjects.find(netdata->myAvatarID)->second);
+            NetGameObject *myobj = netdata->getAvatarObject<NetGameObject *>();
             if (myobj) myobj->control(netdata->me);
 
             netdata->sendChanges();
@@ -154,26 +168,26 @@ int main ( int argc, char** argv )
 
             if (myobj) { xoffset = myobj->loc.x; yoffset = myobj->loc.y; }
 
-            for (po = netdata->netobjects.begin() ; po != netdata->netobjects.end() ; po++)
-                po->second->draw(screen, xoffset, yoffset);
-//            if (myobj) cout << "("<<floor(myobj->loc.x)<<","<<floor(myobj->loc.y)<<")"<<endl;
-            // if (typeid(*po->second) == typeid(Projectile)) // if you need to discriminate
+            while (NetObject *nop = netdata->eachObject())
+                drawObject(screen, xoffset, yoffset, nop);
 
-
-
-            for (po = netdata->netobjects.begin() ; po != netdata->netobjects.end() ; po++)
+            // Draw the radar box
+            while (NetGameObject *radarobj = netdata->eachObject<NetGameObject*>(NetData::OBJECT_TYPE_NETGAMEOBJECT))
             {
-                NetGameObject *radarobj = dynamic_cast<NetGameObject *>(po->second);
-                if (radarobj != NULL)
-                {
-                    SDL_Rect dstrect;
-                    dstrect.w = dstrect.h = 3;
-                    dstrect.x = 750 + radarobj->loc.x / 50;
-                    dstrect.y = 550 - radarobj->loc.y / 50;
-                    SDL_FillRect(screen, &dstrect, radarobj->color);
-                }
+                SDL_Rect dstrect;
+                dstrect.w = dstrect.h = 3;
+                dstrect.x = 750 + radarobj->loc.x / 50;
+                dstrect.y = 550 - radarobj->loc.y / 50;
+                SDL_FillRect(screen, &dstrect, radarobj->color);
             }
 
+/*
+            SDL_Color color = {255,255,255};
+            SDL_Surface *tsurf = TTF_RenderText_Solid(font, "Jee, testirivi", color);
+            SDL_BlitSurface(tsurf, NULL, screen, NULL);
+            SDL_FreeSurface(tsurf);
+*/
+            drawTextArea(screen, 50, 50, "line 1\nline 2 foo foo\nLINE 3!!!", font);
 
             SDL_Flip(screen);       // finally, update the screen :)
             SDL_Delay(1);           // and delay. Could be removed, most probably. Maybe this allows some multiprocessing on single core systems though!
@@ -182,6 +196,7 @@ int main ( int argc, char** argv )
 
         delete netdata;           // all is well ;)
         printf("Exited cleanly\n");
+        TTF_CloseFont(font); TTF_Quit();
         return 0;
     }
 }

@@ -14,13 +14,14 @@
 #include <cmath>    // for sin,cos in the server
 #include <list>
 
-#include "netdata.h"
+#include "net/netdata.h"
 #include "netgameobject.h"
 #include "starfield.h"
 #include "functions.h"
+#include "NablaControl.h"
 
 using namespace std;
-
+using namespace ap::net;
 
 int servermain(int argc, char* argv[])
 {
@@ -33,63 +34,39 @@ int servermain(int argc, char* argv[])
     float dt;                       //
 
     cout << "Created a server."<<endl;
+    cout << "Serving "<< netobjectprototypes().size()<<" kinds of objects."<<endl;
+
     netdata = new NetData(NetData::SERVER);
-
-    cout << "Serving "<< netobjectprototypes().size()<<" objects."<<endl;
-
+    netdata->insertObject(new StarField());
     newticks = nextupdate = getTicks();
-
-    int newid = netdata->getUniqueObjectID();
-    netdata->netobjects.insert(make_pair(newid, new StarField(newid, 0)));
 
     while (1) {             // Server main loop
         netdata->receiveChanges();
         oldticks = newticks; newticks = getTicks(); dt = float(newticks - oldticks) * 0.001;
 
-        p = netdata->netobjects.begin();
-        while (p != netdata->netobjects.end()) {
-            iUser = netdata->users.find(p->second->uid);
-
-            NetGameObject *ptrObj = dynamic_cast<NetGameObject *>(p->second);
-            if (ptrObj) // if the dynamic cast succeeded, then p->second is a NetGameObject!
+        while (NetGameObject *ngop = dynamic_cast<NetGameObject *>(netdata->eachObject(NetData::OBJECT_TYPE_NETGAMEOBJECT)))
+        {
+            iUser = netdata->users.find(ngop->uid);
+            if (iUser != netdata->users.end()) // That means the object's owner is still logged in
             {
-                if (iUser != netdata->users.end()) // That means the object's owner is still logged in
-                {
-                    list<NetObject *> *lObjs = ptrObj->control(iUser->second, true);
-                    if (lObjs != NULL) {            // if control returns objects, insert them to netobjects map
-                        list<NetObject *>::iterator ilObj;
-                        for (ilObj = lObjs->begin(); ilObj != lObjs->end(); ilObj++)
-                        {
-                            int newid = netdata->getUniqueObjectID();
-                            (*ilObj)->id = newid;
-                            netdata->netobjects.insert(make_pair(newid, *ilObj));
-                        }
-                    }
-                } else {                            // That means owner's disconnected, so paint it gray!
-                    ptrObj->color = 0x00666666;
-                }
+                netdata->insertObjects(ngop->control(iUser->second, true));
+            } else {                            // That means owner's disconnected, so paint it gray!
+                ngop->color = 0x00666666;
+            }
 
-                pProj = netdata->netobjects.begin();
-                while (pProj != netdata->netobjects.end())
-                {
-                    Projectile *proj = dynamic_cast<Projectile *>(pProj->second);
-                    if ((proj) && (proj->loc.collision(ptrObj->loc))) {
-                        ptrObj->loc.x = 500 + (rand()%4)*1000;
-                        ptrObj->loc.y = 500 + (rand()%4)*1000;
-                        ptrObj->loc.xvel = ptrObj->loc.yvel = 0.0;
-                        netdata->delObject(pProj->second->id);  // This erases a pair from netobjects map,
-                    }                                           // (hope this doesn't do harm),
-                    pProj++;                                    // and this still uses an iterator to the one.
+            while (Projectile *pp = dynamic_cast<Projectile *>(netdata->eachObject(NetData::OBJECT_TYPE_PROJECTILE)))
+            {
+                if ((pp) && (pp->loc.collision(ngop->loc))) {
+                    ngop->loc.x = 500 + (rand()%4)*1000;    ngop->loc.y = 500 + (rand()%4)*1000;
+                    ngop->loc.xvel = ngop->loc.yvel = 0.0;
+                    netdata->delObject(pp->id);
                 }
             }
 
-            if (p->second->advance(dt) == -1) {
-                delete p->second;
-                netdata->netobjects.erase(p);
-            }
-
-            p++;
         }
+
+        while (NetObject *nop = netdata->eachObject())
+            if (nop->advance(dt) == -1) netdata->delObject(nop->id); //removeNetObject(nop->id);
 
         if (newticks >= nextupdate) {
             netdata->sendChanges();
@@ -97,17 +74,20 @@ int servermain(int argc, char* argv[])
         }                               // Seems to me that up to 100 is still okay!
         SDL_Delay(1);       // sleep even a little bit so that dt is never 0
 
-        while (netdata->pollEvent(&event)) {
+        while (netdata->pollEvent(event)) {
             switch (event.type)
             {
              case NetData::EVENT_CONNECT:
                 cout << "Received a connection from "<< uint2ipv4(netdata->users[event.uid].peer->address.host) <<", uid "<<event.uid;
                 cout << ". We now have "<<netdata->users.size()<<" users."<<endl;
 
-                int newid = netdata->getUniqueObjectID();                                    // and an unused object id
-                netdata->netobjects.insert(make_pair(newid, new NetGameObject(newid, event.uid)));
-
+                int newid = netdata->insertObject(new NetGameObject(0, event.uid));
+                NetGameObject *newobj = netdata->getNetObject<NetGameObject*>(newid);
+                cout << "Added obj id "<<newid<<" for user "<<event.uid<<", ptr "<<newobj<<endl;
+                newobj->controls = new ap::NablaControl();
                 netdata->setAvatarID(event.uid, newid);
+                netdata->users[event.uid].setControlPtr(newobj->controls);
+
                 break;
             }
         }

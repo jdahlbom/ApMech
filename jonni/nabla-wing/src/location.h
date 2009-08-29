@@ -17,7 +17,7 @@ class Location {
     void setLocation(float _x, float _y, float _z) { x = _x; y = _y; z = _z; }
     void setVelocity(float _xv, float _yv, float _zv) { xvel = _xv; yvel = _yv; zvel = _zv; }
 
-    int serialize(enet_uint8 buffer[], int start, int buflength);
+    int serialize(enet_uint8 buffer[], int start, int buflength) const;
     int unserialize(enet_uint8 buffer[], int start);
 
     void advance(float dt);

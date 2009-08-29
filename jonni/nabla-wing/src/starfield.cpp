@@ -9,7 +9,7 @@
 /**/};
 /**/static StarFieldInject __starfieldinject;
 /**//* A create method like this is also ABSOLUTELY REQUIRED in descendants of NetObject. */
-/**/NetObject *StarField::create(int id)
+/**/NetObject *StarField::create(ap::uint32 id)
 /**/{
 /**/    NetObject *ptr = new StarField(id);
 /**/    return ptr;
@@ -22,7 +22,12 @@ StarField::StarField(int _id, int _uid)
     changed = false;
 }
 
-int StarField::serialize(enet_uint8 buffer[], int start, int buflength)
+uint8 StarField::getObjectType()
+{
+    return NetData::OBJECT_TYPE_STARFIELD;
+}
+
+int StarField::serialize(ap::uint8 buffer[], int start, int buflength) const
 {
     int length = 0;
 
@@ -32,38 +37,14 @@ int StarField::serialize(enet_uint8 buffer[], int start, int buflength)
     return length;
 }
 
-int StarField::unserialize(enet_uint8 buffer[], int start)
+int StarField::unserialize(ap::uint8 buffer[], int start)
 {
     int length = 0;
     enet_uint8 objtype;
 
-    if (id == *(int *)(buffer+start)) {                     length += 4;
+    if (id == *(uint32 *)(buffer+start)) {                     length += 4;
         objtype = *(enet_uint8 *)(buffer+start+length);     length++;
     } else cout << "FOULED in StarField::unserialize!" << endl;
 
     return length;
-}
-
-int StarField::draw(SDL_Surface *s, float x, float y)
-{
-    const int stars = 4000;
-    int *scr = (int *)(s->pixels);
-
-    int seed = 452525936;
-    int starx, stary, brightness;
-
-    for (int i=0; i<stars; i++)
-    {
-        starx = fmod((seed >> 16) % 4000 + 2000.0 - x + s->w/2, 4000.0) - 2000.0;
-        seed = ((214013*seed) + 2531011) & 0x7FFFFFFF;      // Step random func
-        stary = fmod((seed >> 16) % 4000 + 2000.0 + y + s->h/2, 4000.0) - 2000.0;
-        seed = ((214013*seed) + 2531011) & 0x7FFFFFFF;      // Step random func
-        brightness = (seed >> 16) % 256;
-        seed = ((214013*seed) + 2531011) & 0x7FFFFFFF;      // Step random func
-
-        if ((starx >= 0) && (stary >= 0) && (starx < s->w) && (stary < s->h))
-            scr[starx + stary*s->w] = brightness + brightness*256 + brightness*65536;
-    }
-
-    return 1;
 }
