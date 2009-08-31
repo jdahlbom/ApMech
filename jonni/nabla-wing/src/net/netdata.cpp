@@ -59,11 +59,24 @@ void NetData::addEvent(NetEvent *event)
 bool NetData::pollEvent(NetEvent &event)
 {
     if (!neteventlist.empty()) {
+//        cout << "event1message: "<<event.message<<","<<(*neteventlist.front()).message<<endl;
         event = *neteventlist.front(); // Copy what's in there
         delete neteventlist.front();
         neteventlist.pop_front();
         return true;
     } else return false;
+}
+int NetData::sendMessage(NetMessage &message)
+{
+    int length = 0;
+    enet_uint8 buffer[2000];
+    buffer[length++] = NetData::PACKET_NETMESSAGE;
+    length += message.serialize(buffer, length, 2000-length);
+    buffer[length++] = NetData::PACKET_EOF;
+    hexprint(buffer, length); // DEBUG
+    ENetPacket *packet = enet_packet_create(buffer, length, ENET_PACKET_FLAG_RELIABLE);
+    enet_host_broadcast(enethost, 0, packet);   // Broadcast always. Hub, not switch. For now.
+    return length;
 }
 
 
@@ -187,6 +200,11 @@ int NetData::serviceServer()
                     if (data[h] == NetData::PACKET_NETUSER) {
                         h++; uid = *(int *)(data+h);  // this means, read an int from data[h] onwards
                         h += users.find(uid)->second.unserialize(data, h);
+                    } else if (data[h] == NetData::PACKET_NETMESSAGE) {
+                        NetMessage netmsg;
+                        h++;
+                        h += netmsg.unserialize(data, h);
+                        sendMessage(netmsg);
                     } else {
                         cout << "[NETDATA] Received an unknown packet! Error in NetData::serviceServer!" << endl;
                     }
@@ -255,6 +273,13 @@ int NetData::serviceClient()
                     myAvatarID = *(int *)(data+h);
                     addEvent(new NetEvent(EVENT_SETAVATAR, myAvatarID));
                     h += 4;
+                } else if (data[h] == NetData::PACKET_NETMESSAGE) {
+                    NetMessage *netmsg = new NetMessage();
+                    h++;
+                    h += netmsg->unserialize(data, h);
+                    NetEvent *event = new NetEvent(NetData::EVENT_MESSAGE, netmsg);
+                    addEvent(event);
+                    cout << "MESSAGE: "<<netmsg->data<<endl;
                 } else if (data[h] == NetData::PACKET_DISCONNECT) {
                     h++;
                     uid = *(int *)(data+h);

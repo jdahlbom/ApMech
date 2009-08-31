@@ -10,6 +10,7 @@
 #include "NetUser.h"
 #include "NetObject.h"
 #include "NetEvent.h"
+#include "NetMessage.h"
 #include "../functions.h"
 #include "../types.h"
 
@@ -40,6 +41,7 @@ class NetData {
     static const enet_uint8 PACKET_DELOBJECT = 42;
     static const enet_uint8 PACKET_SETAVATAR = 43;
     static const enet_uint8 PACKET_DISCONNECT = 44;
+    static const enet_uint8 PACKET_NETMESSAGE = 45;
     static const enet_uint8 PACKET_EOF = 49;
 
     static const enet_uint8 OBJECT_TYPE_NETGAMEOBJECT = 50;
@@ -53,6 +55,7 @@ class NetData {
     static const enet_uint8 EVENT_SETAVATAR = 22;
     static const enet_uint8 EVENT_DELETEOBJECT = 23;
     static const enet_uint8 EVENT_CREATEOBJECT = 24;
+    static const enet_uint8 EVENT_MESSAGE = 25;
 
  private:
     enum status_type { enet_error, offline, connected, server };
@@ -90,6 +93,7 @@ class NetData {
     int sendChanges();
     int receiveChanges();
     bool pollEvent(NetEvent &event);
+    int sendMessage(NetMessage &message);
 
     NetObject *getNetObject(uint32 id);
     NetObject *eachObject();

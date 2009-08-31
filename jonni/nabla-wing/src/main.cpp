@@ -45,7 +45,7 @@ int main ( int argc, char** argv )
         ap::NablaControl control;   // For controlling a ship!
         TTF_Font *font;
 
-        TTF_Init() || cout <<"Error initializing SDL_ttf"<<endl;
+        if (TTF_Init() == -1) cout <<"Error initializing SDL_ttf"<<endl;
         font = TTF_OpenFont("forgotten.ttf", 22);
         if (!font) {
             cout << "Error loading font: "<<TTF_GetError()<<endl;
@@ -68,11 +68,14 @@ int main ( int argc, char** argv )
 
         netdata = new NetData(NetData::CLIENT);
         netdata->connect(ip, 5074);
-        netdata->me.nick = "Test";
+        netdata->me.nick = "Anonymous";
         netdata->me.changed = true;         // Mark this info for transmission
         netdata->me.setControlPtr(&control);
 
-        bool done = false;
+        bool done = false, writemode = false;
+        ap::net::NetEvent netevent;
+        string writeinput;
+        std::list<string> textBox(5,"");
         while (!done)                       // MAIN LOOP **********************************************
         {
             SDL_Event event;
@@ -84,8 +87,48 @@ int main ( int argc, char** argv )
                     done = true;
                     break;
                  case SDL_KEYDOWN:
-                    switch (event.key.keysym.sym)
+                    if (writemode) switch (event.key.keysym.sym) {
+                     case SDLK_RETURN:
+                     {
+                        cout << writeinput << endl;
+                        NetMessage netmsg(writeinput);
+                        netdata->sendMessage(netmsg);
+                        writeinput = "";
+                        writemode = false;
+                        SDL_EnableUNICODE(0);       // disable
+                        SDL_EnableKeyRepeat(0,0);   // disable
+                        break;
+                     }
+                     case SDLK_BACKSPACE:
+                        if (writeinput.size() > 0) writeinput.resize(writeinput.size() - 1);
+                        break;
+                     case SDLK_LALT:
+                     case SDLK_LCTRL:
+                     case SDLK_LSHIFT:
+                     case SDLK_LMETA:
+                     case SDLK_LSUPER:
+                     case SDLK_RALT:
+                     case SDLK_RCTRL:
+                     case SDLK_RSHIFT:
+                     case SDLK_RMETA:
+                     case SDLK_RSUPER:
+                     case SDLK_NUMLOCK:
+                     case SDLK_CAPSLOCK:
+                     case SDLK_SCROLLOCK:
+                     case SDLK_MODE:
+                     case SDLK_MENU:
+                        break;    // Nevermind modifiers!
+                     default:
+                        writeinput.append(1, event.key.keysym.unicode);
+                        break;
+                    } else switch (event.key.keysym.sym)
                     {
+                     case SDLK_t:
+                        writeinput = "";
+                        writemode = true;
+                        SDL_EnableUNICODE(1);
+                        SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
+                        break;
                      case SDLK_ESCAPE:
                      case SDLK_q:
                         done = true;
@@ -116,7 +159,7 @@ int main ( int argc, char** argv )
 
                     break;
                  case SDL_KEYUP:
-                    switch (event.key.keysym.sym)
+                    if (!writemode) switch (event.key.keysym.sym)
                     {
                      case SDLK_w:
                      case SDLK_UP:
@@ -140,12 +183,15 @@ int main ( int argc, char** argv )
                 }
             } // end of SDL message processing
 
-            ap::net::NetEvent netevent;
             while (netdata->pollEvent(netevent)) {
                 switch (netevent.type)
                 {
                  case NetData::EVENT_DELETEOBJECT:
                     netdata->removeNetObject(netevent.uid);
+                    break;
+                 case NetData::EVENT_MESSAGE:
+                    string nick = netdata->users[netevent.message->sender].nick;
+                    textBox.pop_front(); textBox.push_back(nick +"> "+ netevent.message->data.c_str());
                     break;
                 }
             }
@@ -181,13 +227,8 @@ int main ( int argc, char** argv )
                 SDL_FillRect(screen, &dstrect, radarobj->color);
             }
 
-/*
-            SDL_Color color = {255,255,255};
-            SDL_Surface *tsurf = TTF_RenderText_Solid(font, "Jee, testirivi", color);
-            SDL_BlitSurface(tsurf, NULL, screen, NULL);
-            SDL_FreeSurface(tsurf);
-*/
-            drawTextArea(screen, 50, 50, "line 1\nline 2 foo foo\nLINE 3!!!", font);
+            drawTextArea(screen, 50, HEIGHT-TTF_FontLineSkip(font), writeinput.c_str(), font);
+            drawTextArea(screen, 50, HEIGHT-TTF_FontLineSkip(font)*6, textBox, font);
 
             SDL_Flip(screen);       // finally, update the screen :)
             SDL_Delay(1);           // and delay. Could be removed, most probably. Maybe this allows some multiprocessing on single core systems though!

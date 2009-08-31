@@ -37,3 +37,4 @@ void putsputnik(SDL_Surface *s, int x, int y, int size, float angle, int r, int 
 int drawObject(SDL_Surface *s, float x, float y, ap::net::NetObject *no);
 
 int drawTextArea(SDL_Surface *s, float x, float y, const std::string &content, TTF_Font *font);
+int drawTextArea(SDL_Surface *s, float x, float y, std::list<string> &content, TTF_Font *font);

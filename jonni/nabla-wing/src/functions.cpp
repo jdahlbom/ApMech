@@ -290,3 +290,20 @@ int drawTextArea(SDL_Surface *s, float x, float y, const std::string &content, T
     }
     return 0;
 }
+
+int drawTextArea(SDL_Surface *s, float x, float y, std::list<string> &content, TTF_Font *font)
+{
+    SDL_Color color = {255,255,255};
+    SDL_Surface *tsurf;
+    SDL_Rect dstrect;
+    dstrect.w = dstrect.h = 3; dstrect.x = x; dstrect.y = y;
+
+    for (std::list<string>::iterator si = content.begin(); si != content.end(); si++)
+    {
+        tsurf = TTF_RenderText_Blended(font, (*si).c_str(), color);
+        SDL_BlitSurface(tsurf, NULL, s, &dstrect);
+        SDL_FreeSurface(tsurf);
+        dstrect.y += TTF_FontLineSkip(font);
+    }
+    return 0;
+}
