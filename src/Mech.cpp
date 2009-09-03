@@ -31,4 +31,9 @@ net::NetObject *Mech::create(uint32 _id)
     return mech;
 }
 
+uint8 Mech::getObjectType()
+{
+    return ap::OBJECT_TYPE_MECH;
+}
+
 } // namespace ap

@@ -8,6 +8,7 @@
 #include "MovingObject.hpp"
 #include "net/netdata.h"
 #include "types.h"
+#include "constants.h"
 
 namespace ap {
 

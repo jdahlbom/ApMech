@@ -29,6 +29,7 @@ Server::Server(uint32 port) :
 }
 
 void Server::start() {
+    float dt; // delta-t between main loop iterations
     std::cout << "[SERVER] Started the server."<<std::endl;
     netdata = new net::NetData(net::NetData::SERVER, mPort);
 
@@ -43,9 +44,9 @@ void Server::start() {
 
     while (1) {             // Server main loop
         netdata->receiveChanges();
-        oldticks = newticks;
-        newticks = getTicks();
-        ap::uint64 dt = newticks - oldticks;
+        oldticks = newticks; newticks = getTicks();
+        dt = float(newticks - oldticks) * 0.001;
+//        ap::uint64 dt = newticks - oldticks;
 
 
         updateObjects(dt, netdata);
@@ -73,30 +74,23 @@ void Server::processEvents(ap::net::NetData *pNetData) {
         case ap::net::NetData::EVENT_CONNECT:
         {
             cout << "[SERVER] Received a connection from "
-                << uint2ipv4(pNetData->users[event.uid].peer->address.host)
+                << uint2ipv4(pNetData->getUser(event.uid)->peer->address.host)
                 <<", uid " << event.uid;
-            cout << ". We now have "<< pNetData->users.size()<<" users."<<endl;
+            cout << ". We now have "<< pNetData->getUserCount()<<" users."<<endl;
 
-            int newid = pNetData->getUniqueObjectID();   // and an unused object id
-
-            ap::MovingObject *newAvatar = new ap::Mech();
-            newAvatar->id = newid;
+            int newid = pNetData->insertObject(new ap::Mech());
+            ap::MovingObject *newAvatar = pNetData->getObject<ap::MovingObject *>(newid);
             newAvatar->setWorldBoundaries(1500.0f,0.0f,0.0f,1500.0f);
             newAvatar->setMaxSpeed(25.0f);
-            // newAvatar->setLocation(Ogre::Vector3(XXX, YYY, ZZZ)
-            pNetData->users[event.uid].setControlPtr(newAvatar->getControlPtr());
-            pNetData->netobjects.insert(make_pair(newid, newAvatar));
+            pNetData->getUser(event.uid)->setControlPtr(newAvatar->getControlPtr());
 
             pNetData->sendChanges();
             pNetData->setAvatarID(event.uid, newid);
 
             // TODO: Remove this check when object passing is working.
-            ap::net::NetData::netObjectsType::const_iterator objIterator;
-            for( objIterator = pNetData->netobjects.begin();
-                    objIterator!=pNetData->netobjects.end();
-                    ++objIterator) {
-                std::cout << "[SERVER]<EVENT_CONNECT> Objects, id: " << objIterator->second->id << std::endl;
-            }
+            while (NetObject *nop = pNetData->eachObject())
+                std::cout << "[SERVER]<EVENT_CONNECT> Objects, id: " << nop->id << std::endl;
+
             break;
         }
         case ap::net::NetData::EVENT_DISCONNECT:
@@ -109,60 +103,35 @@ void Server::processEvents(ap::net::NetData *pNetData) {
 } // void Server::processEvents(netdata*)
 
 
-void Server::updateObjects(uint64 dt, ap::net::NetData* pNetData) const {
-    ap::net::NetData::netObjectsType::const_iterator objIterator;
+void Server::updateObjects(float dt, ap::net::NetData* pNetData) const {
 
-    for( objIterator = pNetData->netobjects.begin(); objIterator!=pNetData->netobjects.end(); ++objIterator) {
-        objIterator->second->advance(dt);
-    }
+    while (NetObject *nop = pNetData->eachObject()) nop->advance(dt);
+
 } // void Server::updateObjects
 
 void Server::fireWeapons(uint64 tstamp, ap::net::NetData *pNetData) {
-    ap::net::NetData::netObjectsType::const_iterator objIterator;
-
-    for( objIterator = pNetData->netobjects.begin(); objIterator!=pNetData->netobjects.end(); ++objIterator) {
-        ap::Mech *mech = dynamic_cast<ap::Mech *>(objIterator->second);
-        if (!mech)
-            continue;
-        bool mechFired = mech->fireGun(tstamp);
-
-        if(mechFired) {
-            weaponFired(pNetData, mech);
-        }
-    }
+    while (ap::Mech *mech = pNetData->eachObject<ap::Mech *>(ap::OBJECT_TYPE_MECH))
+        if (mech->fireGun(tstamp)) weaponFired(pNetData, mech);
 }
 
 void Server::weaponFired(ap::net::NetData *pNetData, ap::MovingObject *source) {
-    int newid = pNetData->getUniqueObjectID();   // and an unused object id
-
     Ogre::Vector3 facing = source->getFacing();
 
-    ap::Projectile *bullet = new ap::Projectile(facing * 50.0f);
-    bullet->id = newid;
+    int newid = pNetData->insertObject(new ap::Projectile(facing * 50.0f));
+    ap::Projectile *bullet = pNetData->getObject<ap::Projectile *>(newid);
     bullet->setWorldBoundaries(1500.0f,0.0f,0.0f,1500.0f);
     bullet->setMaxSpeed(625.0f);
-
     bullet->setPosition(source->getPosition() + facing*10.0f + Ogre::Vector3(0.0f, 40.0f, 0.0f));
-    pNetData->netobjects.insert(make_pair(newid, bullet));
 }
 
 void Server::detectCollisions(ap::net::NetData *pNetData) const {
-    ap::net::NetData::netObjectsType::iterator mechIter, projIter;
-    for(mechIter=pNetData->netobjects.begin(); mechIter!=pNetData->netobjects.end(); ++mechIter)
-    {
-        ap::Mech *mech = dynamic_cast<ap::Mech *>(mechIter->second);
-        if (!mech)
-            continue;
 
-        for(projIter=pNetData->netobjects.begin(); projIter!=pNetData->netobjects.end(); ++projIter)
-        {
-            ap::Projectile *proj = dynamic_cast<ap::Projectile *>(projIter->second);
-            if ((proj) && (proj->testCollision(*mech))) {
+    while (ap::Mech *mech = pNetData->eachObject<ap::Mech *>(ap::OBJECT_TYPE_MECH))
+        while (ap::Projectile *proj = pNetData->eachObject<ap::Projectile *>(ap::OBJECT_TYPE_PROJECTILE))
+            if (proj->testCollision(*mech)) {
                 relocateSpawnedMech(mech);
-                netdata->delObject(projIter->second->id);  // This erases a pair from netobjects map,
-            }                                           // (hope this doesn't do harm),
-        }
-    }
+                netdata->delObject(proj->id);
+            }
 }
 
 void Server::relocateSpawnedMech(ap::Mech *mech) const

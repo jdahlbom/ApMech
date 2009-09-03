@@ -4,6 +4,7 @@
 #include <list>
 #include "net/netdata.h"
 #include "types.h"
+#include "constants.h"
 #include "location.h"
 #include "projectile.h"
 #include "NablaControl.h"

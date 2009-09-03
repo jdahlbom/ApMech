@@ -2,6 +2,8 @@
 #define AP_MECH_H
 
 #include "MovingObject.hpp"
+#include "types.h"
+#include "constants.h"
 
 #include <OgreVector3.h>
 
@@ -14,6 +16,8 @@ class Mech : public MovingObject
     ~Mech() {}
 
     net::NetObject *create(uint32 id);
+
+    uint8 getObjectType();
 };
 
 } // namespace ap

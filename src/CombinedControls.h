@@ -2,14 +2,14 @@
 #define AP_COMBINED_CONTROLS_H
 
 #include "types.h"
-#include "Controller.h"
+#include "net/Controller.h"
 #include "MovableControl.h"
 #include "WeaponControl.h"
 
 namespace ap {
 class MovableControl;
 
-class CombinedControls : public Controller
+class CombinedControls : public net::Controller
 {
     public:
     CombinedControls(MovableControl *move, WeaponControl *firing);

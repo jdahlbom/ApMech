@@ -18,7 +18,6 @@ namespace ap {
 namespace net {
 
 using namespace std;
-using namespace ap::net;
 
 map<enet_uint8, NetObject *>& netobjectprototypes();
 
@@ -44,9 +43,6 @@ class NetData {
     static const enet_uint8 PACKET_NETMESSAGE = 45;
     static const enet_uint8 PACKET_EOF = 49;
 
-    static const enet_uint8 OBJECT_TYPE_NETGAMEOBJECT = 50;
-    static const enet_uint8 OBJECT_TYPE_PROJECTILE = 51;
-    static const enet_uint8 OBJECT_TYPE_STARFIELD = 52;
     static const enet_uint8 OBJECT_TYPE_NETUSER = 59;
 
     static const enet_uint8 EVENT_NOEVENT = 19;
@@ -77,8 +73,8 @@ class NetData {
 
  // Were public:
     std::map <int, NetObject*> netobjects;
- public:
     std::map <int, NetUser> users;   // This is, users contacted to US! Should be empty unless we're server.
+ public:
 
     NetUser me;
     int myAvatarID;             // if >0, tells which object in the map represents me! (if client)
@@ -95,10 +91,13 @@ class NetData {
     bool pollEvent(NetEvent &event);
     int sendMessage(NetMessage &message);
 
-    NetObject *getNetObject(uint32 id);
+    NetObject *getObject(uint32 id);
     NetObject *eachObject();
     NetObject *eachObject(uint8 type);
-    void removeNetObject(uint32 id);
+    void removeObject(uint32 id);
+
+    NetUser *getUser(uint32 uid);
+    int getUserCount();
 
     // Functions below here are meant for server's use. Undefined consequences for clients. Maybe.
     uint32 getUniqueObjectID();
@@ -112,7 +111,7 @@ class NetData {
         return dynamic_cast<ObjType>(netobjects.find(myAvatarID)->second);
     }
 
-    template <typename ObjType> ObjType getNetObject(uint32 id)
+    template <typename ObjType> ObjType getObject(uint32 id)
     {
         std::map <int, NetObject*>::iterator it = netobjects.find(id);
         if( netobjects.end() == it ) return NULL; // return NULL when not found.

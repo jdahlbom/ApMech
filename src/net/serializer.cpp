@@ -1,9 +1,9 @@
-#include "serializer.hpp"
-
-#include <Ogre.h>
+#include "serializer.h"
 
 namespace ap {
 namespace net {
+
+#ifdef OGRE_VERSION
 int serialize(const Ogre::Vector3 &vect, uint8 *buffer, int start, int buflength)
 {
     // TODO: Vector3 is composed of 3 Real:s. Real is by default a float, but with DOUBLE_PRECISION-flag
@@ -26,33 +26,6 @@ int serialize(const Ogre::Quaternion &quat, uint8 *buffer, int start, int buflen
     length += serialize(vect, buffer, start+length, buflength-length);
     return length;
 }
-
-// FIXME! Floating point numbers will really cause interoperability issues between platforms!
-// http://www.parashift.com/c++-faq-lite/serialization.html#faq-36.6
-int serialize(float f, uint8 *buffer, int start, int buflength)
-{
-    *(reinterpret_cast<float *>(buffer+start)) = f;
-    return 4; // Size of float is 4 bytes
-}
-
-// FIXME! integers may cause interoperability issues between platforms!
-// http://www.parashift.com/c++-faq-lite/serialization.html#faq-36.6
-int serialize(int32 i, uint8 *buffer, int start, int buflength)
-{
-    *(reinterpret_cast<int32 *>(buffer+start)) = i;
-    return 4; // Size of int is 4 bytes
-}
-
-int serialize(uint8 i, uint8 *buffer, int start, int buflength) {
-    *(reinterpret_cast<uint8 *>(buffer+start)) = i;
-    return 1; // Size of unsigned char is 1 byte
-}
-
-int serialize(uint32 i, uint8 *buffer, int start, int buflength) {
-    *(reinterpret_cast<uint32 *>(buffer+start)) = i;
-    return 4; // Size of int is 4 bytes
-}
-
 
 int unserialize(Ogre::Vector3 &vect, uint8 *buffer, int start)
 {
@@ -81,6 +54,35 @@ int unserialize(Ogre::Quaternion &quat, uint8 *buffer, int start)
 
     return length;
 }
+#endif // defined(OGRE_VERSION)
+
+
+// FIXME! Floating point numbers will really cause interoperability issues between platforms!
+// http://www.parashift.com/c++-faq-lite/serialization.html#faq-36.6
+int serialize(float f, uint8 *buffer, int start, int buflength)
+{
+    *(reinterpret_cast<float *>(buffer+start)) = f;
+    return 4; // Size of float is 4 bytes
+}
+
+// FIXME! integers may cause interoperability issues between platforms!
+// http://www.parashift.com/c++-faq-lite/serialization.html#faq-36.6
+int serialize(int32 i, uint8 *buffer, int start, int buflength)
+{
+    *(reinterpret_cast<int32 *>(buffer+start)) = i;
+    return 4; // Size of int is 4 bytes
+}
+
+int serialize(uint8 i, uint8 *buffer, int start, int buflength) {
+    *(reinterpret_cast<uint8 *>(buffer+start)) = i;
+    return 1; // Size of unsigned char is 1 byte
+}
+
+int serialize(uint32 i, uint8 *buffer, int start, int buflength) {
+    *(reinterpret_cast<uint32 *>(buffer+start)) = i;
+    return 4; // Size of int is 4 bytes
+}
+
 
 // FIXME! Floating point numbers will really cause interoperability issues between platforms!
 // http://www.parashift.com/c++-faq-lite/serialization.html#faq-36.6

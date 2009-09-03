@@ -6,7 +6,7 @@
 #include <OgreMath.h>
 
 #include "net/Serializable.h"
-#include "Controller.h"
+#include "net/Controller.h"
 #include "types.h"
 
 namespace ap {
@@ -25,7 +25,7 @@ class MovableState : public net::Serializable {
     void dump();
 };
 
-class MovableControl : public Controller {
+class MovableControl : public net::Controller {
     public:
     float               accelerationFwd;
     float               velocityCWiseTurning;

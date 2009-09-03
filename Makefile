@@ -31,8 +31,13 @@ vpath %.o $(OBJDIR)
 
 ## Files to include in yourApp project
 
-OBJS = InputSystem.o SDLInputSystem.o GameState.o PlayState.o GameStateManager.o main.o MovingObject.o serializer.o RectBoundaries.o netdata.o functions.o NetUser.o NetEvent.o Mech.o Projectile.o rotations.o MovableControl.o WeaponControl.o CombinedControls.o
-SERVEROBJS = servermain.o Server.o MovingObject.o RectBoundaries.o serializer.o netdata.o functions.o NetUser.o NetEvent.o Mech.o Projectile.o rotations.o MovableControl.o WeaponControl.o CombinedControls.o
+OBJS = InputSystem.o SDLInputSystem.o GameState.o PlayState.o GameStateManager.o main.o \
+	MovingObject.o serializer.o RectBoundaries.o netdata.o functions.o NetUser.o NetEvent.o \
+	NetMessage.o Mech.o Projectile.o rotations.o MovableControl.o WeaponControl.o \
+	CombinedControls.o
+SERVEROBJS = servermain.o Server.o MovingObject.o RectBoundaries.o serializer.o netdata.o \
+	functions.o NetUser.o NetEvent.o NetMessage.o Mech.o Projectile.o rotations.o \
+	MovableControl.o WeaponControl.o CombinedControls.o
 
 ## Compilation and linking occurs here
 all: tempDirectories application server
@@ -49,9 +54,10 @@ server: $(SERVEROBJS)
 %.o: %.cpp
 	$(CXX) -c $^ -o $(OBJDIR)/$@ $(CXXFLAGS)
 
+rebuild: clean all
 
 ## Clean up
 clean:
 	rm -R -f $(OBJDIR)
-	- rm $(BIN)
-	- rm Ogre.log CEGUI.log
+	- rm -f $(BIN) apserver
+	- rm -f Ogre.log CEGUI.log

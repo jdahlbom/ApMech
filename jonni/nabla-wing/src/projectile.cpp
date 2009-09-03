@@ -4,7 +4,7 @@
 /**//* in order to easily unserialize stuff. Idea gotten from C++ FAQ Lite by Marshall Cline*/
 /**/class ProjectileInject {
 /**/    public: ProjectileInject() {
-/**/        netobjectprototypes().insert(make_pair(NetData::OBJECT_TYPE_PROJECTILE, new Projectile(0)));
+/**/        netobjectprototypes().insert(make_pair(ap::OBJECT_TYPE_PROJECTILE, new Projectile(0)));
 /**/    }
 /**/};
 /**/static ProjectileInject __projectileinject;
@@ -25,7 +25,7 @@ Projectile::Projectile(int _id, int _uid)
 
 uint8 Projectile::getObjectType()
 {
-    return NetData::OBJECT_TYPE_PROJECTILE;
+    return ap::OBJECT_TYPE_PROJECTILE;
 }
 
 int Projectile::serialize(enet_uint8 buffer[], int start, int buflength) const
@@ -33,7 +33,7 @@ int Projectile::serialize(enet_uint8 buffer[], int start, int buflength) const
     int length = 0;
 
     *(int *)(buffer+start+length) = id;                     length += 4;
-    *(enet_uint8 *)(buffer+start+length) = NetData::OBJECT_TYPE_PROJECTILE; length++;
+    *(enet_uint8 *)(buffer+start+length) = ap::OBJECT_TYPE_PROJECTILE; length++;
     *(int *)(buffer+start+length) = uid;                    length += 4;
     *(unsigned int *)(buffer+start+length) = age;           length += 4;
     length += loc.serialize(buffer, start+length, buflength);

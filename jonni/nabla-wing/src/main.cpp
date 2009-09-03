@@ -18,6 +18,7 @@
 #include "netgameobject.h"
 #include "starfield.h"
 #include "functions.h"
+#include "constants.h"
 #include "NablaControl.h"
 
 using namespace std;
@@ -91,8 +92,17 @@ int main ( int argc, char** argv )
                      case SDLK_RETURN:
                      {
                         cout << writeinput << endl;
-                        NetMessage netmsg(writeinput);
-                        netdata->sendMessage(netmsg);
+                        if (writeinput[0] == '/') { // That is, it's a command
+                            if (writeinput.compare(0, 6, "/nick ") == 0) {
+                                netdata->me.nick = writeinput.substr(6);
+                                netdata->me.changed = true;
+                            } else {
+                                textBox.pop_front(); textBox.push_back("error: unknown command");
+                            }
+                        } else {
+                            NetMessage netmsg(writeinput, netdata->me.uid);
+                            netdata->sendMessage(netmsg);
+                        }
                         writeinput = "";
                         writemode = false;
                         SDL_EnableUNICODE(0);       // disable
@@ -187,11 +197,10 @@ int main ( int argc, char** argv )
                 switch (netevent.type)
                 {
                  case NetData::EVENT_DELETEOBJECT:
-                    netdata->removeNetObject(netevent.uid);
+                    netdata->removeObject(netevent.uid);
                     break;
                  case NetData::EVENT_MESSAGE:
-                    string nick = netdata->users[netevent.message->sender].nick;
-                    textBox.pop_front(); textBox.push_back(nick +"> "+ netevent.message->data.c_str());
+                    textBox.pop_front(); textBox.push_back(netevent.message->data.c_str());
                     break;
                 }
             }
@@ -200,7 +209,7 @@ int main ( int argc, char** argv )
 
             // Now, advance all objects. That means, let them predict where they will be after dt.
             while (NetObject *nop = netdata->eachObject())
-                if (nop->advance(dt) == -1) netdata->removeNetObject(nop->id);
+                if (nop->advance(dt) == -1) netdata->removeObject(nop->id);
 
             // Advance our avatar according to our input state!
             // NOTICE that this is merely for more comfortable controls. Server is king, and overwrites when he wants.
@@ -218,7 +227,7 @@ int main ( int argc, char** argv )
                 drawObject(screen, xoffset, yoffset, nop);
 
             // Draw the radar box
-            while (NetGameObject *radarobj = netdata->eachObject<NetGameObject*>(NetData::OBJECT_TYPE_NETGAMEOBJECT))
+            while (NetGameObject *radarobj = netdata->eachObject<NetGameObject*>(ap::OBJECT_TYPE_NETGAMEOBJECT))
             {
                 SDL_Rect dstrect;
                 dstrect.w = dstrect.h = 3;

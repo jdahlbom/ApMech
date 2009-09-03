@@ -1,6 +1,6 @@
 #include "RectBoundaries.hpp"
 
-#include "net/serializer.hpp"
+#include "net/serializer.h"
 
 namespace ap {
 
@@ -37,6 +37,7 @@ void RectBoundaries::clamp(float &vert, float &horiz) const
  * @return  int     Number of byts written to buffer.
  */
 int RectBoundaries::serialize(uint8 buffer[], int start, int buflength) const {
+    using ap::net::serialize;
     int length = 0;
     length += net::serialize(top, buffer, start+length, buflength-length);
     length += net::serialize(bottom, buffer, start+length, buflength-length);
@@ -49,6 +50,7 @@ int RectBoundaries::serialize(uint8 buffer[], int start, int buflength) const {
  * @return  int     Number of byts read from buffer.
  */
 int RectBoundaries::unserialize(uint8 buffer[], int start) {
+    using ap::net::unserialize;
     int length = 0;
     length += net::unserialize(top, buffer, start+length);
     length += net::unserialize(bottom, buffer, start+length);

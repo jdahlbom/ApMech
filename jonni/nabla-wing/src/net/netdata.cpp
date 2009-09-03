@@ -73,9 +73,10 @@ int NetData::sendMessage(NetMessage &message)
     buffer[length++] = NetData::PACKET_NETMESSAGE;
     length += message.serialize(buffer, length, 2000-length);
     buffer[length++] = NetData::PACKET_EOF;
-    hexprint(buffer, length); // DEBUG
     ENetPacket *packet = enet_packet_create(buffer, length, ENET_PACKET_FLAG_RELIABLE);
     enet_host_broadcast(enethost, 0, packet);   // Broadcast always. Hub, not switch. For now.
+    // TODO: find out if it'd be more effective to only send to listed recipients (many
+    // peer_sends as opposed to one broadcast)
     return length;
 }
 
@@ -204,6 +205,7 @@ int NetData::serviceServer()
                         NetMessage netmsg;
                         h++;
                         h += netmsg.unserialize(data, h);
+                        netmsg.data = users[netmsg.sender].nick + "> " + netmsg.data;
                         sendMessage(netmsg);
                     } else {
                         cout << "[NETDATA] Received an unknown packet! Error in NetData::serviceServer!" << endl;
@@ -279,7 +281,6 @@ int NetData::serviceClient()
                     h += netmsg->unserialize(data, h);
                     NetEvent *event = new NetEvent(NetData::EVENT_MESSAGE, netmsg);
                     addEvent(event);
-                    cout << "MESSAGE: "<<netmsg->data<<endl;
                 } else if (data[h] == NetData::PACKET_DISCONNECT) {
                     h++;
                     uid = *(int *)(data+h);
@@ -361,7 +362,7 @@ int NetData::sendChanges()
     if ((status == connected) && (me.changed) && (me.uid > 0)) { // Do we have updated things to send!
         list<int>::iterator iDelPkg = objectDeleteQueue.begin();
         while (iDelPkg != objectDeleteQueue.end()) {
-            removeNetObject(*iDelPkg);    // First, remove what is to be removed
+            removeObject(*iDelPkg);    // First, remove what is to be removed
             iDelPkg = objectDeleteQueue.erase(iDelPkg);
         }
 
@@ -373,7 +374,7 @@ int NetData::sendChanges()
         list<int>::iterator iDelPkg = objectDeleteQueue.begin();
 
         while (iDelPkg != objectDeleteQueue.end()) {
-            removeNetObject(*iDelPkg);    // Now, actually remove an object
+            removeObject(*iDelPkg);    // Now, actually remove an object
             buffer[length++] = NetData::PACKET_DELOBJECT;
             *(int *)(buffer+length) = *iDelPkg;     length += 4;
             iDelPkg = objectDeleteQueue.erase(iDelPkg);
@@ -409,7 +410,7 @@ uint32 NetData::getUniqueObjectID()
     return newid;
 }
 
-NetObject * NetData::getNetObject(uint32 id)
+NetObject * NetData::getObject(uint32 id)
 {
     std::map <int, NetObject*>::iterator it = netobjects.find(id);
     if( netobjects.end() == it ) {
@@ -420,7 +421,7 @@ NetObject * NetData::getNetObject(uint32 id)
 }
 
 // Client side delete. Just delete, don't let anyone know.
-void NetData::removeNetObject(uint32 id)
+void NetData::removeObject(uint32 id)
 {
     // I had nabla-wing crash once because of double-delete, but couldn't reproduce..
     // checking doesn't harm anyway.
@@ -428,6 +429,18 @@ void NetData::removeNetObject(uint32 id)
         delete netobjects.find(id)->second;
         netobjects.erase(id); // TODO: Shouldn't erase call the destructor anyways??
     }
+}
+
+NetUser *NetData::getUser(uint32 uid)
+{
+    std::map<int, NetUser>::iterator i;
+    i = users.find(uid);
+    if (i == users.end()) return NULL;
+    return &(i->second);
+}
+int NetData::getUserCount()
+{
+    return users.size();
 }
 
 NetObject *NetData::eachObject()

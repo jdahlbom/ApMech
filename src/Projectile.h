@@ -2,6 +2,8 @@
 #define AP_PROJECTILE_H
 
 #include "MovingObject.hpp"
+#include "types.h"
+#include "constants.h"
 
 #include <OgreVector3.h>
 
@@ -14,6 +16,8 @@ class Projectile : public MovingObject
     ~Projectile() {}
 
     net::NetObject *create(uint32 id);
+
+    uint8 getObjectType();
 };
 
 } // namespace ap

@@ -4,7 +4,7 @@
 /**//* in order to easily unserialize stuff. Idea gotten from C++ FAQ Lite by Marshall Cline*/
 /**/class NetGameObjectInject {
 /**/    public: NetGameObjectInject() {
-/**/        netobjectprototypes().insert(make_pair(NetData::OBJECT_TYPE_NETGAMEOBJECT, new NetGameObject(0)));
+/**/        netobjectprototypes().insert(make_pair(ap::OBJECT_TYPE_NETGAMEOBJECT, new NetGameObject(0)));
 /**/    }
 /**/};
 /**/static NetGameObjectInject __netgameobjectinject;
@@ -29,7 +29,7 @@ NetGameObject::NetGameObject(int _id, int _uid)
 
 uint8 NetGameObject::getObjectType()
 {
-    return NetData::OBJECT_TYPE_NETGAMEOBJECT;
+    return ap::OBJECT_TYPE_NETGAMEOBJECT;
 }
 
 
@@ -38,7 +38,7 @@ int NetGameObject::serialize(ap::uint8 buffer[], int start, int buflength) const
     int length = 0;
 
     *(int *)(buffer+start+length) = id;                     length += 4;
-    *(enet_uint8 *)(buffer+start+length) = NetData::OBJECT_TYPE_NETGAMEOBJECT; length++;
+    *(enet_uint8 *)(buffer+start+length) = ap::OBJECT_TYPE_NETGAMEOBJECT; length++;
     *(int *)(buffer+start+length) = uid;                    length += 4;
     *(int *)(buffer+start+length) = color;                  length += 4;
     length += loc.serialize(buffer, start+length, buflength);

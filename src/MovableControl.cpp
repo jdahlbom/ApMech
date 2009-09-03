@@ -1,12 +1,7 @@
 #include "MovableControl.h"
 
-#include <OgreVector3.h>
-#include <OgreQuaternion.h>
-#include <OgreMath.h>
 #include <OgrePrerequisites.h>
-
-#include "types.h"
-#include "net/serializer.hpp"
+#include "net/serializer.h"
 
 namespace ap {
 
@@ -17,6 +12,7 @@ MovableState::MovableState(Ogre::Vector3 startingVelocity):
     velocity(startingVelocity) {}
 
 int MovableState::serialize(uint8 *buffer, int start, int buflength) const {
+    using ap::net::serialize;
     int length = 0;
     length += net::serialize(location, buffer, start+length, buflength-length);
     length += net::serialize(orientation, buffer, start+length, buflength-length);
@@ -25,6 +21,7 @@ int MovableState::serialize(uint8 *buffer, int start, int buflength) const {
 }
 
 int MovableState::unserialize(uint8 *buffer, int start) {
+    using ap::net::unserialize;
     int length = 0;
     length += net::unserialize(location, buffer, start+length);
     length += net::unserialize(orientation, buffer, start+length);
@@ -54,6 +51,7 @@ MovableControl::MovableControl():
     velocityCWiseTurning(0) {}
 
 int MovableControl::serialize(uint8 *buffer, int start, int buflength) const {
+    using ap::net::serialize;
     int length = 0;
     length += net::serialize(accelerationFwd, buffer, start+length, buflength-length);
     length += net::serialize(velocityCWiseTurning, buffer, start+length, buflength-length);
@@ -61,6 +59,7 @@ int MovableControl::serialize(uint8 *buffer, int start, int buflength) const {
 }
 
 int MovableControl::unserialize(uint8 *buffer, int start) {
+    using ap::net::unserialize;
     int length = 0;
     length += net::unserialize(accelerationFwd, buffer, start+length);
     length += net::unserialize(velocityCWiseTurning, buffer, start+length);

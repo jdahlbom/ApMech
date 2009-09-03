@@ -275,7 +275,7 @@ int drawObject(SDL_Surface *s, float x, float y, ap::net::NetObject *no)
 
 int drawTextArea(SDL_Surface *s, float x, float y, const std::string &content, TTF_Font *font)
 {
-    SDL_Color color = {255,255,255};
+    SDL_Color color = {180,180,180};
     SDL_Surface *tsurf;
     SDL_Rect dstrect;
     dstrect.w = dstrect.h = 3; dstrect.x = x; dstrect.y = y;
@@ -293,7 +293,7 @@ int drawTextArea(SDL_Surface *s, float x, float y, const std::string &content, T
 
 int drawTextArea(SDL_Surface *s, float x, float y, std::list<string> &content, TTF_Font *font)
 {
-    SDL_Color color = {255,255,255};
+    SDL_Color color = {180,180,180};
     SDL_Surface *tsurf;
     SDL_Rect dstrect;
     dstrect.w = dstrect.h = 3; dstrect.x = x; dstrect.y = y;

@@ -4,7 +4,7 @@
 /**//* in order to easily unserialize stuff. Idea gotten from C++ FAQ Lite by Marshall Cline*/
 /**/class StarFieldInject {
 /**/    public: StarFieldInject() {
-/**/        netobjectprototypes().insert(make_pair(NetData::OBJECT_TYPE_STARFIELD, new StarField(0)));
+/**/        netobjectprototypes().insert(make_pair(ap::OBJECT_TYPE_STARFIELD, new StarField(0)));
 /**/    }
 /**/};
 /**/static StarFieldInject __starfieldinject;
@@ -24,7 +24,7 @@ StarField::StarField(int _id, int _uid)
 
 uint8 StarField::getObjectType()
 {
-    return NetData::OBJECT_TYPE_STARFIELD;
+    return ap::OBJECT_TYPE_STARFIELD;
 }
 
 int StarField::serialize(ap::uint8 buffer[], int start, int buflength) const
@@ -32,7 +32,7 @@ int StarField::serialize(ap::uint8 buffer[], int start, int buflength) const
     int length = 0;
 
     *(int *)(buffer+start+length) = id;                     length += 4;
-    *(enet_uint8 *)(buffer+start+length) = NetData::OBJECT_TYPE_STARFIELD; length++;
+    *(enet_uint8 *)(buffer+start+length) = ap::OBJECT_TYPE_STARFIELD; length++;
 
     return length;
 }

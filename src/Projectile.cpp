@@ -30,4 +30,9 @@ net::NetObject *Projectile::create(uint32 id)
     return proj;
 }
 
+uint8 Projectile::getObjectType()
+{
+    return ap::OBJECT_TYPE_PROJECTILE;
+}
+
 } // namespace ap

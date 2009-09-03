@@ -4,6 +4,7 @@
 #include <cmath>     // for sin and cos, for advance
 #include "net/netdata.h"
 #include "location.h"
+#include "constants.h"
 
 #include <SDL.h>
 

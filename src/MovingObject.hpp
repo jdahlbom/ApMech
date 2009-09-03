@@ -9,12 +9,14 @@
 #include "types.h"
 
 // For MovableControl
-#include "Controller.h"
+#include "net/Controller.h"
 #include "MovableControl.h"
 #include "WeaponControl.h"
 #include "CombinedControls.h"
 
 namespace ap {
+
+using namespace ap::net;
 
 class MovingObject : public net::NetObject {
     public:
@@ -46,8 +48,8 @@ class MovingObject : public net::NetObject {
     Controller* getControlPtr() const { return combinedControls; }
     MovableState* getStatePtr() const {return state; }
 
-    void update(unsigned long msSinceLast);
-    int advance(unsigned int dt) { update(dt); return 0; }
+    void update(float sSinceLast);
+    int advance(float dt) { update(dt); return 0; }
 
     // WeaponControl methods
     void setFiring(bool firingStatus);
@@ -78,9 +80,9 @@ class MovingObject : public net::NetObject {
 
     Ogre::SceneNode     *pOwnerNode;
 
-    void updateVelocity(unsigned long msSinceLast);
-    void updateFacing(unsigned long msSinceLast);
-    void updatePosition(unsigned long msSinceLast);
+    void updateVelocity(float sSinceLast);
+    void updateFacing(float sSinceLast);
+    void updatePosition(float sSinceLast);
 };
 
 } // namespace ap

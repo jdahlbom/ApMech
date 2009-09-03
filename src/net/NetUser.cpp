@@ -1,8 +1,8 @@
 #include "NetUser.h"
 
-#include "serializer.hpp"
+#include "serializer.h"
 
-#include "../Controller.h"
+#include "Controller.h"
 
 namespace ap {
 namespace net {
@@ -25,6 +25,11 @@ NetUser::NetUser(int _uid, ENetPeer *_peer) :
 {
     controls = 0;
     changed = false;
+}
+
+ap::uint8 NetUser::getObjectType() {
+    return 59; // Should be:  ap::net::NetData::OBJECT_TYPE_NETUSER;
+                // But that makes linking problems now! (because NetData and NetUser include each other, I think)
 }
 
 void NetUser::setControlPtr(Controller *ctrl)
@@ -64,7 +69,7 @@ int NetUser::unserialize(enet_uint8 buffer[], int start)
 
         // buffer must have control set AND controls pointer must not point to null.
         if (CONTROL_IS_SET == *(buffer+start+(length++))) {
-            if (0 != controls) {
+            if (controls) {
                 length += controls->unserialize(buffer, start+length);
                 ++length; // For the CONTROL_BLOCK_FINISHED byte.
             } else {

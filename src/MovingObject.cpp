@@ -3,7 +3,7 @@
 #include <assert.h>
 #include <Ogre.h>
 
-#include "net/serializer.hpp"
+#include "net/serializer.h"
 #include "math/rotations.hpp"
 #include "types.h"
 #include "constants.h"
@@ -94,11 +94,11 @@ bool MovingObject::fireGun(uint64 tstamp) {
  */
 Ogre::Vector3 MovingObject::getFacing() const { return state->orientation * initialFacing; }
 
-void MovingObject::update(unsigned long msSinceLast)
+void MovingObject::update(float sSinceLast)
 {
-    updateFacing(msSinceLast);
-    updateVelocity(msSinceLast);
-    updatePosition(msSinceLast);
+    updateFacing(sSinceLast);
+    updateVelocity(sSinceLast);
+    updatePosition(sSinceLast);
 }
 
 void MovingObject::updateNode()
@@ -111,15 +111,15 @@ void MovingObject::updateNode()
     }
 }
 
-void MovingObject::updateVelocity(unsigned long msSinceLast)
+void MovingObject::updateVelocity(float sSinceLast)
 {
     // Friction
     Ogre::Real length = state->velocity.length();
-    if( 0.1f < length && friction != 0.0f) {
+    if((0.1f < length) && (friction != 0.0f)) {
         state->velocity = Ogre::Vector3::ZERO;
     } else if(length > 0.0f) {
         Ogre::Vector3 unitVelocity = state->velocity / length;
-        state->velocity = state->velocity - unitVelocity*(friction * msSinceLast * 0.001f);
+        state->velocity = state->velocity - unitVelocity*(friction * sSinceLast);
 
         // Friction must not be able to create a backwards motion!
         if(unitVelocity.dotProduct(state->velocity) < 0) {
@@ -127,31 +127,32 @@ void MovingObject::updateVelocity(unsigned long msSinceLast)
         }
     }
 
-    state->velocity += control->accelerationFwd * msSinceLast * 0.001f * getFacing();
+    state->velocity += control->accelerationFwd * sSinceLast * getFacing();
     Ogre::Real squaredLength = state->velocity.squaredLength();
     if ( squaredLength > maxSpeedSquared && squaredLength > 0.0f) {
         state->velocity = (state->velocity / squaredLength) * maxSpeedSquared;
     }
 }
 
-void MovingObject::updateFacing(unsigned long msSinceLast)
+void MovingObject::updateFacing(float sSinceLast)
 {
     if(control->velocityCWiseTurning != 0) {
-        Ogre::Radian turning = Ogre::Radian(control->velocityCWiseTurning * msSinceLast * 0.001f);
+        Ogre::Radian turning = Ogre::Radian(control->velocityCWiseTurning * sSinceLast);
         state->ccwRotation += turning;
         Ogre::Matrix3 rotMatrix(ap::math::getRotationMatrixAfterYaw(state->ccwRotation));
         state->orientation = Ogre::Quaternion(rotMatrix);
     }
 }
 
-void MovingObject::updatePosition(unsigned long msSinceLast)
+void MovingObject::updatePosition(float sSinceLast)
 {
-    state->location = state->location + state->velocity * msSinceLast * 0.001f;
+    state->location = state->location + state->velocity * sSinceLast;
     worldBoundaries.clamp(state->location.z, state->location.x);
 }
 
 int MovingObject::serialize(uint8 *buffer, int start, int buflength) const
 {
+    using ap::net::serialize;
     int length = 0;
     length += ap::net::serialize(id, buffer, start+length, buflength-length);
     length += ap::net::serialize(objectType, buffer, start+length, buflength+length);
@@ -163,6 +164,7 @@ int MovingObject::serialize(uint8 *buffer, int start, int buflength) const
 
 int MovingObject::unserialize(uint8 *buffer, int start)
 {
+    using ap::net::unserialize;
     int length = 0;
     length += ap::net::unserialize(id, buffer, start+length);
     length += ap::net::unserialize(objectType, buffer, start+length);

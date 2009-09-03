@@ -5,7 +5,6 @@
 #include <string>
 #include <iostream>
 
-//#include "netdata.h"
 #include "NetObject.h"
 #include "Controller.h"
 #include "../types.h"

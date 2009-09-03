@@ -6,7 +6,8 @@
 #include <iostream>
 
 #include "NetObject.h"
-#include "../Controller.h"
+#include "Controller.h"
+#include "../types.h"
 
 namespace ap {
 namespace net {
@@ -31,6 +32,7 @@ class NetUser : public NetObject
 
     NetUser();
     NetUser(int uid, ENetPeer *_peer);
+    uint8 getObjectType();
 
     void setControlPtr(Controller *ctrl);
 

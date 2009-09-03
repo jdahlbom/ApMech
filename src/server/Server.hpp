@@ -27,7 +27,7 @@ class Server
     uint32              mPort;
 
     void processEvents(ap::net::NetData *pNetData);
-    void updateObjects(uint64 dt, ap::net::NetData* pNetData) const;
+    void updateObjects(float dt, ap::net::NetData* pNetData) const;
     void fireWeapons(uint64 tstamp, ap::net::NetData *pNetData);
     void weaponFired(ap::net::NetData *pNetData, ap::MovingObject *source);
     void detectCollisions(ap::net::NetData *pNetData) const;

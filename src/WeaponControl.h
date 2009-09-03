@@ -2,11 +2,13 @@
 #define AP_WEAPON_CONTROL_H
 
 #include "types.h"
-#include "Controller.h"
+#include "net/Controller.h"
+#include "net/serializer.h"
+#include <iostream>
 
 namespace ap {
 
-class WeaponControl : public Controller {
+class WeaponControl : public net::Controller {
     public:
     static const uint8 NOT_FIRING = 0;
     static const uint8 IS_FIRING = 1;

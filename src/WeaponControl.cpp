@@ -1,8 +1,5 @@
 #include "WeaponControl.h"
 
-#include "types.h"
-#include "net/serializer.hpp"
-
 namespace ap {
 WeaponControl::WeaponControl(uint32 msFiringInterval):
     isFiring(NOT_FIRING),

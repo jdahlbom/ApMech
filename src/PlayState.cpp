@@ -88,6 +88,7 @@ void PlayState::update( unsigned long lTimeElapsed ) {
     netdata->receiveChanges();
 
   //  TODO: Should update the scenenodes, should not update the state data.
+/*JL
     ap::net::NetData::netObjectsType::iterator objectIter;
     for(objectIter=netdata->netobjects.begin(); objectIter!=netdata->netobjects.end(); ++objectIter)
     {
@@ -97,6 +98,13 @@ void PlayState::update( unsigned long lTimeElapsed ) {
 
         obj->updateNode();
     }
+*/
+    // Should be equal to above.
+    // NOTE: Aaaargh, this is not optimal! I didn't think of selecting objects to iterate through
+    // based on the object's inheritance! Could it be done? Maybe. This is OK until then.
+    while (ap::MovingObject *mop = netdata->eachObject<ap::MovingObject *>(ap::OBJECT_TYPE_MECH)) mop->updateNode();
+    while (ap::MovingObject *mop = netdata->eachObject<ap::MovingObject *>(ap::OBJECT_TYPE_PROJECTILE)) mop->updateNode();
+
 
     net::NetEvent event;
     while (netdata->pollEvent(event)) {
@@ -127,7 +135,7 @@ void PlayState::setAvatar(uint32 avatarId)
         return;
 
     // FIXME: Nasty having to cast things...
-    ap::MovingObject *pAvatarObject = dynamic_cast<ap::MovingObject *>(netdata->getNetObject(avatarId));
+    ap::MovingObject *pAvatarObject = dynamic_cast<ap::MovingObject *>(netdata->getObject(avatarId));
     if (!pAvatarObject->hasOwnerNode()) {
         createSceneNodeForMovable(avatarId);
     }
@@ -141,7 +149,7 @@ void PlayState::createSceneNodeForMovable(uint32 objectId)
 {
     // FIXME: Nasty having to cast things...
     std::cout << "[PLAYSTATE]<createSceneNodeForMovable> object id: " << objectId << " [eol] " << std::endl;
-    ap::MovingObject *pAvatarObject = dynamic_cast<ap::MovingObject *>(netdata->getNetObject(objectId));
+    ap::MovingObject *pAvatarObject = dynamic_cast<ap::MovingObject *>(netdata->getObject(objectId));
     if (!pAvatarObject->hasOwnerNode()) {
         std::stringstream ss;
         ss << "Node/NetObject/"<<objectId;
@@ -182,7 +190,7 @@ void PlayState::deleteNetObject(uint32 objectId)
     }
 
     // Actually delete the object.
-    netdata->removeNetObject(objectId);
+    netdata->removeObject(objectId);
 }
 
 void PlayState::attachCameraNode(Ogre::SceneNode *newParentNode)
