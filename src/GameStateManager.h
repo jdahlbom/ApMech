@@ -9,21 +9,19 @@
 
 #include <OgreRoot.h>
 #include <OgreConfigFile.h>
-#include <OgreRenderWindow.h>
 
 #include "ooinput/InputSystem.h"
 
 namespace ap {
 
 class GameState;
-//class IntroState;
 class PlayState;
 
 //-----------------------------------------------------------------------------
 class GameStateManager : public ooinput::KeyboardListener {
 public:
-    GameStateManager( Ogre::Root *root,
-                Ogre::RenderWindow *renderWindow,
+    GameStateManager(
+		Ogre::Root *root,
                 ooinput::InputSystem *inputSystem,
                 Ogre::SceneManager *sceneManager);
     ~GameStateManager( void );
@@ -40,9 +38,6 @@ public:
     void requestShutdown( void );
 
 private:
-    bool configureGame( void );
-    void setupResources( void );
-
     bool keyPressed( const ooinput::KeyEvent &e );
     bool keyReleased( const ooinput::KeyEvent &e );
 
@@ -50,8 +45,8 @@ private:
     bool mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id );
     bool mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id );
     */
-    Ogre::Root              *mRoot;
-    Ogre::RenderWindow      *mRenderWindow;
+
+    Ogre::Root		    *mRoot;
     Ogre::SceneManager      *mSceneMgr;
     ooinput::InputSystem    *mInputMgr;
 

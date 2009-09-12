@@ -22,6 +22,9 @@ INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT ) {
 int main( int argc, char **argv ) {
 #endif
 
+#define WIDTH 800
+#define HEIGHT 450
+
 // Taken from:
 // http://www.ogre3d.org/wiki/index.php/Using_SDL_Input
 
@@ -30,7 +33,7 @@ int main( int argc, char **argv ) {
 //Then create the window. By passing in SDL_OPENGL, we are telling SDL
 //to create an OpenGL context:
 
-    SDL_Surface *screen = SDL_SetVideoMode(1280, 720, 0, SDL_OPENGL);
+    SDL_Surface *screen = SDL_SetVideoMode(WIDTH, HEIGHT, 0, SDL_OPENGL);
 
 //SDL is now setup. Now we setup OGRE. The first step is to create
 //the OGRE Root object:
@@ -136,7 +139,7 @@ Plugin=Plugin_OctreeSceneManager.so
 
 //RenderWindow *renderWindow = root->createRenderWindow("MainRenderWindow", 640, 480, false, &misc);
     Ogre::RenderWindow *renderWindow = root->createRenderWindow("ApMech",
-                                                            1280, 720,
+                                                            WIDTH, HEIGHT,
                                                             false,
                                                             &misc);
     renderWindow->setVisible(true);
@@ -173,8 +176,7 @@ Plugin=Plugin_OctreeSceneManager.so
 
     ap::ooinput::InputSystem *inputSystem = new ap::ooinput::SDLInputSystem();
 
-    ap::GameStateManager * gameManager = new ap::GameStateManager(root, renderWindow, inputSystem, mSceneMgr);
-//    boost::shared_ptr<Ap::GameStateManager> gameManager(new Ap::GameStateManager(root, renderWindow, inputSystem, mSceneMgr));
+    ap::GameStateManager * gameManager = new ap::GameStateManager(root, inputSystem, mSceneMgr);
 
     try {
         // Initialise the game and switch to the first state
@@ -188,6 +190,7 @@ Plugin=Plugin_OctreeSceneManager.so
         #endif
     }
 
+    delete root;
     return 0;
 }
 
