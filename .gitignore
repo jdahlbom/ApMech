@@ -10,3 +10,17 @@ build/*
 # osx noise
 .DS_Store
 profile
+
+# log files
+*.log
+
+# object files
+*.o
+
+# executables
+apmech
+apserver
+jonni/cegui_sdl_test/jonnin
+
+# SConstruct database
+.sconsign.dblite
