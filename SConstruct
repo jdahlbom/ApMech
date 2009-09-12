@@ -47,45 +47,36 @@ env['CPPFLAGS'] = ["-g"]
 
 print "Building Achtung Panzer Mech for platform '" + env['PLATFORM'] +"'..."
 
-clientSources = Split("""
-src/GameState.cpp
-src/PlayState.cpp
+commonSources = Split("""
 src/MovingObject.cpp
 src/CombinedControls.cpp
 src/MovableControl.cpp
 src/WeaponControl.cpp
-src/GameStateManager.cpp
 src/RectBoundaries.cpp
 src/net/serializer.cpp
 src/net/netdata.cpp
 src/net/NetUser.cpp
 src/net/NetEvent.cpp
+src/net/NetMessage.cpp
 src/functions.cpp
-src/main.cpp
 src/Mech.cpp
 src/Projectile.cpp
-src/ooinput/InputSystem.cpp
-src/ooinput/SDLInputSystem.cpp
 src/math/rotations.cpp
 """)
 
+clientSources = Split("""
+src/GameState.cpp
+src/PlayState.cpp
+src/GameStateManager.cpp
+src/main.cpp
+src/ooinput/InputSystem.cpp
+src/ooinput/SDLInputSystem.cpp
+""")+commonSources
+
 serverSources = Split("""
 src/servermain.cpp
-src/MovingObject.cpp
-src/MovableControl.cpp
-src/CombinedControls.cpp
-src/WeaponControl.cpp
-src/Mech.cpp
-src/Projectile.cpp
-src/RectBoundaries.cpp
-src/net/serializer.cpp
-src/net/netdata.cpp
-src/net/NetUser.cpp
-src/net/NetEvent.cpp
-src/functions.cpp
-src/math/rotations.cpp
 src/server/Server.cpp
-""")
+""")+commonSources
 
 client = env.Program(target='apmech', source=clientSources)
 server = env.Program(target='apserver', source=serverSources)
