@@ -14,6 +14,7 @@
 
 #include <CEGUI.h>
 #include <CEGUI/RendererModules/OpenGLGUIRenderer/openglrenderer.h>
+#include <CEGUIDefaultResourceProvider.h>
 
  /* ***********************************************************************
      Translate a SDLKey to the proper CEGUI::Key
@@ -220,6 +221,65 @@ void inject_input_to_cegui(bool& must_quit)
     inject_time_pulse_to_cegui();   // Maybe needs to be done?!? -JL
 }
 
+void setupCEGUIResources() {
+	using namespace CEGUI;
+	DefaultResourceProvider* rp = static_cast<DefaultResourceProvider*>
+    		(System::getSingleton().getResourceProvider());
+
+	rp->setResourceGroupDirectory("schemes", "../../Media/gui/");
+	rp->setResourceGroupDirectory("imagesets", "../../Media/gui/");
+	rp->setResourceGroupDirectory("fonts", "../../Media/fonts/");
+	rp->setResourceGroupDirectory("layouts", "../../Media/gui/");
+	rp->setResourceGroupDirectory("looknfeels", "../../Media/gui/");
+
+	// This is only needed if you are using Xerces and need to
+	// specify the schemas location
+	rp->setResourceGroupDirectory("schemas", "../../Media/gui/");
+
+	// set the default resource groups to be used
+	Imageset::setDefaultResourceGroup("imagesets");
+	Font::setDefaultResourceGroup("fonts");
+	Scheme::setDefaultResourceGroup("schemes");
+	WidgetLookManager::setDefaultResourceGroup("looknfeels");
+	WindowManager::setDefaultResourceGroup("layouts");
+
+	SchemeManager *schemeManager = SchemeManager::getSingletonPtr();	
+	Scheme *scheme = schemeManager->loadScheme("TaharezLookSkin.scheme", "schemes");
+	assert( scheme );
+	
+	// Again, you only need to this one if you are using xerces and have
+	// defined a group for schemas.
+	//CEGUI::XercesParser::setSchemaDefaultResourceGroup("schemas");
+}
+
+void createGUIWindow()
+{
+    CEGUI::System *ceguiSystem= CEGUI::System::getSingletonPtr();
+    assert(ceguiSystem);
+    CEGUI::WindowManager *winMgr = CEGUI::WindowManager::getSingletonPtr();
+    assert(winMgr);
+
+    CEGUI::Window *ceguiRoot = winMgr->createWindow("DefaultGUISheet","root");
+    assert(ceguiRoot);
+    ceguiSystem->setGUISheet(ceguiRoot);
+
+    CEGUI::UVector2 buttonSize = CEGUI::UVector2(CEGUI::UDim(0.6, 0), CEGUI::UDim(0.1, 0));
+
+    setupCEGUIResources();
+
+    // Menu main page
+
+    CEGUI::Window *mStateOverlay = winMgr->createWindow(
+            (CEGUI::utf8*) "TaharezLook/Button",
+            (CEGUI::utf8*) "root/playState/Button");
+
+    mStateOverlay->setAlpha(0.5f);
+    mStateOverlay->setText("Hello World!");
+    mStateOverlay->setSize(buttonSize);
+    mStateOverlay->setPosition(CEGUI::UVector2(CEGUI::UDim(0.2, 0), CEGUI::UDim(0.6, 0)));
+
+    ceguiRoot->addChildWindow(mStateOverlay);
+}
 
 
 const int WIDTH = 800;
@@ -280,8 +340,7 @@ int main ( int argc, char** argv )
     new CEGUI::System(guirenderer);
     SDL_EnableUNICODE(1);       // Supposedly makes stuff easier with CEGUI
 
-
-
+    createGUIWindow();
 
     // load an image
     SDL_Surface* bmp = SDL_LoadBMP("cb.bmp");
