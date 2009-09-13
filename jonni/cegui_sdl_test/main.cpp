@@ -3,6 +3,10 @@
 #else
     #include <stdlib.h>
 #endif
+#include <iostream>
+#include <list>
+#include <string>
+
 #ifdef __APPLE__
 #include <SDL/SDL.h>
 #else
@@ -16,12 +20,20 @@
 #include <CEGUI/RendererModules/OpenGLGUIRenderer/openglrenderer.h>
 #include <CEGUIDefaultResourceProvider.h>
 
+/* Global cegui window pointers.
+ * Global scope makes it easier to split the 
+ * functionality to smaller functions.
+ */
+CEGUI::Window *mEditBox;
+CEGUI::Window *mButton;
+
  /* ***********************************************************************
      Translate a SDLKey to the proper CEGUI::Key
  ************************************************************************ */
- CEGUI::uint SDLKeyToCEGUI(Uint8 key)
+ CEGUI::uint SDLKeyToCEGUI(SDLKey key)
  {
      using namespace CEGUI;
+
      switch (key)
      {
      case SDLK_BACKSPACE:    return Key::Backspace;
@@ -203,14 +215,14 @@ void inject_input_to_cegui(bool& must_quit)
             inject_mouse_up_to_cegui(e.button.button);
             break;
 
-        case SDL_KEYDOWN:                         // to tell CEGUI that a key was pressed, we inject the scancode.
-            CEGUI::System::getSingleton().injectKeyDown(SDLKeyToCEGUI(e.key.keysym.scancode));
+        case SDL_KEYDOWN:                         // to tell CEGUI that a key was pressed, we inject the symbol. (NOT scancode)
+            CEGUI::System::getSingleton().injectKeyDown(SDLKeyToCEGUI(e.key.keysym.sym));
             // as for the character it's a litte more complicated. we'll use for translated unicode value.
             if (e.key.keysym.unicode != 0) CEGUI::System::getSingleton().injectChar(e.key.keysym.unicode);
             break;
 
-        case SDL_KEYUP:                           // like before we inject the scancode directly.
-            CEGUI::System::getSingleton().injectKeyUp(e.key.keysym.scancode);
+        case SDL_KEYUP:                           // see KEYDOWN
+	  CEGUI::System::getSingleton().injectKeyUp(SDLKeyToCEGUI(e.key.keysym.sym));
             break;
 
         case SDL_QUIT:
@@ -221,6 +233,14 @@ void inject_input_to_cegui(bool& must_quit)
     inject_time_pulse_to_cegui();   // Maybe needs to be done?!? -JL
 }
 
+/**
+ * Initializes all resource (file) locations.
+ * 
+ * We define the used set of CEGUI widgets with a scheme,
+ * a XML file declaring the look of every named component.
+ * The scheme file refers to other resource files, which CEGUI
+ * will try to find from their appropriate directories.
+ */
 void setupCEGUIResources() {
 	using namespace CEGUI;
 	DefaultResourceProvider* rp = static_cast<DefaultResourceProvider*>
@@ -252,6 +272,27 @@ void setupCEGUIResources() {
 	//CEGUI::XercesParser::setSchemaDefaultResourceGroup("schemas");
 }
 
+/**
+ * Example of a CEGUI event callback function.
+ *
+ * CEGUI callback functions must return bool, and must take one
+ * argument of type const CEGUI::EventArgs &arg
+ */
+bool inputEntered(const CEGUI::EventArgs &arg) {
+  mButton->setText(mEditBox->getText());
+  mEditBox->setText("");
+  return true;
+}
+
+/**
+ * Create all widgets and their initial contents.
+ *
+ * CEGUI is based on tree structure of Windows. On top of that
+ * tree is a GUISheet, named "root". Each child has a position and
+ * a size - both given as values relative to the parent elements area.
+ * Position is given as the top left corner of a child within the parent area.
+ * Size is given as the relative portions of the parent area.
+ */
 void createGUIWindow()
 {
     CEGUI::System *ceguiSystem= CEGUI::System::getSingletonPtr();
@@ -261,29 +302,51 @@ void createGUIWindow()
 
     CEGUI::Window *ceguiRoot = winMgr->createWindow("DefaultGUISheet","root");
     assert(ceguiRoot);
-    ceguiSystem->setGUISheet(ceguiRoot);
+    ceguiSystem->setGUISheet(ceguiRoot); // Top element, fills the display area
 
     CEGUI::UVector2 buttonSize = CEGUI::UVector2(CEGUI::UDim(0.6, 0), CEGUI::UDim(0.1, 0));
 
     setupCEGUIResources();
 
-    // Menu main page
+    // Create a button of type "TaharezLook/Button" and name "root/Button"
+    mButton = winMgr->createWindow(
+        reinterpret_cast<const CEGUI::utf8*>("TaharezLook/Button"),
+        reinterpret_cast<const CEGUI::utf8*>("root/Button"));
 
-    CEGUI::Window *mStateOverlay = winMgr->createWindow(
-            (CEGUI::utf8*) "TaharezLook/Button",
-            (CEGUI::utf8*) "root/playState/Button");
+    mButton->setAlpha(0.5f);
+    mButton->setText("Hello World!");
+    mButton->setSize(buttonSize);
+    mButton->setPosition(CEGUI::UVector2(CEGUI::UDim(0.2, 0), CEGUI::UDim(0.6, 0)));
 
-    mStateOverlay->setAlpha(0.5f);
-    mStateOverlay->setText("Hello World!");
-    mStateOverlay->setSize(buttonSize);
-    mStateOverlay->setPosition(CEGUI::UVector2(CEGUI::UDim(0.2, 0), CEGUI::UDim(0.6, 0)));
+    mEditBox = winMgr->createWindow(
+	reinterpret_cast<const CEGUI::utf8*>("TaharezLook/Editbox"),
+	reinterpret_cast<const CEGUI::utf8*>("root/EditBox"));
+    mEditBox->setAlpha(0.5f);
+    mEditBox->setSize(CEGUI::UVector2(CEGUI::UDim(0.6, 0), CEGUI::UDim(0.1, 0)));
+    mEditBox->setPosition(CEGUI::UVector2(CEGUI::UDim(0.2, 0), CEGUI::UDim(0.3, 0)));
 
-    ceguiRoot->addChildWindow(mStateOverlay);
+    // Add both created elements to the GUI sheet.
+    ceguiRoot->addChildWindow(mEditBox);
+    ceguiRoot->addChildWindow(mButton);
+
+    /* Add event subscribers to both elements.
+     * CEGUI input handling is based on function pointers being subscribed
+     * to certain events - events of each window type are defined in the 
+     * CEGUI API docs.  When the event occurs, all subscriber functions
+     * are called (in some order?)
+     */
+    // EventTextAccepted occurs when input box has focus, and user presses
+    // Enter, Return or Tab, and so accepts the input.
+    mEditBox->subscribeEvent(CEGUI::Editbox::EventTextAccepted,
+			     CEGUI::Event::Subscriber(&inputEntered));
+    // EventClicked occurs when button is clicked.
+    mButton->subscribeEvent(CEGUI::PushButton::EventClicked,
+			    CEGUI::Event::Subscriber(&inputEntered));
 }
 
 
 const int WIDTH = 800;
-const int HEIGHT = 600;
+const int HEIGHT = 500; // eeepc resolution is very limited :)
 const int DEPTH = 24;
 
 int main ( int argc, char** argv )
