@@ -20,6 +20,7 @@ profile
 # executables
 apmech
 apserver
+apcrude
 jonni/cegui_sdl_test/jonnin
 
 # SConstruct database

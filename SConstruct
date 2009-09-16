@@ -78,12 +78,24 @@ src/servermain.cpp
 src/server/Server.cpp
 """)+commonSources
 
+crudeSources = Split("""
+src/GameState.cpp
+src/PlayState.cpp
+src/GameStateManager.cpp
+src/SDLGameStateManager.cpp
+src/mainSDL.cpp
+src/ooinput/InputSystem.cpp
+src/ooinput/SDLInputSystem.cpp
+""")+commonSources
+
 client = env.Program(target='apmech', source=clientSources)
 server = env.Program(target='apserver', source=serverSources)
+crudeClient = env.Program(target='apcrude', source=crudeSources)
 
 # the binaries to be built by default
 Default(client)
 Default(server)
+Default(crudeClient)
 
 # make the OS X application bundle
 if platform == 'darwin':

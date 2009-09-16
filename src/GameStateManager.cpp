@@ -74,7 +74,7 @@ void GameStateManager::startGame() {
         mStates.back()->update( lTimeSinceLastFrame );
 
         // Render next frame
-        mRoot->renderOneFrame();
+	updateGraphics();
 
         SDL_GL_SwapBuffers();
 
@@ -85,6 +85,11 @@ void GameStateManager::startGame() {
             usleep( (10.0f - lTimeSinceLastFrame) * 1000.0f);
         }
     }
+}
+
+void GameStateManager::updateGraphics() {
+    // Render next frame
+    mRoot->renderOneFrame();
 }
 
 GameState* GameStateManager::getStatePtr(GAMESTATE state) {
