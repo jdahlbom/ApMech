@@ -19,7 +19,7 @@ namespace ap {
 using namespace ap::net;
 
 class MovingObject : public net::NetObject {
-    public:
+ public:
     MovingObject(float nFriction = 0.05f, Ogre::Vector3 startingSpeed = Ogre::Vector3::ZERO);
     virtual ~MovingObject();
 
@@ -39,6 +39,8 @@ class MovingObject : public net::NetObject {
     void setClockwiseTurningSpeed(float amount) { control->velocityCWiseTurning = amount; }
 
     Ogre::Vector3 getFacing() const;
+    void setFacing(Ogre::Vector3 f);
+    void setFriction(float f) { friction = f; }
 
     Ogre::SceneNode* getOwnerNode() const { return pOwnerNode; }
     void setOwnerNode(Ogre::SceneNode *node) { pOwnerNode = node; }
@@ -62,10 +64,10 @@ class MovingObject : public net::NetObject {
 
     bool testCollision(const MovingObject &other) const;
 
-    protected:
+ protected:
     uint8              objectType;
 
-    private:
+ private:
     Ogre::Vector3       initialFacing;
     MovableState        *state;
     MovableControl      *control;

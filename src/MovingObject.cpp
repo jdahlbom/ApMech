@@ -43,8 +43,7 @@ void MovingObject::setWorldBoundaries(float top, float bottom, float left, float
 
 void MovingObject::setMaxSpeed(float speed)
 {
-    if(speed < 0)
-        return;
+    if(speed < 0) return;
     maxSpeedSquared = speed * speed;
 }
 
@@ -52,6 +51,9 @@ void MovingObject::setMaxSpeed(float speed)
  * Asettaa nopeuden, tarkoitus käyttää alkunopeuden asettamiseksi.
  *
  * TODO: Tämän tulisi olla vain palvelimen tehtävissä.
+ *
+ * Kommentti: miksi? Jos client haksotetaan tekemään näin, se ainoastaan
+ * aiheuttaa sen että client näkee asiat väärin, ei muuta. -Jonni
  */
 void MovingObject::setVelocity(Ogre::Vector3 newVelocity)
 {
@@ -94,6 +96,14 @@ bool MovingObject::fireGun(uint64 tstamp) {
  */
 Ogre::Vector3 MovingObject::getFacing() const { return state->orientation * initialFacing; }
 
+void MovingObject::setFacing(Ogre::Vector3 f)
+{
+   Ogre::Vector3 axes[3];
+   state->orientation.ToAxes(axes);
+   state->orientation = axes[0].getRotationTo(f);
+}
+
+
 void MovingObject::update(float sSinceLast)
 {
     updateFacing(sSinceLast);
@@ -113,24 +123,18 @@ void MovingObject::updateNode()
 
 void MovingObject::updateVelocity(float sSinceLast)
 {
-    // Friction
+    state->velocity += control->accelerationFwd * sSinceLast * getFacing();
     Ogre::Real length = state->velocity.length();
-    if((0.1f < length) && (friction != 0.0f)) {
+
+    if ((length < friction*sSinceLast) || (length == 0.0f))
         state->velocity = Ogre::Vector3::ZERO;
-    } else if(length > 0.0f) {
+    else {
         Ogre::Vector3 unitVelocity = state->velocity / length;
         state->velocity = state->velocity - unitVelocity*(friction * sSinceLast);
 
-        // Friction must not be able to create a backwards motion!
-        if(unitVelocity.dotProduct(state->velocity) < 0) {
-            state->velocity = Ogre::Vector3::ZERO;
-        }
-    }
-
-    state->velocity += control->accelerationFwd * sSinceLast * getFacing();
-    Ogre::Real squaredLength = state->velocity.squaredLength();
-    if ( squaredLength > maxSpeedSquared && squaredLength > 0.0f) {
-        state->velocity = (state->velocity / squaredLength) * maxSpeedSquared;
+        Ogre::Real squaredLength = state->velocity.squaredLength();
+        if ((squaredLength > maxSpeedSquared) && (squaredLength > 0.0f))
+            state->velocity = (state->velocity / squaredLength) * maxSpeedSquared;
     }
 }
 

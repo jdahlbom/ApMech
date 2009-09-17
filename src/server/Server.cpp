@@ -81,7 +81,8 @@ void Server::processEvents(ap::net::NetData *pNetData) {
             int newid = pNetData->insertObject(new ap::Mech());
             ap::MovingObject *newAvatar = pNetData->getObject<ap::MovingObject *>(newid);
             newAvatar->setWorldBoundaries(1500.0f,0.0f,0.0f,1500.0f);
-            newAvatar->setMaxSpeed(25.0f);
+            newAvatar->setMaxSpeed(35.0f);
+            newAvatar->setFriction(8.0f);
             pNetData->getUser(event.uid)->setControlPtr(newAvatar->getControlPtr());
 
             pNetData->sendChanges();
@@ -121,7 +122,8 @@ void Server::weaponFired(ap::net::NetData *pNetData, ap::MovingObject *source) {
     ap::Projectile *bullet = pNetData->getObject<ap::Projectile *>(newid);
     bullet->setWorldBoundaries(1500.0f,0.0f,0.0f,1500.0f);
     bullet->setMaxSpeed(625.0f);
-    bullet->setPosition(source->getPosition() + facing*10.0f + Ogre::Vector3(0.0f, 40.0f, 0.0f));
+    bullet->setPosition(source->getPosition() + facing*10.0f + Ogre::Vector3(0.0f, 80.0f, 0.0f));
+    bullet->setFacing(facing);
 }
 
 void Server::detectCollisions(ap::net::NetData *pNetData) const {
