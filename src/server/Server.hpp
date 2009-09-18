@@ -33,6 +33,7 @@ class Server
     void detectCollisions(ap::net::NetData *pNetData) const;
     void relocateSpawnedMech(ap::Mech *mech) const;
 
+    void createNewConnection(ap::uint32 userId, ap::net::NetData *netData);
 }; // class Server
 
 } // namespace server

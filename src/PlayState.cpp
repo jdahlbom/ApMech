@@ -1,5 +1,8 @@
 #include "PlayState.h"
 
+#include <string>
+#include <list>
+
 #include <Ogre.h>
 
 #include "net/netdata.h"
@@ -19,6 +22,12 @@ PlayState::PlayState( GameStateManager *gameStateManager,
     initStateManager(gameStateManager);
 
     pRoot = Ogre::Root::getSingletonPtr();
+
+    Ogre::SceneNode *rootNode = pSceneManager->getRootSceneNode();
+    mWorldCenter = rootNode->createChildSceneNode("Node/WorldCenter");
+
+    mWorldCenter->setPosition(Ogre::Vector3(750,0,750));
+
     createGUIWindow();
 }
 
@@ -27,33 +36,13 @@ PlayState::~PlayState() {}
 void PlayState::enter( void ) {
     // Create the terrain
 
-    Ogre::Vector3 terrainCenter = Ogre::Vector3(750, 0, 750);
-
     #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-        pSceneManager->setWorldGeometry(macBundlePath() + "/Contents/Resources/Media/terrain.cfg");
+    pSceneManager->setWorldGeometry(macBundlePath() + "/Contents/Resources/Media/terrain.cfg");
     #else
-        pSceneManager->setWorldGeometry("terrain.cfg");
+    pSceneManager->setWorldGeometry("terrain.cfg");
     #endif
 
-    mCamera           = pSceneManager->createCamera( "PlayerCamera" );
-    // REQUIRES for the RenderTarget named "ApMech" to exist..
-    Ogre::RenderTarget *renderWindow = pRoot->getRenderTarget("ApMech");
-    renderWindow->addViewport( mCamera )->setBackgroundColour(Ogre::ColourValue(0.4f,0.0f,0.4f));
-
-    // Create the player character
-    Ogre::SceneNode *rootNode = pSceneManager->getRootSceneNode();
-
-    mWorldCenter = rootNode->createChildSceneNode("Node/WorldCenter");
-    mWorldCenter->setPosition(terrainCenter);
-
-    // Attach a camera to the player model
-    mCameraNode = pSceneManager->createSceneNode("Node/MyCamera");
-    mCameraNode->setPosition(Ogre::Vector3(-100, 500,0));
-    //mCameraNode->yaw(Ogre::Degree(-90));  // Camera facing: Z- --> X+
-    mCameraNode->pitch(Ogre::Degree(-75)); // Camera needs to look down.
-    mCameraNode->attachObject(mCamera);
-    mCamera->setNearClipDistance(5);
-    attachCameraNode(mWorldCenter);
+    setupCamera(pSceneManager);
 
     // Create lighting
     createLighting(pSceneManager);
@@ -73,6 +62,10 @@ void PlayState::enter( void ) {
 void PlayState::exit( void ) {
     mStateOverlay->deactivate();
     mStateOverlay->hide();
+
+    pSceneManager->destroyAllCameras(); // See Ogre API for warnings..
+    pSceneManager->destroyAllLights();
+
     std::cout << "Exiting PlayState" << std::endl;
 
     delete(netdata);
@@ -193,6 +186,27 @@ void PlayState::deleteNetObject(uint32 objectId)
     netdata->removeObject(objectId);
 }
 
+void PlayState::setupCamera(Ogre::SceneManager *sceneManager) {
+    mCamera = sceneManager->createCamera( "PlayerCamera" );    
+
+    // REQUIRES for the RenderTarget named "ApMech" to exist..
+    Ogre::RenderTarget *renderWindow = pRoot->getRenderTarget("ApMech");
+    assert(renderWindow);
+
+    Ogre::ColourValue bgColor(0.2f, 0.6f, 0.2f);
+    renderWindow->addViewport(mCamera)->setBackgroundColour(bgColor);
+
+    // Attach a camera to the player model
+    mCameraNode = sceneManager->createSceneNode("Node/MyCamera");
+    mCameraNode->setPosition(Ogre::Vector3(0, 1000, -50));
+    mCameraNode->pitch(Ogre::Degree(-85)); // Camera needs to look down.
+    mCameraNode->attachObject(mCamera);
+    mCamera->setNearClipDistance(5);
+
+    assert(mWorldCenter);
+    attachCameraNode(mWorldCenter);
+}
+
 void PlayState::attachCameraNode(Ogre::SceneNode *newParentNode)
 {
     if (0 != mCameraNodeParent) {
@@ -309,15 +323,15 @@ bool PlayState::keyReleased( const ap::ooinput::KeyEvent &e ) {
 
 void PlayState::createLighting(Ogre::SceneManager *sceneManager)
 {
-    pSceneManager->setAmbientLight(Ogre::ColourValue(1,1,1));
+    sceneManager->setAmbientLight(Ogre::ColourValue(1,1,1));
 
-    Ogre::Light *myLight= pSceneManager->createLight("MyLight");
+    Ogre::Light *myLight= sceneManager->createLight("MyLight");
     myLight->setType(Ogre::Light::LT_DIRECTIONAL);
     myLight->setDiffuseColour(Ogre::ColourValue(0.5f, 0.5f, 0.5f));
     myLight->setSpecularColour(Ogre::ColourValue(0.5f, 0.5f, 0.5f));
     myLight->setDirection(Ogre::Vector3(0,-1,1));
 
-    Ogre::Light *myLight2= pSceneManager->createLight("MyLight2");
+    Ogre::Light *myLight2= sceneManager->createLight("MyLight2");
     myLight2->setType(Ogre::Light::LT_DIRECTIONAL);
     myLight2->setDiffuseColour(Ogre::ColourValue(0.5f, 0.5f, 0.5f));
     myLight2->setSpecularColour(Ogre::ColourValue(0.5f, 0.5f, 0.5f));

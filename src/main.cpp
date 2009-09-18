@@ -22,8 +22,8 @@ INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT ) {
 int main( int argc, char **argv ) {
 #endif
 
-#define WIDTH 800
-#define HEIGHT 450
+#define WIDTH 1060
+#define HEIGHT 600
 
 // Taken from:
 // http://www.ogre3d.org/wiki/index.php/Using_SDL_Input
@@ -190,6 +190,7 @@ Plugin=Plugin_OctreeSceneManager.so
         #endif
     }
 
+    delete gameManager;
     delete root;
     return 0;
 }

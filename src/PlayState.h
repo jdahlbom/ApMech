@@ -1,6 +1,9 @@
 #ifndef AP_PLAYSTATE_H
 #define AP_PLAYSTATE_H
 
+#include <list>
+#include <string>
+
 #include <OgreCamera.h>
 #include <CEGUI.h>
 
@@ -53,6 +56,8 @@ private:
     void fireGun();
     void setAvatar(uint32 avatarId);
     void deleteNetObject(uint32 objectId);
+
+    void setupCamera(Ogre::SceneManager *sceneManager);
     void attachCameraNode(Ogre::SceneNode *newParentNode);
     void createSceneNodeForMovable(uint32 objectId);
     void createLighting(Ogre::SceneManager *sceneManager);

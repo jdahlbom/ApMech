@@ -76,22 +76,7 @@ void Server::processEvents(ap::net::NetData *pNetData) {
             cout << "[SERVER] Received a connection from "
                 << uint2ipv4(pNetData->getUser(event.uid)->peer->address.host)
                 <<", uid " << event.uid;
-            cout << ". We now have "<< pNetData->getUserCount()<<" users."<<endl;
-
-            int newid = pNetData->insertObject(new ap::Mech());
-            ap::MovingObject *newAvatar = pNetData->getObject<ap::MovingObject *>(newid);
-            newAvatar->setWorldBoundaries(1500.0f,0.0f,0.0f,1500.0f);
-            newAvatar->setMaxSpeed(35.0f);
-            newAvatar->setFriction(8.0f);
-            pNetData->getUser(event.uid)->setControlPtr(newAvatar->getControlPtr());
-
-            pNetData->sendChanges();
-            pNetData->setAvatarID(event.uid, newid);
-
-            // TODO: Remove this check when object passing is working.
-            while (NetObject *nop = pNetData->eachObject())
-                std::cout << "[SERVER]<EVENT_CONNECT> Objects, id: " << nop->id << std::endl;
-
+	    createNewConnection(event.uid, pNetData);
             break;
         }
         case ap::net::NetData::EVENT_DISCONNECT:
@@ -141,6 +126,22 @@ void Server::relocateSpawnedMech(ap::Mech *mech) const
     Ogre::Vector3 newPosition = Ogre::Vector3(rand()%1500, 0, rand()%1500);
     mech->setPosition(newPosition);
     mech->setVelocity(Ogre::Vector3::ZERO);
+}
+
+void Server::createNewConnection(ap::uint32 userId, ap::net::NetData *netData)
+{
+  ap::Mech *newAvatar = new ap::Mech();
+  int newid = netData->insertObject(newAvatar);
+
+  newAvatar->setWorldBoundaries(1500.0f,0.0f,0.0f,1500.0f);
+  newAvatar->setMaxSpeed(35.0f);
+  newAvatar->setFriction(8.0f);
+  relocateSpawnedMech(newAvatar);
+
+  netData->getUser(userId)->setControlPtr(newAvatar->getControlPtr());
+  
+  netData->sendChanges();
+  netData->setAvatarID(userId, newid);
 }
 
 } // namespace server

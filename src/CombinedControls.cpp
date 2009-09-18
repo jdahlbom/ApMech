@@ -31,7 +31,6 @@ int CombinedControls::unserialize(uint8 buffer[], int start) {
     length += moveControl->unserialize(buffer, start+length);
     length += firingControl->unserialize(buffer, start+length);
 
-    dump();
     return length;
 }
 
