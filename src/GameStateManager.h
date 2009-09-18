@@ -24,7 +24,7 @@ public:
 		Ogre::Root *root,
                 ooinput::InputSystem *inputSystem,
                 Ogre::SceneManager *sceneManager);
-    virtual ~GameStateManager( void );
+    ~GameStateManager( void );
 
     void startGame();
 
@@ -36,9 +36,6 @@ public:
     void pushState( GameState *gameState );
     void popState( void );
     void requestShutdown( void );
-
- protected:
-    virtual void updateGraphics();
 
 private:
     bool keyPressed( const ooinput::KeyEvent &e );
