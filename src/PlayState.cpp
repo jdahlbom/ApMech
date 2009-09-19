@@ -47,10 +47,6 @@ void PlayState::enter( void ) {
     // Create lighting
     createLighting(pSceneManager);
 
-    // Show GUI
-    mStateOverlay->show();
-    mStateOverlay->activate();
-
     netdata = new net::NetData(net::NetData::CLIENT);
     netdata->connect("127.0.0.1", 50740);
     netdata->me.nick = "Test";
@@ -60,9 +56,6 @@ void PlayState::enter( void ) {
 }
 
 void PlayState::exit( void ) {
-    mStateOverlay->deactivate();
-    mStateOverlay->hide();
-
     pSceneManager->destroyAllCameras(); // See Ogre API for warnings..
     pSceneManager->destroyAllLights();
 
@@ -220,27 +213,14 @@ void PlayState::attachCameraNode(Ogre::SceneNode *newParentNode)
 
 void PlayState::createGUIWindow()
 {
-    CEGUI::System *ceguiSystem= CEGUI::System::getSingletonPtr();
-    CEGUI::Window *ceguiRoot = ceguiSystem->getGUISheet();
-    CEGUI::WindowManager *winMgr = CEGUI::WindowManager::getSingletonPtr();
-    CEGUI::UVector2 buttonSize = CEGUI::UVector2(CEGUI::UDim(0.6, 0), CEGUI::UDim(0.1, 0));
+  using namespace CEGUI;
+    System *ceguiSystem= System::getSingletonPtr();
+    Window *ceguiRoot = ceguiSystem->getGUISheet();
+    WindowManager *winMgr = WindowManager::getSingletonPtr();
+    UVector2 buttonSize = UVector2(UDim(0.6, 0), UDim(0.1, 0));
 
-    // Menu main page
-
-    mStateOverlay = winMgr->createWindow(
-            (CEGUI::utf8*) "TaharezLook/Button",
-            (CEGUI::utf8*) "root/playState/Button");
-
-    mStateOverlay->setAlpha(0.5f);
-    mStateOverlay->setText("ESC to quit, WASD to move");
-    mStateOverlay->setSize(buttonSize);
-    mStateOverlay->setPosition(CEGUI::UVector2(CEGUI::UDim(0.2, 0), CEGUI::UDim(0.6, 0)));
-
-    mStateOverlay->deactivate();
-    mStateOverlay->hide();
-    ceguiRoot->addChildWindow(mStateOverlay);
-
-    std::cout << "PlayState::createGUIWindow finished" << std::endl;
+    Window *chatLayout = winMgr->loadWindowLayout("ChatBox.layout");
+    ceguiRoot->addChildWindow(chatLayout);
 }
 
 bool PlayState::keyPressed( const ap::ooinput::KeyEvent &e ) {

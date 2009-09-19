@@ -39,7 +39,6 @@ private:
     Ogre::Camera                *mCamera;
     Ogre::Viewport              *mViewport;
     Ogre::SceneManager          *pSceneManager;
-    CEGUI::Window               *mStateOverlay;
 
     Ogre::SceneNode             *mSelfNode;
     Ogre::SceneNode             *mWorldCenter;
