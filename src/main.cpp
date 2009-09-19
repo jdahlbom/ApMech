@@ -12,7 +12,11 @@
 #include "ooinput/SDLInputSystem.h"
 #include "functions.h"
 
-void setupResources(void);
+SDL_Surface* setupSDL(int width, int height);
+void setupOgre(int width, int height, Ogre::RenderWindow *&rWin, Ogre::SceneManager *&sceneMgr, Ogre::Root *&root);
+void setupOgreResources();
+void setupCEGUI(Ogre::RenderWindow *rWin, Ogre::SceneManager *sceneMgr);
+
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 #define WIN32_LEAN_AND_MEAN
@@ -22,161 +26,24 @@ INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT ) {
 int main( int argc, char **argv ) {
 #endif
 
-#define WIDTH 1060
-#define HEIGHT 600
+  //TODO: Should come from config file or other input.
+    int width = 1060;
+    int height = 600;
 
-// Taken from:
-// http://www.ogre3d.org/wiki/index.php/Using_SDL_Input
+    SDL_Surface *screen = setupSDL(width, height);
 
-    SDL_Init(SDL_INIT_VIDEO);
+    Ogre::SceneManager *sceneMgr = 0;
+    Ogre::RenderWindow *renderWindow = 0;
+    Ogre::Root *root = 0;
+    setupOgre(width, height, renderWindow, sceneMgr, root);
 
-//Then create the window. By passing in SDL_OPENGL, we are telling SDL
-//to create an OpenGL context:
-
-    SDL_Surface *screen = SDL_SetVideoMode(WIDTH, HEIGHT, 0, SDL_OPENGL);
-
-//SDL is now setup. Now we setup OGRE. The first step is to create
-//the OGRE Root object:
-
-    Ogre::Root *root;
-
-//In your OGRE configuration files, make sure you are using the OpenGL renderer.
-//This is my ogre.cfg, which tells OGRE to use OpenGL for rendering, to disable
-//full-screen mode (feel free to remove) and that we are rendering in a 640x480
-//sized window:
-
-/*
-Render System=OpenGL Rendering Subsystem
-[OpenGL Rendering Subsystem]
-Full Screen=No
-Video Mode=640 x 480
-*/
-
-
-#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-
-    Ogre::String resourcePath;
-    resourcePath = ap::macBundlePath() + "/Contents/Resources/";
-    root = new Ogre::Root(resourcePath + "plugins.cfg",
-                          resourcePath + "ogre.cfg", resourcePath + "Ogre.log");
-#else
-    root =  new Ogre::Root("plugins.cfg", "ogre.cfg", "ogre.log");
-
-#endif
-
-//The OGRE OpenGL renderer requires the appropriate plugins to be loaded. Here
-//is my plugins.cfg. Note that I have removed plugins I do not use here. You
-//might not want something so minimal in your own plugins.cfg:
-
-/*
-PluginFolder=ogre/lib
-Plugin=RenderSystem_GL.so
-Plugin=Plugin_OctreeSceneManager.so
-*/
-
-//With the Root object created, we proceed to initialise it.
-//The 'false' we pass to initialise() tells OGREe to not auto-create
-//a window (since we have already done this with SDL):
-
-    if(!root->restoreConfig()) {
-        std::cout << "Cannot restore config" << std::endl;
-        throw new Ogre::Exception(0,
-                                Ogre::String("Could not restore config!"),
-                                Ogre::String("ApMech   main func"));
-    }
-    root->initialise(false);
-
-//Nearly there! We now need to configure OGRE to blindly render to
-//the current OpenGL context (which will be the one we have just created
-//with SDL). To do this, we need to set some named parameters (OGRE's way
-//of setting configuration properties).
-
-//Windows and Linux require a slightly different set of named parameters.
-//Ideally, it would be cool if this part was portable too. But like I said,
-//this is experimental - hopefully this will be cleaned up in future
-//releases of OGRE!
-
-//Here's the code to setup the named parameters (named misc in the below
-//code) for Linux and Windows (with the appropriate code under the
-//appropriate #ifdef):
-
-    Ogre::NameValuePairList misc;
-#ifdef WINDOWS
-    SDL_SysWMinfo wmInfo;
-    SDL_VERSION(&wmInfo.version);
-    SDL_GetWMInfo(&wmInfo);
-
-    size_t winHandle = reinterpret_cast<size_t>(wmInfo.window);
-    size_t winGlContext = reinterpret_cast<size_t>(wmInfo.hglrc);
-
-    misc["externalWindowHandle"] = Ogre::StringConverter::toString(winHandle);
-    misc["externalGLContext"] = Ogre::StringConverter::toString(winGlContext);
-#else
-    misc["currentGLContext"] = Ogre::String("True");
-#endif
-
-    setupResources();
-
-//What we have done above is use the externalGLContext named parameter
-//for Windows and the currentGLContext named parameter for Linux. They
-//both do the same thing in the end - make OGRE issue OpenGL commands
-//to the OpenGL context we have created with SDL.
-
-//I will elaborate a bit more. currentGLContext makes OGRE blindly issue
-//OpenGL commands - it is assumed the OpenGL context has already been
-//setup. This is ideally what we want for all platforms, but it seems
-//the Windows OGRE OpenGL renderer does not support this. The Windows
-//OpenGL renderer has something similar though - externalGLContext and
-//externalWindowHandle. These named parameters require you to pass them
-//two Windows-specific handles - namely the Windows-specific handle to
-//the window and the Windows-specific handle to the OpenGL context.
-//Thankfully, SDL provides us with this information!
-
-//Now that we have the named parameters setup, we pass it to the
-//createRenderWindow() function, in the OGRE Root object. This will not
-//actually create a render window. Instead, it will just "link" OGRE up
-//with the window we created with SDL and make OGRE render to that:
-
-//RenderWindow *renderWindow = root->createRenderWindow("MainRenderWindow", 640, 480, false, &misc);
-    Ogre::RenderWindow *renderWindow = root->createRenderWindow("ApMech",
-                                                            WIDTH, HEIGHT,
-                                                            false,
-                                                            &misc);
-    renderWindow->setVisible(true);
-
-
-    // Create needed scenemanagers
-    Ogre::SceneManager *mSceneMgr = root->createSceneManager( Ogre::ST_EXTERIOR_CLOSE, "ST_EXTERIOR_CLOSE" );
-
-    Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-
-        /*
-     * Setup CEGUI System and default GUI sheet.
-     * States will access the System via getSystemPtr-method
-     */
-
-    CEGUI::OgreCEGUIRenderer *mRenderer = new CEGUI::OgreCEGUIRenderer( renderWindow,
-                                                                    Ogre::RENDER_QUEUE_OVERLAY,
-                                                                    false, 0, mSceneMgr);
-
-    CEGUI::System *mSystem = new CEGUI::System( mRenderer );
-    CEGUI::SchemeManager::getSingleton().loadScheme((CEGUI::utf8*)"TaharezLookSkin.scheme");
-
-    mSystem->setDefaultMouseCursor((CEGUI::utf8*)"TaharezLook", (CEGUI::utf8*)"MouseArrow");
-    mSystem->setDefaultFont((CEGUI::utf8*)"BlueHighway-12");
-
-    CEGUI::WindowManager *mWin = CEGUI::WindowManager::getSingletonPtr();
-    CEGUI::Window *ceguiRoot = mWin->createWindow("DefaultGUISheet", "root");
-
-    mSystem->setGUISheet(ceguiRoot);
-
-    /*
-     * CEGUI initialization complete
-     */
+    assert(renderWindow != 0);
+    assert(sceneMgr != 0);
+    setupCEGUI(renderWindow, sceneMgr);
 
     ap::ooinput::InputSystem *inputSystem = new ap::ooinput::SDLInputSystem();
 
-    ap::GameStateManager * gameManager = new ap::GameStateManager(root, inputSystem, mSceneMgr);
+    ap::GameStateManager * gameManager = new ap::GameStateManager(root, inputSystem, sceneMgr);
 
     try {
         // Initialise the game and switch to the first state
@@ -193,9 +60,81 @@ Plugin=Plugin_OctreeSceneManager.so
     delete gameManager;
     delete root;
     return 0;
-}
+} // main
 
-void setupResources(void)
+
+SDL_Surface* setupSDL(int width, int height) {
+    SDL_Init(SDL_INIT_VIDEO);
+    SDL_Surface *screen = SDL_SetVideoMode(width, height, 0, SDL_OPENGL);
+   
+    assert(screen);
+    return screen;
+} // setupSDL
+
+
+ void setupOgre(int width, int height, Ogre::RenderWindow *&rWin, Ogre::SceneManager *&sceneMgr, Ogre::Root *&root) {
+  // TODO: use a ogre.cfg or similar with proper information.
+
+  #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+
+    Ogre::String resourcePath;
+    resourcePath = ap::macBundlePath() + "/Contents/Resources/";
+    root = new Ogre::Root(resourcePath + "plugins.cfg",
+                          resourcePath + "ogre.cfg", resourcePath + "Ogre.log");
+  #else
+    root =  new Ogre::Root("plugins.cfg", "ogre.cfg", "ogre.log");
+
+  #endif
+    assert(root);
+
+    // TODO: Is plugins.cfg really used at the moment?
+
+    if(!root->restoreConfig()) {
+        std::cout << "Cannot restore config" << std::endl;
+        throw new Ogre::Exception(0,
+                                Ogre::String("Could not restore config!"),
+                                Ogre::String("ApMech   main func"));
+    }
+    root->initialise(false);
+
+    // Hook Ogre into SDL window.
+    Ogre::NameValuePairList misc;
+#ifdef WINDOWS
+    SDL_SysWMinfo wmInfo;
+    SDL_VERSION(&wmInfo.version);
+    SDL_GetWMInfo(&wmInfo);
+
+    size_t winHandle = reinterpret_cast<size_t>(wmInfo.window);
+    size_t winGlContext = reinterpret_cast<size_t>(wmInfo.hglrc);
+
+    misc["externalWindowHandle"] = Ogre::StringConverter::toString(winHandle);
+    misc["externalGLContext"] = Ogre::StringConverter::toString(winGlContext);
+#else
+    misc["currentGLContext"] = Ogre::String("True");
+#endif
+
+    setupOgreResources();
+
+    Ogre::RenderWindow *renderWindow = 0;
+    renderWindow = root->createRenderWindow("ApMech",
+					    width, 
+					    height,
+					    false,
+					    &misc);
+    assert(renderWindow != 0);
+
+    renderWindow->setVisible(true);
+
+    // passing out pointers. Ugly, but ach-well..
+    rWin = renderWindow;
+    // Create needed scenemanagers
+    sceneMgr = root->createSceneManager( Ogre::ST_EXTERIOR_CLOSE, "ST_EXTERIOR_CLOSE" );
+    assert(sceneMgr != 0);
+
+    Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+} // setupOgre
+
+void setupOgreResources(void)
 {
     // Load resource paths from config file
     Ogre::ConfigFile cf;
@@ -235,4 +174,33 @@ void setupResources(void)
     }
 
     Ogre::LogManager::getSingleton().logMessage( "Resource directories setup" );
-}
+} // setupOgreResources
+
+
+void setupCEGUI(Ogre::RenderWindow* renderWindow, Ogre::SceneManager *sceneMgr)
+{
+  using namespace CEGUI;
+
+  /*
+   * Setup CEGUI System and default GUI sheet.
+   * States will access the System via getSystemPtr-method
+   */
+
+  OgreCEGUIRenderer *renderer = new OgreCEGUIRenderer(renderWindow,
+						      Ogre::RENDER_QUEUE_OVERLAY,
+						      false, 0, 
+						      sceneMgr);
+
+  System *mSystem = new System( renderer );
+  SchemeManager::getSingleton().loadScheme((CEGUI::utf8*)"TaharezLookSkin.scheme");
+
+  mSystem->setDefaultMouseCursor((CEGUI::utf8*)"TaharezLook", (CEGUI::utf8*)"MouseArrow");
+  mSystem->setDefaultFont((CEGUI::utf8*)"BlueHighway-12");
+
+  WindowManager *mWin = WindowManager::getSingletonPtr();
+  Window *ceguiRoot = mWin->createWindow("DefaultGUISheet", "root");
+  
+  mSystem->setGUISheet(ceguiRoot);    
+  // Leaves renderer-pointer dangling. How to handle properly?
+
+} // setupCEGUI
