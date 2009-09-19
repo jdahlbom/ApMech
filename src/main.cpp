@@ -25,10 +25,16 @@ INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT ) {
 #else
 int main( int argc, char **argv ) {
 #endif
+    int width, height;  // 1060 x 600 ?
 
-  //TODO: Should come from config file or other input.
-    int width = 1060;
-    int height = 600;
+    // Load resolution from a config file (ogre.cfg for now - I guess it's ok)
+    Ogre::ConfigFile ogrecfg;
+    ogrecfg.load("ogre.cfg");
+    Ogre::String renderSystem = ogrecfg.getSetting("Render System");
+    Ogre::String videoMode = ogrecfg.getSetting("Video Mode", renderSystem);
+    Ogre::StringVector videoModeVector = Ogre::StringUtil::split(videoMode);
+    width = Ogre::StringConverter::parseInt(videoModeVector[0]);
+    height = Ogre::StringConverter::parseInt(videoModeVector[2]);
 
     SDL_Surface *screen = setupSDL(width, height);
 
@@ -66,7 +72,7 @@ int main( int argc, char **argv ) {
 SDL_Surface* setupSDL(int width, int height) {
     SDL_Init(SDL_INIT_VIDEO);
     SDL_Surface *screen = SDL_SetVideoMode(width, height, 0, SDL_OPENGL);
-   
+
     assert(screen);
     return screen;
 } // setupSDL
@@ -117,7 +123,7 @@ SDL_Surface* setupSDL(int width, int height) {
 
     Ogre::RenderWindow *renderWindow = 0;
     renderWindow = root->createRenderWindow("ApMech",
-					    width, 
+					    width,
 					    height,
 					    false,
 					    &misc);
@@ -188,7 +194,7 @@ void setupCEGUI(Ogre::RenderWindow* renderWindow, Ogre::SceneManager *sceneMgr)
 
   OgreCEGUIRenderer *renderer = new OgreCEGUIRenderer(renderWindow,
 						      Ogre::RENDER_QUEUE_OVERLAY,
-						      false, 0, 
+						      false, 0,
 						      sceneMgr);
 
   System *mSystem = new System( renderer );
@@ -199,8 +205,8 @@ void setupCEGUI(Ogre::RenderWindow* renderWindow, Ogre::SceneManager *sceneMgr)
 
   WindowManager *mWin = WindowManager::getSingletonPtr();
   Window *ceguiRoot = mWin->createWindow("DefaultGUISheet", "root");
-  
-  mSystem->setGUISheet(ceguiRoot);    
+
+  mSystem->setGUISheet(ceguiRoot);
   // Leaves renderer-pointer dangling. How to handle properly?
 
 } // setupCEGUI
