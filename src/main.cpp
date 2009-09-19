@@ -33,8 +33,12 @@ int main( int argc, char **argv ) {
     Ogre::String renderSystem = ogrecfg.getSetting("Render System");
     Ogre::String videoMode = ogrecfg.getSetting("Video Mode", renderSystem);
     Ogre::StringVector videoModeVector = Ogre::StringUtil::split(videoMode);
-    width = Ogre::StringConverter::parseInt(videoModeVector[0]);
-    height = Ogre::StringConverter::parseInt(videoModeVector[2]);
+    if (videoModeVector.size() == 3) {
+        width = Ogre::StringConverter::parseInt(videoModeVector[0]);
+        height = Ogre::StringConverter::parseInt(videoModeVector[2]);
+    } else {
+        width = 800; height = 600;
+    }
 
     SDL_Surface *screen = setupSDL(width, height);
 
