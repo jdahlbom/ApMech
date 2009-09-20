@@ -5,6 +5,7 @@
 #include <SDL.h>
 
 #include "GameStateManager.h"
+#include "Gui.h"
 
 #include "GameState.h"
 #include "PlayState.h"
@@ -18,10 +19,12 @@ typedef std::pair<GameStateManager::GAMESTATE, GameState *> StatePair;
 GameStateManager::GameStateManager(
 		    Ogre::Root 	 *root,
                     ooinput::InputSystem *inputSystem,
-                    Ogre::SceneManager *sceneManager) :
+                    Ogre::SceneManager *sceneManager,
+		    ap::Gui *gui) :
     mRoot(root),
     mSceneMgr(sceneManager),
-    mInputMgr( inputSystem ),
+    pGui(gui),
+    pInputMgr( inputSystem ),
     mPlayState( 0 ),
     bShutdown( false ) {}
 
@@ -36,9 +39,6 @@ GameStateManager::~GameStateManager( void )
     delete mStateMap;
     mStateMap = 0;
 
-    delete mInputMgr;
-    mInputMgr = 0;
-
     delete mPlayState;
     mPlayState  = 0;
 }
@@ -46,12 +46,12 @@ GameStateManager::~GameStateManager( void )
 void GameStateManager::startGame() {
     mStateMap = new StateMap();
     // Setup states
-    mPlayState  = new PlayState( this, mSceneMgr);
+    mPlayState  = new PlayState( this, mSceneMgr, pGui);
 
     mStateMap->insert(StatePair(PLAY, mPlayState));
 
     // Setup input
-    mInputMgr->addKeyboardListener( this );
+    pInputMgr->addKeyboardListener( this );
 
     // Change to first state
     this->changeState( mPlayState );
@@ -68,7 +68,7 @@ void GameStateManager::startGame() {
         lTimeLastFrame = lTimeCurrentFrame;
 
         // Update inputmanager
-        mInputMgr->capture();
+        pInputMgr->capture();
 
         // Update current state
         mStates.back()->update( lTimeSinceLastFrame );

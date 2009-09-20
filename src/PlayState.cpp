@@ -6,6 +6,7 @@
 #include <Ogre.h>
 
 #include "net/netdata.h"
+#include "Gui.h"
 #include "Mech.h"
 #include "Projectile.h"
 #include "types.h"
@@ -13,9 +14,11 @@
 namespace ap {
 
 PlayState::PlayState( GameStateManager *gameStateManager,
-                      Ogre::SceneManager *sceneManager) :
+                      Ogre::SceneManager *sceneManager,
+		      ap::Gui *gui) :
                       pSceneManager(sceneManager),
                       mCameraNodeParent(0),
+		      pGui(gui),
                       mAvatarId(idForNoAvatar),
                       mObject(0)
 {
@@ -213,14 +216,7 @@ void PlayState::attachCameraNode(Ogre::SceneNode *newParentNode)
 
 void PlayState::createGUIWindow()
 {
-  using namespace CEGUI;
-    System *ceguiSystem= System::getSingletonPtr();
-    Window *ceguiRoot = ceguiSystem->getGUISheet();
-    WindowManager *winMgr = WindowManager::getSingletonPtr();
-    UVector2 buttonSize = UVector2(UDim(0.6, 0), UDim(0.1, 0));
-
-    Window *chatLayout = winMgr->loadWindowLayout("ChatBox.layout");
-    ceguiRoot->addChildWindow(chatLayout);
+  pGui->setupChatBox();
 }
 
 bool PlayState::keyPressed( const ap::ooinput::KeyEvent &e ) {

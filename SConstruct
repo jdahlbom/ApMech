@@ -68,6 +68,7 @@ clientSources = Split("""
 src/GameState.cpp
 src/PlayState.cpp
 src/GameStateManager.cpp
+src/Gui.cpp
 src/main.cpp
 src/ooinput/InputSystem.cpp
 src/ooinput/SDLInputSystem.cpp

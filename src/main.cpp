@@ -8,6 +8,7 @@
 #include <boost/shared_ptr.hpp>
 
 #include "GameStateManager.h"
+#include "Gui.h"
 #include "ooinput/InputSystem.h"
 #include "ooinput/SDLInputSystem.h"
 #include "functions.h"
@@ -15,7 +16,7 @@
 SDL_Surface* setupSDL(int width, int height);
 void setupOgre(int width, int height, Ogre::RenderWindow *&rWin, Ogre::SceneManager *&sceneMgr, Ogre::Root *&root);
 void setupOgreResources();
-void setupCEGUI(Ogre::RenderWindow *rWin, Ogre::SceneManager *sceneMgr);
+CEGUI::Renderer *setupCEGUI(Ogre::RenderWindow *rWin, Ogre::SceneManager *sceneMgr);
 
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
@@ -49,11 +50,12 @@ int main( int argc, char **argv ) {
 
     assert(renderWindow != 0);
     assert(sceneMgr != 0);
-    setupCEGUI(renderWindow, sceneMgr);
+    CEGUI::Renderer *ceguiRenderer = setupCEGUI(renderWindow, sceneMgr);
+    ap::Gui *gui = new ap::Gui(ceguiRenderer);
 
     ap::ooinput::InputSystem *inputSystem = new ap::ooinput::SDLInputSystem();
 
-    ap::GameStateManager * gameManager = new ap::GameStateManager(root, inputSystem, sceneMgr);
+    ap::GameStateManager * gameManager = new ap::GameStateManager(root, inputSystem, sceneMgr, gui);
 
     try {
         // Initialise the game and switch to the first state
@@ -68,6 +70,9 @@ int main( int argc, char **argv ) {
     }
 
     delete gameManager;
+    delete inputSystem;
+    delete gui;
+    delete ceguiRenderer;
     delete root;
     return 0;
 } // main
@@ -187,30 +192,13 @@ void setupOgreResources(void)
 } // setupOgreResources
 
 
-void setupCEGUI(Ogre::RenderWindow* renderWindow, Ogre::SceneManager *sceneMgr)
+CEGUI::Renderer* setupCEGUI(Ogre::RenderWindow* renderWindow, Ogre::SceneManager *sceneMgr)
 {
-  using namespace CEGUI;
-
-  /*
-   * Setup CEGUI System and default GUI sheet.
-   * States will access the System via getSystemPtr-method
-   */
-
-  OgreCEGUIRenderer *renderer = new OgreCEGUIRenderer(renderWindow,
-						      Ogre::RENDER_QUEUE_OVERLAY,
-						      false, 0,
-						      sceneMgr);
-
-  System *mSystem = new System( renderer );
-  SchemeManager::getSingleton().loadScheme((CEGUI::utf8*)"TaharezLookSkin.scheme");
-
-  mSystem->setDefaultMouseCursor((CEGUI::utf8*)"TaharezLook", (CEGUI::utf8*)"MouseArrow");
-  mSystem->setDefaultFont((CEGUI::utf8*)"BlueHighway-12");
-
-  WindowManager *mWin = WindowManager::getSingletonPtr();
-  Window *ceguiRoot = mWin->createWindow("DefaultGUISheet", "root");
-
-  mSystem->setGUISheet(ceguiRoot);
-  // Leaves renderer-pointer dangling. How to handle properly?
-
+  CEGUI::OgreCEGUIRenderer *renderer = 
+    new CEGUI::OgreCEGUIRenderer(renderWindow,
+				 Ogre::RENDER_QUEUE_OVERLAY,
+				 false, 0,
+				 sceneMgr);
+  assert(renderer);
+  return renderer;
 } // setupCEGUI

@@ -14,6 +14,7 @@
 
 namespace ap {
 
+class Gui;
 class GameState;
 class PlayState;
 
@@ -23,7 +24,8 @@ public:
     GameStateManager(
 		Ogre::Root *root,
                 ooinput::InputSystem *inputSystem,
-                Ogre::SceneManager *sceneManager);
+                Ogre::SceneManager *sceneManager,
+		ap::Gui *gui);
     ~GameStateManager( void );
 
     void startGame();
@@ -48,9 +50,10 @@ private:
 
     Ogre::Root		    *mRoot;
     Ogre::SceneManager      *mSceneMgr;
-    ooinput::InputSystem    *mInputMgr;
+    ap::Gui                 *pGui;
+    ooinput::InputSystem    *pInputMgr;
 
-    PlayState           *mPlayState;
+    PlayState               *mPlayState;
 
     bool bShutdown;
     std::vector<GameState*> mStates;

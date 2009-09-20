@@ -5,20 +5,22 @@
 #include <string>
 
 #include <OgreCamera.h>
-#include <CEGUI.h>
 
 #include "GameState.h"
+#include "Gui.h"
 #include "MovingObject.hpp"
 #include "net/netdata.h"
 #include "types.h"
 #include "constants.h"
+
 
 namespace ap {
 
 class PlayState : public GameState {
 public:
     PlayState( GameStateManager *gameStateManager,
-                Ogre::SceneManager *pSceneManager);
+	       Ogre::SceneManager *pSceneManager,
+	       ap::Gui *gui);
     ~PlayState( void );
 
     void enter( void );
@@ -45,6 +47,7 @@ private:
     Ogre::SceneNode             *mCameraNode;
     Ogre::SceneNode             *mCameraNodeParent;
 
+    ap::Gui                     *pGui;
     ap::net::NetData            *netdata;
 
     static const int            idForNoAvatar=-1;
