@@ -103,7 +103,7 @@ void Server::fireWeapons(uint64 tstamp, ap::net::NetData *pNetData) {
 void Server::weaponFired(ap::net::NetData *pNetData, ap::MovingObject *source) {
     Ogre::Vector3 facing = source->getFacing();
 
-    int newid = pNetData->insertObject(new ap::Projectile(facing * 50.0f));
+    int newid = pNetData->insertObject(new ap::Projectile(facing * 100.0f)); //100 is velocity
     ap::Projectile *bullet = pNetData->getObject<ap::Projectile *>(newid);
     bullet->setWorldBoundaries(1500.0f,0.0f,0.0f,1500.0f);
     bullet->setMaxSpeed(625.0f);
