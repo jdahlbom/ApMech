@@ -1,10 +1,10 @@
 #ifndef AP_OOINPUT_KEYEVENT
 #define AP_OOINPUT_KEYEVENT
 
+#include "../types.h"
+
 namespace ap {
 namespace ooinput {
-
-typedef unsigned short Uint16;
 
 /*
     Key codes matching those in SDL.h
@@ -267,7 +267,7 @@ typedef enum {
 typedef struct{
     KeyEventType  type;
     KeySymbol     key;
-    Uint16        unicode;
+    ap::uint16        unicode;
 } KeyEvent;
 
 } //namespace ooinput
