@@ -3,9 +3,9 @@
 
 #include <CEGUI.h>
 
+#include "GuiChatReceiver.h"
 #include "ooinput/KeyboardListener.h"
 #include "ooinput/KeyEvent.h"
-
 #include "ooinput/MouseClickedEvent.h"
 #include "ooinput/MouseListener.h"
 #include "ooinput/MouseMovedEvent.h"
@@ -20,7 +20,7 @@ class Gui
   ~Gui();
 
   void setupChatBox();
-
+  void setChatReceiver(GuiChatReceiver *receiver);
 
   // KeyboardListener interface
   /**
@@ -44,11 +44,15 @@ class Gui
   bool mouseMoved(const ap::ooinput::MouseMovedEvent &event);
 
  private:
-  CEGUI::System *mSystem;
-  CEGUI::Window *pRoot;
-  int  keysBeingPressed;
+  CEGUI::System   *mSystem;
+  CEGUI::Window   *pRoot;
+
+  CEGUI::Window   *pChatBox;
+  int             keysBeingPressed;
+  GuiChatReceiver *pReceiver;
 
   CEGUI::uint MapKeyToCEGUI(ap::ooinput::KeySymbol key);
+  bool chatMessageSent(const CEGUI::EventArgs &args);
 };
 
 } // namespace ap

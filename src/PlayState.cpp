@@ -217,6 +217,7 @@ void PlayState::attachCameraNode(Ogre::SceneNode *newParentNode)
 void PlayState::createGUIWindow()
 {
   pGui->setupChatBox();
+  pGui->setChatReceiver(this);
 }
 
 bool PlayState::keyPressed( const ap::ooinput::KeyEvent &e ) {
@@ -325,6 +326,11 @@ bool PlayState::keyReleased( const ap::ooinput::KeyEvent &e ) {
   bool PlayState::mouseMoved(const ap::ooinput::MouseMovedEvent &e)
   {
     return pGui->mouseMoved(e);
+  }
+
+  void PlayState::sendChatMessage(const std::string &message)
+  {
+    std::cout << "Mock-sending chat message: " << message << std::endl;
   }
 
 void PlayState::createLighting(Ogre::SceneManager *sceneManager)

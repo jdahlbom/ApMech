@@ -1,11 +1,14 @@
 #include "Gui.h"
 
+#include <iostream>
+
 #include <CEGUI.h>
 
 namespace ap {
 
   Gui::Gui(CEGUI::Renderer *renderer) :
-    keysBeingPressed(0)
+    keysBeingPressed(0),
+    pReceiver(0)
   {
     assert(renderer);
     using namespace CEGUI;
@@ -31,6 +34,29 @@ namespace ap {
     CEGUI::WindowManager *winMgr = CEGUI::WindowManager::getSingletonPtr();
     CEGUI::Window *chatLayout = winMgr->loadWindowLayout("ChatBox.layout");
     pRoot->addChildWindow(chatLayout);
+
+    pChatBox = winMgr->getWindow("/ChatBox/Text");
+    pChatBox->subscribeEvent(CEGUI::Editbox::EventTextAccepted,
+			     CEGUI::Event::Subscriber(&Gui::chatMessageSent, this));
+  }
+
+  void Gui::setChatReceiver(GuiChatReceiver *receiver)
+  {
+    assert(receiver);
+    pReceiver = receiver;
+  }
+
+  bool Gui::chatMessageSent(const CEGUI::EventArgs &args)
+  {
+    if(pReceiver && pChatBox) {
+      // FIXME:      
+      //std::string message = pChatBox->getText().c_str();
+      // .. and then remove this one
+      std::cout << pChatBox->getText() << std::endl;
+
+      pChatBox->setText("");
+      //pReceiver->sendChatMessage(message);
+    }
   }
 
 
@@ -83,9 +109,9 @@ namespace ap {
     case AP_B_MIDDLE: return mSystem->injectMouseButtonDown(CEGUI::MiddleButton);
     case AP_B_WHEELDOWN: return mSystem->injectMouseWheelChange(-1);
     case AP_B_WHEELUP: return mSystem->injectMouseWheelChange(1);
-    default: return 0;
+    default: break;
     }
-
+    
     return 0;
   } // mousePressed
 

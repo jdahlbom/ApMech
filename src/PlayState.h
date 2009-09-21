@@ -9,6 +9,7 @@
 #include "GameState.h"
 
 #include "Gui.h"
+#include "GuiChatReceiver.h"
 #include "MovingObject.hpp"
 #include "net/netdata.h"
 #include "types.h"
@@ -17,7 +18,7 @@
 
 namespace ap {
 
-class PlayState : public GameState {
+  class PlayState : public GameState, public GuiChatReceiver{
 public:
     PlayState( GameStateManager *gameStateManager,
 	       Ogre::SceneManager *pSceneManager,
@@ -41,6 +42,9 @@ public:
     bool mousePressed(const ooinput::MouseClickedEvent &e);
     bool mouseReleased(const ooinput::MouseClickedEvent &e);
     bool mouseMoved(const ooinput::MouseMovedEvent &e);
+
+    // GuiChatReceiver
+    void sendChatMessage(const std::string &message);
 
 private:
     Ogre::Root                  *pRoot;
