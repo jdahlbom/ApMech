@@ -11,6 +11,8 @@
 #include <OgreConfigFile.h>
 
 #include "ooinput/InputSystem.h"
+#include "ooinput/KeyboardListener.h"
+#include "ooinput/MouseListener.h"
 
 namespace ap {
 
@@ -19,7 +21,8 @@ class GameState;
 class PlayState;
 
 //-----------------------------------------------------------------------------
-class GameStateManager : public ooinput::KeyboardListener {
+ class GameStateManager : public ap::ooinput::KeyboardListener,
+  public ap::ooinput::MouseListener {
 public:
     GameStateManager(
 		Ogre::Root *root,
@@ -39,14 +42,12 @@ public:
     void popState( void );
     void requestShutdown( void );
 
-private:
     bool keyPressed( const ooinput::KeyEvent &e );
     bool keyReleased( const ooinput::KeyEvent &e );
+    bool mousePressed( const ap::ooinput::MouseClickedEvent &e);
+    bool mouseReleased( const ap::ooinput::MouseClickedEvent &e);
+    bool mouseMoved( const ap::ooinput::MouseMovedEvent &e);
 
-    /*    bool mouseMoved( const OIS::MouseEvent &e );
-    bool mousePressed( const OIS::MouseEvent &e, OIS::MouseButtonID id );
-    bool mouseReleased( const OIS::MouseEvent &e, OIS::MouseButtonID id );
-    */
 
     Ogre::Root		    *mRoot;
     Ogre::SceneManager      *mSceneMgr;

@@ -7,6 +7,7 @@
 #include <OgreCamera.h>
 
 #include "GameState.h"
+
 #include "Gui.h"
 #include "MovingObject.hpp"
 #include "net/netdata.h"
@@ -35,6 +36,11 @@ public:
 //--KeyboardListener-(inherited through GameState)-----------------------------
     bool keyPressed( const ooinput::KeyEvent &e );
     bool keyReleased( const ooinput::KeyEvent &e );
+
+    // MouseListener
+    bool mousePressed(const ooinput::MouseClickedEvent &e);
+    bool mouseReleased(const ooinput::MouseClickedEvent &e);
+    bool mouseMoved(const ooinput::MouseMovedEvent &e);
 
 private:
     Ogre::Root                  *pRoot;

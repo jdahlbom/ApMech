@@ -52,6 +52,7 @@ void GameStateManager::startGame() {
 
     // Setup input
     pInputMgr->addKeyboardListener( this );
+    pInputMgr->addMouseListener( this );
 
     // Change to first state
     this->changeState( mPlayState );
@@ -139,6 +140,7 @@ void GameStateManager::requestShutdown( void ) {
     bShutdown = true;
 }
 
+  // Keyboard listener
   bool GameStateManager::keyPressed( const ap::ooinput::KeyEvent &e ) {
     // Call keyPressed of current state
     mStates.back()->keyPressed( e );
@@ -152,5 +154,21 @@ void GameStateManager::requestShutdown( void ) {
 
     return true;
 }
+
+  // Mouse listener
+  bool GameStateManager::mousePressed( const ap::ooinput::MouseClickedEvent &e) 
+  {
+    mStates.back()->mousePressed( e );
+  }
+  
+  bool GameStateManager::mouseReleased( const ap::ooinput::MouseClickedEvent &e) 
+  {
+    mStates.back()->mouseReleased( e );
+  }
+
+  bool GameStateManager::mouseMoved( const ap::ooinput::MouseMovedEvent &e) 
+  {
+    mStates.back()->mouseMoved( e );
+  }
 
 } // namespace ap

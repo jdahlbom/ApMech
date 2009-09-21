@@ -8,18 +8,14 @@
 #define AP_GAMESTATE_H
 
 #include "ooinput/KeyboardListener.h"
-
-#include <OgreRoot.h>
-#include <OgreRenderWindow.h>
-#include <OgreOverlayElement.h>
-#include <OgreOverlayManager.h>
-#include <OgreStringConverter.h>
+#include "ooinput/MouseListener.h"
 
 namespace ap {
 
 class GameStateManager;
 
-class GameState: public ooinput::KeyboardListener{
+ class GameState: public ooinput::KeyboardListener, 
+  public ooinput::MouseListener {
 public:
     virtual ~GameState( void ) { }
 
@@ -34,6 +30,10 @@ public:
 
     virtual bool keyPressed( const ooinput::KeyEvent &e )  = 0;
     virtual bool keyReleased( const ooinput::KeyEvent &e ) = 0;
+
+    virtual bool mousePressed(const ooinput::MouseClickedEvent &e) =0;
+    virtual bool mouseReleased(const ooinput::MouseClickedEvent &e) =0;
+    virtual bool mouseMoved(const ooinput::MouseMovedEvent &e) =0;
 
     void changeState( GameState *state );
     void pushState( GameState *state );

@@ -220,82 +220,112 @@ void PlayState::createGUIWindow()
 }
 
 bool PlayState::keyPressed( const ap::ooinput::KeyEvent &e ) {
+  if (pGui->keyPressed(e)) {
+    return 1;
+  }
     switch( e.key ) {
         case ooinput::AP_K_ESCAPE:
             std::cout << "Escape pressed, quitting." << std::endl;
             netdata->disconnect();
             this->requestShutdown();
-            break;
+            return 1;
         case ooinput::AP_K_a:
             if(mObject) {
                 mObject->addClockwiseTurningSpeed(5);
                 setNetDataDirty();
+		return 1;
             }
-            break;
+            return 0;
         case ooinput::AP_K_w:
             if(mObject) {
                 mObject->addForwardAcceleration(15);
                 setNetDataDirty();
+		return 1;
             }
-            break;
+            return 0;
         case ooinput::AP_K_s:
             if(mObject) {
                 mObject->addForwardAcceleration(-9);
                 setNetDataDirty();
+		return 1;
             }
-            break;
-        case ooinput::AP_K_d:
+            return 0;
+    case ooinput::AP_K_d:
             if(mObject) {
                 mObject->addClockwiseTurningSpeed(-5);
                 setNetDataDirty();
+		return 1;
             }
-            break;
+            return 0;
         case ooinput::AP_K_SPACE:
             mObject->setFiring(true);
             setNetDataDirty();
-            break;
+            return 1;
         default:
             std::cout << e.unicode << " pressed, not doing anything." << std::endl;
-            break;
+            return 0;
     }
-  return false;
+  return 0;
 }
 
 bool PlayState::keyReleased( const ap::ooinput::KeyEvent &e ) {
+  if(pGui->keyReleased(e)) {
+    return 1;
+  }
+
     switch( e.key ) {
         case ooinput::AP_K_a:
             if(mObject) {
                 mObject->addClockwiseTurningSpeed(-5);
                 setNetDataDirty();
+		return 1;
             }
-            break;
+	    return 0;
         case ooinput::AP_K_w:
             if(mObject) {
                 mObject->addForwardAcceleration(-15);
                 setNetDataDirty();
+		return 1;
             }
-            break;
+	    return 0;
         case ooinput::AP_K_s:
             if(mObject) {
                 mObject->addForwardAcceleration(9);
                 setNetDataDirty();
+		return 1;
             }
-            break;
+	    return 0;
         case ooinput::AP_K_d:
             if(mObject) {
                 mObject->addClockwiseTurningSpeed(5);
                 setNetDataDirty();
+		return 1;
             }
-            break;
+	    return 0;
         case ooinput::AP_K_SPACE:
             mObject->setFiring(false);
             setNetDataDirty();
+	    return 1;
         default:
-            break;
+	  return 0;
     }
-
-  return false;
+    return 0;
 }
+
+  bool PlayState::mousePressed(const ap::ooinput::MouseClickedEvent &e)
+  {
+    return pGui->mousePressed(e);
+  }
+
+  bool PlayState::mouseReleased(const ap::ooinput::MouseClickedEvent &e)
+  {
+    return pGui->mouseReleased(e);
+  }
+
+  bool PlayState::mouseMoved(const ap::ooinput::MouseMovedEvent &e)
+  {
+    return pGui->mouseMoved(e);
+  }
 
 void PlayState::createLighting(Ogre::SceneManager *sceneManager)
 {
