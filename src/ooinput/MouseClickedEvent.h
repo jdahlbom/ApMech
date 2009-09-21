@@ -16,7 +16,9 @@ typedef enum {
    AP_B_LEFT = 1,
    AP_B_MIDDLE = 2,
    AP_B_RIGHT = 3,
-   AP_B_UNDEFINED = 4
+   AP_B_WHEELDOWN = 4,
+   AP_B_WHEELUP = 5,
+   AP_B_UNDEFINED = 6
 } MouseButton;
 
 typedef struct{

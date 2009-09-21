@@ -32,10 +32,9 @@ class InputSystem
     void fireMouseReleasedEvent(const MouseClickedEvent &event);
     void fireMouseMovedEvent(const MouseMovedEvent &event);
 
+ private:
     std::list<KeyboardListener*> *mKeyListeners;
     std::list<MouseListener*> *mMouseListeners;
-    private:
-
 };
 
 } // namespace ooinput

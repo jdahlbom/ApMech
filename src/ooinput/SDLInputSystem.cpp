@@ -337,6 +337,12 @@ MouseClickedEvent SDLInputSystem::createMouseClickedEvent(SDL_MouseButtonEvent &
   case SDL_BUTTON_MIDDLE:
     mouseEvent.button=AP_B_MIDDLE;
     break;
+  case SDL_BUTTON_WHEELDOWN:
+    mouseEvent.button=AP_B_WHEELDOWN;
+    break;
+  case SDL_BUTTON_WHEELUP:
+    mouseEvent.button=AP_B_WHEELUP;
+    break;
   default:
     mouseEvent.button=AP_B_UNDEFINED;
   }
