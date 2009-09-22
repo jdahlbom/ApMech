@@ -34,7 +34,7 @@ vpath %.o $(OBJDIR)
 OBJS = InputSystem.o SDLInputSystem.o GameState.o PlayState.o GameStateManager.o main.o \
 	MovingObject.o serializer.o RectBoundaries.o netdata.o functions.o NetUser.o NetEvent.o \
 	NetMessage.o Mech.o Projectile.o rotations.o MovableControl.o WeaponControl.o \
-	CombinedControls.o
+	CombinedControls.o Gui.o
 SERVEROBJS = servermain.o Server.o MovingObject.o RectBoundaries.o serializer.o netdata.o \
 	functions.o NetUser.o NetEvent.o NetMessage.o Mech.o Projectile.o rotations.o \
 	MovableControl.o WeaponControl.o CombinedControls.o

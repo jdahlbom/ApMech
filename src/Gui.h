@@ -20,21 +20,13 @@ class Gui
   ~Gui();
 
   void setupChatBox();
+  void activateChatBox(bool activate = true);
   void setChatReceiver(GuiChatReceiver *receiver);
+  void addChatItem(const std::string &item);
 
   // KeyboardListener interface
-  /**
-   * Inform this object that key was pressed.
-   *
-   * @return   bool  True if keypress was handled in GUI, false otherwise.
-   */
-  bool keyPressed(const ap::ooinput::KeyEvent &event);
 
-  /**
-   * Inform this object that key was released.
-   *
-   * @return   bool  True if keyrelease was handled in GUI, false otherwise.
-   */
+  bool keyPressed(const ap::ooinput::KeyEvent &event);
   bool keyReleased(const ap::ooinput::KeyEvent &event);
 
   // MouseListener interface

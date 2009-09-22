@@ -8,7 +8,7 @@ namespace ap {
    */
   class GuiChatReceiver {
   public:
-    void sendChatMessage(const std::string &message);
+    virtual void sendChatMessage(const std::string &message) = 0;
   };
 } // namespace ap
 

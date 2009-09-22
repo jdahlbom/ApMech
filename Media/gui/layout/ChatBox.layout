@@ -15,7 +15,7 @@
                 <Property Name="UnifiedAreaRect" Value="{{0.02,0},{0.078,0},{0.98,0},{1,-30}}" />
             </Window>
             <Window Type="TaharezLook/Editbox" Name="/ChatBox/Text" >
-                <Property Name="Text" Value="CEGUI is not set up to receive input yet :)" />
+                <Property Name="Text" Value="" />
                 <Property Name="MaxTextLength" Value="1073741823" />
                 <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
                 <Property Name="UnifiedAreaRect" Value="{{0.02,0},{1,-30},{0.98,0},{1,-5}}" />

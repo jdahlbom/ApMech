@@ -107,7 +107,7 @@ void Server::weaponFired(ap::net::NetData *pNetData, ap::MovingObject *source) {
     ap::Projectile *bullet = pNetData->getObject<ap::Projectile *>(newid);
     bullet->setWorldBoundaries(1500.0f,0.0f,0.0f,1500.0f);
     bullet->setMaxSpeed(625.0f);
-    bullet->setPosition(source->getPosition() + facing*10.0f + Ogre::Vector3(0.0f, 80.0f, 0.0f));
+    bullet->setPosition(source->getPosition() + facing*70.0f + Ogre::Vector3(0.0f, 80.0f, 0.0f));
     bullet->setFacing(facing);
 }
 
@@ -139,7 +139,7 @@ void Server::createNewConnection(ap::uint32 userId, ap::net::NetData *netData)
   relocateSpawnedMech(newAvatar);
 
   netData->getUser(userId)->setControlPtr(newAvatar->getControlPtr());
-  
+
   netData->sendChanges();
   netData->setAvatarID(userId, newid);
 }

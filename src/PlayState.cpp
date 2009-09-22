@@ -77,22 +77,11 @@ void PlayState::update( unsigned long lTimeElapsed ) {
     netdata->receiveChanges();
 
   //  TODO: Should update the scenenodes, should not update the state data.
-/*JL
-    ap::net::NetData::netObjectsType::iterator objectIter;
-    for(objectIter=netdata->netobjects.begin(); objectIter!=netdata->netobjects.end(); ++objectIter)
-    {
-        ap::MovingObject *obj = dynamic_cast<ap::MovingObject *>(objectIter->second);
-        if( !obj )
-            continue;
 
-        obj->updateNode();
-    }
-*/
-    // Should be equal to above.
     // NOTE: Aaaargh, this is not optimal! I didn't think of selecting objects to iterate through
     // based on the object's inheritance! Could it be done? Maybe. This is OK until then.
-    while (ap::MovingObject *mop = netdata->eachObject<ap::MovingObject *>(ap::OBJECT_TYPE_MECH)) mop->updateNode();
-    while (ap::MovingObject *mop = netdata->eachObject<ap::MovingObject *>(ap::OBJECT_TYPE_PROJECTILE)) mop->updateNode();
+    while (ap::MovingObject *pMO = netdata->eachObject<ap::MovingObject *>(ap::OBJECT_TYPE_MECH)) pMO->updateNode();
+    while (ap::MovingObject *pMO = netdata->eachObject<ap::MovingObject *>(ap::OBJECT_TYPE_PROJECTILE)) pMO->updateNode();
 
 
     net::NetEvent event;
@@ -107,6 +96,9 @@ void PlayState::update( unsigned long lTimeElapsed ) {
             case net::NetData::EVENT_CREATEOBJECT:
                 std::cout << "[PLAYSTATE] Handled EVENT_CREATEOBJECT, uid: " << event.uid << std::endl;
                 createSceneNodeForMovable(event.uid);
+                break;
+            case net::NetData::EVENT_MESSAGE:
+                pGui->addChatItem(event.message->data);
                 break;
             default:
                 break;
@@ -183,7 +175,7 @@ void PlayState::deleteNetObject(uint32 objectId)
 }
 
 void PlayState::setupCamera(Ogre::SceneManager *sceneManager) {
-    mCamera = sceneManager->createCamera( "PlayerCamera" );    
+    mCamera = sceneManager->createCamera( "PlayerCamera" );
 
     // REQUIRES for the RenderTarget named "ApMech" to exist..
     Ogre::RenderTarget *renderWindow = pRoot->getRenderTarget("ApMech");
@@ -234,34 +226,37 @@ bool PlayState::keyPressed( const ap::ooinput::KeyEvent &e ) {
             if(mObject) {
                 mObject->addClockwiseTurningSpeed(5);
                 setNetDataDirty();
-		return 1;
+                return 1;
             }
             return 0;
         case ooinput::AP_K_w:
             if(mObject) {
                 mObject->addForwardAcceleration(15);
                 setNetDataDirty();
-		return 1;
+                return 1;
             }
             return 0;
         case ooinput::AP_K_s:
             if(mObject) {
                 mObject->addForwardAcceleration(-9);
                 setNetDataDirty();
-		return 1;
+                return 1;
             }
             return 0;
-    case ooinput::AP_K_d:
+        case ooinput::AP_K_d:
             if(mObject) {
                 mObject->addClockwiseTurningSpeed(-5);
                 setNetDataDirty();
-		return 1;
+                return 1;
             }
             return 0;
         case ooinput::AP_K_SPACE:
             mObject->setFiring(true);
             setNetDataDirty();
             return 1;
+        case ooinput::AP_K_t:
+            pGui->activateChatBox();
+            return true;
         default:
             std::cout << e.unicode << " pressed, not doing anything." << std::endl;
             return 0;
@@ -315,6 +310,7 @@ bool PlayState::keyReleased( const ap::ooinput::KeyEvent &e ) {
 
   bool PlayState::mousePressed(const ap::ooinput::MouseClickedEvent &e)
   {
+    pGui->activateChatBox(false);
     return pGui->mousePressed(e);
   }
 
@@ -330,7 +326,8 @@ bool PlayState::keyReleased( const ap::ooinput::KeyEvent &e ) {
 
   void PlayState::sendChatMessage(const std::string &message)
   {
-    std::cout << "Mock-sending chat message: " << message << std::endl;
+    NetMessage nmessage(message, netdata->me.uid);
+    netdata->sendMessage(nmessage);
   }
 
 void PlayState::createLighting(Ogre::SceneManager *sceneManager)

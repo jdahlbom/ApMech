@@ -33,7 +33,7 @@ bool MovableState::testCollision(const MovableState &other) const {
     // TODO: Distance is a inferior solution, func should be replaced with real collision detection
     Ogre::Real sqDistance = location.squaredDistance(other.location);
 
-    if (sqDistance < 10.0f) {
+    if (sqDistance < 8000.0f) {
         return true;
     }
     return false;

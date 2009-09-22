@@ -75,7 +75,6 @@ private:
     void createLighting(Ogre::SceneManager *sceneManager);
     void setNetDataDirty() { netdata->me.changed = true; }
     void createNewEntity(ap::MovingObject *newObject, uint32 objectId);
-
 };
 
 } // namespace ap

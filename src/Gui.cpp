@@ -12,24 +12,24 @@ namespace ap {
   {
     assert(renderer);
     using namespace CEGUI;
-    
+
     mSystem = new System( renderer );
     SchemeManager::getSingleton().loadScheme((CEGUI::utf8*)"TaharezLookSkin.scheme");
-    
+
     mSystem->setDefaultMouseCursor((CEGUI::utf8*)"TaharezLook", (CEGUI::utf8*)"MouseArrow");
     mSystem->setDefaultFont((CEGUI::utf8*)"BlueHighway-12");
-    
-    WindowManager *mWin = WindowManager::getSingletonPtr();
-    pRoot = mWin->createWindow("DefaultGUISheet", "root");    
-    mSystem->setGUISheet(pRoot);
-  } // Gui::Gui    
 
-  Gui::~Gui() 
+    WindowManager *mWin = WindowManager::getSingletonPtr();
+    pRoot = mWin->createWindow("DefaultGUISheet", "root");
+    mSystem->setGUISheet(pRoot);
+  } // Gui::Gui
+
+  Gui::~Gui()
   {
     delete(mSystem);
   }
 
-  void Gui::setupChatBox() 
+  void Gui::setupChatBox()
   {
     CEGUI::WindowManager *winMgr = CEGUI::WindowManager::getSingletonPtr();
     CEGUI::Window *chatLayout = winMgr->loadWindowLayout("ChatBox.layout");
@@ -40,27 +40,45 @@ namespace ap {
 			     CEGUI::Event::Subscriber(&Gui::chatMessageSent, this));
   }
 
+  void Gui::activateChatBox(bool activate)
+  {
+    if (activate) pChatBox->activate();
+    else pChatBox->deactivate();
+  }
+
   void Gui::setChatReceiver(GuiChatReceiver *receiver)
   {
     assert(receiver);
     pReceiver = receiver;
   }
 
+  void Gui::addChatItem(const std::string &item)
+  {
+    CEGUI::Listbox *lbox = dynamic_cast<CEGUI::Listbox *>(CEGUI::WindowManager::getSingletonPtr()->getWindow("/ChatBox/List"));
+    assert (lbox);
+    CEGUI::ListboxTextItem *ltItem = new CEGUI::ListboxTextItem(CEGUI::String(item));
+    lbox->addItem(ltItem);
+    lbox->ensureItemIsVisible(ltItem);
+  }
+
   bool Gui::chatMessageSent(const CEGUI::EventArgs &args)
   {
     if(pReceiver && pChatBox) {
-      // FIXME:      
-      //std::string message = pChatBox->getText().c_str();
-      // .. and then remove this one
-      std::cout << pChatBox->getText() << std::endl;
-
+      std::string message(pChatBox->getText().c_str());
       pChatBox->setText("");
-      //pReceiver->sendChatMessage(message);
+      pReceiver->sendChatMessage(message);
+      pChatBox->deactivate();
     }
   }
 
 
-  // Keyboard listener
+  // *****************************************************  Keyboard listener
+
+  /**
+   * Inform this object that key was pressed.
+   *
+   * @return   bool  True if keypress was handled in GUI, false otherwise.
+   */
   bool Gui::keyPressed(const ap::ooinput::KeyEvent &event)
   {
     assert(mSystem);
@@ -70,7 +88,7 @@ namespace ap {
     if (event.unicode != 0) {
       charProcessed = mSystem->injectChar(event.unicode);
     }
-    
+
     if (keysymProcessed || charProcessed) {
       ++keysBeingPressed;
       return 1;
@@ -78,6 +96,11 @@ namespace ap {
     return 0;
   } // keyPressed
 
+  /**
+   * Inform this object that key was released.
+   *
+   * @return   bool  True if keyrelease was handled in GUI, false otherwise.
+   */
   bool Gui::keyReleased(const ap::ooinput::KeyEvent &event)
   {
     assert(mSystem);
@@ -99,7 +122,7 @@ namespace ap {
 
 
   // MouseListener
-  bool Gui::mousePressed(const ap::ooinput::MouseClickedEvent &event) 
+  bool Gui::mousePressed(const ap::ooinput::MouseClickedEvent &event)
   {
     using namespace ap::ooinput;
 
@@ -111,7 +134,7 @@ namespace ap {
     case AP_B_WHEELUP: return mSystem->injectMouseWheelChange(1);
     default: break;
     }
-    
+
     return 0;
   } // mousePressed
 
