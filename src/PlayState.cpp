@@ -15,12 +15,16 @@ namespace ap {
 
 PlayState::PlayState( GameStateManager *gameStateManager,
                       Ogre::SceneManager *sceneManager,
-		      ap::Gui *gui) :
+		      ap::Gui *gui,
+		      const std::string &_ipAddress,
+		      const std::string &_playerName) :
                       pSceneManager(sceneManager),
                       mCameraNodeParent(0),
 		      pGui(gui),
                       mAvatarId(idForNoAvatar),
-                      mObject(0)
+                      mObject(0),
+		      ipAddress(_ipAddress),
+		      playerName(_playerName)
 {
     initStateManager(gameStateManager);
 
@@ -51,8 +55,8 @@ void PlayState::enter( void ) {
     createLighting(pSceneManager);
 
     netdata = new net::NetData(net::NetData::CLIENT);
-    netdata->connect("127.0.0.1", 50740);
-    netdata->me.nick = "Test";
+    netdata->connect(ipAddress, 50740);
+    netdata->me.nick = playerName;
     netdata->me.changed = true;         // Mark this info for transmission
 
     std::cout << "Entering PlayState" << std::endl;

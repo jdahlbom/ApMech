@@ -20,6 +20,7 @@ public:
     virtual ~GameState( void ) { }
 
     void initStateManager(GameStateManager *gameStateManager);
+    GameStateManager *getStateManager();
 
     virtual void enter( void )  = 0;
     virtual void exit( void )   = 0;
@@ -35,9 +36,6 @@ public:
     virtual bool mouseReleased(const ooinput::MouseClickedEvent &e) =0;
     virtual bool mouseMoved(const ooinput::MouseMovedEvent &e) =0;
 
-    void changeState( GameState *state );
-    void pushState( GameState *state );
-    void popState( void );
     void requestShutdown( void );
 
 protected:

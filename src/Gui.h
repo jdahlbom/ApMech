@@ -4,6 +4,7 @@
 #include <CEGUI.h>
 
 #include "GuiChatReceiver.h"
+#include "GuiLoginReceiver.h"
 #include "ooinput/KeyboardListener.h"
 #include "ooinput/KeyEvent.h"
 #include "ooinput/MouseClickedEvent.h"
@@ -20,9 +21,16 @@ class Gui
   ~Gui();
 
   void setupChatBox();
+  void setupLoginWindow();
+
+  void exitLoginWindow();
+
   void activateChatBox(bool activate = true);
+
   void setChatReceiver(GuiChatReceiver *receiver);
   void addChatItem(const std::string &item);
+
+  void setLoginReceiver(GuiLoginReceiver *receiver);
 
   // KeyboardListener interface
 
@@ -36,15 +44,27 @@ class Gui
   bool mouseMoved(const ap::ooinput::MouseMovedEvent &event);
 
  private:
-  CEGUI::System   *mSystem;
-  CEGUI::Window   *pRoot;
+  CEGUI::System     *mSystem;
+  CEGUI::Window     *pRoot;
 
-  CEGUI::Window   *pChatBox;
-  int             keysBeingPressed;
-  GuiChatReceiver *pReceiver;
+  CEGUI::Window     *pChatBox;
+  int               keysBeingPressed;
+  GuiChatReceiver   *pChatReceiver;
+  GuiLoginReceiver  *pLoginReceiver;
 
   CEGUI::uint MapKeyToCEGUI(ap::ooinput::KeySymbol key);
   bool chatMessageSent(const CEGUI::EventArgs &args);
+  bool attemptLogin(const CEGUI::EventArgs &args);
+  bool requestQuit(const CEGUI::EventArgs &args);
+
+  static const std::string loginLayoutFile;
+  static const std::string loginRootName;
+  static const std::string loginNameField;
+  static const std::string loginAddressField;
+
+  static const std::string chatLayoutFile;
+  static const std::string chatRootName;
+
 };
 
 } // namespace ap
