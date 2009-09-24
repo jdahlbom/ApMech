@@ -1,8 +1,8 @@
 #ifndef AP_LOGINSTATE_H
 #define AP_LOGINSTATE_H
 
+#include <fstream>
 #include <string>
-
 #include <Ogre.h>
 
 #include "GameState.h"

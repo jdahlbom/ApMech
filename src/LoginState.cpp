@@ -35,7 +35,17 @@ void LoginState::exit( void ) {
 void LoginState::createGUIWindow()
 {
   assert(pGui);
-  pGui->setupLoginWindow();
+
+    // Load the previous login settings from login.cfg, if one exists
+  std::string ipAddress(""), playerName("nameless newbie");
+  Ogre::ConfigFile loginConfig;
+  try {
+      loginConfig.load("login.cfg");
+      ipAddress = loginConfig.getSetting("IPaddress");
+      playerName = loginConfig.getSetting("PlayerName");
+  } catch (Ogre::FileNotFoundException e) {}
+
+  pGui->setupLoginWindow(ipAddress, playerName);
   pGui->setLoginReceiver(this);
   setupOgreViewport(pSceneManager);
 }
@@ -63,7 +73,7 @@ void LoginState::terminateGUIWindow()
   void LoginState::removeCamera(Ogre::SceneManager *sceneMgr)
   {
     sceneMgr->destroyCamera(mCamera);
-    
+
     Ogre::Root *pRoot = Ogre::Root::getSingletonPtr();
     pRoot->getRenderTarget("ApMech")->removeAllViewports();
   }
@@ -105,6 +115,12 @@ bool LoginState::keyReleased( const ap::ooinput::KeyEvent &e ) {
 
 void LoginState::attemptLogin(const std::string &ipAddress, const std::string &playerName)
   {
+    // First, save our login settings, overwriting the previous file
+    std::ofstream lastLoginSettings("login.cfg", std::ios::trunc);
+    lastLoginSettings << "IPaddress="<<ipAddress<<std::endl;
+    lastLoginSettings << "PlayerName="<<playerName<<std::endl;
+    lastLoginSettings.close();
+    // Then, login.
     getStateManager()->loginToGame(ipAddress, playerName);
   }
 

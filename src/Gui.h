@@ -21,7 +21,7 @@ class Gui
   ~Gui();
 
   void setupChatBox();
-  void setupLoginWindow();
+  void setupLoginWindow(const std::string &ipAddress = "", const std::string &playerName = "");
 
   void exitLoginWindow();
 

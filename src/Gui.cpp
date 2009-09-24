@@ -49,7 +49,7 @@ namespace ap {
 			     CEGUI::Event::Subscriber(&Gui::chatMessageSent, this));
   }
 
-  void Gui::setupLoginWindow()
+  void Gui::setupLoginWindow(const std::string &ipAddress, const std::string &playerName)
   {
     CEGUI::WindowManager *winMgr = CEGUI::WindowManager::getSingletonPtr();
 
@@ -69,7 +69,10 @@ namespace ap {
 
     CEGUI::Window *quitButton = winMgr->getWindow("/Login/QuitButton");
     quitButton->subscribeEvent(CEGUI::PushButton::EventClicked,
-			       CEGUI::Event::Subscriber(&Gui::requestQuit, this));    
+			       CEGUI::Event::Subscriber(&Gui::requestQuit, this));
+
+    winMgr->getWindow("/Login/Address")->setText(ipAddress);
+    winMgr->getWindow("/Login/Name")->setText(playerName);
   }
 
   void Gui::exitLoginWindow()
@@ -77,9 +80,9 @@ namespace ap {
     CEGUI::WindowManager *winMgr = CEGUI::WindowManager::getSingletonPtr();
 
     if ( winMgr->isWindowPresent(loginRootName) ) {
-     CEGUI::Window *loginRoot = winMgr->getWindow(loginRootName); 
+     CEGUI::Window *loginRoot = winMgr->getWindow(loginRootName);
      loginRoot->hide();
-    }    
+    }
   }
 
   void Gui::activateChatBox(bool activate)
@@ -129,7 +132,7 @@ namespace ap {
     if (address->getText() == "" || address->getText() == "0.0.0.0") {
 	address->setText("0.0.0.0");
 	return true;
-      } 
+      }
     else if (name->getText() == "") {
       name->setText("Nameless newbie");
       return true;
