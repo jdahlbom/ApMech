@@ -19,6 +19,7 @@ namespace ap {
 class Gui;
 class GameState;
 class PlayState;
+class LoginState;
 
 //-----------------------------------------------------------------------------
  class GameStateManager : public ap::ooinput::KeyboardListener,
@@ -32,33 +33,32 @@ public:
     ~GameStateManager( void );
 
     void startGame();
-
-    //    enum GAMESTATE {INTRO, PLAY};
-    enum GAMESTATE {PLAY, LOGIN};
-    GameState *getStatePtr(GAMESTATE state);
-
-    void changeState( GameState *gameState );
-    void pushState( GameState *gameState );
-    void popState( void );
     void requestShutdown( void );
+    void loginToGame(const std::string &ipAddress, const std::string &playerName);
 
+    // input listeners
     bool keyPressed( const ooinput::KeyEvent &e );
     bool keyReleased( const ooinput::KeyEvent &e );
     bool mousePressed( const ap::ooinput::MouseClickedEvent &e);
     bool mouseReleased( const ap::ooinput::MouseClickedEvent &e);
     bool mouseMoved( const ap::ooinput::MouseMovedEvent &e);
 
-
+ private:
     Ogre::Root		    *mRoot;
     Ogre::SceneManager      *mSceneMgr;
     ap::Gui                 *pGui;
     ooinput::InputSystem    *pInputMgr;
 
+    LoginState              *mLoginState;
     PlayState               *mPlayState;
 
-    bool bShutdown;
+    bool                    bShutdown;
     std::vector<GameState*> mStates;
-    std::map<GAMESTATE, GameState*> *mStateMap;
+
+    // state management
+    void changeState( GameState *gameState );
+    void pushState( GameState *gameState );
+    void popState( void );
 };
 
 } // namespace ap

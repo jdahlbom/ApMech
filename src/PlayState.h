@@ -22,7 +22,9 @@ namespace ap {
 public:
     PlayState( GameStateManager *gameStateManager,
 	       Ogre::SceneManager *pSceneManager,
-	       ap::Gui *gui);
+	       ap::Gui *gui,
+	       const std::string &ipAddress,
+	       const std::string &playerName);
     ~PlayState( void );
 
     void enter( void );
@@ -31,8 +33,6 @@ public:
     void pause( void );
     void resume( void );
     void update( unsigned long lTimeElapsed );
-
-    void createGUIWindow();
 
 //--KeyboardListener-(inherited through GameState)-----------------------------
     bool keyPressed( const ooinput::KeyEvent &e );
@@ -60,6 +60,9 @@ private:
     ap::Gui                     *pGui;
     ap::net::NetData            *netdata;
 
+    std::string                 ipAddress;
+    std::string                 playerName;
+
     static const int            idForNoAvatar=-1;
     int                         mAvatarId;
 
@@ -75,6 +78,8 @@ private:
     void createLighting(Ogre::SceneManager *sceneManager);
     void setNetDataDirty() { netdata->me.changed = true; }
     void createNewEntity(ap::MovingObject *newObject, uint32 objectId);
+    void createGUIWindow();
+
 };
 
 } // namespace ap

@@ -1,5 +1,5 @@
 <GUILayout >
-    <Window Type="DefaultWindow" Name="Root" >
+    <Window Type="DefaultWindow" Name="ChatBoxRoot" >
         <Property Name="InheritsAlpha" Value="False" />
         <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
         <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
@@ -10,6 +10,7 @@
             <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
             <Property Name="TitlebarEnabled" Value="True" />
             <Property Name="UnifiedAreaRect" Value="{{0.01,0},{0,40},{0.6,0},{0.4,0}}" />
+
             <Window Type="TaharezLook/Listbox" Name="/ChatBox/List" >
                 <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
                 <Property Name="UnifiedAreaRect" Value="{{0.02,0},{0.078,0},{0.98,0},{1,-30}}" />

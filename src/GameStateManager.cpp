@@ -1,20 +1,19 @@
+#include "GameStateManager.h"
+
+#include <string>
+
 #include <Ogre.h>
-
 #include <OgreWindowEventUtilities.h>
-
 #include <SDL.h>
 
-#include "GameStateManager.h"
 #include "Gui.h"
 
 #include "GameState.h"
+#include "LoginState.h"
 #include "PlayState.h"
 #include "functions.h"
 
 namespace ap {
-
-typedef std::map<GameStateManager::GAMESTATE, GameState *> StateMap;
-typedef std::pair<GameStateManager::GAMESTATE, GameState *> StatePair;
 
 GameStateManager::GameStateManager(
 		    Ogre::Root 	 *root,
@@ -25,7 +24,8 @@ GameStateManager::GameStateManager(
     mSceneMgr(sceneManager),
     pGui(gui),
     pInputMgr( inputSystem ),
-    mPlayState( 0 ),
+    mLoginState(0),
+    mPlayState(0),
     bShutdown( false ) {}
 
 GameStateManager::~GameStateManager( void )
@@ -36,26 +36,25 @@ GameStateManager::~GameStateManager( void )
         mStates.pop_back();
     }
 
-    delete mStateMap;
-    mStateMap = 0;
+    delete mLoginState;
+    mLoginState = 0;
 
     delete mPlayState;
     mPlayState  = 0;
 }
 
 void GameStateManager::startGame() {
-    mStateMap = new StateMap();
-    // Setup states
-    mPlayState  = new PlayState( this, mSceneMgr, pGui);
 
-    mStateMap->insert(StatePair(PLAY, mPlayState));
+    // Setup states
+  mLoginState  = new LoginState( this, mSceneMgr, pGui);
+
 
     // Setup input
     pInputMgr->addKeyboardListener( this );
     pInputMgr->addMouseListener( this );
 
     // Change to first state
-    this->changeState( mPlayState );
+    this->changeState( mLoginState );
 
     // lTimeLastFrame remembers the last time that it was checked
     // We use it to calculate the time since last frame
@@ -86,18 +85,6 @@ void GameStateManager::startGame() {
             usleep( (10.0f - lTimeSinceLastFrame) * 1000.0f);
         }
     }
-}
-
-GameState* GameStateManager::getStatePtr(GAMESTATE state) {
-    StateMap::iterator end = mStateMap->end();
-    StateMap::iterator currentIterator = mStateMap->find(state);
-
-    if( currentIterator == end ) {
-      throw std::runtime_error("Managed to ask for a non-existent state object, aborting!");
-    }
-
-    return dynamic_cast<GameState*>(currentIterator->second);
-
 }
 
 void GameStateManager::changeState( GameState *gameState ) {
@@ -134,6 +121,13 @@ void GameStateManager::popState() {
     if( !mStates.empty() ) {
         mStates.back()->resume();
     }
+}
+
+void GameStateManager::loginToGame(const std::string &ipAddress, const std::string &playerName)
+{
+  // FIXME: Kinda ugly initializing playstate here.
+  mPlayState = new PlayState(this, mSceneMgr, pGui, ipAddress, playerName);
+  changeState(mPlayState);
 }
 
 void GameStateManager::requestShutdown( void ) {

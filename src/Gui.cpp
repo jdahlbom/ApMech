@@ -6,9 +6,18 @@
 
 namespace ap {
 
+  const std::string Gui::loginLayoutFile = "Login.layout";
+  const std::string Gui::loginRootName = "LoginRoot";
+  const std::string Gui::loginNameField = "/Login/Name";
+  const std::string Gui::loginAddressField = "/Login/Address";
+
+  const std::string Gui::chatLayoutFile = "ChatBox.layout";
+  const std::string Gui::chatRootName = "ChatBoxRoot";
+
   Gui::Gui(CEGUI::Renderer *renderer) :
     keysBeingPressed(0),
-    pReceiver(0)
+    pChatReceiver(0),
+    pLoginReceiver(0)
   {
     assert(renderer);
     using namespace CEGUI;
@@ -32,7 +41,7 @@ namespace ap {
   void Gui::setupChatBox()
   {
     CEGUI::WindowManager *winMgr = CEGUI::WindowManager::getSingletonPtr();
-    CEGUI::Window *chatLayout = winMgr->loadWindowLayout("ChatBox.layout");
+    CEGUI::Window *chatLayout = winMgr->loadWindowLayout(chatLayoutFile);
     pRoot->addChildWindow(chatLayout);
 
     pChatBox = winMgr->getWindow("/ChatBox/Text");
@@ -40,8 +49,42 @@ namespace ap {
 			     CEGUI::Event::Subscriber(&Gui::chatMessageSent, this));
   }
 
+  void Gui::setupLoginWindow()
+  {
+    CEGUI::WindowManager *winMgr = CEGUI::WindowManager::getSingletonPtr();
+
+    if ( winMgr->isWindowPresent(loginRootName) ) {
+      CEGUI::Window *loginRoot = winMgr->getWindow(loginRootName);
+      loginRoot->show();
+      loginRoot->activate();
+      return;
+    }
+
+    CEGUI::Window *loginLayout = winMgr->loadWindowLayout(loginLayoutFile);
+    pRoot->addChildWindow(loginLayout);
+
+    CEGUI::Window *loginButton = winMgr->getWindow("/Login/LoginButton");
+    loginButton->subscribeEvent(CEGUI::PushButton::EventClicked,
+				CEGUI::Event::Subscriber(&Gui::attemptLogin, this));
+
+    CEGUI::Window *quitButton = winMgr->getWindow("/Login/QuitButton");
+    quitButton->subscribeEvent(CEGUI::PushButton::EventClicked,
+			       CEGUI::Event::Subscriber(&Gui::requestQuit, this));    
+  }
+
+  void Gui::exitLoginWindow()
+  {
+    CEGUI::WindowManager *winMgr = CEGUI::WindowManager::getSingletonPtr();
+
+    if ( winMgr->isWindowPresent(loginRootName) ) {
+     CEGUI::Window *loginRoot = winMgr->getWindow(loginRootName); 
+     loginRoot->hide();
+    }    
+  }
+
   void Gui::activateChatBox(bool activate)
   {
+    assert(pChatBox);
     if (activate) pChatBox->activate();
     else pChatBox->deactivate();
   }
@@ -49,7 +92,13 @@ namespace ap {
   void Gui::setChatReceiver(GuiChatReceiver *receiver)
   {
     assert(receiver);
-    pReceiver = receiver;
+    pChatReceiver = receiver;
+  }
+
+  void Gui::setLoginReceiver(GuiLoginReceiver *receiver)
+  {
+    assert(receiver);
+    pLoginReceiver = receiver;
   }
 
   void Gui::addChatItem(const std::string &item)
@@ -63,14 +112,40 @@ namespace ap {
 
   bool Gui::chatMessageSent(const CEGUI::EventArgs &args)
   {
-    if(pReceiver && pChatBox) {
+    if(pChatReceiver && pChatBox) {
       std::string message(pChatBox->getText().c_str());
       pChatBox->setText("");
-      pReceiver->sendChatMessage(message);
+      pChatReceiver->sendChatMessage(message);
       pChatBox->deactivate();
     }
   }
 
+  bool Gui::attemptLogin(const CEGUI::EventArgs &args)
+  {
+    assert(pLoginReceiver);
+    CEGUI::WindowManager *winMgr = CEGUI::WindowManager::getSingletonPtr();
+    CEGUI::Window *address = winMgr->getWindow(loginAddressField);
+    CEGUI::Window *name = winMgr->getWindow(loginNameField);
+    if (address->getText() == "" || address->getText() == "0.0.0.0") {
+	address->setText("0.0.0.0");
+	return true;
+      } 
+    else if (name->getText() == "") {
+      name->setText("Nameless newbie");
+      return true;
+      }
+    else {
+      pLoginReceiver->attemptLogin(std::string(address->getText().c_str()),
+				   std::string(name->getText().c_str()));
+    }
+    return true;
+  }
+
+  bool Gui::requestQuit(const CEGUI::EventArgs &args)
+  {
+    assert(pLoginReceiver);
+    pLoginReceiver->requestQuit();
+  }
 
   // *****************************************************  Keyboard listener
 
