@@ -170,6 +170,22 @@ void PlayState::deleteNetObject(uint32 objectId)
         netdata->me.setControlPtr(0);
     }
 
+    // TODO: Jukka, check this. Should destroy all entities in a scenenode and finally the node
+    // itself. Every ap::MovingObject has its own scenenode, always, and these nodes have
+    // nothing else, right? RIGHT?
+    ap::MovingObject *pMO = dynamic_cast<ap::MovingObject *>(netdata->getObject(objectId));
+    if (NULL != pMO) if (pMO->hasOwnerNode())
+    {
+        while (pMO->getOwnerNode()->numAttachedObjects() > 0)
+        {
+            Ogre::Entity *pEntity = dynamic_cast<Ogre::Entity *>(pMO->getOwnerNode()->getAttachedObject(0));
+            assert(pEntity);
+            pSceneManager->destroyEntity(pEntity);
+            std::cout << "Destroyed an entity!"<<std::endl;
+        }
+        pSceneManager->destroySceneNode(pMO->getOwnerNode());
+    }
+
     // Actually delete the object.
     netdata->removeObject(objectId);
 }
