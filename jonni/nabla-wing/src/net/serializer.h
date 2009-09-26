@@ -8,6 +8,7 @@
 #include <Ogre.h>
 #endif
 
+#include <string>
 #include "../types.h"
 
 namespace ap {
@@ -24,11 +25,14 @@ int serialize(float f, uint8 *buffer, int start, int buflength);
 int serialize(int32 i, uint8 *buffer, int start, int buflength);
 int serialize(uint8 i, uint8 *buffer, int start, int buflength);
 int serialize(uint32 i, uint8 *buffer, int start, int buflength);
-
+int serialize(std::string s, uint8 *buffer, int start, int buflength);
+   
 int unserialize(float &f, uint8 *buffer, int start);
 int unserialize(int32 &i, uint8 *buffer, int start);
 int unserialize(uint8 &i, uint8 *buffer, int start);
 int unserialize(uint32 &i, uint8 *buffer, int start);
+int unserialize(std::string &s, uint8 *buffer, int start);
+
 } // namespace net
 } // namespace ap
 
