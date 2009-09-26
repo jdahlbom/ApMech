@@ -83,6 +83,12 @@ int serialize(uint32 i, uint8 *buffer, int start, int buflength) {
     return 4; // Size of int is 4 bytes
 }
 
+// FIXME! No buffer overflow checking
+int serialize(std::string s, uint8 *buffer, int start, int buflength) {
+    strcpy( (char *)buffer + start, s.c_str());
+    return s.length()+1;
+}
+   
 
 // FIXME! Floating point numbers will really cause interoperability issues between platforms!
 // http://www.parashift.com/c++-faq-lite/serialization.html#faq-36.6
@@ -109,5 +115,11 @@ int unserialize(uint32 &i, uint8 *buffer, int start) {
     return 4; // 4 is the length of float in bytes
 }
 
+int unserialize(std::string &s, uint8 *buffer, int start) {
+    s.assign((char *)buffer+start);
+    return s.length()+1;
+}
+   
+   
 } // namespace net
 } // namespace ap
