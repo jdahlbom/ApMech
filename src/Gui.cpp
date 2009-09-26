@@ -4,6 +4,8 @@
 
 #include <CEGUI.h>
 
+#include "functions.h"
+
 namespace ap {
 
   const std::string Gui::loginLayoutFile = "Login.layout";
@@ -14,10 +16,15 @@ namespace ap {
   const std::string Gui::chatLayoutFile = "ChatBox.layout";
   const std::string Gui::chatRootName = "ChatBoxRoot";
 
+  const std::string Gui::scoreWindowName = "ScoreList";
+  const std::string Gui::scoreLayoutFile = "ScoreBoard.layout";
+
+
   Gui::Gui(CEGUI::Renderer *renderer) :
     keysBeingPressed(0),
     pChatReceiver(0),
-    pLoginReceiver(0)
+    pLoginReceiver(0),
+    scoreListUIDs(std::list<ap::uint32>())
   {
     assert(renderer);
     using namespace CEGUI;
@@ -28,8 +35,8 @@ namespace ap {
     mSystem->setDefaultMouseCursor((CEGUI::utf8*)"TaharezLook", (CEGUI::utf8*)"MouseArrow");
     mSystem->setDefaultFont((CEGUI::utf8*)"BlueHighway-12");
 
-    WindowManager *mWin = WindowManager::getSingletonPtr();
-    pRoot = mWin->createWindow("DefaultGUISheet", "root");
+    pWinMgr = WindowManager::getSingletonPtr();
+    pRoot = pWinMgr->createWindow("DefaultGUISheet", "root");
     mSystem->setGUISheet(pRoot);
   } // Gui::Gui
 
@@ -40,50 +47,196 @@ namespace ap {
 
   void Gui::setupChatBox()
   {
-    CEGUI::WindowManager *winMgr = CEGUI::WindowManager::getSingletonPtr();
-    CEGUI::Window *chatLayout = winMgr->loadWindowLayout(chatLayoutFile);
+    assert(pWinMgr);
+    CEGUI::Window *chatLayout = pWinMgr->loadWindowLayout(chatLayoutFile);    
     pRoot->addChildWindow(chatLayout);
 
-    pChatBox = winMgr->getWindow("/ChatBox/Text");
+    pChatBox = pWinMgr->getWindow("/ChatBox/Text");
     pChatBox->subscribeEvent(CEGUI::Editbox::EventTextAccepted,
 			     CEGUI::Event::Subscriber(&Gui::chatMessageSent, this));
   }
 
   void Gui::setupLoginWindow(const std::string &ipAddress, const std::string &playerName)
   {
-    CEGUI::WindowManager *winMgr = CEGUI::WindowManager::getSingletonPtr();
-
-    if ( winMgr->isWindowPresent(loginRootName) ) {
-      CEGUI::Window *loginRoot = winMgr->getWindow(loginRootName);
+    assert(pWinMgr);
+    if ( pWinMgr->isWindowPresent(loginRootName) ) {
+      CEGUI::Window *loginRoot = pWinMgr->getWindow(loginRootName);
       loginRoot->show();
       loginRoot->activate();
       return;
     }
 
-    CEGUI::Window *loginLayout = winMgr->loadWindowLayout(loginLayoutFile);
+    CEGUI::Window *loginLayout = pWinMgr->loadWindowLayout(loginLayoutFile);
     pRoot->addChildWindow(loginLayout);
 
-    CEGUI::Window *loginButton = winMgr->getWindow("/Login/LoginButton");
+    CEGUI::Window *loginButton = pWinMgr->getWindow("/Login/LoginButton");
     loginButton->subscribeEvent(CEGUI::PushButton::EventClicked,
 				CEGUI::Event::Subscriber(&Gui::attemptLogin, this));
 
-    CEGUI::Window *quitButton = winMgr->getWindow("/Login/QuitButton");
+    CEGUI::Window *quitButton = pWinMgr->getWindow("/Login/QuitButton");
     quitButton->subscribeEvent(CEGUI::PushButton::EventClicked,
 			       CEGUI::Event::Subscriber(&Gui::requestQuit, this));
 
-    winMgr->getWindow("/Login/Address")->setText(ipAddress);
-    winMgr->getWindow("/Login/Name")->setText(playerName);
+    pWinMgr->getWindow("/Login/Address")->setText(ipAddress);
+    pWinMgr->getWindow("/Login/Name")->setText(playerName);
+  }
+
+  void Gui::setupScoreWindow()
+  {
+    assert(pWinMgr);
+    if ( pWinMgr->isWindowPresent(scoreWindowName) ) {
+      CEGUI::Window *scoreRoot = pWinMgr->getWindow(scoreWindowName);
+      scoreRoot->hide();
+      scoreRoot->deactivate();
+      return;
+    }
+
+    CEGUI::Window *scoreLayout = pWinMgr->loadWindowLayout(scoreLayoutFile);
+    pRoot->addChildWindow(scoreLayout);
   }
 
   void Gui::exitLoginWindow()
   {
-    CEGUI::WindowManager *winMgr = CEGUI::WindowManager::getSingletonPtr();
-
-    if ( winMgr->isWindowPresent(loginRootName) ) {
-     CEGUI::Window *loginRoot = winMgr->getWindow(loginRootName);
+    assert(pWinMgr);
+    if ( pWinMgr->isWindowPresent(loginRootName) ) {
+     CEGUI::Window *loginRoot = pWinMgr->getWindow(loginRootName);
      loginRoot->hide();
     }
   }
+
+  void Gui::showScoreWindow()
+  {
+    assert(pWinMgr);
+    if ( pWinMgr->isWindowPresent(scoreWindowName) ) {
+      std::cout << "Showing!" << std::endl;
+      CEGUI::Window *scoreRoot = pWinMgr->getWindow(scoreWindowName);
+      scoreRoot->show();
+      scoreRoot->deactivate();
+      return;
+    }
+  }
+
+  void Gui::hideScoreWindow()
+  {
+    assert(pWinMgr);
+    if ( pWinMgr->isWindowPresent(scoreWindowName) ) {
+      std::cout << "Hiding!" << std::endl;
+      CEGUI::Window *scoreRoot = pWinMgr->getWindow(scoreWindowName);
+      scoreRoot->hide();
+      return;
+    }
+  }  
+
+  void Gui::updateScores(const ScoreListing &scores)
+  {
+    using CEGUI::uint;
+    using CEGUI::MultiColumnList;
+    using CEGUI::MCLGridRef;
+    using CEGUI::ListboxItem;
+    using CEGUI::ListboxTextItem;
+
+    assert(pWinMgr);
+    MultiColumnList *multiCL = dynamic_cast<MultiColumnList *>(pWinMgr->getWindow(scoreWindowName));
+
+    // matching column indices to the colIDs used in layout file.    
+    const uint nameCol = 1;
+    const uint killCol = 2;
+    const uint deathCol = 3;
+    const uint scoreCol = 4;
+
+    uint nameIndex, killIndex, deathIndex, scoreIndex;
+    try {
+      // TODO: this should only be done once!
+      nameIndex = multiCL->getColumnWithID(nameCol);
+      killIndex = multiCL->getColumnWithID(killCol);
+      deathIndex = multiCL->getColumnWithID(deathCol);
+      scoreIndex = multiCL->getColumnWithID(scoreCol);
+    } catch (CEGUI::InvalidRequestException) {
+      // Uh-oh.
+      // TODO: Figure out a exception handling structure to manage this or kill the game.
+      std::cout << "Mismatch between Gui::updateScores column IDs and layout file!" << std::endl;
+      throw 0;
+    }
+
+    std::list<ap::uint32> recentUIDList = std::list<ap::uint32>();
+
+    while(const ScoreTuple *tuple = scores.getEachScore())
+      {
+	recentUIDList.push_back(tuple->uid);
+
+	uint rowIndex;
+	bool addNew = false;
+	try {
+	  rowIndex = multiCL->getRowWithID(tuple->uid);
+	} catch (CEGUI::InvalidRequestException) {
+	  // Just means this players' entry is new. New row addition needed.
+	  // Cannot set rowIndex to negative since it's uint, use addNew helper variable instead.
+	  addNew = true;
+	}
+	
+	if (addNew) {
+	  // Explicitly set the last argument (AutoDelete) to true (even though it's default)
+	  ListboxItem *name = new ListboxTextItem(to_string(tuple->uid),0,0,false,true);
+	  ListboxItem *kills = new ListboxTextItem(to_string(tuple->kills),0,0,false,true);
+	  ListboxItem *deaths = new ListboxTextItem(to_string(tuple->deaths),0,0,false,true);
+	  ListboxItem *score = new ListboxTextItem(to_string(tuple->score),0,0,false,true);
+
+	  rowIndex = multiCL->addRow(tuple->uid);
+
+	  multiCL->setItem(name, nameCol, rowIndex);
+	  multiCL->setItem(kills, killCol, rowIndex);
+	  multiCL->setItem(deaths, deathCol, rowIndex);
+	  multiCL->setItem(score, scoreCol, rowIndex);
+
+	  scoreListUIDs.push_back(tuple->uid);
+	} else {
+	  // Update a score row
+	  try {
+	    // name
+	    ListboxItem *item = multiCL->getItemAtGridReference(MCLGridRef(rowIndex,nameIndex));
+	    item->setText(to_string(tuple->uid));	    
+	    //kills
+	    item = multiCL->getItemAtGridReference(MCLGridRef(rowIndex, killIndex));
+	    item->setText(to_string(tuple->kills));
+	    //deaths
+	    item = multiCL->getItemAtGridReference(MCLGridRef(rowIndex, deathIndex));
+	    item->setText(to_string(tuple->deaths));
+	    //score
+	    item = multiCL->getItemAtGridReference(MCLGridRef(rowIndex, scoreIndex));
+	    item->setText(to_string(tuple->score));
+	  } catch (CEGUI::InvalidRequestException e) {
+	    // ListboxItem at requested MCLGridRef was not found..
+	    std::cout << "ListboxItem at requested MCLGridRef was not found, aborting..." 
+		      << std::endl;
+	    throw 0;
+	  }
+	}
+      } // while(scores)
+
+    // Remove score list rows that were NOT in the recent scores
+    // TODO: Maybe this should be done by user sending removable uid's, instead?
+    std::list<ap::uint32>::iterator it;
+    for(it=scoreListUIDs.begin(); it!=scoreListUIDs.end(); )
+      {
+	const ap::uint32 testedId = *it;
+	std::cout << "Tested id: " << *it << std::endl;
+	if (std::find(recentUIDList.begin(), recentUIDList.end(), testedId) == recentUIDList.end()){
+	  // This row id should no longer be shown in the score list.
+	  uint rowIndex;
+	  try {
+	    rowIndex = multiCL->getRowWithID(testedId);
+	  } catch (CEGUI::InvalidRequestException e) {
+	    std::cout << "Error removing rows from score list: row not found! "
+		      << "Non-fatal, though should not occur!" << std::endl;
+	    throw 0;
+	  }
+	  multiCL->removeRow(rowIndex); // calls ListboxItem destructors on that row.
+	  it = scoreListUIDs.erase(it);
+	} else {
+	  ++it;
+	}	
+      }
+  } // updateScores
 
   void Gui::activateChatBox(bool activate)
   {
@@ -113,6 +266,8 @@ namespace ap {
     lbox->ensureItemIsVisible(ltItem);
   }
 
+
+  // Triggerable events
   bool Gui::chatMessageSent(const CEGUI::EventArgs &args)
   {
     if(pChatReceiver && pChatBox) {
@@ -123,12 +278,13 @@ namespace ap {
     }
   }
 
+
   bool Gui::attemptLogin(const CEGUI::EventArgs &args)
   {
     assert(pLoginReceiver);
-    CEGUI::WindowManager *winMgr = CEGUI::WindowManager::getSingletonPtr();
-    CEGUI::Window *address = winMgr->getWindow(loginAddressField);
-    CEGUI::Window *name = winMgr->getWindow(loginNameField);
+    assert(pWinMgr);
+    CEGUI::Window *address = pWinMgr->getWindow(loginAddressField);
+    CEGUI::Window *name = pWinMgr->getWindow(loginNameField);
     if (address->getText() == "" || address->getText() == "0.0.0.0") {
 	address->setText("0.0.0.0");
 	return true;
@@ -144,6 +300,7 @@ namespace ap {
     return true;
   }
 
+
   bool Gui::requestQuit(const CEGUI::EventArgs &args)
   {
     assert(pLoginReceiver);
@@ -151,7 +308,6 @@ namespace ap {
   }
 
   // *****************************************************  Keyboard listener
-
   /**
    * Inform this object that key was pressed.
    *

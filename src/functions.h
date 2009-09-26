@@ -1,3 +1,6 @@
+#ifndef AP_FUNCTIONS_H
+#define AP_FUNCTIONS_H
+
 /*  Random small functions
  *
  *  Jonni Lehtiranta
@@ -17,7 +20,15 @@ std::string uint2ipv4(unsigned int ip);  // Convert a uint32 to a string with th
 
 void hexprint(enet_uint8 *buffer, int length); // Cout a random buffer and maybe understand what's in it!
 
-template <class T> inline std::string to_string (const T &t); // generic to_string() for any pipeable thing
+/**
+ * generic to_string() for any pipeable type.
+ */
+template <class T> inline std::string to_string (const T &t)
+  {
+    std::stringstream ss;
+    ss << t;
+    return ss.str();
+  }
 
 long int getTicks(); // milliseconds since approx program start. OBS! Not C-standard, but POSIX
 
@@ -30,3 +41,5 @@ std::string macBundlePath();
 #endif
 
 } // namespace ap
+
+#endif

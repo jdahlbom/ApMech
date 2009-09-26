@@ -5,11 +5,11 @@
         <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
         <Window Type="TaharezLook/FrameWindow" Name="/ChatBox" >
 	    <Property Name="Alpha" Value="0.5" />
-            <Property Name="Text" Value="Chat" />
+            <Property Name="Text" Value="" />
             <Property Name="InheritsAlpha" Value="False" />
             <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
-            <Property Name="TitlebarEnabled" Value="True" />
-            <Property Name="UnifiedAreaRect" Value="{{0.01,0},{0,40},{0.6,0},{0.4,0}}" />
+            <Property Name="TitlebarEnabled" Value="False" />
+            <Property Name="UnifiedAreaRect" Value="{{0,0},{1,-250},{0.4,0},{1,0}}" />
 
             <Window Type="TaharezLook/Listbox" Name="/ChatBox/List" >
                 <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />

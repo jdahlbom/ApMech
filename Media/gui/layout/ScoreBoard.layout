@@ -1,0 +1,17 @@
+<GUILayout>
+  <Window Type="TaharezLook/MultiColumnList" Name="ScoreList" > 
+    <Property Name="Alpha" Value="0.5" />
+    <Property Name="Text" Value="Scores" />
+    <Property Name="ColumnsMovable" Value="False" />
+    <Property Name="ColumnsSizable" Value="False" />
+    <Property Name="InheritsAlpha" Value="False" />
+    <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+    <Property Name="TitlebarEnabled" Value="True" />
+    <Property Name="UnifiedAreaRect" Value="{{0,300},{0,100},{0,900},{0,400}}" />
+
+    <Property Name="ColumnHeader" Value="text:Player width:{0,300} id:1" />
+    <Property Name="ColumnHeader" Value="text:Kills width:{0,90} id:2" />
+    <Property Name="ColumnHeader" Value="text:Deaths width: {0,90} id:3" />
+    <Property Name="ColumnHeader" Value="text:Score width: {0,90} id:4" />
+  </Window>
+</GUILayout>

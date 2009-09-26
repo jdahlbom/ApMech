@@ -7,6 +7,9 @@ build/*
 # old skool
 .svn
 
+# temp files
+*~
+
 # osx noise
 .DS_Store
 profile
@@ -24,3 +27,6 @@ jonni/cegui_sdl_test/jonnin
 
 # SConstruct database
 .sconsign.dblite
+
+# Login data persistency file
+login.cfg

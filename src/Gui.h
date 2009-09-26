@@ -5,6 +5,7 @@
 
 #include "GuiChatReceiver.h"
 #include "GuiLoginReceiver.h"
+#include "ScoreListing.h"
 #include "ooinput/KeyboardListener.h"
 #include "ooinput/KeyEvent.h"
 #include "ooinput/MouseClickedEvent.h"
@@ -22,8 +23,13 @@ class Gui
 
   void setupChatBox();
   void setupLoginWindow(const std::string &ipAddress = "", const std::string &playerName = "");
+  void setupScoreWindow();
 
   void exitLoginWindow();
+
+  void showScoreWindow();
+  void hideScoreWindow();
+  void updateScores(const ScoreListing &scores);
 
   void activateChatBox(bool activate = true);
 
@@ -46,11 +52,14 @@ class Gui
  private:
   CEGUI::System     *mSystem;
   CEGUI::Window     *pRoot;
+  CEGUI::WindowManager *pWinMgr;
 
   CEGUI::Window     *pChatBox;
   int               keysBeingPressed;
   GuiChatReceiver   *pChatReceiver;
   GuiLoginReceiver  *pLoginReceiver;
+
+  std::list<ap::uint32> scoreListUIDs;
 
   CEGUI::uint MapKeyToCEGUI(ap::ooinput::KeySymbol key);
   bool chatMessageSent(const CEGUI::EventArgs &args);
@@ -65,6 +74,8 @@ class Gui
   static const std::string chatLayoutFile;
   static const std::string chatRootName;
 
+  static const std::string scoreWindowName;
+  static const std::string scoreLayoutFile;
 };
 
 } // namespace ap

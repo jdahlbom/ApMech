@@ -53,6 +53,7 @@ src/CombinedControls.cpp
 src/MovableControl.cpp
 src/WeaponControl.cpp
 src/RectBoundaries.cpp
+src/ScoreListing.cpp
 src/net/serializer.cpp
 src/net/netdata.cpp
 src/net/NetUser.cpp
