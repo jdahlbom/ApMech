@@ -18,7 +18,8 @@ namespace ap {
 /**/static ProjectileInject __projectileinject;
 
 Projectile::Projectile(Ogre::Vector3 velocity) :
-    MovingObject(0.0f, velocity)
+    MovingObject(0.0f, velocity),
+    age(0.0f)
 {
     objectType = ap::OBJECT_TYPE_PROJECTILE;
 }
@@ -28,6 +29,16 @@ net::NetObject *Projectile::create(uint32 id)
     Projectile *proj = new Projectile(Ogre::Vector3::ZERO);
     proj->id = id;
     return proj;
+}
+
+int Projectile::advance(float dt)
+{
+    age += dt;
+    if (age > 6) return -1;     // Live for 6 seconds
+
+    MovingObject::advance(dt);
+    if (worldBoundaries.clamped) return -1;     // If we hit the world's edge, then die
+    return 0;
 }
 
 uint8 Projectile::getObjectType()

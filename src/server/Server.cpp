@@ -91,8 +91,8 @@ void Server::processEvents(ap::net::NetData *pNetData) {
 
 void Server::updateObjects(float dt, ap::net::NetData* pNetData) const {
 
-    while (NetObject *nop = pNetData->eachObject()) nop->advance(dt);
-
+    while (NetObject *nop = pNetData->eachObject())
+        if (nop->advance(dt) == -1) pNetData->delObject(nop->id);
 } // void Server::updateObjects
 
 void Server::fireWeapons(uint64 tstamp, ap::net::NetData *pNetData) {
@@ -117,7 +117,7 @@ void Server::detectCollisions(ap::net::NetData *pNetData) const {
         while (ap::Projectile *proj = pNetData->eachObject<ap::Projectile *>(ap::OBJECT_TYPE_PROJECTILE))
             if (proj->testCollision(*mech)) {
                 relocateSpawnedMech(mech);
-                netdata->delObject(proj->id);
+                pNetData->delObject(proj->id);
             }
 }
 

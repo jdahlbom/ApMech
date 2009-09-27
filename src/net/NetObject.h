@@ -18,9 +18,10 @@ class NetObject : public Serializable {
     inline void setChanged() { changed = true; }
     virtual uint8 getObjectType() = 0;
 
+// Not needed here, as this is inherited??? -JL 27.9.09
     /// any class that inherits GameObject must be ready to serialize!
-    virtual int serialize(ap::uint8 buffer[], int start, int buflength) const = 0;
-    virtual int unserialize(ap::uint8 buffer[], int start) = 0;
+//    virtual int serialize(ap::uint8 buffer[], int start, int buflength) const = 0;
+//    virtual int unserialize(ap::uint8 buffer[], int start) = 0;
 
     /** A method for an object to create an object of its own type, and return
      * it as a NetObject*. Needed for unserialization.

@@ -84,9 +84,11 @@ bool LoginState::keyPressed( const ap::ooinput::KeyEvent &e ) {
   }
 
   switch( e.key ) {
-  case ooinput::AP_K_ESCAPE:
+   case ooinput::AP_K_ESCAPE:
     this->requestShutdown();
     return 1;
+   default:
+    break;      // Some other key: do nothing
   }
   return 0;
 }
