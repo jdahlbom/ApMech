@@ -91,8 +91,10 @@ namespace ap {
       return;
     }
 
-    CEGUI::Window *scoreLayout = pWinMgr->loadWindowLayout(scoreLayoutFile);
-    pRoot->addChildWindow(scoreLayout);
+    CEGUI::Window *scoreRoot = pWinMgr->loadWindowLayout(scoreLayoutFile);
+    pRoot->addChildWindow(scoreRoot);
+    scoreRoot->hide();
+    scoreRoot->deactivate();
   }
 
   void Gui::exitLoginWindow()

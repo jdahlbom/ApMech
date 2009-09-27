@@ -270,6 +270,11 @@ void PlayState::createGUIWindow()
 }
 
 bool PlayState::keyPressed( const ap::ooinput::KeyEvent &e ) {
+  if (e.key == ooinput::AP_K_TAB) {
+    pGui->showScoreWindow();
+    return true;
+  }
+
   if (pGui->keyPressed(e)) {
     return 1;
   }
@@ -314,9 +319,6 @@ bool PlayState::keyPressed( const ap::ooinput::KeyEvent &e ) {
         case ooinput::AP_K_t:
             pGui->activateChatBox();
             return true;
-        case ooinput::AP_K_TAB:
-	  pGui->showScoreWindow();
-	  return true;
         default:
             std::cout << e.unicode << " pressed, not doing anything." << std::endl;
             return 0;
@@ -325,6 +327,11 @@ bool PlayState::keyPressed( const ap::ooinput::KeyEvent &e ) {
 }
 
 bool PlayState::keyReleased( const ap::ooinput::KeyEvent &e ) {
+  if (e.key == ooinput::AP_K_TAB) {
+    pGui->hideScoreWindow();
+    return true;
+  }
+
   if(pGui->keyReleased(e)) {
     return 1;
   }
@@ -362,9 +369,6 @@ bool PlayState::keyReleased( const ap::ooinput::KeyEvent &e ) {
             mObject->setFiring(false);
             setNetDataDirty();
 	    return 1;
-        case ooinput::AP_K_TAB:
-            pGui->hideScoreWindow();
-            return 1;
         default:
 	  return 0;
     }
