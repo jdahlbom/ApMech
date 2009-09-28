@@ -110,7 +110,6 @@ namespace ap {
   {
     assert(pWinMgr);
     if ( pWinMgr->isWindowPresent(scoreWindowName) ) {
-      std::cout << "Showing!" << std::endl;
       CEGUI::Window *scoreRoot = pWinMgr->getWindow(scoreWindowName);
       scoreRoot->show();
       scoreRoot->deactivate();
@@ -122,7 +121,6 @@ namespace ap {
   {
     assert(pWinMgr);
     if ( pWinMgr->isWindowPresent(scoreWindowName) ) {
-      std::cout << "Hiding!" << std::endl;
       CEGUI::Window *scoreRoot = pWinMgr->getWindow(scoreWindowName);
       scoreRoot->hide();
       return;
