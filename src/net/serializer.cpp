@@ -67,6 +67,13 @@ int serialize(float f, uint8 *buffer, int start, int buflength)
 
 // FIXME! integers may cause interoperability issues between platforms!
 // http://www.parashift.com/c++-faq-lite/serialization.html#faq-36.6
+int serialize(int16 i, uint8 *buffer, int start, int buflength)
+{
+    *(reinterpret_cast<int16 *>(buffer+start)) = i;
+    return 2;
+}
+
+
 int serialize(int32 i, uint8 *buffer, int start, int buflength)
 {
     *(reinterpret_cast<int32 *>(buffer+start)) = i;
@@ -76,6 +83,11 @@ int serialize(int32 i, uint8 *buffer, int start, int buflength)
 int serialize(uint8 i, uint8 *buffer, int start, int buflength) {
     *(reinterpret_cast<uint8 *>(buffer+start)) = i;
     return 1; // Size of unsigned char is 1 byte
+}
+
+int serialize(uint16 i, uint8 *buffer, int start, int buflength) {
+    *(reinterpret_cast<uint16 *>(buffer+start)) = i;
+    return 2; // Size of int is 4 bytes
 }
 
 int serialize(uint32 i, uint8 *buffer, int start, int buflength) {
@@ -94,6 +106,11 @@ int unserialize(float &f, uint8 *buffer, int start)
 
 // FIXME! integers may cause interoperability issues between platforms!
 // http://www.parashift.com/c++-faq-lite/serialization.html#faq-36.6
+int unserialize(int16 &i, uint8 *buffer, int start) {
+    i = *(reinterpret_cast<int16 *>(buffer+start));
+    return 2;
+}
+
 int unserialize(int32 &i, uint8 *buffer, int start) {
     i = *(reinterpret_cast<int32 *>(buffer+start));
     return 4; // 4 is the length of float in bytes
@@ -102,6 +119,11 @@ int unserialize(int32 &i, uint8 *buffer, int start) {
 int unserialize(uint8 &i, uint8 *buffer, int start) {
     i = *(reinterpret_cast<uint8 *>(buffer+start));
     return 1; // 4 is the length of float in bytes
+}
+
+int unserialize(uint16 &i, uint8 *buffer, int start) {
+    i = *(reinterpret_cast<uint16 *>(buffer+start));
+    return 2;
 }
 
 int unserialize(uint32 &i, uint8 *buffer, int start) {

@@ -11,11 +11,15 @@ namespace ap {
 
 class Projectile : public MovingObject
 {
+ private:
+    float age;
+
  public:
     Projectile(Ogre::Vector3 velocity);
     ~Projectile() {}
 
     net::NetObject *create(uint32 id);
+    int advance(float dt);
 
     uint8 getObjectType();
 };

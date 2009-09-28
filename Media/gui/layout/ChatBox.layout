@@ -1,26 +1,19 @@
 <GUILayout >
-    <Window Type="DefaultWindow" Name="ChatBoxRoot" >
-        <Property Name="InheritsAlpha" Value="False" />
-        <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
-        <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
-        <Window Type="TaharezLook/FrameWindow" Name="/ChatBox" >
-	    <Property Name="Alpha" Value="0.5" />
-            <Property Name="Text" Value="Chat" />
-            <Property Name="InheritsAlpha" Value="False" />
-            <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
-            <Property Name="TitlebarEnabled" Value="True" />
-            <Property Name="UnifiedAreaRect" Value="{{0.01,0},{0,40},{0.6,0},{0.4,0}}" />
+  <Window Type="DefaultGUISheet" Name="ChatBoxRoot" >
+    <Property Name="Alpha" Value="0.5" />
+    <Property Name="InheritsAlpha" Value="False" />
+    <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+    <Property Name="UnifiedAreaRect" Value="{{0,0},{1,-250},{0.4,0},{1,0}}" />
 
-            <Window Type="TaharezLook/Listbox" Name="/ChatBox/List" >
-                <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
-                <Property Name="UnifiedAreaRect" Value="{{0.02,0},{0.078,0},{0.98,0},{1,-30}}" />
-            </Window>
-            <Window Type="TaharezLook/Editbox" Name="/ChatBox/Text" >
-                <Property Name="Text" Value="" />
-                <Property Name="MaxTextLength" Value="1073741823" />
-                <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
-                <Property Name="UnifiedAreaRect" Value="{{0.02,0},{1,-30},{0.98,0},{1,-5}}" />
-            </Window>
-        </Window>
+    <Window Type="TaharezLook/Listbox" Name="/ChatBox/List" >
+      <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+      <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,-30}}" />
     </Window>
+    <Window Type="TaharezLook/Editbox" Name="/ChatBox/Text" >
+      <Property Name="Text" Value="asd" />
+      <Property Name="MaxTextLength" Value="300" />
+      <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+      <Property Name="UnifiedAreaRect" Value="{{0,0},{1,-30},{1,0},{1,0}}" />
+    </Window>
+  </Window>
 </GUILayout>

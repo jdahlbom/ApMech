@@ -66,6 +66,7 @@ class MovingObject : public net::NetObject {
 
  protected:
     uint8              objectType;
+    RectBoundaries      worldBoundaries;
 
  private:
     Ogre::Vector3       initialFacing;
@@ -76,8 +77,6 @@ class MovingObject : public net::NetObject {
     CombinedControls    *combinedControls;
 
     float               friction;
-
-    RectBoundaries      worldBoundaries;
     float               maxSpeedSquared;
 
     Ogre::SceneNode     *pOwnerNode;

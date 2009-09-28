@@ -2,6 +2,7 @@
 
 #include <Ogre.h>
 
+
 namespace ap
 {
 
@@ -31,13 +32,6 @@ void hexprint(enet_uint8 *buffer, int length)
     }
 
     cout << ")"<<endl;
-}
-
-template <class T> inline std::string to_string (const T &t)
-{
-    std::stringstream ss;
-    ss << t;
-    return ss.str();
 }
 
 long int getTicks()

@@ -8,26 +8,32 @@ RectBoundaries::RectBoundaries(float _top, float _bottom, float _left, float _ri
     top(_top),
     bottom(_bottom),
     left(_left),
-    right(_right) {}
+    right(_right),
+    clamped(false) {}
 
 RectBoundaries::RectBoundaries(const RectBoundaries &source) :
     top(source.top),
     bottom(source.bottom),
     left(source.left),
-    right(source.right) {}
+    right(source.right),
+    clamped(source.clamped) {}
 
-void RectBoundaries::clamp(float &vert, float &horiz) const
+void RectBoundaries::clamp(float &vert, float &horiz)
 {
     if( horiz < left ) {
         horiz = left;
+        clamped = true;
     } else if (horiz > right) {
         horiz = right;
+        clamped = true;
     }
 
     if ( vert < bottom) {
         vert = bottom;
+        clamped = true;
     } else if ( vert > top) {
         horiz = top;
+        clamped = true;
     }
 }
 

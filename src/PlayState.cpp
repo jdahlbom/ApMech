@@ -9,6 +9,7 @@
 #include "Gui.h"
 #include "Mech.h"
 #include "Projectile.h"
+#include "ScoreListing.h"
 #include "types.h"
 
 namespace ap {
@@ -229,10 +230,51 @@ void PlayState::attachCameraNode(Ogre::SceneNode *newParentNode)
 void PlayState::createGUIWindow()
 {
   pGui->setupChatBox();
+  pGui->setupScoreWindow();
   pGui->setChatReceiver(this);
+
+  ScoreListing listing;
+  ScoreTuple tuple;
+  tuple.uid = 1;
+  tuple.kills=11;
+  tuple.deaths=111;
+  tuple.score=1111;
+  listing.addScore(tuple);
+  tuple.uid = 2;
+  tuple.kills = 22;
+  tuple.deaths = 222;
+  tuple.score = 2222;
+  listing.addScore(tuple);
+
+  std::cout << "PlayState::createGUIWindow():" << std::endl;
+  listing.print();
+
+  pGui->updateScores(listing);
+
+  listing.clearAllScores();
+  std::cout << "PS:cGUIW: cleared:" << std::endl;
+  listing.print();
+
+  tuple.kills=33;
+  listing.addScore(tuple);
+  tuple.uid=5;
+  tuple.kills=55;
+  tuple.deaths=555;
+  tuple.score=5555;
+  listing.addScore(tuple);
+  listing.print();
+
+  std::cout << "PS:cGUIW: added new: " << std::endl;
+  //  listing.addScore(tuple);
+  pGui->updateScores(listing);
 }
 
 bool PlayState::keyPressed( const ap::ooinput::KeyEvent &e ) {
+  if (e.key == ooinput::AP_K_TAB) {
+    pGui->showScoreWindow();
+    return true;
+  }
+
   if (pGui->keyPressed(e)) {
     return 1;
   }
@@ -285,6 +327,11 @@ bool PlayState::keyPressed( const ap::ooinput::KeyEvent &e ) {
 }
 
 bool PlayState::keyReleased( const ap::ooinput::KeyEvent &e ) {
+  if (e.key == ooinput::AP_K_TAB) {
+    pGui->hideScoreWindow();
+    return true;
+  }
+
   if(pGui->keyReleased(e)) {
     return 1;
   }
