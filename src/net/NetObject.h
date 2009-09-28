@@ -10,10 +10,10 @@ namespace net {
 class NetObject : public Serializable {
  public:
     ap::uint32 id;
-    ap::int32 uid;            // owner
+    ap::uint32 uid;            // owner
     bool changed;       // Whether the object was updated since last serialization
 
-    NetObject(int _id = -1) { id = _id; }
+    NetObject(uint32 _id = 0) { id = _id; }
     inline bool isChanged() { return changed; }
     inline void setChanged() { changed = true; }
     virtual uint8 getObjectType() = 0;

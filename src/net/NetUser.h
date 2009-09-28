@@ -24,14 +24,14 @@ class NetUser : public NetObject
     static const enet_uint8 CONTROL_BLOCK_FINISHED=6;
 
     ENetPeer *peer;
-    int uid;
+    uint32 uid;
     std::string nick;
 
     int ping;
     Controller *controls;
 
     NetUser();
-    NetUser(int uid, ENetPeer *_peer);
+    NetUser(uint32 uid, ENetPeer *_peer);
     uint8 getObjectType();
 
     void setControlPtr(Controller *ctrl);

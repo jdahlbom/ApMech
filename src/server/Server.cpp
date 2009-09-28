@@ -46,13 +46,10 @@ void Server::start() {
         netdata->receiveChanges();
         oldticks = newticks; newticks = getTicks();
         dt = float(newticks - oldticks) * 0.001;
-//        ap::uint64 dt = newticks - oldticks;
-
 
         updateObjects(dt, netdata);
         fireWeapons(newticks, netdata);
         detectCollisions(netdata);
-
 
         if (newticks >= nextupdate) {
             netdata->sendChanges();
@@ -76,11 +73,13 @@ void Server::processEvents(ap::net::NetData *pNetData) {
             cout << "[SERVER] Received a connection from "
                 << uint2ipv4(pNetData->getUser(event.uid)->peer->address.host)
                 <<", uid " << event.uid;
-	    createNewConnection(event.uid, pNetData);
+            createNewConnection(event.uid, pNetData);
             break;
         }
         case ap::net::NetData::EVENT_DISCONNECT:
             cout << "[SERVER] Client "<<event.uid<<" disconnected."<<endl;
+            while (Mech *pM = pNetData->eachObject<Mech *>(ap::OBJECT_TYPE_MECH))
+                if (pM->uid == event.uid) pNetData->delObject(pM->id);
             break;
         default:
             break;
@@ -91,8 +90,11 @@ void Server::processEvents(ap::net::NetData *pNetData) {
 
 void Server::updateObjects(float dt, ap::net::NetData* pNetData) const {
 
-    while (NetObject *nop = pNetData->eachObject())
+    while (NetObject *nop = pNetData->eachObject()) {
+//        cout << "upd. obj"<< endl;cout << nop->id <<endl;
         if (nop->advance(dt) == -1) pNetData->delObject(nop->id);
+
+    }
 } // void Server::updateObjects
 
 void Server::fireWeapons(uint64 tstamp, ap::net::NetData *pNetData) {
@@ -103,7 +105,7 @@ void Server::fireWeapons(uint64 tstamp, ap::net::NetData *pNetData) {
 void Server::weaponFired(ap::net::NetData *pNetData, ap::MovingObject *source) {
     Ogre::Vector3 facing = source->getFacing();
 
-    int newid = pNetData->insertObject(new ap::Projectile(facing * 100.0f)); //100 is velocity
+    int newid = pNetData->insertObject(new ap::Projectile(facing * 150.0f)); //150 is velocity
     ap::Projectile *bullet = pNetData->getObject<ap::Projectile *>(newid);
     bullet->setWorldBoundaries(1500.0f,0.0f,0.0f,1500.0f);
     bullet->setMaxSpeed(625.0f);
@@ -128,20 +130,21 @@ void Server::relocateSpawnedMech(ap::Mech *mech) const
     mech->setVelocity(Ogre::Vector3::ZERO);
 }
 
-void Server::createNewConnection(ap::uint32 userId, ap::net::NetData *netData)
+void Server::createNewConnection(ap::uint32 userId, ap::net::NetData *pNetData)
 {
   ap::Mech *newAvatar = new ap::Mech();
-  int newid = netData->insertObject(newAvatar);
+  int newid = pNetData->insertObject(newAvatar);
 
   newAvatar->setWorldBoundaries(1500.0f,0.0f,0.0f,1500.0f);
   newAvatar->setMaxSpeed(35.0f);
   newAvatar->setFriction(8.0f);
+  newAvatar->uid = userId;
   relocateSpawnedMech(newAvatar);
 
-  netData->getUser(userId)->setControlPtr(newAvatar->getControlPtr());
+  pNetData->getUser(userId)->setControlPtr(newAvatar->getControlPtr());
 
-  netData->sendChanges();
-  netData->setAvatarID(userId, newid);
+  pNetData->sendChanges();
+  pNetData->setAvatarID(userId, newid);
 }
 
 } // namespace server

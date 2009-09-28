@@ -41,6 +41,11 @@ void MovingObject::setWorldBoundaries(float top, float bottom, float left, float
     worldBoundaries = RectBoundaries(top, bottom, left, right);
 }
 
+bool MovingObject::hitWorldBoundaries() const
+{
+    return worldBoundaries.clamped;
+}
+
 void MovingObject::setMaxSpeed(float speed)
 {
     if(speed < 0) return;
@@ -62,7 +67,7 @@ void MovingObject::setVelocity(Ogre::Vector3 newVelocity)
 
 void MovingObject::addForwardAcceleration(float amount)
 {
-    float maxAbsAcceleration = 25;
+    float maxAbsAcceleration = 70;  // was 25
     control->accelerationFwd += amount;
 
     if(control->accelerationFwd > maxAbsAcceleration) {

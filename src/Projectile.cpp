@@ -37,7 +37,7 @@ int Projectile::advance(float dt)
     if (age > 6) return -1;     // Live for 6 seconds
 
     MovingObject::advance(dt);
-    if (worldBoundaries.clamped) return -1;     // If we hit the world's edge, then die
+    if (hitWorldBoundaries()) return -1;     // If we hit the world's edge, then die
     return 0;
 }
 

@@ -24,6 +24,7 @@ class MovingObject : public net::NetObject {
     virtual ~MovingObject();
 
     void setWorldBoundaries(float top, float bottom, float left, float right);
+    bool hitWorldBoundaries() const;
 
     void setMaxSpeed(float speed);
     void setVelocity(Ogre::Vector3 velocity);
@@ -66,7 +67,6 @@ class MovingObject : public net::NetObject {
 
  protected:
     uint8              objectType;
-    RectBoundaries      worldBoundaries;
 
  private:
     Ogre::Vector3       initialFacing;
@@ -80,6 +80,7 @@ class MovingObject : public net::NetObject {
     float               maxSpeedSquared;
 
     Ogre::SceneNode     *pOwnerNode;
+    RectBoundaries      worldBoundaries;
 
     void updateVelocity(float sSinceLast);
     void updateFacing(float sSinceLast);

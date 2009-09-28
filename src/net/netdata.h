@@ -6,6 +6,7 @@
 #include <string>
 #include <map>
 #include <list>
+#include <set>
 
 #include "NetUser.h"
 #include "NetObject.h"
@@ -59,21 +60,23 @@ class NetData {
     std::string errorstring;
     ENetHost *enethost;     // this is my own host struct
     ENetPeer *enetserver;   // this is my server's peer struct
+    bool __template_eachObject_active[256]; // ONLY FOR templated eachObject.
 
     int serviceServer();
     int serviceClient();
 
     void sendClientChanges();
 
-    std::list <int> objectDeleteQueue;
+    std::set <int> objectDeleteQueue;
     std::list <NetEvent *> neteventlist;
 
     void addEvent(NetEvent *event); // Almost useless, if you can push_back stuff to a list
     uint32 processPacketNetObject(enet_uint8 *data);
 
- // Were public:
     std::map <int, NetObject*> netobjects;
+    std::multimap <ap::uint8, NetObject*> netObjectsByType; // Index table for efficient eachObject
     std::map <int, NetUser> users;   // This is, users contacted to US! Should be empty unless we're server.
+
  public:
 
     NetUser me;
@@ -93,51 +96,43 @@ class NetData {
 
     NetObject *getObject(uint32 id);
     NetObject *eachObject();
-    NetObject *eachObject(uint8 type);
     void removeObject(uint32 id);
 
     NetUser *getUser(uint32 uid);
     int getUserCount();
 
-    // Functions below here are meant for server's use. Undefined consequences for clients. Maybe.
-    uint32 getUniqueObjectID();
-    uint32 insertObject(NetObject *obj);
-    void insertObjects(list<NetObject *> *objlist);
-    void delObject(uint32 id);
-
-    template <typename ObjType> ObjType getAvatarObject()
-    {
+    template <typename ObjType> ObjType getAvatarObject() {
         if ((myAvatarID <= 0) || (netobjects.find(myAvatarID) == netobjects.end())) return NULL;
         return dynamic_cast<ObjType>(netobjects.find(myAvatarID)->second);
     }
 
-    template <typename ObjType> ObjType getObject(uint32 id)
-    {
+    template <typename ObjType> ObjType getObject(uint32 id) {
         std::map <int, NetObject*>::iterator it = netobjects.find(id);
         if( netobjects.end() == it ) return NULL; // return NULL when not found.
         return dynamic_cast<ObjType>(it->second); // maybe cast fails too? Take care.
     }
 
-    template <typename ObjType> ObjType eachObject()
-    {
-        static std::map<int,NetObject*>::iterator i = netobjects.begin();
-        if (i != netobjects.end()) return dynamic_cast<ObjType>((i++)->second);
-        i = netobjects.begin();
-        return NULL;
+    template <typename ObjType> ObjType eachObject(uint8 type) {
+        static pair<multimap<uint8,NetObject*>::iterator, multimap<uint8,NetObject*>::iterator> ii[256];
+
+        if (false == __template_eachObject_active[type]) {
+            ii[type] = netObjectsByType.equal_range(type);
+            __template_eachObject_active[type] = true;
+        }
+
+        if (ii[type].first == ii[type].second) {    // We're at the end!
+            __template_eachObject_active[type] = false;
+            return NULL;
+        } else {                        // Not at the end yet!
+            return dynamic_cast<ObjType>((ii[type].first++)->second);
+        }
     }
 
-    template <typename ObjType> ObjType eachObject(uint8 type)
-    {
-#define b ,netobjects.begin()
-        static std::map<int,NetObject*>::iterator i[256] = { netobjects.begin() b b b b b    b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b    b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b    b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b    b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b    b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b };
-#undef b
-        while (i[type] != netobjects.end()) {
-            if (i[type]->second->getObjectType() == type) return dynamic_cast<ObjType>((i[type]++)->second);
-            i[type]++;
-        }
-        i[type] = netobjects.begin();
-        return NULL;
-    }
+// Functions below here are meant for server's use. Undefined consequences for clients. Maybe.
+    uint32 getUniqueObjectID();
+    uint32 insertObject(NetObject *obj, uint32 id = 0);
+    void insertObjects(list<NetObject *> *objlist);
+    void delObject(uint32 id);
 
 //    int save(string filename);
 //    int load(string filename);
