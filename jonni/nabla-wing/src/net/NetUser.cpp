@@ -52,7 +52,8 @@ int NetUser::serialize(enet_uint8 buffer[], int start, int buflength) const
         *(buffer + start + length) = CONTROL_NOT_SET; ++length;
     }
     *(buffer+start+length) = CONTROL_BLOCK_FINISHED; ++length;
-    strcpy( (char *)buffer + start+length, nick.c_str());   length += nick.length()+1;
+    length += serialize(nick, buffer, start+length, buflength);
+    // strcpy( (char *)buffer + start+length, nick.c_str());   length += nick.length()+1;
 
     return length;
 }
@@ -86,7 +87,8 @@ int NetUser::unserialize(enet_uint8 buffer[], int start)
             }
         }
 
-        nick.assign((char *)buffer+start+length);           length += nick.length()+1;
+        length += unserialize(nick, buffer, start+length);
+        // nick.assign((char *)buffer+start+length);           length += nick.length()+1;
 
 //        cout << uid << ": x "<<x<<", y "<<y<<" nick "<<nick<<endl;
     } else cout << "FOULED in NetUser::unserialize!" << endl;

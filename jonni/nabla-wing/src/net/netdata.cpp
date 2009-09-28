@@ -426,6 +426,12 @@ void NetData::removeObject(uint32 id)
     // I had nabla-wing crash once because of double-delete, but couldn't reproduce..
     // checking doesn't harm anyway.
     if (netobjects.find(id) != netobjects.end()) {
+        std::multimap<uint8, NetObject*>::iterator obji, endi;
+        std::make_pair(obji, endi) = netObjectsByType.equal_range(netobjects.find(id)->second->getObjectType());
+        while (obji != endi)
+            if ((*obji).second == netobjects.find(id)->second) netObjectsByType.erase(obji++);
+            else obji++;
+
         delete netobjects.find(id)->second;
         netobjects.erase(id); // TODO: Shouldn't erase call the destructor anyways??
     }
@@ -480,6 +486,8 @@ uint32 NetData::insertObject(NetObject *obj)
     uint32 newid = getUniqueObjectID();
     obj->id = newid;
     netobjects.insert(make_pair(newid, obj));
+
+    netObjectsByType.insert(make_pair(obj->getObjectType(), obj));
     return newid;
 }
 

@@ -73,6 +73,7 @@ class NetData {
 
  // Were public:
     std::map <int, NetObject*> netobjects;
+    std::multimap <uint8, NetObject*> netObjectsByType; // Index table for efficient eachObject
     std::map <int, NetUser> users;   // This is, users contacted to US! Should be empty unless we're server.
  public:
 

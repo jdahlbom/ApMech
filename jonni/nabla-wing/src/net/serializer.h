@@ -8,7 +8,8 @@
 #include <Ogre.h>
 #endif
 
-#include <string>
+#include <string>       // for std::string
+#include <string.h>     // for strcpy
 #include "../types.h"
 
 namespace ap {
@@ -26,7 +27,7 @@ int serialize(int32 i, uint8 *buffer, int start, int buflength);
 int serialize(uint8 i, uint8 *buffer, int start, int buflength);
 int serialize(uint32 i, uint8 *buffer, int start, int buflength);
 int serialize(std::string s, uint8 *buffer, int start, int buflength);
-   
+
 int unserialize(float &f, uint8 *buffer, int start);
 int unserialize(int32 &i, uint8 *buffer, int start);
 int unserialize(uint8 &i, uint8 *buffer, int start);
