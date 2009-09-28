@@ -34,14 +34,17 @@ namespace ap {
   }
 
   ScoreListing::ScoreListing() :
-    scoreList(std::list<ScoreTuple>()),
+    scoreList(std::map<ap::uint32, ScoreTuple>()),
     scoreIterator(scoreList.end()) {}
 
   ScoreListing::~ScoreListing() {}
 
   void ScoreListing::addScore(ScoreTuple tuple) {
-    // TODO: Should this ensure there are no duplicate uids?
-    scoreList.push_back(tuple);
+    std::map<ap::uint32, ScoreTuple>::iterator it = scoreList.find(tuple.uid);
+    if(it != scoreList.end()) {
+      scoreList.erase(it->first);
+    }
+    scoreList.insert(std::make_pair<ap::uint32, ScoreTuple>(tuple.uid, tuple));
   }
 
   void ScoreListing::clearAllScores() {
@@ -57,7 +60,7 @@ namespace ap {
     }
 
     if (scoreIterator != scoreList.end()) {
-      return &(*scoreIterator);
+      return &(scoreIterator->second);
     }
     return 0;
   }
@@ -69,9 +72,9 @@ namespace ap {
     
     length += ap::net::serialize(numberOfTuples, buffer, start+length, buflength-length);
 
-    std::list<ScoreTuple>::const_iterator it = scoreList.begin();
+    std::map<ap::uint32, ScoreTuple>::const_iterator it = scoreList.begin();
     for (; it != scoreList.end(); ++it) {
-      length += (*it).serialize(buffer, start+length, buflength+length);
+      length += it->second.serialize(buffer, start+length, buflength+length);
     }
     return length;
   }
@@ -93,9 +96,9 @@ namespace ap {
 
   void ScoreListing::print()
   {
-    std::list<ScoreTuple>::const_iterator it = scoreList.begin();
+    std::map<ap::uint32, ScoreTuple>::const_iterator it = scoreList.begin();
     for (; it != scoreList.end(); ++it) {
-      (*it).print();
+      it->second.print();
     }
   }
 } // namespace ap

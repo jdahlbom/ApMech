@@ -39,9 +39,12 @@ namespace ap {
 
     void print();
 
+    enum ScoreType {KILLS=1, DEATHS=2, SCORE=3};
+
   private:
-    std::list<ScoreTuple> scoreList;
-    mutable std::list<ScoreTuple>::const_iterator scoreIterator;
+    std::map<ap::uint32, ScoreTuple> scoreList;
+    mutable std::map<ap::uint32, ScoreTuple>::const_iterator scoreIterator;
+
   }; // class ScoreListing
 
 } // namespace ap
