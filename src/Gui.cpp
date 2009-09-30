@@ -160,14 +160,15 @@ namespace ap {
 
     std::list<ap::uint32> recentUIDList = std::list<ap::uint32>();
 
-    while(const ScoreTuple *tuple = scores.getEachScore())
+    ScoreTuple tuple;
+    while(scores.getEachScore(tuple))
       {
-	recentUIDList.push_back(tuple->uid);
+	recentUIDList.push_back(tuple.uid);
 
 	uint rowIndex;
 	bool addNew = false;
 	try {
-	  rowIndex = multiCL->getRowWithID(tuple->uid);
+	  rowIndex = multiCL->getRowWithID(tuple.uid);
 	} catch (CEGUI::InvalidRequestException) {
 	  // Just means this players' entry is new. New row addition needed.
 	  // Cannot set rowIndex to negative since it's uint, use addNew helper variable instead.
@@ -176,34 +177,34 @@ namespace ap {
 	
 	if (addNew) {
 	  // Explicitly set the last argument (AutoDelete) to true (even though it's default)
-	  ListboxItem *name = new ListboxTextItem(to_string(tuple->uid),0,0,false,true);
-	  ListboxItem *kills = new ListboxTextItem(to_string(tuple->kills),0,0,false,true);
-	  ListboxItem *deaths = new ListboxTextItem(to_string(tuple->deaths),0,0,false,true);
-	  ListboxItem *score = new ListboxTextItem(to_string(tuple->score),0,0,false,true);
+	  ListboxItem *name = new ListboxTextItem(to_string(tuple.uid),0,0,false,true);
+	  ListboxItem *kills = new ListboxTextItem(to_string(tuple.kills),0,0,false,true);
+	  ListboxItem *deaths = new ListboxTextItem(to_string(tuple.deaths),0,0,false,true);
+	  ListboxItem *score = new ListboxTextItem(to_string(tuple.score),0,0,false,true);
 
-	  rowIndex = multiCL->addRow(tuple->uid);
+	  rowIndex = multiCL->addRow(tuple.uid);
 
 	  multiCL->setItem(name, nameCol, rowIndex);
 	  multiCL->setItem(kills, killCol, rowIndex);
 	  multiCL->setItem(deaths, deathCol, rowIndex);
 	  multiCL->setItem(score, scoreCol, rowIndex);
 
-	  scoreListUIDs.push_back(tuple->uid);
+	  scoreListUIDs.push_back(tuple.uid);
 	} else {
 	  // Update a score row
 	  try {
 	    // name
 	    ListboxItem *item = multiCL->getItemAtGridReference(MCLGridRef(rowIndex,nameIndex));
-	    item->setText(to_string(tuple->uid));	    
+	    item->setText(to_string(tuple.uid));	    
 	    //kills
 	    item = multiCL->getItemAtGridReference(MCLGridRef(rowIndex, killIndex));
-	    item->setText(to_string(tuple->kills));
+	    item->setText(to_string(tuple.kills));
 	    //deaths
 	    item = multiCL->getItemAtGridReference(MCLGridRef(rowIndex, deathIndex));
-	    item->setText(to_string(tuple->deaths));
+	    item->setText(to_string(tuple.deaths));
 	    //score
 	    item = multiCL->getItemAtGridReference(MCLGridRef(rowIndex, scoreIndex));
-	    item->setText(to_string(tuple->score));
+	    item->setText(to_string(tuple.score));
 	  } catch (CEGUI::InvalidRequestException e) {
 	    // ListboxItem at requested MCLGridRef was not found..
 	    std::cout << "ListboxItem at requested MCLGridRef was not found, aborting..." 

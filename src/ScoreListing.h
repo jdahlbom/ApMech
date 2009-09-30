@@ -14,8 +14,8 @@ namespace ap {
   {
   public:
     ap::int32 uid;
-    ap::int16 kills;
-    ap::int16 deaths;
+    ap::uint16 kills;
+    ap::uint16 deaths;
     ap::int16 score;
 
     int serialize(uint8 buffer[], int start, int buflength) const;
@@ -30,20 +30,18 @@ namespace ap {
     ScoreListing();
     ~ScoreListing();
 
-    void addScore(ScoreTuple tuple);
+    void addScore(ScoreTuple tuple, bool replace=false);
     void clearAllScores();
-    const ScoreTuple* getEachScore() const;
+    bool getEachScore(ScoreTuple &result) const;
 
     int serialize(uint8 buffer[], int start, int buflength) const;
     int unserialize(uint8 buffer[], int start);
 
     void print();
 
-    enum ScoreType {KILLS=1, DEATHS=2, SCORE=3};
-
   private:
-    std::map<ap::uint32, ScoreTuple> scoreList;
-    mutable std::map<ap::uint32, ScoreTuple>::const_iterator scoreIterator;
+    std::map<ap::int32, ScoreTuple> scoreList;
+    mutable std::map<ap::int32, ScoreTuple>::const_iterator scoreIterator;
 
   }; // class ScoreListing
 
