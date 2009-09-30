@@ -32,13 +32,14 @@ class NetUser : public NetObject
 
     NetUser();
     NetUser(uint32 uid, ENetPeer *_peer);
-    uint8 getObjectType();
 
     void setControlPtr(Controller *ctrl);
 
+    // NetObject interface
     int serialize(enet_uint8 buffer[], int start, int buflength) const;
     int unserialize(enet_uint8 buffer[], int start);
-    NetObject *create(uint32 id);
+    NetObject *create(uint32 id) const;
+    uint8 getObjectType() const;
 };
 
 } // namespace net

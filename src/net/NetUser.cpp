@@ -1,8 +1,8 @@
 #include "NetUser.h"
 
 #include "serializer.h"
-
 #include "Controller.h"
+#include "../constants.h"
 
 namespace ap {
 namespace net {
@@ -27,9 +27,8 @@ NetUser::NetUser(uint32 _uid, ENetPeer *_peer) :
     changed = false;
 }
 
-ap::uint8 NetUser::getObjectType() {
-    return 59; // Should be:  ap::net::NetData::OBJECT_TYPE_NETUSER;
-                // But that makes linking problems now! (because NetData and NetUser include each other, I think)
+ap::uint8 NetUser::getObjectType() const {
+  return ap::OBJECT_TYPE_NETUSER; 
 }
 
 void NetUser::setControlPtr(Controller *ctrl)
@@ -95,7 +94,7 @@ int NetUser::unserialize(enet_uint8 buffer[], int start)
 }
 
 
-NetObject *NetUser::create(uint32 id) // OBS! FIXME! A rather dummy method. NetUser without uid is baddy.
+NetObject *NetUser::create(uint32 id) const // OBS! FIXME! A rather dummy method. NetUser without uid is baddy.
 {
     NetObject *ptr = new NetUser();
     return ptr;

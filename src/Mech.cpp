@@ -24,14 +24,14 @@ Mech::Mech(Ogre::Vector3 velocity) :
     objectType = ap::OBJECT_TYPE_MECH;
 }
 
-net::NetObject *Mech::create(uint32 _id)
+net::NetObject *Mech::create(uint32 _id) const
 {
     Mech *mech = new Mech(Ogre::Vector3::ZERO);
     mech->id = _id;
     return mech;
 }
 
-uint8 Mech::getObjectType()
+uint8 Mech::getObjectType() const
 {
     return ap::OBJECT_TYPE_MECH;
 }

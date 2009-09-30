@@ -52,7 +52,8 @@ class MovingObject : public net::NetObject {
     MovableState* getStatePtr() const {return state; }
 
     void update(float sSinceLast);
-    int advance(float dt) { update(dt); return 0; }
+
+    bool testCollision(const MovingObject &other) const;
 
     // WeaponControl methods
     void setFiring(bool firingStatus);
@@ -62,8 +63,9 @@ class MovingObject : public net::NetObject {
     int serialize(uint8 *buffer, int start, int buflength) const;
     int unserialize(uint8 *buffer, int start);
     NetObject *create(uint32 id);
+    int advance(float dt) { update(dt); return 0; }
+    virtual uint8 getObjectType() const = 0;
 
-    bool testCollision(const MovingObject &other) const;
 
  protected:
     uint8              objectType;

@@ -1,8 +1,21 @@
 #include "ScoreListing.h"
 
+#include "constants.h"
+//FIXME: netobjectprototypes should be removed from netdata, to avoid these dependencies!
+#include "net/netdata.h"
 #include "net/serializer.h"
 
 namespace ap {
+
+  // Add prototype to netobjectprototypes.
+   class ScoreListingInject {
+   public:
+     ScoreListingInject() {
+       ap::net::netobjectprototypes().insert(
+           std::make_pair(ap::OBJECT_TYPE_SCORELISTING, new ScoreListing()));
+     }
+   };
+  static ScoreListingInject __projectileinject;
 
   int ScoreTuple::serialize(uint8 buffer[], int start, int buflength) const
   {
@@ -34,7 +47,7 @@ namespace ap {
   }
 
   ScoreListing::ScoreListing() :
-    scoreList(std::map<ap::int32, ScoreTuple>()),
+    scoreList(std::map<ap::uint32, ScoreTuple>()),
     scoreIterator(scoreList.begin()) {}
 
   ScoreListing::~ScoreListing() {}
@@ -45,8 +58,8 @@ namespace ap {
    * @param ScoreTuple tuple   The tuple to be added to the container.
    * @param bool       replace If true, existing tuple with same uid will be replaced. Otherwise their values will be added together.
    */
-  void ScoreListing::addScore(ScoreTuple tuple, bool replace) {
-    std::map<ap::int32, ScoreTuple>::iterator it = scoreList.find(tuple.uid);
+  void ScoreListing::addScore(const ScoreTuple &tuple, bool replace) {
+    std::map<ap::uint32, ScoreTuple>::iterator it = scoreList.find(tuple.uid);
 
     if(it != scoreList.end()) {
       if (replace) {
@@ -58,7 +71,7 @@ namespace ap {
 	return;
       }
     }
-    scoreList.insert(std::make_pair<ap::int32, ScoreTuple>(tuple.uid, tuple));
+    scoreList.insert(std::make_pair<ap::uint32, ScoreTuple>(tuple.uid, tuple));
     scoreIterator = scoreList.begin();
   }
 
@@ -98,7 +111,7 @@ namespace ap {
     
     length += ap::net::serialize(numberOfTuples, buffer, start+length, buflength-length);
 
-    std::map<ap::int32, ScoreTuple>::const_iterator it = scoreList.begin();
+    std::map<ap::uint32, ScoreTuple>::const_iterator it = scoreList.begin();
     for (; it != scoreList.end(); ++it) {
       length += it->second.serialize(buffer, start+length, buflength+length);
     }
@@ -120,9 +133,19 @@ namespace ap {
     return length;
   }
 
-  void ScoreListing::print()
+  ap::uint8 ScoreListing::getObjectType() const {
+    return ap::OBJECT_TYPE_SCORELISTING;
+  }
+
+  ap::net::NetObject* ScoreListing::create(ap::uint32 _id) const {
+    ap::net::NetObject *pNetObject = new ScoreListing();
+    pNetObject->id = _id;
+    return pNetObject;
+  }
+
+  void ScoreListing::print() const
   {
-    std::map<ap::int32, ScoreTuple>::const_iterator it;
+    std::map<ap::uint32, ScoreTuple>::const_iterator it;
     for (it = scoreList.begin(); it != scoreList.end(); ++it) {
       it->second.print();
     }

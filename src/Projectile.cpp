@@ -24,7 +24,7 @@ Projectile::Projectile(Ogre::Vector3 velocity) :
     objectType = ap::OBJECT_TYPE_PROJECTILE;
 }
 
-net::NetObject *Projectile::create(uint32 id)
+net::NetObject *Projectile::create(uint32 id) const
 {
     Projectile *proj = new Projectile(Ogre::Vector3::ZERO);
     proj->id = id;
@@ -41,7 +41,7 @@ int Projectile::advance(float dt)
     return 0;
 }
 
-uint8 Projectile::getObjectType()
+uint8 Projectile::getObjectType() const
 {
     return ap::OBJECT_TYPE_PROJECTILE;
 }

@@ -18,10 +18,11 @@ class Projectile : public MovingObject
     Projectile(Ogre::Vector3 velocity);
     ~Projectile() {}
 
-    net::NetObject *create(uint32 id);
+    // NetObject interface
+    net::NetObject *create(uint32 id) const;
     int advance(float dt);
 
-    uint8 getObjectType();
+    uint8 getObjectType() const;
 };
 
 } // namespace ap
