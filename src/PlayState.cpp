@@ -99,9 +99,27 @@ void PlayState::update( unsigned long lTimeElapsed ) {
                 deleteNetObject(event.uid);
                 break;
             case net::NetData::EVENT_CREATEOBJECT:
-                std::cout << "[PLAYSTATE] Handled EVENT_CREATEOBJECT, uid: " << event.uid << std::endl;
-                createSceneNodeForMovable(event.uid);
-                break;
+	      {
+		NetObject *pObject = netdata->getObject(event.uid);
+		if (pObject) {		
+		  switch (pObject->getObjectType()) {
+		  case ap::OBJECT_TYPE_SCORELISTING:
+		    pScoreListing = dynamic_cast<ap::ScoreListing *>(pObject);
+		    updateScores();
+		    break;
+		  case ap::OBJECT_TYPE_MECH:
+		  case ap::OBJECT_TYPE_PROJECTILE:
+		    createSceneNodeForMovable(event.uid);
+		    break;
+		  default:
+		    break;
+		  }
+		}
+		break;
+	      }
+	    case net::NetData::EVENT_UPDATEOBJECT:
+	      updateScores(); // at the moment updateScores is the only update event.
+	        break;
             case net::NetData::EVENT_MESSAGE:
                 pGui->addChatItem(event.message->data);
                 break;
@@ -115,7 +133,6 @@ void PlayState::update( unsigned long lTimeElapsed ) {
 
 void PlayState::setAvatar(uint32 avatarId)
 {
-    std::cout << "[PLAYSTATE] Set avatar to id " << avatarId << std::endl;
     assert(0!=netdata);
     if ( avatarId == mAvatarId )
         return;
@@ -134,7 +151,6 @@ void PlayState::setAvatar(uint32 avatarId)
 void PlayState::createSceneNodeForMovable(uint32 objectId)
 {
     // FIXME: Nasty having to cast things...
-    std::cout << "[PLAYSTATE]<createSceneNodeForMovable> object id: " << objectId << " [eol] " << std::endl;
     ap::MovingObject *pAvatarObject = dynamic_cast<ap::MovingObject *>(netdata->getObject(objectId));
     if (!pAvatarObject->hasOwnerNode()) {
         std::stringstream ss;
@@ -232,41 +248,6 @@ void PlayState::createGUIWindow()
   pGui->setupChatBox();
   pGui->setupScoreWindow();
   pGui->setChatReceiver(this);
-
-  ScoreListing listing;
-  ScoreTuple tuple;
-  tuple.uid = 1;
-  tuple.kills=11;
-  tuple.deaths=111;
-  tuple.score=1111;
-  listing.addScore(tuple);
-  tuple.uid = 2;
-  tuple.kills = 22;
-  tuple.deaths = 222;
-  tuple.score = 2222;
-  listing.addScore(tuple);
-
-  std::cout << "PlayState::createGUIWindow():" << std::endl;
-  listing.print();
-
-  pGui->updateScores(listing);
-
-  listing.clearAllScores();
-  std::cout << "PS:cGUIW: cleared:" << std::endl;
-  listing.print();
-
-  tuple.kills=33;
-  listing.addScore(tuple);
-  tuple.uid=5;
-  tuple.kills=55;
-  tuple.deaths=555;
-  tuple.score=5555;
-  listing.addScore(tuple);
-  listing.print();
-
-  std::cout << "PS:cGUIW: added new: " << std::endl;
-  //  listing.addScore(tuple);
-  pGui->updateScores(listing);
 }
 
 bool PlayState::keyPressed( const ap::ooinput::KeyEvent &e ) {
@@ -413,5 +394,11 @@ void PlayState::createLighting(Ogre::SceneManager *sceneManager)
     myLight2->setSpecularColour(Ogre::ColourValue(0.5f, 0.5f, 0.5f));
     myLight2->setDirection(Ogre::Vector3(1,0,-1));
 }
+
+ void PlayState::updateScores() const {
+   if (pGui && pScoreListing) {
+     pGui->updateScores(*pScoreListing);
+   }
+ }
 
 } // namespace ap

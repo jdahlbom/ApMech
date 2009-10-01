@@ -8,6 +8,7 @@
 
 #include "../Mech.h"
 #include "../MovingObject.hpp"
+#include "../ScoreListing.h"
 #include "../types.h"
 
 namespace ap {
@@ -21,6 +22,7 @@ class Server
 
     private:
     ap::net::NetData    *netdata;
+    ap::ScoreListing    *mScores;
     uint64              nextupdate; // When we will send updates to clients the next time
     uint64              oldticks;   // These here for tracking time
     uint64              newticks;   // These here for tracking time

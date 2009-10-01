@@ -220,7 +220,6 @@ namespace ap {
     for(it=scoreListUIDs.begin(); it!=scoreListUIDs.end(); )
       {
 	const ap::uint32 testedId = *it;
-	std::cout << "Tested id: " << *it << std::endl;
 	if (std::find(recentUIDList.begin(), recentUIDList.end(), testedId) == recentUIDList.end()){
 	  // This row id should no longer be shown in the score list.
 	  uint rowIndex;
