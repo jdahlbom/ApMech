@@ -51,6 +51,7 @@ class NetData {
     static const enet_uint8 EVENT_DELETEOBJECT = 23;
     static const enet_uint8 EVENT_CREATEOBJECT = 24;
     static const enet_uint8 EVENT_MESSAGE = 25;
+    static const enet_uint8 EVENT_UPDATEOBJECT = 26;
 
  private:
     enum status_type { enet_error, offline, connected, server };
@@ -70,6 +71,8 @@ class NetData {
 
     void addEvent(NetEvent *event); // Almost useless, if you can push_back stuff to a list
     uint32 processPacketNetObject(enet_uint8 *data);
+    ap::uint32 createPacketNetObject(const ap::net::NetObject* pObj, enet_uint8 *data,
+				     ap::uint32 start, ap::uint32 buflength) const;
 
     std::map <int, NetObject*> netobjects;
     std::multimap <ap::uint8, NetObject*> netObjectsByType; // Index table for efficient eachObject

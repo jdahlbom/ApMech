@@ -1,5 +1,6 @@
 #include "netdata.h"
 
+#include "../constants.h" // netdata should not need this!
 #include "../types.h"
 #include "serializer.h"
 
@@ -311,25 +312,63 @@ int NetData::serviceClient()
     return items;
 }
 
+  /**
+   * Client handling code of NETOBJECT packets.
+   *
+   * createPacketNetObject is the matching method used by server for sending one.
+   *
+   * @param enet_uint8* data Pointer to the packet data where to start unserializing.
+   * @return uint32 The length of unserialized object.
+   */
 uint32 NetData::processPacketNetObject(enet_uint8 *data)
 {
     ap::uint8 objtype;
     ap::uint32 id;
 
     int length = 0;
-    length = ap::net::unserialize(id, data, length);
+    length += ap::net::unserialize(id, data, length);
+    length += ap::net::unserialize(objtype, data, length);
 
     if (netobjects.find(id) != netobjects.end()) {
-        length = netobjects.find(id)->second->unserialize(data, 0);
+        length += netobjects.find(id)->second->unserialize(data, length);
+	// TODO Should not be here. netdata should be content-neutral!
+	switch(objtype) {
+	case ap::OBJECT_TYPE_SCORELISTING:
+	  addEvent(new NetEvent(EVENT_UPDATEOBJECT, id));
+	  break;
+	default:
+	  break;
+	}
     } else {
-        length += ap::net::unserialize(objtype, data, length);
         insertObject(ap::net::netobjectprototypes()[objtype]->create(id), id);
-        length = netobjects.find(id)->second->unserialize(data, 0);
+	// FIXME: Ugh, chaining map-find and methods operating on it. Looks bad. -JD
+        length += netobjects.find(id)->second->unserialize(data, length);
         addEvent(new NetEvent(EVENT_CREATEOBJECT, id));
     }
 
     return length;
 }
+
+  /**
+   * Server creation code of NETOBJECT packets
+   *
+   * processPacketNetObject is the matching method used by client for receiving.
+   *
+   * @return uint32 The length of created packet.
+   */
+  ap::uint32 NetData::createPacketNetObject(const ap::net::NetObject* pObj, enet_uint8 *data, 
+					    ap::uint32 start, ap::uint32 buflength) const
+  {
+    ap::uint32 length = 0;
+    data[start+(length++)] = NetData::PACKET_NETOBJECT;
+   
+    length += ap::net::serialize(pObj->id, data, start+length, buflength);
+    length += ap::net::serialize(pObj->getObjectType(), data, start+length, buflength);
+    length += pObj->serialize(data, start+length, buflength);
+
+    return length;
+  }
+  
 
 int NetData::receiveChanges()
 {
@@ -355,7 +394,6 @@ void NetData::sendClientChanges()
 
 int NetData::sendChanges()
 {
-    //std::cout << "[NETDATA] Sending changes - " << netobjects.size() << " objects in map" << std::endl;
     int items = 0;
     if ((status == connected) && (me.changed) && (me.uid > 0)) { // Do we have updated things to send!
         std::set<int>::iterator iDelPkg = objectDeleteQueue.begin();
@@ -379,17 +417,11 @@ int NetData::sendChanges()
         }
         po = netobjects.begin();
         while (po != netobjects.end()) {
-            buffer[length++] = NetData::PACKET_NETOBJECT;
-            length += po->second->serialize(buffer, length, 10000);
-            packetstosend++; po++;
+	  length += createPacketNetObject(po->second, buffer, length, 10000);
+	  packetstosend++; po++;
         }
         buffer[length++] = NetData::PACKET_EOF;
 
-/* // Debug info: print what we see in map, and how it's serialized
-for (map<int,NetObject*>::iterator i=netobjects.begin() ; i != netobjects.end() ; i++)
-    cout << "Map ID "<<i->first << " to "<<i->second->id<<endl;
-hexprint(buffer, length);
-*/
         if (packetstosend > 0) {
             ENetPacket *packet = enet_packet_create(buffer, length, 0);//ENET_PACKET_FLAG_RELIABLE);
             enet_host_broadcast(enethost, 0, packet);
