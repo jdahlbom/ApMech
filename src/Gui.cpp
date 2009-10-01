@@ -236,6 +236,8 @@ namespace ap {
 	  ++it;
 	}	
       }
+
+    multiCL->requestRedraw(); // Update the score list element on next render cycle.
   } // updateScores
 
   void Gui::activateChatBox(bool activate)
