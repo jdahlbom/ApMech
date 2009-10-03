@@ -75,6 +75,10 @@ namespace ap {
     scoreIterator = scoreList.begin();
   }
 
+  void ScoreListing::removeScore(ap::uint32 id) {
+    scoreList.erase(id);
+  }
+
   void ScoreListing::clearAllScores() {
     scoreList.clear();
     scoreIterator = scoreList.begin();
@@ -128,7 +132,7 @@ namespace ap {
     ScoreTuple tempTuple;
     for (int i=0; i<numberOfTuples; ++i) {
       length += tempTuple.unserialize(buffer, start+length);
-      addScore(tempTuple);
+      addScore(tempTuple, true);
     }
     return length;
   }

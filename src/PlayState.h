@@ -11,6 +11,7 @@
 #include "Gui.h"
 #include "GuiChatReceiver.h"
 #include "MovingObject.hpp"
+#include "ScoreListing.h"
 #include "net/netdata.h"
 #include "types.h"
 #include "constants.h"
@@ -57,6 +58,8 @@ private:
     Ogre::SceneNode             *mCameraNode;
     Ogre::SceneNode             *mCameraNodeParent;
 
+    ap::ScoreListing            *pScoreListing;
+
     ap::Gui                     *pGui;
     ap::net::NetData            *netdata;
 
@@ -79,6 +82,7 @@ private:
     void setNetDataDirty() { netdata->me.changed = true; }
     void createNewEntity(ap::MovingObject *newObject, uint32 objectId);
     void createGUIWindow();
+    void updateScores() const;
 
 };
 

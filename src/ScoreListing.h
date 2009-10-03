@@ -32,6 +32,7 @@ namespace ap {
     ~ScoreListing();
 
     void addScore(const ScoreTuple& tuple, bool replace=false);
+    void removeScore(ap::uint32 id);
     void clearAllScores();
     bool getEachScore(ScoreTuple &result) const;
     void print() const;

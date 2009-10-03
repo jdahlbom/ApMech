@@ -23,6 +23,7 @@ namespace server {
 using namespace std;
 
 Server::Server(uint32 port) :
+  mScores(new ap::ScoreListing()),
   mPort(port)
 {
     std::cout << "[SERVER] Created a server."<< std::endl;
@@ -37,9 +38,10 @@ void Server::start() {
         std::cout << "[SERVER] Error initializing NetData, exiting!" << std::endl;
         return;
     }
-
+    
     std::cout << "[SERVER] Serving "<< ap::net::netobjectprototypes().size()<<" types of objects."<<std::endl;
 
+    netdata->insertObject(mScores);
     newticks = nextupdate = getTicks();
 
     while (1) {             // Server main loop
@@ -78,9 +80,12 @@ void Server::processEvents(ap::net::NetData *pNetData) {
         }
         case ap::net::NetData::EVENT_DISCONNECT:
             cout << "[SERVER] Client "<<event.uid<<" disconnected."<<endl;
-            while (Mech *pM = pNetData->eachObject<Mech *>(ap::OBJECT_TYPE_MECH))
+            while (Mech *pM = pNetData->eachObject<Mech *>(ap::OBJECT_TYPE_MECH)) {
                 if (pM->uid == event.uid) pNetData->delObject(pM->id);
+	    }
+	    mScores->removeScore(event.uid);
             break;
+
         default:
             break;
         }
@@ -108,7 +113,7 @@ void Server::fireWeapons(uint64 tstamp, ap::net::NetData *pNetData) {
         if (mech->fireGun(tstamp)) weaponFired(pNetData, mech);
 }
 
-void Server::weaponFired(ap::net::NetData *pNetData, ap::MovingObject *source) {
+  void Server::weaponFired(ap::net::NetData *pNetData, ap::MovingObject *source) {
     Ogre::Vector3 facing = source->getFacing();
 
     int newid = pNetData->insertObject(new ap::Projectile(facing * 150.0f)); //150 is velocity
@@ -117,16 +122,39 @@ void Server::weaponFired(ap::net::NetData *pNetData, ap::MovingObject *source) {
     bullet->setMaxSpeed(625.0f);
     bullet->setPosition(source->getPosition() + facing*70.0f + Ogre::Vector3(0.0f, 80.0f, 0.0f));
     bullet->setFacing(facing);
+    bullet->uid = source->uid;
 }
 
 void Server::detectCollisions(ap::net::NetData *pNetData) const {
 
-    while (ap::Mech *mech = pNetData->eachObject<ap::Mech *>(ap::OBJECT_TYPE_MECH))
-        while (ap::Projectile *proj = pNetData->eachObject<ap::Projectile *>(ap::OBJECT_TYPE_PROJECTILE))
+    while (ap::Mech *mech = pNetData->eachObject<ap::Mech *>(ap::OBJECT_TYPE_MECH)) 
+      {
+        while (ap::Projectile *proj = pNetData->eachObject<ap::Projectile *>(ap::OBJECT_TYPE_PROJECTILE)) 
+	  {
             if (proj->testCollision(*mech)) {
                 relocateSpawnedMech(mech);
+
+		// update scores.
+		ap::ScoreTuple projOwner;
+		projOwner.uid = proj->uid;
+		projOwner.kills = 1;
+		projOwner.deaths = 0;
+		projOwner.score = 1;
+		ap::ScoreTuple mechOwner;
+		mechOwner.uid = mech->uid;
+		mechOwner.kills = 0;
+		mechOwner.deaths = 1;
+		mechOwner.score = -1;
+		mScores->addScore(projOwner, false);
+		mScores->addScore(mechOwner, false);
+		mScores->setChanged();
+		
+		mScores->print();
+
                 pNetData->delObject(proj->id);
             }
+	  }
+      }
 }
 
 void Server::relocateSpawnedMech(ap::Mech *mech) const
@@ -149,6 +177,15 @@ void Server::createNewConnection(ap::uint32 userId, ap::net::NetData *pNetData)
   relocateSpawnedMech(newAvatar);
 
   pNetData->getUser(userId)->setControlPtr(newAvatar->getControlPtr());
+  
+  // Add scores:
+  ap::ScoreTuple newPlayer;
+  newPlayer.uid = userId;
+  newPlayer.kills = 0;
+  newPlayer.deaths = 0;
+  newPlayer.score = 0;
+  mScores->addScore(newPlayer, true);
+  mScores->setChanged();
 
   pNetData->sendChanges();
   pNetData->setAvatarID(userId, newid);
