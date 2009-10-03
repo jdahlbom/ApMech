@@ -6,6 +6,7 @@
  *  Jonni Lehtiranta
  */
 
+#include "types.h"
 #include <string>
 #include <sstream>
 #include <iostream>
@@ -24,13 +25,22 @@ void hexprint(enet_uint8 *buffer, int length); // Cout a random buffer and maybe
  * generic to_string() for any pipeable type.
  */
 template <class T> inline std::string to_string (const T &t)
-  {
+{
     std::stringstream ss;
     ss << t;
     return ss.str();
-  }
+}
+
+template <class T> bool from_string(T& t, const std::string& s, std::ios_base& (*f)(std::ios_base&))
+{
+  std::istringstream iss(s);
+  return !(iss >> f >> t).fail();
+}
+
 
 long int getTicks(); // milliseconds since approx program start. OBS! Not C-standard, but POSIX
+
+ap::uint32 getColorFromPseudoHue(float phue);
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 

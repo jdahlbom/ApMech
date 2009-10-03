@@ -91,8 +91,14 @@ void Server::processEvents(ap::net::NetData *pNetData) {
 void Server::updateObjects(float dt, ap::net::NetData* pNetData) const {
 
     while (NetObject *nop = pNetData->eachObject()) {
-//        cout << "upd. obj"<< endl;cout << nop->id <<endl;
         if (nop->advance(dt) == -1) pNetData->delObject(nop->id);
+    }
+
+    // Copy colors from NetUser data to Mechs they own
+    // TODO: think of some way of doing this only when necessary!
+    while (ap::Mech *pMech = pNetData->eachObject<ap::Mech*>(ap::OBJECT_TYPE_MECH)) {
+        if (pNetData->getUser(pMech->uid))
+            pMech->color = pNetData->getUser(pMech->uid)->color;
 
     }
 } // void Server::updateObjects
@@ -139,6 +145,7 @@ void Server::createNewConnection(ap::uint32 userId, ap::net::NetData *pNetData)
   newAvatar->setMaxSpeed(35.0f);
   newAvatar->setFriction(8.0f);
   newAvatar->uid = userId;
+  newAvatar->color = pNetData->getUser(userId)->color;
   relocateSpawnedMech(newAvatar);
 
   pNetData->getUser(userId)->setControlPtr(newAvatar->getControlPtr());

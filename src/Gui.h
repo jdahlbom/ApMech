@@ -22,7 +22,7 @@ class Gui
   ~Gui();
 
   void setupChatBox();
-  void setupLoginWindow(const std::string &ipAddress = "", const std::string &playerName = "");
+  void setupLoginWindow(const std::string &ipAddress = "", const std::string &playerName = "", const float colorIndex = 0.0f);
   void setupScoreWindow();
 
   void exitLoginWindow();
@@ -37,6 +37,7 @@ class Gui
   void addChatItem(const std::string &item);
 
   void setLoginReceiver(GuiLoginReceiver *receiver);
+  float getColorSliderValue();
 
   // KeyboardListener interface
 

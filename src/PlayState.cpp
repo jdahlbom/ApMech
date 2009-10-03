@@ -10,6 +10,7 @@
 #include "Mech.h"
 #include "Projectile.h"
 #include "ScoreListing.h"
+#include "functions.h"
 #include "types.h"
 
 namespace ap {
@@ -58,8 +59,9 @@ void PlayState::enter( void ) {
     netdata = new net::NetData(net::NetData::CLIENT);
     netdata->connect(ipAddress, 50740);
     netdata->me.nick = playerName;
+    netdata->me.color = getColorFromPseudoHue(pGui->getColorSliderValue());
     netdata->me.changed = true;         // Mark this info for transmission
-
+    netdata->sendChanges();             // Send changes without waiting!
     std::cout << "Entering PlayState" << std::endl;
 }
 
@@ -88,6 +90,16 @@ void PlayState::update( unsigned long lTimeElapsed ) {
     while (ap::MovingObject *pMO = netdata->eachObject<ap::MovingObject *>(ap::OBJECT_TYPE_MECH)) pMO->updateNode();
     while (ap::MovingObject *pMO = netdata->eachObject<ap::MovingObject *>(ap::OBJECT_TYPE_PROJECTILE)) pMO->updateNode();
 
+    // Color all mechs.
+    // TODO: find a way to do this only when necessary.
+    while (ap::Mech *pMech = netdata->eachObject<ap::Mech*>(ap::OBJECT_TYPE_MECH)) {
+        float r, g, b;
+        r = float(pMech->color & 0x0000FF) / 255.0f;
+        g = float(pMech->color & 0x00FF00) / 65535.0f;
+        b = float(pMech->color & 0xFF0000) / 16777215.0f;
+        if (pMech->getEntity())
+            pMech->getEntity()->getSubEntity(0)->setCustomParameter(1, Ogre::Vector4(r, g, b, 0.0f));
+    }
 
     net::NetEvent event;
     while (netdata->pollEvent(event)) {
@@ -129,6 +141,10 @@ void PlayState::setAvatar(uint32 avatarId)
     attachCameraNode(pAvatarNode);
     netdata->me.setControlPtr(pAvatarObject->getControlPtr());
     mObject = pAvatarObject;
+
+    // Phew! This is *some* trouble to get the Entity for our avatar object.
+    // TODO: Maybe there is (or should be made) a simpler way to get the Entity..
+//    dynamic_cast<Ogre::Entity*>(pAvatarObject->getOwnerNode()->getAttachedObject(0))->getSubEntity(0)->setCustomParameter(1, Ogre::Vector4(1.f, 0.f, 0.8f, 0.0f));
 }
 
 void PlayState::createSceneNodeForMovable(uint32 objectId)
@@ -149,6 +165,7 @@ void PlayState::createSceneNodeForMovable(uint32 objectId)
 
 void PlayState::createNewEntity(ap::MovingObject *newObject, uint32 objectId)
 {
+    Ogre::Entity *newEntity;
     assert(newObject->hasOwnerNode());
 
     std::stringstream ss;
@@ -158,11 +175,24 @@ void PlayState::createNewEntity(ap::MovingObject *newObject, uint32 objectId)
 
     std::stringstream mesh;
     if (dynamic_cast<ap::Mech *>(newObject)) {
-        mesh << "CrudeMech.mesh";
+        float r, g, b;
+
+        ap::Mech *pMech = dynamic_cast<ap::Mech *>(newObject);
+        r = float(pMech->color & 0x0000FF) / 255.0f;
+        g = float(pMech->color & 0x00FF00) / 65535.0f;
+        b = float(pMech->color & 0xFF0000) / 16777215.0f;
+
+        newEntity = pSceneManager->createEntity(ss.str(), "CrudeMech.mesh");
+        newEntity->getSubEntity(0)->setCustomParameter(1, Ogre::Vector4(r, g, b, 0.0f));
+        pMech->setEntity(newEntity);
     } else if (dynamic_cast<ap::Projectile *>(newObject)) {
         mesh << "CrudeMissile.mesh";
+        newEntity = pSceneManager->createEntity(ss.str(), mesh.str());
+
+        ap::Projectile *pProj = dynamic_cast<ap::Projectile *>(newObject);
+        pProj->setEntity(newEntity);
     }
-    Ogre::Entity *newEntity = pSceneManager->createEntity(ss.str(), mesh.str());
+
     objNode->attachObject(newEntity);
 }
 

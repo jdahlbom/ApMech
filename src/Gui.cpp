@@ -30,9 +30,9 @@ namespace ap {
     using namespace CEGUI;
 
     mSystem = new System( renderer );
-    SchemeManager::getSingleton().loadScheme((CEGUI::utf8*)"TaharezLookSkin.scheme");
+    SchemeManager::getSingleton().loadScheme((CEGUI::utf8*)"ApMechLookSkin.scheme");
 
-    mSystem->setDefaultMouseCursor((CEGUI::utf8*)"TaharezLook", (CEGUI::utf8*)"MouseArrow");
+    mSystem->setDefaultMouseCursor((CEGUI::utf8*)"ApMechLook", (CEGUI::utf8*)"MouseArrow");
     mSystem->setDefaultFont((CEGUI::utf8*)"BlueHighway-12");
 
     pWinMgr = WindowManager::getSingletonPtr();
@@ -48,7 +48,7 @@ namespace ap {
   void Gui::setupChatBox()
   {
     assert(pWinMgr);
-    CEGUI::Window *chatLayout = pWinMgr->loadWindowLayout(chatLayoutFile);    
+    CEGUI::Window *chatLayout = pWinMgr->loadWindowLayout(chatLayoutFile);
     pRoot->addChildWindow(chatLayout);
 
     pChatBox = pWinMgr->getWindow("/ChatBox/Text");
@@ -56,7 +56,7 @@ namespace ap {
 			     CEGUI::Event::Subscriber(&Gui::chatMessageSent, this));
   }
 
-  void Gui::setupLoginWindow(const std::string &ipAddress, const std::string &playerName)
+  void Gui::setupLoginWindow(const std::string &ipAddress, const std::string &playerName, const float colorIndex)
   {
     assert(pWinMgr);
     if ( pWinMgr->isWindowPresent(loginRootName) ) {
@@ -79,6 +79,7 @@ namespace ap {
 
     pWinMgr->getWindow("/Login/Address")->setText(ipAddress);
     pWinMgr->getWindow("/Login/Name")->setText(playerName);
+    dynamic_cast<CEGUI::Slider *>(pWinMgr->getWindow("/Login/ColorSlider"))->setCurrentValue(colorIndex);
   }
 
   void Gui::setupScoreWindow()
@@ -125,7 +126,7 @@ namespace ap {
       scoreRoot->hide();
       return;
     }
-  }  
+  }
 
   void Gui::updateScores(const ScoreListing &scores)
   {
@@ -138,7 +139,7 @@ namespace ap {
     assert(pWinMgr);
     MultiColumnList *multiCL = dynamic_cast<MultiColumnList *>(pWinMgr->getWindow(scoreWindowName));
 
-    // matching column indices to the colIDs used in layout file.    
+    // matching column indices to the colIDs used in layout file.
     const uint nameCol = 1;
     const uint killCol = 2;
     const uint deathCol = 3;
@@ -174,7 +175,7 @@ namespace ap {
 	  // Cannot set rowIndex to negative since it's uint, use addNew helper variable instead.
 	  addNew = true;
 	}
-	
+
 	if (addNew) {
 	  // Explicitly set the last argument (AutoDelete) to true (even though it's default)
 	  ListboxItem *name = new ListboxTextItem(to_string(tuple.uid),0,0,false,true);
@@ -195,7 +196,7 @@ namespace ap {
 	  try {
 	    // name
 	    ListboxItem *item = multiCL->getItemAtGridReference(MCLGridRef(rowIndex,nameIndex));
-	    item->setText(to_string(tuple.uid));	    
+	    item->setText(to_string(tuple.uid));
 	    //kills
 	    item = multiCL->getItemAtGridReference(MCLGridRef(rowIndex, killIndex));
 	    item->setText(to_string(tuple.kills));
@@ -207,7 +208,7 @@ namespace ap {
 	    item->setText(to_string(tuple.score));
 	  } catch (CEGUI::InvalidRequestException e) {
 	    // ListboxItem at requested MCLGridRef was not found..
-	    std::cout << "ListboxItem at requested MCLGridRef was not found, aborting..." 
+	    std::cout << "ListboxItem at requested MCLGridRef was not found, aborting..."
 		      << std::endl;
 	    throw 0;
 	  }
@@ -235,7 +236,7 @@ namespace ap {
 	  it = scoreListUIDs.erase(it);
 	} else {
 	  ++it;
-	}	
+	}
       }
   } // updateScores
 
@@ -256,6 +257,13 @@ namespace ap {
   {
     assert(receiver);
     pLoginReceiver = receiver;
+  }
+
+  float Gui::getColorSliderValue()
+  {
+    CEGUI::Slider *slider = dynamic_cast<CEGUI::Slider *>(CEGUI::WindowManager::getSingletonPtr()->getWindow("/Login/ColorSlider"));
+    assert (slider);
+    return slider->getCurrentValue();
   }
 
   void Gui::addChatItem(const std::string &item)

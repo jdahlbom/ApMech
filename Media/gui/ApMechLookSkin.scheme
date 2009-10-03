@@ -1,0 +1,49 @@
+<?xml version="1.0" ?>
+<GUIScheme Name="ApMechLook">
+	<Imageset Name="ApMechLook" Filename="ApMechLook.imageset" />
+    <Font Name="BlueHighway-12" Filename="bluehighway-12.font" />
+    <Font Name="BlueHighway-10" Filename="bluehighway-10.font" />
+    <Font Name="BlueHighway-8" Filename="bluehighway-8.font" />
+	<LookNFeel Filename="ApMechLook.looknfeel" />
+	<WindowRendererSet Filename="CEGUIFalagardWRBase" />
+	<FalagardMapping WindowType="ApMechLook/Button"      TargetType="CEGUI/PushButton"  Renderer="Falagard/Button"       LookNFeel="ApMechLook/Button" />
+	<FalagardMapping WindowType="ApMechLook/Checkbox"    TargetType="CEGUI/Checkbox"    Renderer="Falagard/ToggleButton" LookNFeel="ApMechLook/Checkbox" />
+	<FalagardMapping WindowType="ApMechLook/ImageButton" TargetType="CEGUI/PushButton"  Renderer="Falagard/Button"       LookNFeel="ApMechLook/ImageButton" />
+	<FalagardMapping WindowType="ApMechLook/RadioButton" TargetType="CEGUI/RadioButton" Renderer="Falagard/ToggleButton" LookNFeel="ApMechLook/RadioButton" />
+	<FalagardMapping WindowType="ApMechLook/FrameWindow"  TargetType="CEGUI/FrameWindow" Renderer="Falagard/FrameWindow"  LookNFeel="ApMechLook/FrameWindow" />
+	<FalagardMapping WindowType="ApMechLook/Titlebar"     TargetType="CEGUI/Titlebar"    Renderer="Falagard/Titlebar"     LookNFeel="ApMechLook/Titlebar" />
+	<FalagardMapping WindowType="ApMechLook/SystemButton" TargetType="CEGUI/PushButton"  Renderer="Falagard/SystemButton" LookNFeel="ApMechLook/Button" />
+	<FalagardMapping WindowType="ApMechLook/Editbox"          TargetType="CEGUI/Editbox"          Renderer="Falagard/Editbox"          LookNFeel="ApMechLook/Editbox" />
+	<FalagardMapping WindowType="ApMechLook/MultiLineEditbox" TargetType="CEGUI/MultiLineEditbox" Renderer="Falagard/MultiLineEditbox" LookNFeel="ApMechLook/MultiLineEditbox" />
+	<FalagardMapping WindowType="ApMechLook/Menubar"   TargetType="CEGUI/Menubar"   Renderer="Falagard/Menubar"   LookNFeel="ApMechLook/Menubar" />
+	<FalagardMapping WindowType="ApMechLook/PopupMenu" TargetType="CEGUI/PopupMenu" Renderer="Falagard/PopupMenu" LookNFeel="ApMechLook/PopupMenu" />
+	<FalagardMapping WindowType="ApMechLook/MenuItem"  TargetType="CEGUI/MenuItem"  Renderer="Falagard/MenuItem"  LookNFeel="ApMechLook/MenuItem" />
+	<FalagardMapping WindowType="ApMechLook/AlternateProgressBar" TargetType="CEGUI/ProgressBar" Renderer="Falagard/ProgressBar" LookNFeel="ApMechLook/AltProgressBar" />
+	<FalagardMapping WindowType="ApMechLook/ProgressBar"          TargetType="CEGUI/ProgressBar" Renderer="Falagard/ProgressBar" LookNFeel="ApMechLook/ProgressBar" />
+	<FalagardMapping WindowType="ApMechLook/VUMeter"              TargetType="CEGUI/ProgressBar" Renderer="Falagard/ProgressBar" LookNFeel="ApMechLook/VUMeter" />
+	<FalagardMapping WindowType="ApMechLook/VerticalScrollbar"   TargetType="CEGUI/Scrollbar" Renderer="Falagard/Scrollbar" LookNFeel="ApMechLook/VerticalScrollbar" />
+	<FalagardMapping WindowType="ApMechLook/HorizontalScrollbar" TargetType="CEGUI/Scrollbar" Renderer="Falagard/Scrollbar" LookNFeel="ApMechLook/HorizontalScrollbar" />
+	<FalagardMapping WindowType="ApMechLook/VerticalScrollbarThumb"   TargetType="CEGUI/Thumb" Renderer="Falagard/Button" LookNFeel="ApMechLook/VerticalScrollbarThumb" />
+	<FalagardMapping WindowType="ApMechLook/HorizontalScrollbarThumb" TargetType="CEGUI/Thumb" Renderer="Falagard/Button" LookNFeel="ApMechLook/HorizontalScrollbarThumb" />
+	<FalagardMapping WindowType="ApMechLook/LargeVerticalScrollbar"      TargetType="CEGUI/Scrollbar" Renderer="Falagard/Scrollbar" LookNFeel="ApMechLook/LargeVerticalScrollbar" />
+	<FalagardMapping WindowType="ApMechLook/LargeVerticalScrollbarThumb" TargetType="CEGUI/Thumb"     Renderer="Falagard/Button"    LookNFeel="ApMechLook/LargeVerticalScrollbarThumb" />
+	<FalagardMapping WindowType="ApMechLook/TabButton"  TargetType="CEGUI/TabButton"  Renderer="Falagard/TabButton"  LookNFeel="ApMechLook/TabButton" />
+	<FalagardMapping WindowType="ApMechLook/TabControl" TargetType="CEGUI/TabControl" Renderer="Falagard/TabControl" LookNFeel="ApMechLook/TabControl" />
+	<FalagardMapping WindowType="ApMechLook/TabContentPane"    TargetType="DefaultWindow"    Renderer="Falagard/Default"    LookNFeel="ApMechLook/TabContentPane" />
+	<FalagardMapping WindowType="ApMechLook/TabButtonPane"    TargetType="DefaultWindow"    Renderer="Falagard/Default"    LookNFeel="ApMechLook/TabButtonPane" />
+	<FalagardMapping WindowType="ApMechLook/ComboDropList" TargetType="CEGUI/ComboDropList" Renderer="Falagard/Listbox" LookNFeel="ApMechLook/ComboDropList" />
+	<FalagardMapping WindowType="ApMechLook/ComboEditbox"  TargetType="CEGUI/Editbox"	 Renderer="Falagard/Editbox" LookNFeel="ApMechLook/ComboEditbox" />
+	<FalagardMapping WindowType="ApMechLook/Combobox"	TargetType="CEGUI/Combobox"	 Renderer="Falagard/Default" LookNFeel="ApMechLook/Combobox" />
+	<FalagardMapping WindowType="ApMechLook/Listbox"           TargetType="CEGUI/Listbox"           Renderer="Falagard/Listbox"           LookNFeel="ApMechLook/Listbox" />
+	<FalagardMapping WindowType="ApMechLook/ListHeader"        TargetType="CEGUI/ListHeader"        Renderer="Falagard/ListHeader"        LookNFeel="ApMechLook/ListHeader" />
+	<FalagardMapping WindowType="ApMechLook/ListHeaderSegment" TargetType="CEGUI/ListHeaderSegment" Renderer="Falagard/ListHeaderSegment" LookNFeel="ApMechLook/ListHeaderSegment" />
+	<FalagardMapping WindowType="ApMechLook/MultiColumnList"   TargetType="CEGUI/MultiColumnList"   Renderer="Falagard/MultiColumnList"   LookNFeel="ApMechLook/MultiColumnList" />
+	<FalagardMapping WindowType="ApMechLook/Slider"      TargetType="CEGUI/Slider"      Renderer="Falagard/Slider"  LookNFeel="ApMechLook/Slider" />
+	<FalagardMapping WindowType="ApMechLook/ColorSlider"      TargetType="CEGUI/Slider"      Renderer="Falagard/Slider"  LookNFeel="ApMechLook/ColorSlider" />
+	<FalagardMapping WindowType="ApMechLook/SliderThumb" TargetType="CEGUI/Thumb" Renderer="Falagard/Button"  LookNFeel="ApMechLook/SliderThumb" />
+	<FalagardMapping WindowType="ApMechLook/ScrollablePane" TargetType="CEGUI/ScrollablePane" Renderer="Falagard/ScrollablePane" LookNFeel="ApMechLook/ScrollablePane" />
+	<FalagardMapping WindowType="ApMechLook/Spinner" TargetType="CEGUI/Spinner" Renderer="Falagard/Default" LookNFeel="ApMechLook/Spinner" />
+	<FalagardMapping WindowType="ApMechLook/Tooltip" TargetType="CEGUI/Tooltip" Renderer="Falagard/Tooltip" LookNFeel="ApMechLook/Tooltip" />
+	<FalagardMapping WindowType="ApMechLook/StaticImage" TargetType="DefaultWindow" Renderer="Falagard/StaticImage" LookNFeel="ApMechLook/StaticImage" />
+	<FalagardMapping WindowType="ApMechLook/StaticText"  TargetType="DefaultWindow" Renderer="Falagard/StaticText"  LookNFeel="ApMechLook/StaticText" />
+</GUIScheme>

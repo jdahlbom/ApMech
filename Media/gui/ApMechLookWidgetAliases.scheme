@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<GUIScheme Name="ApMechLookWidgetAliases">
+	<WindowAlias Alias="ApMech AltProgressBar" Target="ApMechLook/AlternateProgressBar" />
+	<WindowAlias Alias="ApMech Button" Target="ApMechLook/Button" />
+	<WindowAlias Alias="ApMech Checkbox" Target="ApMechLook/Checkbox" />
+	<WindowAlias Alias="ApMech Close Button" Target="ApMechLook/CloseButton" />
+	<WindowAlias Alias="ApMech Combobox" Target="ApMechLook/Combobox" />
+	<WindowAlias Alias="ApMech ComboDropList" Target="ApMechLook/ComboDropList" />
+	<WindowAlias Alias="ApMech ComboEditbox" Target="ApMechLook/ComboEditbox" />
+	<WindowAlias Alias="ApMech Editbox" Target="ApMechLook/Editbox" />
+	<WindowAlias Alias="ApMech Frame Window" Target="ApMechLook/FrameWindow" />
+	<WindowAlias Alias="ApMech Listbox" Target="ApMechLook/Listbox" />
+	<WindowAlias Alias="ApMech ListHeader" Target="ApMechLook/ListHeader" />
+	<WindowAlias Alias="ApMech ListHeaderSegment" Target="ApMechLook/ListHeaderSegment" />
+	<WindowAlias Alias="ApMech MiniHorzScrollbar" Target="ApMechLook/HorizontalScrollbar" />
+	<WindowAlias Alias="ApMech MiniHorzScrollbarThumb" Target="ApMechLook/HorizontalScrollbarThumb" />
+	<WindowAlias Alias="ApMech MiniVertScrollbar" Target="ApMechLook/VerticalScrollbar" />
+	<WindowAlias Alias="ApMech MiniVertScrollbarThumb" Target="ApMechLook/VerticalScrollbarThumb" />
+	<WindowAlias Alias="ApMech MultiColumnList" Target="ApMechLook/MultiColumnList" />
+	<WindowAlias Alias="ApMech MultiLineEditbox" Target="ApMechLook/MultiLineEditbox" />
+	<WindowAlias Alias="ApMech ProgressBar" Target="ApMechLook/ProgressBar" />
+	<WindowAlias Alias="ApMech RadioButton" Target="ApMechLook/RadioButton" />
+	<WindowAlias Alias="ApMech Slider" Target="ApMechLook/Slider" />
+	<WindowAlias Alias="ApMech Slider Thumb" Target="ApMechLook/SliderThumb" />
+	<WindowAlias Alias="ApMech StaticImage" Target="ApMechLook/StaticImage" />
+	<WindowAlias Alias="ApMech StaticText" Target="ApMechLook/StaticText" />
+	<WindowAlias Alias="ApMech Tab Button" Target="ApMechLook/TabButton" />
+	<WindowAlias Alias="ApMech Tab Pane" Target="ApMechLook/TabPane" />
+	<WindowAlias Alias="ApMech Tab Control" Target="ApMechLook/TabControl" />
+	<WindowAlias Alias="ApMech Titlebar" Target="ApMechLook/Titlebar" />
+	<WindowAlias Alias="ApMech VertScrollbar" Target="ApMechLook/LargeVerticalScrollbar" />
+	<WindowAlias Alias="ApMech VertScrollbarThumb" Target="ApMechLook/LargeVerticalScrollbarThumb" />
+</GUIScheme>
+

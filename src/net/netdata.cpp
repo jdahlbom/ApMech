@@ -465,6 +465,22 @@ NetObject *NetData::eachObject()
     } else return (i++)->second;
 }
 
+
+NetUser *NetData::eachUser()
+{
+    static bool active = false;
+    static std::map<int,NetUser>::iterator i;
+
+    if (!active) {
+        i = users.begin();
+        active = true;
+    }
+    if (i == users.end()) {
+        active = false;
+        return NULL;
+    } else return &(i++)->second;
+}
+
 /** Insert an object and give it a new, unique ID.
  *  You can optionally specify the wanted id, but the insertion is then
  *  perhaps more likely to fail.

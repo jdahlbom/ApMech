@@ -1,5 +1,5 @@
 <GUILayout>
-  <Window Type="TaharezLook/MultiColumnList" Name="ScoreList" > 
+  <Window Type="ApMechLook/MultiColumnList" Name="ScoreList" > 
     <Property Name="Alpha" Value="0.5" />
     <Property Name="Text" Value="Scores" />
     <Property Name="ColumnsMovable" Value="False" />

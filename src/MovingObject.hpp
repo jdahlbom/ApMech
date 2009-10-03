@@ -43,9 +43,11 @@ class MovingObject : public net::NetObject {
     void setFacing(Ogre::Vector3 f);
     void setFriction(float f) { friction = f; }
 
-    Ogre::SceneNode* getOwnerNode() const { return pOwnerNode; }
+    Ogre::SceneNode *getOwnerNode() const { return pOwnerNode; }
     void setOwnerNode(Ogre::SceneNode *node) { pOwnerNode = node; }
     bool hasOwnerNode() const { return pOwnerNode; }
+    Ogre::Entity *getEntity() const { return pEntity; }
+    void setEntity(Ogre::Entity *ent) { pEntity = ent; }
     void updateNode();
 
     Controller* getControlPtr() const { return combinedControls; }
@@ -82,6 +84,7 @@ class MovingObject : public net::NetObject {
     float               maxSpeedSquared;
 
     Ogre::SceneNode     *pOwnerNode;
+    Ogre::Entity        *pEntity;
     RectBoundaries      worldBoundaries;
 
     void updateVelocity(float sSinceLast);

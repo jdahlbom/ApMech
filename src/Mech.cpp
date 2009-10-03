@@ -2,9 +2,8 @@
 
 #include <OgreVector3.h>
 
-#include "types.h"
-#include "constants.h"
 #include "net/netdata.h"
+#include "net/serializer.h"
 
 namespace ap {
 /**//* This mystical part here pushes exactly ONE object of this type to the prototype map, */
@@ -34,6 +33,26 @@ net::NetObject *Mech::create(uint32 _id) const
 uint8 Mech::getObjectType() const
 {
     return ap::OBJECT_TYPE_MECH;
+}
+
+
+int Mech::serialize(uint8 *buffer, int start, int buflength) const
+{
+    using ap::net::serialize;
+
+    int length = 0;
+    length += MovingObject::serialize(buffer, start+length, buflength);
+    length += serialize(color, buffer, start+length, buflength);
+    return length;
+}
+int Mech::unserialize(uint8 *buffer, int start)
+{
+    using ap::net::unserialize;
+
+    int length = 0;
+    length += MovingObject::unserialize(buffer, start+length);
+    length += unserialize(color, buffer, start+length);
+    return length;
 }
 
 } // namespace ap

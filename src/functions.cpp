@@ -51,6 +51,40 @@ long int getTicks()
     }
 }
 
+/** Convert a pseudo-hue from a ColorSlider widget value (float, [0,1])
+ * to uint32 RGBA. */
+ap::uint32 getColorFromPseudoHue(float phue)
+{
+    if (phue < (6./96.)) return 0x00FFFFFF;     // White!
+
+    float hue = 1. - (phue - (6./96.)) * (96./90.);
+    uint8 r = 0, g = 0, b = 0;
+
+    if (hue < 1./6.) {
+        r = 0xFF;
+        g = int(255. * 6. * hue);
+    } else if (hue < 2./6.) {
+        r = int(255. - 255. * 6. * (hue - 1./6.));
+        g = 0xFF;
+    } else if (hue < 3./6.) {
+        g = 0xFF;
+        b = int(255. * 6. * (hue - 2./6.));
+    } else if (hue < 4./6.) {
+        g = int(255. - 255. * 6. * (hue - 3./6.));
+        b = 0xFF;
+    } else if (hue < 5./6.) {
+        r = int(255. * 6. * (hue - 4./6.));
+        b = 0xFF;
+    } else if (hue <= 1.) {
+        r = 0xFF;
+        b = int(255. - 255. * 6. * (hue - 5./6.));
+    } else {
+        r = 0; g = 0; b = 0; // Black for a very erroneous input. Should maybe be white?
+    }
+
+    return r + (g<<8) + (b<<16);
+}
+
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 
 // This function will locate the path to our application on OS X,

@@ -11,7 +11,8 @@ NetUser::NetUser():
     peer(0),
     uid(-1),
     nick("uninitialized"),
-    ping(0)
+    ping(0),
+    color(0xFFFFFF)
 {
     controls = 0;
     changed = false;
@@ -21,14 +22,15 @@ NetUser::NetUser(uint32 _uid, ENetPeer *_peer) :
     peer(_peer),
     uid(_uid),
     nick("uninitialized"),
-    ping(0)
+    ping(0),
+    color(0xFFFFFF)
 {
     controls = 0;
     changed = false;
 }
 
 ap::uint8 NetUser::getObjectType() const {
-  return ap::OBJECT_TYPE_NETUSER; 
+  return ap::OBJECT_TYPE_NETUSER;
 }
 
 void NetUser::setControlPtr(Controller *ctrl)
@@ -43,6 +45,7 @@ int NetUser::serialize(enet_uint8 buffer[], int start, int buflength) const
 
     length += serialize(uid, buffer, start+length, buflength-length);
     length += serialize(ping, buffer, start+length, buflength-length);
+    length += serialize(color, buffer, start+length, buflength-length);
 
     if(controls) {
         *(buffer + start + length) = CONTROL_IS_SET; ++length;
@@ -65,6 +68,7 @@ int NetUser::unserialize(enet_uint8 buffer[], int start)
 
     if (uid) {
         length += unserialize(ping, buffer, start+length);
+        length += unserialize(color, buffer, start+length);
 
         // buffer must have control set AND controls pointer must not point to null.
         if (CONTROL_IS_SET == *(buffer+start+(length++))) {

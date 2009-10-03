@@ -1,10 +1,42 @@
-material Material
+// This vertex shader doesn't work, nor does it do anything.
+vertex_program AP/MechColor cg
+{
+	source CrudeMech.cg
+	entry_point MechColor_vp
+	profiles vs_1_1 arbvp1
+    default_params {
+	param_named brightness float 1.0
+	param_named modelViewProjection float4x4 1 0 0 0 0 1 0 0 1 1 1 0 0 0 0 0
+    }
+}
+
+// Pixel shader for coloring mechs
+fragment_program AP/CrudeMeshColor cg
+{
+	source CrudeMech.cg
+	entry_point main_fp
+	profiles ps_1_1 arbfp1
+
+    default_params {
+	param_named modColor float4 1.0 1.0 1.0 0
+    }
+}
+
+
+material AP/Mech/MechMaterial
 {
 	receive_shadows on
 	technique
 	{
 		pass
 		{
+			fragment_program_ref AP/CrudeMeshColor
+			{
+				// This means parameter modColor can be set from code
+				// by setting parameter 1.
+				param_named_auto modColor custom 1
+			}
+
 			ambient 0.500000 0.500000 0.500000 1.000000
 			diffuse 0.640000 0.640000 0.640000 1.000000
 			specular 0.500000 0.500000 0.500000 1.000000 12.500000
@@ -12,3 +44,4 @@ material Material
 		}
 	}
 }
+

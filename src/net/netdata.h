@@ -98,6 +98,7 @@ class NetData {
 
     NetUser *getUser(uint32 uid);
     int getUserCount();
+    NetUser *eachUser();
 
     template <typename ObjType> ObjType getAvatarObject() {
         if ((myAvatarID <= 0) || (netobjects.find(myAvatarID) == netobjects.end())) return NULL;

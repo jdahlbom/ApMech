@@ -25,6 +25,7 @@ class NetUser : public NetObject
 
     ENetPeer *peer;
     uint32 uid;
+    uint32 color;
     std::string nick;
 
     int ping;

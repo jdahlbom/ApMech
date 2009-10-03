@@ -8,6 +8,7 @@
 #include "GameStateManager.h"
 #include "Gui.h"
 #include "types.h"
+#include "functions.h"
 
 namespace ap {
 
@@ -38,14 +39,17 @@ void LoginState::createGUIWindow()
 
     // Load the previous login settings from login.cfg, if one exists
   std::string ipAddress(""), playerName("nameless newbie");
+  float colorSelection = 0.0f;
   Ogre::ConfigFile loginConfig;
   try {
       loginConfig.load("login.cfg");
       ipAddress = loginConfig.getSetting("IPaddress");
       playerName = loginConfig.getSetting("PlayerName");
+      if (!from_string<float>(colorSelection, loginConfig.getSetting("PlayerColor"), std::dec))
+        colorSelection = 0.0f;
   } catch (Ogre::FileNotFoundException e) {}
 
-  pGui->setupLoginWindow(ipAddress, playerName);
+  pGui->setupLoginWindow(ipAddress, playerName, colorSelection);
   pGui->setLoginReceiver(this);
   setupOgreViewport(pSceneManager);
 }
@@ -121,7 +125,9 @@ void LoginState::attemptLogin(const std::string &ipAddress, const std::string &p
     std::ofstream lastLoginSettings("login.cfg", std::ios::trunc);
     lastLoginSettings << "IPaddress="<<ipAddress<<std::endl;
     lastLoginSettings << "PlayerName="<<playerName<<std::endl;
+    lastLoginSettings << "PlayerColor="<<pGui->getColorSliderValue()<<std::endl;
     lastLoginSettings.close();
+
     // Then, login.
     getStateManager()->loginToGame(ipAddress, playerName);
   }
