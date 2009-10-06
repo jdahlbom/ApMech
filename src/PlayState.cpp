@@ -111,23 +111,23 @@ void PlayState::update( unsigned long lTimeElapsed ) {
                 deleteNetObject(event.uid);
                 break;
             case net::NetData::EVENT_CREATEOBJECT:
-	      {
-		NetObject *pObject = netdata->getObject(event.uid);
-		if (pObject) {		
-		  switch (pObject->getObjectType()) {
-		  case ap::OBJECT_TYPE_SCORELISTING:
-		    pScoreListing = dynamic_cast<ap::ScoreListing *>(pObject);
-		    updateScores();
-		    break;
-		  case ap::OBJECT_TYPE_MECH:
-		  case ap::OBJECT_TYPE_PROJECTILE:
-		    createSceneNodeForMovable(event.uid);
-		    break;
-		  default:
-		    break;
-		  }
-		}
-		break;
+            {
+                NetObject *pObject = netdata->getObject(event.uid);
+                if (pObject) {
+                    switch (pObject->getObjectType()) {
+                        case ap::OBJECT_TYPE_SCORELISTING:
+                            pScoreListing = dynamic_cast<ap::ScoreListing *>(pObject);
+                            updateScores();
+                            break;
+                        case ap::OBJECT_TYPE_MECH:
+                        case ap::OBJECT_TYPE_PROJECTILE:
+                            createSceneNodeForMovable(event.uid);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                break;
 	      }
 	    case net::NetData::EVENT_UPDATEOBJECT:
 	      updateScores(); // at the moment updateScores is the only update event.
@@ -181,7 +181,7 @@ void PlayState::createSceneNodeForMovable(uint32 objectId)
 
 void PlayState::createNewEntity(ap::MovingObject *newObject, uint32 objectId)
 {
-    Ogre::Entity *newEntity;
+    Ogre::Entity *newEntity = NULL;
     assert(newObject->hasOwnerNode());
 
     std::stringstream ss;
@@ -209,7 +209,8 @@ void PlayState::createNewEntity(ap::MovingObject *newObject, uint32 objectId)
         pProj->setEntity(newEntity);
     }
 
-    objNode->attachObject(newEntity);
+    if (newEntity)
+        objNode->attachObject(newEntity);
 }
 
 

@@ -48,6 +48,7 @@
 	    <Window Type="ApMechLook/ColorSlider" Name="/Login/ColorSlider" >
 		<Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
 		<Property Name="UnifiedAreaRect" Value="{{0,545},{0,90},{0,565},{0,300}}" />
+		<Property Name="ClickStepSize" Value="0.1" />
 	    </Window>
 
 	    <Window Type="ApMechLook/Button" Name="/Login/LoginButton" >
