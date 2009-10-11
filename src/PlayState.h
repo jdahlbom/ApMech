@@ -10,6 +10,7 @@
 
 #include "Gui.h"
 #include "GuiChatReceiver.h"
+#include "ObjectDataModel.h"
 #include "MovingObject.hpp"
 #include "ScoreListing.h"
 #include "net/netdata.h"
@@ -65,6 +66,7 @@ private:
 
     std::string                 ipAddress;
     std::string                 playerName;
+    ObjectDataModel             mDataModel;
 
     static const int            idForNoAvatar=-1;
     int                         mAvatarId;
