@@ -11,7 +11,6 @@
 #include <sstream>
 #include <iostream>
 #include <enet/enet.h>
-#include <sys/time.h>
 
 #include <Ogre.h> // In order to use OGRE_PLATFORM we need Ogre.h
 
@@ -39,6 +38,8 @@ template <class T> bool from_string(T& t, const std::string& s, std::ios_base& (
 
 
 long int getTicks(); // milliseconds since approx program start. OBS! Not C-standard, but POSIX
+int sleep(int useconds);    // Sleep for some amount of microseconds. OBS! Portable, but possibly
+                            // VERY inaccurate (to several ms) currently, at least on Windows.
 
 ap::uint32 getColorFromPseudoHue(float phue);
 

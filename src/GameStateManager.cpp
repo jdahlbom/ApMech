@@ -82,7 +82,7 @@ void GameStateManager::startGame() {
         Ogre::WindowEventUtilities::messagePump();
 
         if(lTimeSinceLastFrame < 10) {
-            usleep( (10.0f - lTimeSinceLastFrame) * 1000.0f);
+            ap::sleep( (10.0f - lTimeSinceLastFrame) * 1000.0f);
         }
     }
 }
@@ -150,17 +150,17 @@ void GameStateManager::requestShutdown( void ) {
 }
 
   // Mouse listener
-  bool GameStateManager::mousePressed( const ap::ooinput::MouseClickedEvent &e) 
+  bool GameStateManager::mousePressed( const ap::ooinput::MouseClickedEvent &e)
   {
     mStates.back()->mousePressed( e );
   }
-  
-  bool GameStateManager::mouseReleased( const ap::ooinput::MouseClickedEvent &e) 
+
+  bool GameStateManager::mouseReleased( const ap::ooinput::MouseClickedEvent &e)
   {
     mStates.back()->mouseReleased( e );
   }
 
-  bool GameStateManager::mouseMoved( const ap::ooinput::MouseMovedEvent &e) 
+  bool GameStateManager::mouseMoved( const ap::ooinput::MouseMovedEvent &e)
   {
     mStates.back()->mouseMoved( e );
   }

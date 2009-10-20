@@ -1,7 +1,11 @@
 #include "functions.h"
 
+#include <sys/time.h>
 #include <Ogre.h>
 
+#ifdef WIN32
+    #include <SDL.h>
+#endif
 
 namespace ap
 {
@@ -49,6 +53,16 @@ long int getTicks()
         startticks = now.tv_usec/1000;
         return 0;
     }
+}
+
+int sleep(int useconds)
+{
+#ifdef WIN32
+    SDL_Delay(useconds/1000);
+    return 0;
+#else
+    return usleep(useconds);
+#endif
 }
 
 /** Convert a pseudo-hue from a ColorSlider widget value (float, [0,1])

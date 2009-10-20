@@ -39,7 +39,7 @@ NetData::NetData(int type, uint32 _port) :
         status = enet_error;
         errorstring = "Error using enet_host_create in NetData constructor";
     }
-    me.uid = -1; myAvatarID = 0; enetserver = NULL;
+    me.uid = 0; myAvatarID = 0; enetserver = NULL;
     return;
 }
 
@@ -297,7 +297,7 @@ int NetData::serviceClient()
             break;}
 
          case ENET_EVENT_TYPE_DISCONNECT:   // that means, a client loses connection unwillingly
-            me.uid = -1; status = offline;
+            me.uid = 0; status = offline;
             if (int(event.data) == NetData::SERVERFULL) cout << "[NETDATA] Server full, connection closed!" << endl;
             else cout << "[NETDATA] Connection lost!" << endl;
             break;
@@ -356,19 +356,19 @@ uint32 NetData::processPacketNetObject(enet_uint8 *data)
    *
    * @return uint32 The length of created packet.
    */
-  ap::uint32 NetData::createPacketNetObject(const ap::net::NetObject* pObj, enet_uint8 *data, 
+  ap::uint32 NetData::createPacketNetObject(const ap::net::NetObject* pObj, enet_uint8 *data,
 					    ap::uint32 start, ap::uint32 buflength) const
   {
     ap::uint32 length = 0;
     data[start+(length++)] = NetData::PACKET_NETOBJECT;
-   
+
     length += ap::net::serialize(pObj->id, data, start+length, buflength);
     length += ap::net::serialize(pObj->getObjectType(), data, start+length, buflength);
     length += pObj->serialize(data, start+length, buflength);
 
     return length;
   }
-  
+
 
 int NetData::receiveChanges()
 {

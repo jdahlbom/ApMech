@@ -3,7 +3,7 @@
 
 #include "net/NetObject.h"
 
-#include <list>
+#include <map>
 
 #include "types.h"
 #include "net/Serializable.h"
