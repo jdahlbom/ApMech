@@ -9,7 +9,7 @@ namespace net {
 
 NetUser::NetUser():
     peer(0),
-    uid(-1),
+    uid(0),
     nick("uninitialized"),
     ping(0),
     color(0xFFFFFF)

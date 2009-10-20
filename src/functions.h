@@ -7,6 +7,7 @@
  
 #include "types.h"
 #include <enet/enet.h> // TODO: Why do we need this one?
+
 #include <Ogre.h> // In order to use OGRE_PLATFORM we need Ogre.h
 
 namespace ap {

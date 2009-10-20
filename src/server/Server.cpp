@@ -38,7 +38,7 @@ void Server::start() {
         std::cout << "[SERVER] Error initializing NetData, exiting!" << std::endl;
         return;
     }
-    
+
     std::cout << "[SERVER] Serving "<< ap::net::netobjectprototypes().size()<<" types of objects."<<std::endl;
 
     netdata->insertObject(mScores);
@@ -58,7 +58,7 @@ void Server::start() {
             nextupdate = newticks + 40; // 40 ms between updates, that's 25 network fps.
         }                               // Seems to me that up to 100 is still okay!
         // TODO: Ensure that usleep is available on Mac/Windows as well!
-        usleep(1000);       // sleep even a little bit so that dt is never 0
+        ap::sleep(1000);       // sleep even a little bit so that dt is never 0
 
         processEvents(netdata);
     } // Main loop
@@ -127,9 +127,9 @@ void Server::fireWeapons(uint64 tstamp, ap::net::NetData *pNetData) {
 
 void Server::detectCollisions(ap::net::NetData *pNetData) const {
 
-    while (ap::Mech *mech = pNetData->eachObject<ap::Mech *>(ap::OBJECT_TYPE_MECH)) 
+    while (ap::Mech *mech = pNetData->eachObject<ap::Mech *>(ap::OBJECT_TYPE_MECH))
       {
-        while (ap::Projectile *proj = pNetData->eachObject<ap::Projectile *>(ap::OBJECT_TYPE_PROJECTILE)) 
+        while (ap::Projectile *proj = pNetData->eachObject<ap::Projectile *>(ap::OBJECT_TYPE_PROJECTILE))
 	  {
             if (proj->testCollision(*mech)) {
                 relocateSpawnedMech(mech);
@@ -148,7 +148,7 @@ void Server::detectCollisions(ap::net::NetData *pNetData) const {
 		mScores->addScore(projOwner, false);
 		mScores->addScore(mechOwner, false);
 		mScores->setChanged();
-		
+
 		mScores->print();
 
                 pNetData->delObject(proj->id);
@@ -177,7 +177,7 @@ void Server::createNewConnection(ap::uint32 userId, ap::net::NetData *pNetData)
   relocateSpawnedMech(newAvatar);
 
   pNetData->getUser(userId)->setControlPtr(newAvatar->getControlPtr());
-  
+
   // Add scores:
   ap::ScoreTuple newPlayer;
   newPlayer.uid = userId;
