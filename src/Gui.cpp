@@ -286,6 +286,7 @@ namespace ap {
       pChatReceiver->sendChatMessage(message);
       pChatBox->deactivate();
     }
+	return false; // TODO: Why does this function return anything?
   }
 
 
@@ -315,6 +316,7 @@ namespace ap {
   {
     assert(pLoginReceiver);
     pLoginReceiver->requestQuit();
+	return true; // TODO: Why does this function return anything?
   }
 
   // *****************************************************  Keyboard listener

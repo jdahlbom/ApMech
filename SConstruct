@@ -40,10 +40,27 @@ elif platform == 'posix':
     env.ParseConfig('pkg-config --cflags --libs OGRE CEGUI-OGRE CEGUI')
     env.ParseConfig('pkg-config --libs enet')
 
-env.ParseConfig('sdl-config --cflags')
-env.ParseConfig('sdl-config --libs')
+elif platform == 'win32':
+	env = Environment()
+	cpppath = Split("""
+	C:\\devel\\apmech_ogre-1_6\\OgreMain\\include
+	C:\\devel\\MS_SDKs_Windows_v6.0A\\Include
+	C:\\devel\\cegui\\cegui_mk2_0_6\\include
+	C:\\devel\\enet\\include
+	C:\devel\SDL-1.2.13\include
+	""")
+	env['CPPPATH'] = cpppath
+	env.Append(CCFLAGS = '-DWIN32')
+	
+if platform == 'posix' or platform == 'darwin':
+	env.ParseConfig('sdl-config --cflags')
+	env.ParseConfig('sdl-config --libs')
+	
+	env['CPPFLAGS'] = ["-g"]
+# elif platform == 'win32':
+	# Find sdl somehow?
+	
 
-env['CPPFLAGS'] = ["-g"]
 
 print "Building Achtung Panzer Mech for platform '" + env['PLATFORM'] +"'..."
 
