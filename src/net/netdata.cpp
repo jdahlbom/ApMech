@@ -296,7 +296,7 @@ int NetData::serviceClient()
             break;}
 
          case ENET_EVENT_TYPE_DISCONNECT:   // that means, a client loses connection unwillingly
-            me.uid = -1; status = offline;
+            me.uid = 0; status = offline;
             if (int(event.data) == NetData::SERVERFULL) cout << "[NETDATA] Server full, connection closed!" << endl;
             else cout << "[NETDATA] Connection lost!" << endl;
             break;

@@ -8,6 +8,7 @@
 #include <Ogre.h>
 #endif
 
+#include <string>
 #include "../types.h"
 
 namespace ap {

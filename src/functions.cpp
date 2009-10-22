@@ -1,7 +1,13 @@
 #include "functions.h"
 
-#include <Ogre.h>
 
+#include <string>
+#include <sstream>
+#include <iostream>
+
+#include <Ogre.h>
+#include <enet/enet.h> // TODO: Why do we need this one?
+#include <SDL.h>
 
 namespace ap
 {
@@ -34,12 +40,28 @@ void hexprint(enet_uint8 *buffer, int length)
     cout << ")"<<endl;
 }
 
-long int getTicks()
+/**
+ * Sleep for defined amount of milliseconds
+ * @param unsigned int milliseconds - The amount of milliseconds to sleep
+ */
+void mSleep(ap::uint32 milliseconds)
 {
+	SDL_Delay(milliseconds);
+}
+
+/**
+ * Return the time since program started in milliseconds.
+ * @return ap::uint32 Time since program started in milliseconds
+ */
+ap::uint32 getTicks()
+{
+	return SDL_GetTicks();
+	/*
     static long int startticks = -1;
     static time_t starttime_t;
     static timeval now;
 
+	
     gettimeofday(&now, NULL);
 
     if (startticks != -1) { // then the function is initialized already
@@ -49,6 +71,7 @@ long int getTicks()
         startticks = now.tv_usec/1000;
         return 0;
     }
+	*/
 }
 
 /** Convert a pseudo-hue from a ColorSlider widget value (float, [0,1])

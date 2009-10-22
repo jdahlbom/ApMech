@@ -1,10 +1,15 @@
 @ECHO OFF
 
-REM probably outdated, as this is not modified for the subdir src/net/
-REM MAYBE fixed by copy src/net/* src/
+REM BASEDIR voisi olla esim c:\programming tms.
 
-set SDLDIR=c:\programming\SDL-1.2.13
+set BASEDIR=d:
+
+set SDLDIR=%BASEDIR%\SDL-1.2.13
+set SDLTTFDIR=%BASEDIR%\SDL_ttf-2.0.9
+set MINGWDIR=%BASEDIR%\CodeBlocks\MinGW
 set CXX=g++
+
+set PATH=%MINGWDIR%\bin;%PATH%
 
 if /i not [%1] == [distclean] goto WORK0
 
@@ -23,8 +28,8 @@ if exist %SDLDIR%\bin\SDL.dll goto WORK1
 
 :WORK1
 
-set CXXFLAGS=-I. -I..\src -I%SDLDIR%\include\SDL
-set LDFLAGS=-L. -L%SDLDIR%\lib -lmingw32 -lSDLmain -lSDL -lenet -lws2_32 -lwinmm
+set CXXFLAGS=-I. -I..\src -I%SDLDIR%\include\SDL -I%SDLTTFDIR%\include
+set LDFLAGS=-L. -L%SDLDIR%\lib -lmingw32 -lSDLmain -lSDL -lenet -lws2_32 -lwinmm -L%SDLTTFDIR%\lib -lSDL_ttf
 %CXX% -dumpversion
 if NOT %ERRORLEVEL% == 9009 goto WORK2
 
@@ -39,11 +44,17 @@ md bin obj
 
 xcopy /e winlibs\* obj
 xcopy %SDLDIR%\bin\SDL.dll bin\
+xcopy %SDLTTFDIR%\lib\SDL_ttf.dll bin\
+xcopy %SDLTTFDIR%\lib\zlib1.dll bin\
+xcopy "%PROGRAMFILES%\GnuWin32\bin\freetype6.dll" bin\
+xcopy forgotten.ttf bin\
+move bin\freetype6.dll bin\libfreetype-6.dll
 
 cd obj
 
 %CXX% -c %CXXFLAGS% ../src/*.cpp
-%CXX% *.o -o ../bin/netdata.exe %LDFLAGS%
+%CXX% -c %CXXFLAGS% ../src/net/*.cpp
+%CXX% *.o -o ../bin/nablawing.exe %LDFLAGS%
 
 cd ..
 

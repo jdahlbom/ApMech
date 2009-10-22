@@ -2,6 +2,7 @@
 #define AP_GUI
 
 #include <CEGUI.h>
+#include <list>
 
 #include "GuiChatReceiver.h"
 #include "GuiLoginReceiver.h"

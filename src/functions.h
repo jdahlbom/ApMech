@@ -1,17 +1,12 @@
 #ifndef AP_FUNCTIONS_H
 #define AP_FUNCTIONS_H
 
-/*  Random small functions
- *
- *  Jonni Lehtiranta
- */
-
-#include "types.h"
 #include <string>
 #include <sstream>
 #include <iostream>
-#include <enet/enet.h>
-#include <sys/time.h>
+ 
+#include "types.h"
+#include <enet/enet.h> // TODO: Why do we need this one?
 
 #include <Ogre.h> // In order to use OGRE_PLATFORM we need Ogre.h
 
@@ -37,8 +32,8 @@ template <class T> bool from_string(T& t, const std::string& s, std::ios_base& (
   return !(iss >> f >> t).fail();
 }
 
-
-long int getTicks(); // milliseconds since approx program start. OBS! Not C-standard, but POSIX
+void mSleep(ap::uint32 milliseconds);
+ap::uint32 getTicks();
 
 ap::uint32 getColorFromPseudoHue(float phue);
 

@@ -8,6 +8,7 @@
 #include "net/netdata.h"
 #include "Gui.h"
 #include "Mech.h"
+#include "ObjectDataModel.h"
 #include "Projectile.h"
 #include "ScoreListing.h"
 #include "functions.h"
@@ -38,6 +39,8 @@ PlayState::PlayState( GameStateManager *gameStateManager,
     mWorldCenter->setPosition(Ogre::Vector3(750,0,750));
 
     createGUIWindow();
+
+    mDataModel = ObjectDataModel();
 }
 
 PlayState::~PlayState() {}
@@ -189,24 +192,34 @@ void PlayState::createNewEntity(ap::MovingObject *newObject, uint32 objectId)
 
     Ogre::SceneNode *objNode = newObject->getOwnerNode();
 
-    std::stringstream mesh;
-    if (dynamic_cast<ap::Mech *>(newObject)) {
-        float r, g, b;
-
-        ap::Mech *pMech = dynamic_cast<ap::Mech *>(newObject);
-        r = float(pMech->color & 0x0000FF) / 255.0f;
-        g = float(pMech->color & 0x00FF00) / 65535.0f;
-        b = float(pMech->color & 0xFF0000) / 16777215.0f;
-
-        newEntity = pSceneManager->createEntity(ss.str(), "CrudeMech.mesh");
-        newEntity->getSubEntity(0)->setCustomParameter(1, Ogre::Vector4(r, g, b, 0.0f));
-        pMech->setEntity(newEntity);
-    } else if (dynamic_cast<ap::Projectile *>(newObject)) {
-        mesh << "CrudeMissile.mesh";
-        newEntity = pSceneManager->createEntity(ss.str(), mesh.str());
-
-        ap::Projectile *pProj = dynamic_cast<ap::Projectile *>(newObject);
-        pProj->setEntity(newEntity);
+    switch (newObject->getObjectType() ) {
+    case ap::OBJECT_TYPE_MECH:
+      {
+	float r, g, b;
+	
+	ap::Mech *pMech = dynamic_cast<ap::Mech *>(newObject);
+	r = float(pMech->color & 0x0000FF) / 255.0f;
+	g = float(pMech->color & 0x00FF00) / 65535.0f;
+	b = float(pMech->color & 0xFF0000) / 16777215.0f;
+	
+	std::string mesh = mDataModel.getMeshFilename(ap::OBJECT_TYPE_MECH);
+	newEntity = pSceneManager->createEntity(ss.str(), mesh);
+	newEntity->getSubEntity(0)->setCustomParameter(1, Ogre::Vector4(r, g, b, 0.0f));
+	pMech->setEntity(newEntity);
+      }
+      break;
+    case ap::OBJECT_TYPE_PROJECTILE:
+      {
+	std::string mesh = mDataModel.getMeshFilename(ap::OBJECT_TYPE_PROJECTILE);
+	newEntity = pSceneManager->createEntity(ss.str(), mesh);
+	
+	ap::Projectile *pProj = dynamic_cast<ap::Projectile *>(newObject);
+	pProj->setEntity(newEntity);
+      }
+      break;
+    default:
+      // TODO: Should cause an error?
+      return;
     }
 
     if (newEntity)
