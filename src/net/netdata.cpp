@@ -9,12 +9,12 @@ namespace net {
 
 using namespace std;
 
-
 map<enet_uint8, NetObject *>& netobjectprototypes()
 {
     static map<enet_uint8, NetObject *> * objectprotomap = new map<enet_uint8, NetObject *>;
     return *objectprotomap;
 }
+
 
 NetData::NetData(int type, uint32 _port) :
     neteventlist(std::list <NetEvent *>())
@@ -62,13 +62,13 @@ void NetData::addEvent(NetEvent *event)
 bool NetData::pollEvent(NetEvent &event)
 {
     if (!neteventlist.empty()) {
-//        cout << "event1message: "<<event.message<<","<<(*neteventlist.front()).message<<endl;
         event = *neteventlist.front(); // Copy what's in there
         delete neteventlist.front();
         neteventlist.pop_front();
         return true;
     } else return false;
 }
+
 int NetData::sendMessage(NetMessage &message)
 {
     int length = 0;
@@ -77,7 +77,7 @@ int NetData::sendMessage(NetMessage &message)
     length += message.serialize(buffer, length, 2000-length);
     buffer[length++] = NetData::PACKET_EOF;
     ENetPacket *packet = enet_packet_create(buffer, length, ENET_PACKET_FLAG_RELIABLE);
-    enet_host_broadcast(enethost, 0, packet);   // Broadcast always. Hub, not switch. For now.
+    enet_host_broadcast(enethost, 1, packet);   // Broadcast always. Hub, not switch. For now.
     // TODO: find out if it'd be more effective to only send to listed recipients (many
     // peer_sends as opposed to one broadcast)
     return length;
@@ -95,7 +95,7 @@ void NetData::setAvatarID(uint32 uid, uint32 avatarid)
     map<int,NetUser>::iterator userIterator;
     userIterator = users.find(uid);
     if (userIterator == users.end()) cout << "FOULED in NetData::setAvatarID: Uid not found!"<<endl;
-    else enet_peer_send(userIterator->second.peer, 0, packet);
+    else enet_peer_send(userIterator->second.peer, 1, packet); // Channel 1 because reliable
 }
 
 int NetData::connect(std::string ip, uint32 port)
@@ -105,10 +105,9 @@ int NetData::connect(std::string ip, uint32 port)
 
     enet_address_set_host(&address, ip.c_str());
     address.port = port;
-    enetserver = enet_host_connect(enethost, &address, 1);
-
+    enetserver = enet_host_connect(enethost, &address, 2);
     if (enetserver == NULL) {
-        cout << (errorstring = "[NETDATA] Connect to server failed") << endl;
+        cout << (errorstring = "[NETDATA] Connect to server failed: network error") << endl;
         return NETERROR;
     }
 
@@ -118,8 +117,7 @@ int NetData::connect(std::string ip, uint32 port)
         status = connected;
     } else {
         enet_peer_reset(enetserver);
-        errorstring = "[NETDATA] Connect to server failed: timeout error";
-        cout << errorstring << endl;
+        cout << (errorstring = "[NETDATA] Connect to server failed: timeout error") << endl;
         return TIMEOUT;
     }
 
@@ -163,6 +161,7 @@ int NetData::disconnect()
             }
         }
         enet_peer_reset(enetserver); // Clean disconnect didn't work - do it by force
+        cout << "[NETDATA] Disconnected by force - server did not respond" << endl;
         return 0;
     }
     return 0;
@@ -187,9 +186,9 @@ int NetData::serviceServer()
                 users.insert(make_pair(newuid, NetUser(newuid, event.peer)));
                 event.peer->data = new uint32(newuid);
 
-                enet_uint8 buffer[4]; *(int *)(buffer) = newuid;
+                enet_uint8 buffer[4]; *(uint32 *)(buffer) = newuid;
                 ENetPacket *packet = enet_packet_create(buffer, 4, ENET_PACKET_FLAG_RELIABLE); // OBS! Bad way to do this!
-                enet_peer_send(event.peer, 0, packet);
+                enet_peer_send(event.peer, 1, packet);
 
                 addEvent(new NetEvent(NetData::EVENT_CONNECT, newuid));
             }
@@ -202,16 +201,16 @@ int NetData::serviceServer()
                 while (data[h] != NetData::PACKET_EOF)
                 {
                     if (data[h] == NetData::PACKET_NETUSER) {
-                        h++; uid = *(int *)(data+h);  // this means, read an int from data[h] onwards
+                        h++; uid = *(uint32 *)(data+h);  // this means, read an uint from data[h] onwards
                         h += users.find(uid)->second.unserialize(data, h);
                     } else if (data[h] == NetData::PACKET_NETMESSAGE) {
                         NetMessage netmsg;
                         h++;
                         h += netmsg.unserialize(data, h);
-                        netmsg.data = users[netmsg.sender].nick + "> " + netmsg.data;
+                        netmsg.data = users[netmsg.sender].nick + ": " + netmsg.data;
                         sendMessage(netmsg);
                     } else {
-                        cout << "[NETDATA] Received an unknown packet! Error in NetData::serviceServer!" << endl;
+                        cout << "[NETDATA] Received an unknown packet! Error in NetData::serviceServer() !" << endl;
                     }
                 }
                 enet_packet_destroy(event.packet);
@@ -220,8 +219,8 @@ int NetData::serviceServer()
 
          case ENET_EVENT_TYPE_DISCONNECT:
             if (status == server) {
-                uint32 uid = *(uint32 *)event.peer->data;     // Who disconnected? He sent his uid too,
-                                                        // but rather trust enet's peer->data
+                uint32 uid = *(uint32 *)event.peer->data;   // Who disconnected? He sent his uid too,
+                                                            // but rather trust enet's peer->data
                 users.erase(uid);
                 delete (uint32 *)event.peer->data;
                 cout << "[NETDATA] Client " << uid << " has disconnected" << endl;
@@ -230,7 +229,7 @@ int NetData::serviceServer()
                 *(int *)(buffer + 1) = uid;
                 buffer[5] = NetData::PACKET_EOF;
                 ENetPacket *packet = enet_packet_create(buffer, 6, ENET_PACKET_FLAG_RELIABLE);
-                enet_host_broadcast(enethost, 0, packet);
+                enet_host_broadcast(enethost, 1, packet); // Channel 1 cause reliable
                 // Not detecting if we get disconnect messages from users who weren't connected in the first place. Oh well.
 
                 addEvent(new NetEvent(NetData::EVENT_DISCONNECT, uid));
@@ -433,6 +432,7 @@ int NetData::sendChanges()
     return items;
 }
 
+/** Return some object id that is not in use. For creating id's for new objects. */
 uint32 NetData::getUniqueObjectID()
 {
     uint32 newid;
@@ -450,7 +450,10 @@ NetObject * NetData::getObject(uint32 id)
     return it->second;
 }
 
-// Client side delete. Just delete, don't let anyone know.
+/** Client side delete. Just delete, delete immediately,
+ *  and don't let anyone know. I think this should only be called
+ *  when handling an EVENT_DELETEOBJECT.
+ */
 void NetData::removeObject(uint32 id)
 {
     // I had nabla-wing crash once because of double-delete, but couldn't reproduce..
