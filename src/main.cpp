@@ -3,9 +3,7 @@
 
 #include <OgreRenderSystem.h>
 #include <OgreCEGUIRenderer.h>
-#include <CEGUI.h>
-
-#include <boost/shared_ptr.hpp>
+#include <CEGUI/CEGUI.h>
 
 #include "GameStateManager.h"
 #include "Gui.h"
@@ -62,11 +60,7 @@ int main( int argc, char **argv ) {
         gameManager->startGame();
     }
     catch ( Ogre::Exception& ex ) {
-        #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-                MessageBox( NULL, ex.getFullDescription().c_str(), "An exception has occurred!", MB_OK | MB_ICONERROR | MB_TASKMODAL );
-        #else
-                std::cerr << "An exception has occured: " << ex.getFullDescription();
-        #endif
+		std::cerr << "An exception has occured: " << ex.getFullDescription();
     }
 
     delete gameManager;

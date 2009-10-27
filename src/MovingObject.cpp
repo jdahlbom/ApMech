@@ -184,8 +184,6 @@ int MovingObject::unserialize(uint8 *buffer, int start)
     return length;
 }
 
-net::NetObject *MovingObject::create(uint32 id) {}
-
 bool MovingObject::testCollision(const MovingObject &other) const
 { return this->state->testCollision(*(other.getStatePtr())); }
 

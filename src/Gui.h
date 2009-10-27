@@ -1,7 +1,7 @@
 #ifndef AP_GUI
 #define AP_GUI
 
-#include <CEGUI.h>
+#include <CEGUI/CEGUI.h>
 #include <list>
 
 #include "GuiChatReceiver.h"

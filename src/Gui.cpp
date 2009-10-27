@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include <CEGUI.h>
+#include <CEGUI/CEGUI.h>
 
 #include "functions.h"
 

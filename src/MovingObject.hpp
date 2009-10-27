@@ -64,7 +64,7 @@ class MovingObject : public net::NetObject {
     //NetObject serialization
     int serialize(uint8 *buffer, int start, int buflength) const;
     int unserialize(uint8 *buffer, int start);
-    NetObject *create(uint32 id);
+    ap::net::NetObject *create(uint32 id) { return 0; }; // FIXME: Evil!
     int advance(float dt) { update(dt); return 0; }
     virtual uint8 getObjectType() const = 0;
 

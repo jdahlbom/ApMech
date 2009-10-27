@@ -47,7 +47,7 @@ void Server::start() {
     while (1) {             // Server main loop
         netdata->receiveChanges();
         oldticks = newticks; newticks = getTicks();
-        dt = float(newticks - oldticks) * 0.001;
+        dt = float(newticks - oldticks); // dt is in milliseconds
 
         updateObjects(dt, netdata);
         fireWeapons(newticks, netdata);
@@ -58,7 +58,7 @@ void Server::start() {
             nextupdate = newticks + 40; // 40 ms between updates, that's 25 network fps.
         }                               // Seems to me that up to 100 is still okay!
         // TODO: Ensure that usleep is available on Mac/Windows as well!
-        ap::sleep(1000);       // sleep even a little bit so that dt is never 0
+        ap::mSleep(1);       // sleep even a little bit so that dt is never 0
 
         processEvents(netdata);
     } // Main loop

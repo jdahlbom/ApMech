@@ -1,5 +1,17 @@
 import os
 import sys
+#import glob
+
+# Helper function for windows libs..
+# Search expression means "a string that is found in the file name". Mostly "_d.lib"
+def findLibs(dir, searchExpression):
+	libArr = []
+	for file in os.listdir(dir):
+		if file.find(searchExpression) != -1:
+			parts = file.split('.')
+			libArr.append(parts[0])
+
+	return libArr
 
 # Setup some of our requirements
 
@@ -42,15 +54,71 @@ elif platform == 'posix':
 
 elif platform == 'win32':
 	env = Environment()
+	#AR taken from http://www.scons.org/wiki/MicrosoftPlatformTool
+	#Doesn't look like there is any documentation about it..
+	sdkPath = "D:\\Program Files\\Microsoft Visual Studio 9.0\\VC"
+	env['AR'] = '"'+ sdkPath +'\\bin\\lib.exe"'
+	env['LINK'] = '"'+ sdkPath +'\\bin\\link.exe"'
+	
 	cpppath = Split("""
 	C:\\devel\\apmech_ogre-1_6\\OgreMain\\include
 	C:\\devel\\MS_SDKs_Windows_v6.0A\\Include
-	C:\\devel\\cegui\\cegui_mk2_0_6\\include
+	C:\\devel\\cegui
+	C:\\devel\\cegui\\ogreceguirenderer\\include
 	C:\\devel\\enet\\include
 	C:\devel\SDL-1.2.13\include
 	""")
 	env['CPPPATH'] = cpppath
-	env.Append(CCFLAGS = '-DWIN32')
+
+	# Some of these libraries are compiled to DEBUG and RELEASE versions separately.
+	libVersionedPath = Split("""
+	C:\\devel\\apmech_ogre-1_6\\lib
+	C:\\devel\\cegui\\lib
+	""")
+	
+	libOtherPath = Split("""
+	C:\\devel\\enet\\lib
+	C:\\devel\\SDL-1.2.13\\lib
+	""")
+	
+	libWinPath = Split("""
+	C:\\devel\\MS_SDKs_Windows_v6.0A\\lib
+	""")
+	
+	libCeguiDepPath = ['C:\\devel\\cegui\\cegui_mk2_0_6\\dependencies\\lib']
+	
+	env.Append(LIBPATH = libVersionedPath + libOtherPath + libCeguiDepPath + libWinPath)
+	
+	libs = []
+	for dir in libVersionedPath:
+		libs = libs + findLibs(dir, '_d.lib')
+	for dir in libOtherPath:
+		libs = libs + findLibs(dir, '.lib')
+	for dir in libCeguiDepPath:
+		libs = libs + findLibs(dir, '_d.lib')
+	
+	#for dir in libWinPath:
+	#	libs = libs + findLibs(dir, '.lib')
+	#	libs = libs + findLibs(dir, '.Lib')
+	
+	
+	#CEGUI dependencies withoug _d.lib suffices
+	libs.append('DevIL')
+	libs.append('ILU')
+	libs.append('ILUT')
+	libs.append('xerces-c_3D')
+	
+	libsMain = Split("""
+	enet
+	SDL
+	""")
+	libsAll = libsMain + libs
+	#print libsAll
+	#sys.exit(0)
+	
+	env.Append(LIBS = libsAll)
+	env.Append(CCFLAGS = '-DWIN32  /EHsc')
+
 	
 if platform == 'posix' or platform == 'darwin':
 	env.ParseConfig('sdl-config --cflags')
