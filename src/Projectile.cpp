@@ -1,6 +1,10 @@
 #include "Projectile.h"
 
+#ifndef WIN32
 #include <OgreVector3.h>
+#else
+#include <Ogre/OgreVector3.h>
+#endif
 
 #include "types.h"
 #include "constants.h"

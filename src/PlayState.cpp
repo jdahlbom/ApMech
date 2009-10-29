@@ -3,7 +3,11 @@
 #include <string>
 #include <list>
 
+#ifndef WIN32
 #include <Ogre.h>
+#else
+#include <Ogre/Ogre.h>
+#endif
 
 #include "net/netdata.h"
 #include "Gui.h"

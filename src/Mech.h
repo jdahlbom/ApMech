@@ -5,7 +5,11 @@
 #include "types.h"
 #include "constants.h"
 
+#ifndef WIN32
 #include <OgreVector3.h>
+#else
+#include <Ogre/OgreVector3.h>
+#endif
 
 namespace ap {
 

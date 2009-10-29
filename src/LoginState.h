@@ -3,7 +3,12 @@
 
 #include <fstream>
 #include <string>
+
+#ifndef WIN32
 #include <Ogre.h>
+#else
+#include <Ogre/Ogre.h>
+#endif
 
 #include "GameState.h"
 

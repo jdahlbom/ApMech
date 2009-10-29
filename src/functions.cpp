@@ -5,9 +5,15 @@
 #include <sstream>
 #include <iostream>
 
+#ifndef WIN32
 #include <Ogre.h>
-#include <enet/enet.h> // TODO: Why do we need this one?
 #include <SDL.h>
+#else
+#include <Ogre/Ogre.h>
+#include <SDL/SDL.h>
+#endif
+
+#include <enet/enet.h> // TODO: Why do we need this one?
 
 namespace ap
 {

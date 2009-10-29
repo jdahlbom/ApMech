@@ -1,11 +1,13 @@
 #ifndef AP_SERIALIZER
 #define AP_SERIALIZER
 
-// Test if we're compiling with Ogre3D or not, and include accordingly.
-// This is for the sake of ap::net code not depending on Ogre.
-// I hope one of these is always defined, btw! Dunno for sure.
-#if defined(OGRE_CONFIG_LITTLE_ENDIAN) || defined(OGRE_CONFIG_BIG_ENDIAN)
-#include <Ogre.h>
+// If this library is used for other purposes than Apmech, define NO_OGRE
+#ifndef NO_OGRE
+ #ifndef WIN32
+  #include <Ogre.h>
+ #else
+  #include <Ogre/Ogre.h>
+ #endif
 #endif
 
 #include <string>

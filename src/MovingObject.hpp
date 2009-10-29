@@ -1,7 +1,11 @@
 #ifndef AP_MOVING_OBJECT
 #define AP_MOVING_OBJECT
 
+#ifndef WIN32
 #include <Ogre.h>
+#else
+#include <Ogre/Ogre.h>
+#endif
 
 #include "net/NetObject.h"
 #include "net/Serializable.h"

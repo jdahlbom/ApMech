@@ -1,7 +1,11 @@
 #ifndef AP_OOINPUT_SDLINPUTSYSTEM
 #define AP_OOINPUT_SDLINPUTSYSTEM
 
+#ifndef WIN32
 #include <SDL.h>
+#else
+#include <SDL/SDL.h>
+#endif
 
 #include "InputSystem.h"
 #include "KeyEvent.h"

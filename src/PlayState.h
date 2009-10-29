@@ -4,7 +4,11 @@
 #include <list>
 #include <string>
 
+#ifndef WIN32
 #include <OgreCamera.h>
+#else
+#include <Ogre/OgreCamera.h>
+#endif
 
 #include "GameState.h"
 

@@ -1,8 +1,15 @@
+#ifndef WIN32
 #include <OgreRoot.h>
 #include <OgreException.h>
-
 #include <OgreRenderSystem.h>
 #include <OgreCEGUIRenderer.h>
+#else
+#include <Ogre/OgreRoot.h>
+#include <Ogre/OgreException.h>
+#include <Ogre/OgreRenderSystem.h>
+#include <CEGUIRenderer/OgreCEGUIRenderer.h>
+#endif
+
 #include <CEGUI/CEGUI.h>
 
 #include "GameStateManager.h"
