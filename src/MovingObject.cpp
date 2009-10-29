@@ -1,7 +1,11 @@
 #include "MovingObject.hpp"
 
 #include <assert.h>
+#ifndef WIN32
 #include <Ogre.h>
+#else
+#include <Ogre/Ogre.h>
+#endif
 
 #include "net/serializer.h"
 #include "math/rotations.hpp"

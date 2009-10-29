@@ -7,8 +7,11 @@
 #ifndef AP_GAMESTATEMANAGER_H
 #define AP_GAMESTATEMANAGER_H
 
-#include <OgreRoot.h>
-#include <OgreConfigFile.h>
+#ifndef WIN32
+#include <Ogre.h>
+#else
+#include <Ogre/Ogre.h>
+#endif
 
 #include "ooinput/InputSystem.h"
 #include "ooinput/KeyboardListener.h"

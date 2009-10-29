@@ -1,6 +1,10 @@
 #include "Mech.h"
 
+#ifndef WIN32
 #include <OgreVector3.h>
+#else
+#include <Ogre/OgreVector3.h>
+#endif
 
 #include "net/netdata.h"
 #include "net/serializer.h"

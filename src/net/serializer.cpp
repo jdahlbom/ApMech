@@ -1,5 +1,14 @@
 #include "serializer.h"
 
+// If this library is used for other purposes than Apmech, define NO_OGRE
+#ifndef NO_OGRE
+ #ifndef WIN32
+  #include <Ogre.h>
+ #else
+  #include <Ogre/Ogre.h>
+ #endif
+#endif
+
 namespace ap {
 namespace net {
 

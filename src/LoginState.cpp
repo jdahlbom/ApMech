@@ -3,7 +3,11 @@
 #include <iostream>
 #include <string>
 
+#ifndef WIN32
 #include <Ogre.h>
+#else
+#include <Ogre/Ogre.h>
+#endif
 
 #include "GameStateManager.h"
 #include "Gui.h"

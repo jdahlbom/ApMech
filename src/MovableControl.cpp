@@ -1,6 +1,10 @@
 #include "MovableControl.h"
 
+#ifndef WIN32
 #include <OgrePrerequisites.h>
+#else
+#include <Ogre/OgrePrerequisites.h>
+#endif
 #include "net/serializer.h"
 
 namespace ap {

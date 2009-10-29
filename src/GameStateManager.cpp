@@ -2,9 +2,13 @@
 
 #include <string>
 
+#ifndef WIN32
 #include <Ogre.h>
-#include <OgreWindowEventUtilities.h>
 #include <SDL.h>
+#else
+#include <Ogre/Ogre.h>
+#include <SDL/SDL.h>
+#endif
 
 #include "Gui.h"
 

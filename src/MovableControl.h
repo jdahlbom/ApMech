@@ -1,9 +1,15 @@
 #ifndef AP_MOVABLE_CONTROL_H
 #define AP_MOVABLE_CONTROL_H
 
+#ifndef WIN32
 #include <OgreVector3.h>
 #include <OgreQuaternion.h>
 #include <OgreMath.h>
+#else
+#include <Ogre/OgreVector3.h>
+#include <Ogre/OgreQuaternion.h>
+#include <Ogre/OgreMath.h>
+#endif
 
 #include "net/Serializable.h"
 #include "net/Controller.h"

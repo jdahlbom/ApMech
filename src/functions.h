@@ -8,7 +8,11 @@
 #include "types.h"
 #include <enet/enet.h> // TODO: Why do we need this one?
 
-#include <Ogre.h> // In order to use OGRE_PLATFORM we need Ogre.h
+#ifndef WIN32
+#include <Ogre.h>
+#else
+#include <Ogre/Ogre.h>
+#endif
 
 namespace ap {
 
