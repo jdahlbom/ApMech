@@ -19,6 +19,12 @@ profile
 
 # object files
 *.o
+*.obj
+
+# VC++ output files
+*.exe
+*.ilk
+*.pdb
 
 # executables
 apmech

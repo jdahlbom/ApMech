@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C++ Express 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "apmech", "vc2008.vcproj", "{6ADAA21D-DEB3-4614-AE02-DF0475A354EA}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "apserver", "..\apserver\apserver.vcproj", "{CD8C636D-436D-4F23-8361-6B28DA0D4529}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6ADAA21D-DEB3-4614-AE02-DF0475A354EA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6ADAA21D-DEB3-4614-AE02-DF0475A354EA}.Debug|Win32.Build.0 = Debug|Win32
+		{6ADAA21D-DEB3-4614-AE02-DF0475A354EA}.Release|Win32.ActiveCfg = Release|Win32
+		{6ADAA21D-DEB3-4614-AE02-DF0475A354EA}.Release|Win32.Build.0 = Release|Win32
+		{CD8C636D-436D-4F23-8361-6B28DA0D4529}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CD8C636D-436D-4F23-8361-6B28DA0D4529}.Debug|Win32.Build.0 = Debug|Win32
+		{CD8C636D-436D-4F23-8361-6B28DA0D4529}.Release|Win32.ActiveCfg = Release|Win32
+		{CD8C636D-436D-4F23-8361-6B28DA0D4529}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

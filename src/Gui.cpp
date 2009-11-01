@@ -29,7 +29,13 @@ namespace ap {
     assert(renderer);
     using namespace CEGUI;
 
-    mSystem = new System( renderer );
+	try {
+		mSystem = new System( renderer );
+	} catch (CEGUI::GenericException genException) {
+		std::cout << "Could not create CEGUI::System!" << std::endl;
+		std::cout << genException.getMessage() << std::endl;
+		throw; // GUI cannot function without CEGUI, rethrow the exception.
+	}
     SchemeManager::getSingleton().loadScheme((CEGUI::utf8*)"ApMechLookSkin.scheme");
 
     mSystem->setDefaultMouseCursor((CEGUI::utf8*)"ApMechLook", (CEGUI::utf8*)"MouseArrow");

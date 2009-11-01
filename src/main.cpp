@@ -3,11 +3,14 @@
 #include <OgreException.h>
 #include <OgreRenderSystem.h>
 #include <OgreCEGUIRenderer.h>
+#include <SDL.h>
 #else
+#include <CEGUIRenderer/OgreCEGUIRenderer.h>
 #include <Ogre/OgreRoot.h>
 #include <Ogre/OgreException.h>
 #include <Ogre/OgreRenderSystem.h>
-#include <CEGUIRenderer/OgreCEGUIRenderer.h>
+#include <SDL/SDL.h>
+#include <SDL/SDL_syswm.h>
 #endif
 
 #include <CEGUI/CEGUI.h>
@@ -115,7 +118,7 @@ SDL_Surface* setupSDL(int width, int height) {
 
     // Hook Ogre into SDL window.
     Ogre::NameValuePairList misc;
-#ifdef WINDOWS
+#ifdef WIN32_LEAN_AND_MEAN
     SDL_SysWMinfo wmInfo;
     SDL_VERSION(&wmInfo.version);
     SDL_GetWMInfo(&wmInfo);
