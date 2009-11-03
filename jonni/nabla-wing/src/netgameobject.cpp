@@ -76,7 +76,10 @@ list<NetObject *> *NetGameObject::control(NetUser &user, bool createobjects)
     // TODO: DO SOMETHING!
     ap::NablaControl *control;
     control = dynamic_cast<ap::NablaControl *>(user.controls);
-    if (!control) cout << "netgameobject.cpp: Control is of wrong type!\n";
+    if (!control) {
+       cout << "netgameobject.cpp: Control is of wrong type!\n";
+       return NULL;
+    }
 
     loc.a = control->a;
     loc.turning = control->turning;

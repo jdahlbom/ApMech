@@ -55,6 +55,7 @@ int servermain(int argc, char* argv[])
                 netdata->insertObjects(ngop->control(*userp, true));
             } else {                            // That means owner's disconnected, so paint it gray!
                 ngop->color = 0x00666666;
+                ngop->uid = 0; // Set owner to zero, so that controls don't go to somebody else
             }
 
             while (Projectile *pp = netdata->eachObject<Projectile *>(ap::OBJECT_TYPE_PROJECTILE))
@@ -81,7 +82,6 @@ int servermain(int argc, char* argv[])
             switch (event.type)
             {
              case NetData::EVENT_CONNECT:
-//                cout << "Received a connection from "<< uint2ipv4(netdata->users[event.uid].peer->address.host) <<", uid "<<event.uid;
                 cout << "Received a connection from "<< uint2ipv4(netdata->getUser(event.uid)->peer->address.host) <<", uid "<<event.uid;
                 cout << ". We now have "<<netdata->getUserCount()<<" users."<<endl;
 
