@@ -56,17 +56,26 @@ void mSleep(ap::uint32 milliseconds)
 }
 
 /**
+ * Sleep for defined amount of microseconds
+ * @param unsigned int microseconds - The amount of microseconds to sleep
+ */
+void uSleep(ap::uint32 microseconds)
+{
+	// TODO: use something more accurate, perhaps depending on OS
+	SDL_Delay(microseconds / 1000);
+}
+
+/**
  * Return the time since program started in milliseconds.
  * @return ap::uint32 Time since program started in milliseconds
  */
 ap::uint32 getTicks()
 {
 	return SDL_GetTicks();
-	/*
+/*
     static long int startticks = -1;
     static time_t starttime_t;
     static timeval now;
-
 	
     gettimeofday(&now, NULL);
 
@@ -77,7 +86,7 @@ ap::uint32 getTicks()
         startticks = now.tv_usec/1000;
         return 0;
     }
-	*/
+*/
 }
 
 /** Convert a pseudo-hue from a ColorSlider widget value (float, [0,1])

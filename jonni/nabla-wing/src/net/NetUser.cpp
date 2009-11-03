@@ -1,35 +1,36 @@
 #include "NetUser.h"
 
 #include "serializer.h"
-
 #include "Controller.h"
+#include "../constants.h"
 
 namespace ap {
 namespace net {
 
 NetUser::NetUser():
     peer(0),
-    uid(-1),
+    uid(0),
     nick("uninitialized"),
-    ping(0)
+    ping(0),
+    color(0xFFFFFF)
 {
     controls = 0;
     changed = false;
 }
 
-NetUser::NetUser(int _uid, ENetPeer *_peer) :
+NetUser::NetUser(uint32 _uid, ENetPeer *_peer) :
     peer(_peer),
     uid(_uid),
     nick("uninitialized"),
-    ping(0)
+    ping(0),
+    color(0xFFFFFF)
 {
     controls = 0;
     changed = false;
 }
 
-ap::uint8 NetUser::getObjectType() {
-    return 59; // Should be:  ap::net::NetData::OBJECT_TYPE_NETUSER;
-                // But that makes linking problems now! (because NetData and NetUser include each other, I think)
+ap::uint8 NetUser::getObjectType() const {
+  return ap::OBJECT_TYPE_NETUSER;
 }
 
 void NetUser::setControlPtr(Controller *ctrl)
@@ -44,6 +45,7 @@ int NetUser::serialize(enet_uint8 buffer[], int start, int buflength) const
 
     length += serialize(uid, buffer, start+length, buflength-length);
     length += serialize(ping, buffer, start+length, buflength-length);
+    length += serialize(color, buffer, start+length, buflength-length);
 
     if(controls) {
         *(buffer + start + length) = CONTROL_IS_SET; ++length;
@@ -53,7 +55,6 @@ int NetUser::serialize(enet_uint8 buffer[], int start, int buflength) const
     }
     *(buffer+start+length) = CONTROL_BLOCK_FINISHED; ++length;
     length += serialize(nick, buffer, start+length, buflength);
-    // strcpy( (char *)buffer + start+length, nick.c_str());   length += nick.length()+1;
 
     return length;
 }
@@ -67,6 +68,7 @@ int NetUser::unserialize(enet_uint8 buffer[], int start)
 
     if (uid) {
         length += unserialize(ping, buffer, start+length);
+        length += unserialize(color, buffer, start+length);
 
         // buffer must have control set AND controls pointer must not point to null.
         if (CONTROL_IS_SET == *(buffer+start+(length++))) {
@@ -88,7 +90,6 @@ int NetUser::unserialize(enet_uint8 buffer[], int start)
         }
 
         length += unserialize(nick, buffer, start+length);
-        // nick.assign((char *)buffer+start+length);           length += nick.length()+1;
 
 //        cout << uid << ": x "<<x<<", y "<<y<<" nick "<<nick<<endl;
     } else cout << "FOULED in NetUser::unserialize!" << endl;
@@ -97,7 +98,7 @@ int NetUser::unserialize(enet_uint8 buffer[], int start)
 }
 
 
-NetObject *NetUser::create(uint32 id) // OBS! FIXME! A rather dummy method. NetUser without uid is baddy.
+NetObject *NetUser::create(uint32 id) const // OBS! FIXME! A rather dummy method. NetUser without uid is baddy.
 {
     NetObject *ptr = new NetUser();
     return ptr;

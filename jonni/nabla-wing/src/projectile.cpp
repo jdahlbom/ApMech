@@ -9,7 +9,7 @@
 /**/};
 /**/static ProjectileInject __projectileinject;
 /**//* A create method like this is also ABSOLUTELY REQUIRED in descendants of NetObject. */
-/**/NetObject *Projectile::create(ap::uint32 id)
+/**/NetObject *Projectile::create(ap::uint32 id) const
 /**/{
 /**/    NetObject *ptr = new Projectile(id);
 /**/    return ptr;
@@ -23,7 +23,7 @@ Projectile::Projectile(int _id, int _uid)
     changed = false;
 }
 
-uint8 Projectile::getObjectType()
+uint8 Projectile::getObjectType() const
 {
     return ap::OBJECT_TYPE_PROJECTILE;
 }

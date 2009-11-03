@@ -45,7 +45,7 @@ int servermain(int argc, char* argv[])
         netdata->receiveChanges();
         oldticks = newticks; newticks = getTicks(); dt = float(newticks - oldticks) * 0.001;
 
-        while (NetGameObject *ngop = dynamic_cast<NetGameObject *>(netdata->eachObject(ap::OBJECT_TYPE_NETGAMEOBJECT)))
+	while (NetGameObject *ngop = netdata->eachObject<NetGameObject *>(ap::OBJECT_TYPE_NETGAMEOBJECT))
         {
 //JL            iUser = netdata->users.find(ngop->uid);
 //JL            if (iUser != netdata->users.end()) // That means the object's owner is still logged in
@@ -57,7 +57,7 @@ int servermain(int argc, char* argv[])
                 ngop->color = 0x00666666;
             }
 
-            while (Projectile *pp = dynamic_cast<Projectile *>(netdata->eachObject(ap::OBJECT_TYPE_PROJECTILE)))
+            while (Projectile *pp = netdata->eachObject<Projectile *>(ap::OBJECT_TYPE_PROJECTILE))
             {
                 if ((pp) && (pp->loc.collision(ngop->loc))) {
                     ngop->loc.x = 500 + (rand()%4)*1000;    ngop->loc.y = 500 + (rand()%4)*1000;

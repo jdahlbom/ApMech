@@ -9,7 +9,7 @@
 /**/};
 /**/static NetGameObjectInject __netgameobjectinject;
 /**//* A create method like this is also ABSOLUTELY REQUIRED in descendants of NetObject. */
-/**/NetObject *NetGameObject::create(ap::uint32 id)
+/**/NetObject *NetGameObject::create(ap::uint32 id) const
 /**/{
 /**/    NetObject *ptr = new NetGameObject(id);
 /**/    return ptr;
@@ -27,7 +27,7 @@ NetGameObject::NetGameObject(int _id, int _uid)
     loc.radius = 11.0; loc.x = loc.y = 50;
 }
 
-uint8 NetGameObject::getObjectType()
+uint8 NetGameObject::getObjectType() const
 {
     return ap::OBJECT_TYPE_NETGAMEOBJECT;
 }

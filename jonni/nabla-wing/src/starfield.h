@@ -5,6 +5,7 @@
 #include "net/netdata.h"
 #include "location.h"
 #include "constants.h"
+#include "types.h"
 
 #include <SDL.h>
 
@@ -14,11 +15,11 @@ class StarField : public NetObject {
  public:
     StarField(int _id = -1, int _uid = -1);
 
-    uint8 getObjectType();
+    ap::uint8 getObjectType() const;
 
     int serialize(ap::uint8 buffer[], int start, int buflength) const;
     int unserialize(ap::uint8 buffer[], int start);
-    NetObject *create(ap::uint32 id);
+    NetObject *create(ap::uint32 id) const;
 };
 
 #endif

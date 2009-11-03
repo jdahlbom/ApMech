@@ -9,7 +9,7 @@
 /**/};
 /**/static StarFieldInject __starfieldinject;
 /**//* A create method like this is also ABSOLUTELY REQUIRED in descendants of NetObject. */
-/**/NetObject *StarField::create(ap::uint32 id)
+/**/NetObject *StarField::create(ap::uint32 id) const
 /**/{
 /**/    NetObject *ptr = new StarField(id);
 /**/    return ptr;
@@ -22,7 +22,7 @@ StarField::StarField(int _id, int _uid)
     changed = false;
 }
 
-uint8 StarField::getObjectType()
+ap::uint8 StarField::getObjectType() const
 {
     return ap::OBJECT_TYPE_STARFIELD;
 }
