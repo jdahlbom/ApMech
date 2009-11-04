@@ -24,21 +24,23 @@ class NetUser : public NetObject
     static const enet_uint8 CONTROL_BLOCK_FINISHED=6;
 
     ENetPeer *peer;
-    int uid;
+    uint32 uid;
+    uint32 color;
     std::string nick;
 
     int ping;
     Controller *controls;
 
     NetUser();
-    NetUser(int uid, ENetPeer *_peer);
-    uint8 getObjectType();
+    NetUser(uint32 uid, ENetPeer *_peer);
 
     void setControlPtr(Controller *ctrl);
 
+    // NetObject interface
     int serialize(enet_uint8 buffer[], int start, int buflength) const;
     int unserialize(enet_uint8 buffer[], int start);
-    NetObject *create(uint32 id);
+    NetObject *create(uint32 id) const;
+    uint8 getObjectType() const;
 };
 
 } // namespace net

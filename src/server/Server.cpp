@@ -47,7 +47,7 @@ void Server::start() {
     while (1) {             // Server main loop
         netdata->receiveChanges();
         oldticks = newticks; newticks = getTicks();
-        dt = float(newticks - oldticks); // dt is in milliseconds
+        dt = float(newticks - oldticks)*0.001; // dt is in seconds
 
         updateObjects(dt, netdata);
         fireWeapons(newticks, netdata);

@@ -9,7 +9,7 @@
 /**/};
 /**/static NetGameObjectInject __netgameobjectinject;
 /**//* A create method like this is also ABSOLUTELY REQUIRED in descendants of NetObject. */
-/**/NetObject *NetGameObject::create(ap::uint32 id)
+/**/NetObject *NetGameObject::create(ap::uint32 id) const
 /**/{
 /**/    NetObject *ptr = new NetGameObject(id);
 /**/    return ptr;
@@ -27,7 +27,7 @@ NetGameObject::NetGameObject(int _id, int _uid)
     loc.radius = 11.0; loc.x = loc.y = 50;
 }
 
-uint8 NetGameObject::getObjectType()
+uint8 NetGameObject::getObjectType() const
 {
     return ap::OBJECT_TYPE_NETGAMEOBJECT;
 }
@@ -76,7 +76,10 @@ list<NetObject *> *NetGameObject::control(NetUser &user, bool createobjects)
     // TODO: DO SOMETHING!
     ap::NablaControl *control;
     control = dynamic_cast<ap::NablaControl *>(user.controls);
-    if (!control) cout << "netgameobject.cpp: Control is of wrong type!\n";
+    if (!control) {
+       cout << "netgameobject.cpp: Control is of wrong type!\n";
+       return NULL;
+    }
 
     loc.a = control->a;
     loc.turning = control->turning;

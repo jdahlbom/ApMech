@@ -37,6 +37,7 @@ template <class T> bool from_string(T& t, const std::string& s, std::ios_base& (
 }
 
 void mSleep(ap::uint32 milliseconds);
+void uSleep(ap::uint32 microseconds);
 ap::uint32 getTicks();
 
 ap::uint32 getColorFromPseudoHue(float phue);

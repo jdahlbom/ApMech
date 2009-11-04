@@ -1,5 +1,6 @@
 #include "netdata.h"
 
+#include "../constants.h" // netdata should not need this!
 #include "../types.h"
 #include "serializer.h"
 
@@ -8,16 +9,18 @@ namespace net {
 
 using namespace std;
 
-
 map<enet_uint8, NetObject *>& netobjectprototypes()
 {
     static map<enet_uint8, NetObject *> * objectprotomap = new map<enet_uint8, NetObject *>;
     return *objectprotomap;
 }
 
+
 NetData::NetData(int type, uint32 _port) :
     neteventlist(std::list <NetEvent *>())
 {
+    for (int i=0; i<256; i++) __template_eachObject_active[i] = false;
+
     if (enet_initialize() != 0) {
         status = enet_error;
         errorstring = "Error in enet_initialize()";
@@ -36,7 +39,7 @@ NetData::NetData(int type, uint32 _port) :
         status = enet_error;
         errorstring = "Error using enet_host_create in NetData constructor";
     }
-    me.uid = -1; myAvatarID = 0; enetserver = NULL;
+    me.uid = 0; myAvatarID = 0; enetserver = NULL;
     return;
 }
 
@@ -59,13 +62,13 @@ void NetData::addEvent(NetEvent *event)
 bool NetData::pollEvent(NetEvent &event)
 {
     if (!neteventlist.empty()) {
-//        cout << "event1message: "<<event.message<<","<<(*neteventlist.front()).message<<endl;
         event = *neteventlist.front(); // Copy what's in there
         delete neteventlist.front();
         neteventlist.pop_front();
         return true;
     } else return false;
 }
+
 int NetData::sendMessage(NetMessage &message)
 {
     int length = 0;
@@ -74,7 +77,7 @@ int NetData::sendMessage(NetMessage &message)
     length += message.serialize(buffer, length, 2000-length);
     buffer[length++] = NetData::PACKET_EOF;
     ENetPacket *packet = enet_packet_create(buffer, length, ENET_PACKET_FLAG_RELIABLE);
-    enet_host_broadcast(enethost, 0, packet);   // Broadcast always. Hub, not switch. For now.
+    enet_host_broadcast(enethost, 1, packet);   // Broadcast always. Hub, not switch. For now.
     // TODO: find out if it'd be more effective to only send to listed recipients (many
     // peer_sends as opposed to one broadcast)
     return length;
@@ -92,7 +95,7 @@ void NetData::setAvatarID(uint32 uid, uint32 avatarid)
     map<int,NetUser>::iterator userIterator;
     userIterator = users.find(uid);
     if (userIterator == users.end()) cout << "FOULED in NetData::setAvatarID: Uid not found!"<<endl;
-    else enet_peer_send(userIterator->second.peer, 0, packet);
+    else enet_peer_send(userIterator->second.peer, 1, packet); // Channel 1 because reliable
 }
 
 int NetData::connect(std::string ip, uint32 port)
@@ -102,10 +105,9 @@ int NetData::connect(std::string ip, uint32 port)
 
     enet_address_set_host(&address, ip.c_str());
     address.port = port;
-    enetserver = enet_host_connect(enethost, &address, 1);
-
+    enetserver = enet_host_connect(enethost, &address, 2);
     if (enetserver == NULL) {
-        cout << (errorstring = "[NETDATA] Connect to server failed") << endl;
+        cout << (errorstring = "[NETDATA] Connect to server failed: network error") << endl;
         return NETERROR;
     }
 
@@ -115,8 +117,7 @@ int NetData::connect(std::string ip, uint32 port)
         status = connected;
     } else {
         enet_peer_reset(enetserver);
-        errorstring = "[NETDATA] Connect to server failed: timeout error";
-        cout << errorstring << endl;
+        cout << (errorstring = "[NETDATA] Connect to server failed: timeout error") << endl;
         return TIMEOUT;
     }
 
@@ -160,6 +161,7 @@ int NetData::disconnect()
             }
         }
         enet_peer_reset(enetserver); // Clean disconnect didn't work - do it by force
+        cout << "[NETDATA] Disconnected by force - server did not respond" << endl;
         return 0;
     }
     return 0;
@@ -179,14 +181,14 @@ int NetData::serviceServer()
             if (users.size() == MAXCLIENTS) {   // If server is full..
                 enet_peer_disconnect(event.peer, NetData::SERVERFULL);
             } else {
-                int newuid;
+                uint32 newuid;
                 for (newuid = 1; users.find(newuid) != users.end(); newuid++); // find first unused uid
                 users.insert(make_pair(newuid, NetUser(newuid, event.peer)));
-                event.peer->data = new int(newuid);
+                event.peer->data = new uint32(newuid);
 
-                enet_uint8 buffer[4]; *(int *)(buffer) = newuid;
+                enet_uint8 buffer[4]; *(uint32 *)(buffer) = newuid;
                 ENetPacket *packet = enet_packet_create(buffer, 4, ENET_PACKET_FLAG_RELIABLE); // OBS! Bad way to do this!
-                enet_peer_send(event.peer, 0, packet);
+                enet_peer_send(event.peer, 1, packet);
 
                 addEvent(new NetEvent(NetData::EVENT_CONNECT, newuid));
             }
@@ -199,16 +201,16 @@ int NetData::serviceServer()
                 while (data[h] != NetData::PACKET_EOF)
                 {
                     if (data[h] == NetData::PACKET_NETUSER) {
-                        h++; uid = *(int *)(data+h);  // this means, read an int from data[h] onwards
+                        h++; uid = *(uint32 *)(data+h);  // this means, read an uint from data[h] onwards
                         h += users.find(uid)->second.unserialize(data, h);
                     } else if (data[h] == NetData::PACKET_NETMESSAGE) {
                         NetMessage netmsg;
                         h++;
                         h += netmsg.unserialize(data, h);
-                        netmsg.data = users[netmsg.sender].nick + "> " + netmsg.data;
+                        netmsg.data = users[netmsg.sender].nick + ": " + netmsg.data;
                         sendMessage(netmsg);
                     } else {
-                        cout << "[NETDATA] Received an unknown packet! Error in NetData::serviceServer!" << endl;
+                        cout << "[NETDATA] Received an unknown packet! Error in NetData::serviceServer() !" << endl;
                     }
                 }
                 enet_packet_destroy(event.packet);
@@ -217,21 +219,17 @@ int NetData::serviceServer()
 
          case ENET_EVENT_TYPE_DISCONNECT:
             if (status == server) {
-                int uid = *(int *)event.peer->data;     // Who disconnected? He sent his uid too,
-                                                        // but rather trust enet's peer->data
+                uint32 uid = *(uint32 *)event.peer->data;   // Who disconnected? He sent his uid too,
+                                                            // but rather trust enet's peer->data
                 users.erase(uid);
-                delete (int *)event.peer->data;
+                delete (uint32 *)event.peer->data;
                 cout << "[NETDATA] Client " << uid << " has disconnected" << endl;
-
-                std::map <int, NetObject*>::iterator iObj;
-                for (iObj=netobjects.begin() ; iObj!=netobjects.end() ; iObj++)
-                    if (iObj->second->uid == uid) iObj->second->uid = -1;
 
                 enet_uint8 buffer[6]; buffer[0] = NetData::PACKET_DISCONNECT;    // Let clients know!
                 *(int *)(buffer + 1) = uid;
                 buffer[5] = NetData::PACKET_EOF;
                 ENetPacket *packet = enet_packet_create(buffer, 6, ENET_PACKET_FLAG_RELIABLE);
-                enet_host_broadcast(enethost, 0, packet);
+                enet_host_broadcast(enethost, 1, packet); // Channel 1 cause reliable
                 // Not detecting if we get disconnect messages from users who weren't connected in the first place. Oh well.
 
                 addEvent(new NetEvent(NetData::EVENT_DISCONNECT, uid));
@@ -298,7 +296,7 @@ int NetData::serviceClient()
             break;}
 
          case ENET_EVENT_TYPE_DISCONNECT:   // that means, a client loses connection unwillingly
-            me.uid = -1; status = offline;
+            me.uid = 0; status = offline;
             if (int(event.data) == NetData::SERVERFULL) cout << "[NETDATA] Server full, connection closed!" << endl;
             else cout << "[NETDATA] Connection lost!" << endl;
             break;
@@ -313,25 +311,64 @@ int NetData::serviceClient()
     return items;
 }
 
+  /**
+   * Client handling code of NETOBJECT packets.
+   *
+   * createPacketNetObject is the matching method used by server for sending one.
+   *
+   * @param enet_uint8* data Pointer to the packet data where to start unserializing.
+   * @return uint32 The length of unserialized object.
+   */
 uint32 NetData::processPacketNetObject(enet_uint8 *data)
 {
     ap::uint8 objtype;
     ap::uint32 id;
 
     int length = 0;
-    length = ap::net::unserialize(id, data, length);
+    length += ap::net::unserialize(id, data, length);
+    length += ap::net::unserialize(objtype, data, length);
 
     if (netobjects.find(id) != netobjects.end()) {
-        length = netobjects.find(id)->second->unserialize(data, 0);
+        length += netobjects.find(id)->second->unserialize(data, length);
+	// TODO Should not be here. netdata should be content-neutral!
+	switch(objtype) {
+// TODO: Jonni, find something else for this!
+//	case ap::OBJECT_TYPE_SCORELISTING:
+//	  addEvent(new NetEvent(EVENT_UPDATEOBJECT, id));
+//	  break;
+	default:
+	  break;
+	}
     } else {
-        length += ap::net::unserialize(objtype, data, length);
-        netobjects.insert(make_pair(id, ap::net::netobjectprototypes()[objtype]->create(id)));
-        length = netobjects.find(id)->second->unserialize(data, 0);
+        insertObject(ap::net::netobjectprototypes()[objtype]->create(id), id);
+	// FIXME: Ugh, chaining map-find and methods operating on it. Looks bad. -JD
+        length += netobjects.find(id)->second->unserialize(data, length);
         addEvent(new NetEvent(EVENT_CREATEOBJECT, id));
     }
 
     return length;
 }
+
+  /**
+   * Server creation code of NETOBJECT packets
+   *
+   * processPacketNetObject is the matching method used by client for receiving.
+   *
+   * @return uint32 The length of created packet.
+   */
+  ap::uint32 NetData::createPacketNetObject(const ap::net::NetObject* pObj, enet_uint8 *data,
+					    ap::uint32 start, ap::uint32 buflength) const
+  {
+    ap::uint32 length = 0;
+    data[start+(length++)] = NetData::PACKET_NETOBJECT;
+
+    length += ap::net::serialize(pObj->id, data, start+length, buflength);
+    length += ap::net::serialize(pObj->getObjectType(), data, start+length, buflength);
+    length += pObj->serialize(data, start+length, buflength);
+
+    return length;
+  }
+
 
 int NetData::receiveChanges()
 {
@@ -357,41 +394,34 @@ void NetData::sendClientChanges()
 
 int NetData::sendChanges()
 {
-    //std::cout << "[NETDATA] Sending changes - " << netobjects.size() << " objects in map" << std::endl;
     int items = 0;
     if ((status == connected) && (me.changed) && (me.uid > 0)) { // Do we have updated things to send!
-        list<int>::iterator iDelPkg = objectDeleteQueue.begin();
+        std::set<int>::iterator iDelPkg = objectDeleteQueue.begin();
         while (iDelPkg != objectDeleteQueue.end()) {
             removeObject(*iDelPkg);    // First, remove what is to be removed
-            iDelPkg = objectDeleteQueue.erase(iDelPkg);
+            objectDeleteQueue.erase(iDelPkg++);
         }
 
         sendClientChanges();
     } else if ((status == server) ) {          // 1st iteration: send anyway, even if no updates.
         enet_uint8 buffer[10000];
         int length=0, packetstosend = 0;
-        std::map <int, NetObject*>::iterator po = netobjects.begin();
-        list<int>::iterator iDelPkg = objectDeleteQueue.begin();
+        std::map<int, NetObject*>::iterator po = netobjects.begin();
+        std::set<int>::iterator iDelPkg = objectDeleteQueue.begin();
 
         while (iDelPkg != objectDeleteQueue.end()) {
             removeObject(*iDelPkg);    // Now, actually remove an object
             buffer[length++] = NetData::PACKET_DELOBJECT;
             *(int *)(buffer+length) = *iDelPkg;     length += 4;
-            iDelPkg = objectDeleteQueue.erase(iDelPkg);
+            objectDeleteQueue.erase(iDelPkg++);
         }
         po = netobjects.begin();
         while (po != netobjects.end()) {
-            buffer[length++] = NetData::PACKET_NETOBJECT;
-            length += po->second->serialize(buffer, length, 10000);
-            packetstosend++; po++;
+	  length += createPacketNetObject(po->second, buffer, length, 10000);
+	  packetstosend++; po++;
         }
         buffer[length++] = NetData::PACKET_EOF;
 
-/* // Debug info: print what we see in map, and how it's serialized
-for (map<int,NetObject*>::iterator i=netobjects.begin() ; i != netobjects.end() ; i++)
-    cout << "Map ID "<<i->first << " to "<<i->second->id<<endl;
-hexprint(buffer, length);
-*/
         if (packetstosend > 0) {
             ENetPacket *packet = enet_packet_create(buffer, length, 0);//ENET_PACKET_FLAG_RELIABLE);
             enet_host_broadcast(enethost, 0, packet);
@@ -403,6 +433,7 @@ hexprint(buffer, length);
     return items;
 }
 
+/** Return some object id that is not in use. For creating id's for new objects. */
 uint32 NetData::getUniqueObjectID()
 {
     uint32 newid;
@@ -420,21 +451,27 @@ NetObject * NetData::getObject(uint32 id)
     return it->second;
 }
 
-// Client side delete. Just delete, don't let anyone know.
+/** Client side delete. Just delete, delete immediately,
+ *  and don't let anyone know. I think this should only be called
+ *  when handling an EVENT_DELETEOBJECT.
+ */
 void NetData::removeObject(uint32 id)
 {
     // I had nabla-wing crash once because of double-delete, but couldn't reproduce..
     // checking doesn't harm anyway.
     if (netobjects.find(id) != netobjects.end()) {
-        std::multimap<uint8, NetObject*>::iterator obji, endi;
-        std::make_pair(obji, endi) = netObjectsByType.equal_range(netobjects.find(id)->second->getObjectType());
-        while (obji != endi)
-            if ((*obji).second == netobjects.find(id)->second) netObjectsByType.erase(obji++);
-            else obji++;
+        pair<multimap<uint8,NetObject*>::iterator, multimap<uint8,NetObject*>::iterator> ii;
+        ii = netObjectsByType.equal_range(netobjects.find(id)->second->getObjectType());
+
+        while (ii.first != ii.second) {
+            if (ii.first->second == netobjects.find(id)->second) netObjectsByType.erase(ii.first++);
+            else ii.first++;
+        }
 
         delete netobjects.find(id)->second;
         netobjects.erase(id); // TODO: Shouldn't erase call the destructor anyways??
     }
+//    cout << "[NETDATA] Object removed. Now "<<netobjects.size()<<" / "<<netObjectsByType.size()<<endl;
 }
 
 NetUser *NetData::getUser(uint32 uid)
@@ -451,43 +488,53 @@ int NetData::getUserCount()
 
 NetObject *NetData::eachObject()
 {
-    static std::map<int,NetObject*>::iterator i = netobjects.begin();
+    static bool active = false;
+    static std::map<int,NetObject*>::iterator i;
 
-    if (i != netobjects.end()) {
-        return (i++)->second;
-    } else {
+    if (!active) {
         i = netobjects.begin();
-        return NULL;
+        active = true;
     }
+    if (i == netobjects.end()) {
+        active = false;
+        return NULL;
+    } else return (i++)->second;
 }
 
-NetObject *NetData::eachObject(uint8 type)
+
+NetUser *NetData::eachUser()
 {
-#define b ,netobjects.begin()
-    static std::map<int,NetObject*>::iterator i[256] = { netobjects.begin() b b b b b
-    b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b
-    b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b
-    b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b
-    b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b
-    b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b b };
-#undef b
-    while (i[type] != netobjects.end()) {
-        if (i[type]->second->getObjectType() == type) return (i[type]++)->second;
-        i[type]++;
+    static bool active = false;
+    static std::map<int,NetUser>::iterator i;
+
+    if (!active) {
+        i = users.begin();
+        active = true;
     }
-    i[type] = netobjects.begin();
-    return NULL;
+    if (i == users.end()) {
+        active = false;
+        return NULL;
+    } else return &(i++)->second;
 }
 
 /** Insert an object and give it a new, unique ID.
- *  \return the new, unique ID given to the object. */
-uint32 NetData::insertObject(NetObject *obj)
+ *  You can optionally specify the wanted id, but the insertion is then
+ *  perhaps more likely to fail.
+ *  \return the new, unique ID given to the object, 0 if error. */
+uint32 NetData::insertObject(NetObject *obj, uint32 id)
 {
-    uint32 newid = getUniqueObjectID();
+    uint32 newid;
+    if (id > 0) {
+        if (netobjects.find(id) != netobjects.end()) return 0;
+        newid = id;
+    } else newid = getUniqueObjectID();
+
     obj->id = newid;
     netobjects.insert(make_pair(newid, obj));
 
     netObjectsByType.insert(make_pair(obj->getObjectType(), obj));
+
+//    cout << "[NETDATA] Object of type "<<int(obj->getObjectType())<< " inserted. Now "<<netobjects.size()<<" / "<<netObjectsByType.size()<<endl;
     return newid;
 }
 
@@ -502,13 +549,12 @@ void NetData::insertObjects(list<NetObject *> *objlist)
     }
 }
 
-// Server delete (let clients know as well)
+/** Graceful delete: mark the object for deletion next time sendChanges() is called.
+ *  Additionally, connected clients will be notified so that they can also delete the object.
+ */
 void NetData::delObject(uint32 id)
 {
-    objectDeleteQueue.push_back(id);
-//    removeNetObject(id);    // Let's not remove yet, lest we fuck up iterators
-//    delete netobjects.find(id)->second;
-//    netobjects.erase(id);
+    objectDeleteQueue.insert(id);
 }
 
 } //namespace net

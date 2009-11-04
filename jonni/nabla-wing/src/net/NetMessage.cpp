@@ -60,7 +60,6 @@ int NetMessage::serialize(ap::uint8 buffer[], int start, int buflength) const
     }
 
     length += serialize(data, buffer, start+length, buflength);
-//    strcpy( (char *)buffer + start+length, data.c_str());   length += data.length()+1;
     return length;
 }
 
@@ -86,7 +85,6 @@ int NetMessage::unserialize(ap::uint8 buffer[], int start)
         recipients = NULL;
     }
 
-//    data.assign((char *)buffer+start+length);           length += data.length()+1;
     length += unserialize(data, buffer, start+length);
     return length;
 }

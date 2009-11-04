@@ -24,11 +24,11 @@ class NetGameObject : public NetObject {
 
     NetGameObject(int _id, int _uid = -1);
 
-    uint8 getObjectType();
+    uint8 getObjectType() const;
 
     int serialize(ap::uint8 buffer[], int start, int buflength) const;
     int unserialize(ap::uint8 buffer[], int start);
-    NetObject *create(ap::uint32 id);
+    NetObject *create(ap::uint32 id) const;
 
     int advance(float dt);
     list<NetObject *> *control(NetUser &user, bool createobjects = false);

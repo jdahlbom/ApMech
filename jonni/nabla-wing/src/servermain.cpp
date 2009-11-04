@@ -45,7 +45,7 @@ int servermain(int argc, char* argv[])
         netdata->receiveChanges();
         oldticks = newticks; newticks = getTicks(); dt = float(newticks - oldticks) * 0.001;
 
-        while (NetGameObject *ngop = dynamic_cast<NetGameObject *>(netdata->eachObject(ap::OBJECT_TYPE_NETGAMEOBJECT)))
+	while (NetGameObject *ngop = netdata->eachObject<NetGameObject *>(ap::OBJECT_TYPE_NETGAMEOBJECT))
         {
 //JL            iUser = netdata->users.find(ngop->uid);
 //JL            if (iUser != netdata->users.end()) // That means the object's owner is still logged in
@@ -55,9 +55,10 @@ int servermain(int argc, char* argv[])
                 netdata->insertObjects(ngop->control(*userp, true));
             } else {                            // That means owner's disconnected, so paint it gray!
                 ngop->color = 0x00666666;
+                ngop->uid = 0; // Set owner to zero, so that controls don't go to somebody else
             }
 
-            while (Projectile *pp = dynamic_cast<Projectile *>(netdata->eachObject(ap::OBJECT_TYPE_PROJECTILE)))
+            while (Projectile *pp = netdata->eachObject<Projectile *>(ap::OBJECT_TYPE_PROJECTILE))
             {
                 if ((pp) && (pp->loc.collision(ngop->loc))) {
                     ngop->loc.x = 500 + (rand()%4)*1000;    ngop->loc.y = 500 + (rand()%4)*1000;
@@ -81,7 +82,6 @@ int servermain(int argc, char* argv[])
             switch (event.type)
             {
              case NetData::EVENT_CONNECT:
-//                cout << "Received a connection from "<< uint2ipv4(netdata->users[event.uid].peer->address.host) <<", uid "<<event.uid;
                 cout << "Received a connection from "<< uint2ipv4(netdata->getUser(event.uid)->peer->address.host) <<", uid "<<event.uid;
                 cout << ". We now have "<<netdata->getUserCount()<<" users."<<endl;
 
