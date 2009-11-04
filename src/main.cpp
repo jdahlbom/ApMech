@@ -128,6 +128,7 @@ SDL_Surface* setupSDL(int width, int height) {
 
     misc["externalWindowHandle"] = Ogre::StringConverter::toString(winHandle);
     misc["externalGLContext"] = Ogre::StringConverter::toString(winGlContext);
+	misc["externalGLControl"] = Ogre::String("True");
 #else
     misc["currentGLContext"] = Ogre::String("True");
 #endif
