@@ -220,6 +220,8 @@ int NetData::serviceServer()
             if (status == server) {
                 uint32 uid = *(uint32 *)event.peer->data;   // Who disconnected? He sent his uid too,
                                                             // but rather trust enet's peer->data
+                pastUsers.erase(uid);
+                pastUsers.insert(make_pair(uid, NetUser(users.find(uid)->second)));
                 users.erase(uid);
                 delete (uint32 *)event.peer->data;
                 cout << "[NETDATA] Client " << uid << " has disconnected" << endl;
@@ -488,6 +490,13 @@ NetUser *NetData::getUser(uint32 uid)
     std::map<int, NetUser>::iterator i;
     i = users.find(uid);
     if (i == users.end()) return NULL;
+    return &(i->second);
+}
+NetUser *NetData::getPastUser(uint32 uid)
+{
+    std::map<int, NetUser>::iterator i;
+    i = pastUsers.find(uid);
+    if (i == pastUsers.end()) return NULL;
     return &(i->second);
 }
 int NetData::getUserCount()

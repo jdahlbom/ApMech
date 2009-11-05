@@ -16,6 +16,7 @@
 #include "../Projectile.h"
 #include "../MovingObject.hpp"
 #include "../types.h"
+#include "../net/NetMessage.h"
 
 namespace ap {
 namespace server {
@@ -79,16 +80,22 @@ void Server::processEvents(ap::net::NetData *pNetData) {
                 << uint2ipv4(pNetData->getUser(event.uid)->peer->address.host)
                 <<", uid " << event.uid;
             createNewConnection(event.uid, pNetData);
+            NetMessage connectMessage("!!! "+pNetData->getUser(event.uid)->nick+" has joined the game !!!");
+            pNetData->sendMessage(connectMessage);
             break;
         }
         case ap::net::NetData::EVENT_DISCONNECT:
+        {
             cout << "[SERVER] Client "<<event.uid<<" disconnected."<<endl;
             while (Mech *pM = pNetData->eachObject<Mech *>(ap::OBJECT_TYPE_MECH)) {
                 if (pM->uid == event.uid) pNetData->delObject(pM->id);
-	    }
-	    mScores->removeScore(event.uid);
+            }
+            mScores->removeScore(event.uid);
+            pNetData->alertObject(mScores->id);       // Refresh the score display to players
+            NetMessage disconnectMessage("!!! "+pNetData->getPastUser(event.uid)->nick+" has disconnected !!!");
+            pNetData->sendMessage(disconnectMessage);
             break;
-
+        }
         default:
             break;
         }
@@ -157,7 +164,7 @@ void Server::detectCollisions(ap::net::NetData *pNetData) const {
                 mScores->print();
 
                 pNetData->delObject(proj->id);
-                pNetData->alertObject(mScores->id);
+                pNetData->alertObject(mScores->id);       // Refresh the score display to players
             }
 	  }
       }
@@ -192,6 +199,7 @@ void Server::createNewConnection(ap::uint32 userId, ap::net::NetData *pNetData)
   newPlayer.score = 0;
   mScores->addScore(newPlayer, true);
   mScores->setChanged();
+  pNetData->alertObject(mScores->id);       // Refresh the score display to players
 
   pNetData->sendChanges();
   pNetData->setAvatarID(userId, newid);

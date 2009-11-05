@@ -79,6 +79,7 @@ class NetData {
     std::map <int, NetObject*> netobjects;
     std::multimap <ap::uint8, NetObject*> netObjectsByType; // Index table for efficient eachObject
     std::map <int, NetUser> users;   // This is, users contacted to US! Should be empty unless we're server.
+    std::map <int, NetUser> pastUsers;// Users who disconnected already. A non-strict storage
 
  public:
 
@@ -102,6 +103,7 @@ class NetData {
     void removeObject(uint32 id);
 
     NetUser *getUser(uint32 uid);
+    NetUser *getPastUser(uint32 uid);
     int getUserCount();
     NetUser *eachUser();
 
