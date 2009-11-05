@@ -335,7 +335,7 @@ namespace ap {
   {
     assert(mSystem);
 
-    bool keysymProcessed, charProcessed;
+    bool keysymProcessed = false, charProcessed = false;
     keysymProcessed = mSystem->injectKeyDown(MapKeyToCEGUI(event.key));
     if (event.unicode != 0) {
       charProcessed = mSystem->injectChar(event.unicode);
