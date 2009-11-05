@@ -8,16 +8,24 @@
 
 namespace ap {
 
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+  std::string mResourcePath = ap::macBundlePath() + "/Contents/Resources/Media/gui/layout/";
+  const std::string Gui::loginLayoutFile = mResourcePath + "Login.layout";
+  const std::string Gui::chatLayoutFile = mResourcePath + "ChatBox.layout";
+  const std::string Gui::scoreLayoutFile = mResourcePath + "ScoreBoard.layout";
+#else
   const std::string Gui::loginLayoutFile = "Login.layout";
+  const std::string Gui::chatLayoutFile = "ChatBox.layout";
+  const std::string Gui::scoreLayoutFile = "ScoreBoard.layout";
+#endif
+
   const std::string Gui::loginRootName = "LoginRoot";
   const std::string Gui::loginNameField = "/Login/Name";
   const std::string Gui::loginAddressField = "/Login/Address";
 
-  const std::string Gui::chatLayoutFile = "ChatBox.layout";
   const std::string Gui::chatRootName = "ChatBoxRoot";
 
   const std::string Gui::scoreWindowName = "ScoreList";
-  const std::string Gui::scoreLayoutFile = "ScoreBoard.layout";
 
 
   Gui::Gui(CEGUI::Renderer *renderer) :
