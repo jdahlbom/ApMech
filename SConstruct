@@ -42,6 +42,7 @@ if platform == 'darwin':
             ogresdkLocation + '/Samples/include',
             '/opt/local/include/boost-1_35/'
         ]
+    env['CPPDEFINES'] = ['SERIALIZER_WITH_OGRE']
     env.Append(LIBS = ['enet'])
     env.Append(CCFLAGS = '-include Carbon/Carbon.h')
     env.Append(LINKFLAGS = '-F' + ogresdkLocation + '/build/Release -F' + ogresdkLocation + '/Dependencies')
