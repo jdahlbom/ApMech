@@ -7,7 +7,6 @@
 
 #include "types.h"
 #include "net/Serializable.h"
-#include "net/serializer.h"
 
 namespace ap {
 

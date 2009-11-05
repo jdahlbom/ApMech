@@ -13,10 +13,12 @@ class NetEvent
  public:
     ap::uint8 type;
     ap::uint32 uid;
+    ap::uint32 id;
+    ap::uint8 objectType;
     NetMessage *message;
 
     NetEvent();
-    NetEvent(ap::uint8 _type, ap::int32 _uid);
+    NetEvent(ap::uint8 _type, ap::int32 _uid, ap::uint32 _id = 0, ap::uint8 _objectType = 0);
     NetEvent(ap::uint8 _type, NetMessage *_message);
     NetEvent(NetEvent &e);                        // Copy constructor
     void operator=(NetEvent &e);

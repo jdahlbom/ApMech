@@ -1,8 +1,6 @@
 #include "ScoreListing.h"
 
 #include "constants.h"
-//FIXME: netobjectprototypes should be removed from netdata, to avoid these dependencies!
-#include "net/netdata.h"
 #include "net/serializer.h"
 
 namespace ap {
@@ -39,10 +37,10 @@ namespace ap {
 
   void ScoreTuple::print() const
   {
-    std::cout << "uid: " << uid 
+    std::cout << "uid: " << uid
 	      <<", kills: " << kills
 	      <<", deaths: " << deaths
-	      <<", score: " << score 
+	      <<", score: " << score
 	      <<std::endl;
   }
 
@@ -112,7 +110,7 @@ namespace ap {
   {
     int length = 0;
     ap::uint16 numberOfTuples = scoreList.size();
-    
+
     length += ap::net::serialize(numberOfTuples, buffer, start+length, buflength-length);
 
     std::map<ap::uint32, ScoreTuple>::const_iterator it = scoreList.begin();
@@ -122,12 +120,12 @@ namespace ap {
     return length;
   }
 
-  int ScoreListing::unserialize(uint8 buffer[], int start) 
+  int ScoreListing::unserialize(uint8 buffer[], int start)
   {
     int length = 0;
     ap::uint16 numberOfTuples = 0;
     length += ap::net::unserialize(numberOfTuples, buffer, start+length);
-    
+
     scoreList.clear();
     ScoreTuple tempTuple;
     for (int i=0; i<numberOfTuples; ++i) {

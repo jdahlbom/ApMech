@@ -1,6 +1,5 @@
 #include "netdata.h"
 
-#include "../constants.h" // netdata should not need this!
 #include "../types.h"
 #include "serializer.h"
 
@@ -265,13 +264,13 @@ int NetData::serviceClient()
                     h += processPacketNetObject(data+h);
                 } else if (data[h] == NetData::PACKET_DELOBJECT) {
                     h++;
-                    id = *(int *)(data+h);
-                    addEvent(new NetEvent(EVENT_DELETEOBJECT, id));
+                    id = *(uint32 *)(data+h);
+                    addEvent(new NetEvent(EVENT_DELETEOBJECT, 0, id));
                     h += 4;
                 } else if (data[h] == NetData::PACKET_SETAVATAR) {
                     h++;
-                    myAvatarID = *(int *)(data+h);
-                    addEvent(new NetEvent(EVENT_SETAVATAR, myAvatarID));
+                    myAvatarID = *(uint32 *)(data+h);
+                    addEvent(new NetEvent(EVENT_SETAVATAR, 0, myAvatarID));
                     h += 4;
                 } else if (data[h] == NetData::PACKET_NETMESSAGE) {
                     NetMessage *netmsg = new NetMessage();
@@ -279,9 +278,14 @@ int NetData::serviceClient()
                     h += netmsg->unserialize(data, h);
                     NetEvent *event = new NetEvent(NetData::EVENT_MESSAGE, netmsg);
                     addEvent(event);
+                } else if (data[h] == NetData::PACKET_ALERTOBJECT) {
+                    h++;
+                    id = *(uint32 *)(data+h);           h += 4;
+                    uint8 objtype = *(uint8 *)(data+h); h++;
+                    addEvent(new NetEvent(EVENT_UPDATEOBJECT, 0, id, objtype));
                 } else if (data[h] == NetData::PACKET_DISCONNECT) {
                     h++;
-                    uid = *(int *)(data+h);
+                    uid = *(uint32 *)(data+h);
                     addEvent(new NetEvent(EVENT_DISCONNECT, 0));
                     h+=4;
                     cout << "[NETDATA] Player "<<uid<<" disconnected!"<<endl;
@@ -330,14 +334,6 @@ uint32 NetData::processPacketNetObject(enet_uint8 *data)
 
     if (netobjects.find(id) != netobjects.end()) {
         length += netobjects.find(id)->second->unserialize(data, length);
-	// TODO Should not be here. netdata should be content-neutral!
-	switch(objtype) {
-	case ap::OBJECT_TYPE_SCORELISTING:
-	  addEvent(new NetEvent(EVENT_UPDATEOBJECT, id));
-	  break;
-	default:
-	  break;
-	}
     } else {
         insertObject(ap::net::netobjectprototypes()[objtype]->create(id), id);
 	// FIXME: Ugh, chaining map-find and methods operating on it. Looks bad. -JD
@@ -377,7 +373,7 @@ int NetData::receiveChanges()
     return items;
 }
 
-void NetData::sendClientChanges()
+int NetData::sendClientChanges()
 {
     enet_uint8 buffer[10000];
     int length=0;
@@ -389,47 +385,61 @@ void NetData::sendClientChanges()
     ENetPacket *packet = enet_packet_create(buffer, length, 0);//ENET_PACKET_FLAG_RELIABLE);
     enet_peer_send(enetserver, 0, packet);
     me.changed = false;
+    return length;
 }
 
 int NetData::sendChanges()
 {
-    int items = 0;
     if ((status == connected) && (me.changed) && (me.uid > 0)) { // Do we have updated things to send!
-        std::set<int>::iterator iDelPkg = objectDeleteQueue.begin();
+        std::set<uint32>::iterator iDelPkg = objectDeleteQueue.begin();
         while (iDelPkg != objectDeleteQueue.end()) {
             removeObject(*iDelPkg);    // First, remove what is to be removed
             objectDeleteQueue.erase(iDelPkg++);
         }
 
-        sendClientChanges();
+        return sendClientChanges();
+
     } else if ((status == server) ) {          // 1st iteration: send anyway, even if no updates.
         enet_uint8 buffer[10000];
         int length=0, packetstosend = 0;
         std::map<int, NetObject*>::iterator po = netobjects.begin();
-        std::set<int>::iterator iDelPkg = objectDeleteQueue.begin();
+        std::set<uint32>::iterator iDelPkg = objectDeleteQueue.begin(), iAlertPkg = objectAlertQueue.begin();
 
         while (iDelPkg != objectDeleteQueue.end()) {
             removeObject(*iDelPkg);    // Now, actually remove an object
             buffer[length++] = NetData::PACKET_DELOBJECT;
-            *(int *)(buffer+length) = *iDelPkg;     length += 4;
+            *(uint32 *)(buffer+length) = *iDelPkg;     length += 4;
             objectDeleteQueue.erase(iDelPkg++);
         }
         po = netobjects.begin();
         while (po != netobjects.end()) {
-	  length += createPacketNetObject(po->second, buffer, length, 10000);
-	  packetstosend++; po++;
+//            if (po->second->changed) {
+//                po->second->changed = false;
+                length += createPacketNetObject(po->second, buffer, length, 10000);
+                packetstosend++;
+//            }
+            po++;
         }
-        buffer[length++] = NetData::PACKET_EOF;
+        while (iAlertPkg != objectAlertQueue.end()) {
+            if (netobjects.find(*iAlertPkg) != netobjects.end()) { // If the object still exists
+                buffer[length++] = NetData::PACKET_ALERTOBJECT;
+                *(uint32 *)(buffer+length) = *iAlertPkg;     length += 4;
+                *(uint8 *)(buffer+length) = netobjects[*iAlertPkg]->getObjectType();    length++;
+            }
+            objectAlertQueue.erase(iAlertPkg++);
+        }
 
+        buffer[length++] = NetData::PACKET_EOF;
+//        hexprint(buffer, length); // DEBUG INFO
         if (packetstosend > 0) {
             ENetPacket *packet = enet_packet_create(buffer, length, 0);//ENET_PACKET_FLAG_RELIABLE);
             enet_host_broadcast(enethost, 0, packet);
         }
-
+        return length;
 //        me.changed = false;// Is server's "me" even used like this?!?
     }
 
-    return items;
+    return 0;
 }
 
 /** Return some object id that is not in use. For creating id's for new objects. */
@@ -555,6 +565,14 @@ void NetData::delObject(uint32 id)
 {
     objectDeleteQueue.insert(id);
 }
+
+/** Alert connected clients about this object (for any app-specific reason)
+ */
+void NetData::alertObject(uint32 id)
+{
+    objectAlertQueue.insert(id);
+}
+
 
 } //namespace net
 } //namespace ap

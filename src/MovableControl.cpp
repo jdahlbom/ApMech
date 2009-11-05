@@ -5,6 +5,7 @@
 #else
 #include <Ogre/OgrePrerequisites.h>
 #endif
+
 #include "net/serializer.h"
 
 namespace ap {

@@ -20,7 +20,7 @@ namespace net {
 
 using namespace std;
 
-map<enet_uint8, NetObject *>& netobjectprototypes();
+map<ap::uint8, NetObject *>& netobjectprototypes();
 
 class NetData {
  public:
@@ -42,6 +42,7 @@ class NetData {
     static const enet_uint8 PACKET_SETAVATAR = 43;
     static const enet_uint8 PACKET_DISCONNECT = 44;
     static const enet_uint8 PACKET_NETMESSAGE = 45;
+    static const enet_uint8 PACKET_ALERTOBJECT = 46;
     static const enet_uint8 PACKET_EOF = 49;
 
     static const enet_uint8 EVENT_NOEVENT = 19;
@@ -64,9 +65,10 @@ class NetData {
     int serviceServer();
     int serviceClient();
 
-    void sendClientChanges();
+    int sendClientChanges();
 
-    std::set <int> objectDeleteQueue;
+    std::set <uint32> objectDeleteQueue;
+    std::set <uint32> objectAlertQueue;
     std::list <NetEvent *> neteventlist;
 
     void addEvent(NetEvent *event); // Almost useless, if you can push_back stuff to a list
@@ -135,6 +137,7 @@ class NetData {
     uint32 insertObject(NetObject *obj, uint32 id = 0);
     void insertObjects(list<NetObject *> *objlist);
     void delObject(uint32 id);
+    void alertObject(uint32 id);
 
 //    int save(string filename);
 //    int load(string filename);

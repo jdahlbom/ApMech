@@ -1,8 +1,10 @@
 #ifndef AP_SERIALIZER
 #define AP_SERIALIZER
 
-// If this library is used for other purposes than Apmech, define NO_OGRE
-#ifndef NO_OGRE
+// If this library is used with Ogre3d, define SERIALIZER_WITH_OGRE
+// before including serializer.h.
+
+#ifdef SERIALIZER_WITH_OGRE
  #ifndef WIN32
   #include <Ogre.h>
  #else
@@ -16,7 +18,7 @@
 namespace ap {
 namespace net {
 
-#ifdef OGRE_VERSION
+#ifdef SERIALIZER_WITH_OGRE
 int serialize(const Ogre::Vector3 &vect, uint8 *buffer, int start, int buflength);
 int serialize(const Ogre::Quaternion &quat, uint8 *buffer, int start, int buflength);
 int unserialize(Ogre::Vector3 &vect, uint8 *buffer, int start);

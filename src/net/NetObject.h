@@ -3,6 +3,7 @@
 
 #include "Serializable.h"
 #include "../types.h"
+#include <map>
 
 namespace ap {
 namespace net {
@@ -34,6 +35,9 @@ class NetObject : public Serializable {
     virtual int serialize(uint8 buffer[], int start, int buflength) const = 0;
     virtual int unserialize(uint8 buffer[], int start) = 0;
 };
+
+// declared here, so that inheritants do not need to include netdata.h.
+extern std::map<ap::uint8, NetObject *>& netobjectprototypes();
 
 } // namespace net
 } // namespace ap

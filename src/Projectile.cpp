@@ -8,7 +8,6 @@
 
 #include "types.h"
 #include "constants.h"
-#include "net/netdata.h"
 
 namespace ap {
 /**//* This mystical part here pushes exactly ONE object of this type to the prototype map, */

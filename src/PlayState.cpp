@@ -97,25 +97,14 @@ void PlayState::update( unsigned long lTimeElapsed ) {
     while (ap::MovingObject *pMO = netdata->eachObject<ap::MovingObject *>(ap::OBJECT_TYPE_MECH)) pMO->updateNode();
     while (ap::MovingObject *pMO = netdata->eachObject<ap::MovingObject *>(ap::OBJECT_TYPE_PROJECTILE)) pMO->updateNode();
 
-    // Color all mechs.
-    // TODO: find a way to do this only when necessary.
-    while (ap::Mech *pMech = netdata->eachObject<ap::Mech*>(ap::OBJECT_TYPE_MECH)) {
-        float r, g, b;
-        r = float(pMech->color & 0x0000FF) / 255.0f;
-        g = float(pMech->color & 0x00FF00) / 65535.0f;
-        b = float(pMech->color & 0xFF0000) / 16777215.0f;
-        if (pMech->getEntity())
-            pMech->getEntity()->getSubEntity(0)->setCustomParameter(1, Ogre::Vector4(r, g, b, 0.0f));
-    }
-
     net::NetEvent event;
     while (netdata->pollEvent(event)) {
         switch( event.type ) {
             case net::NetData::EVENT_SETAVATAR:
-                setAvatar(event.uid);
+                setAvatar(event.id);
                 break;
             case net::NetData::EVENT_DELETEOBJECT:
-                deleteNetObject(event.uid);
+                deleteNetObject(event.id);
                 break;
             case net::NetData::EVENT_CREATEOBJECT:
             {
@@ -135,10 +124,30 @@ void PlayState::update( unsigned long lTimeElapsed ) {
                     }
                 }
                 break;
-	      }
-	    case net::NetData::EVENT_UPDATEOBJECT:
-	      updateScores(); // at the moment updateScores is the only update event.
-	        break;
+	        }
+            case net::NetData::EVENT_UPDATEOBJECT:
+            {
+                switch (event.objectType) {
+                    case ap::OBJECT_TYPE_SCORELISTING:
+                        updateScores(); // at the moment updateScores is the only update event.
+                        break;
+                    case ap::OBJECT_TYPE_MECH:
+                    {
+                        // A mech has probably just been painted! Well, set its color again anyway.
+                        ap::Mech *pMech = netdata->getObject<ap::Mech*>(event.id);
+                        float r, g, b;
+                        r = float(pMech->color & 0x0000FF) / 255.0f;
+                        g = float(pMech->color & 0x00FF00) / 65535.0f;
+                        b = float(pMech->color & 0xFF0000) / 16777215.0f;
+                        if (pMech->getEntity())
+                            pMech->getEntity()->getSubEntity(0)->setCustomParameter(1, Ogre::Vector4(r, g, b, 0.0f));
+                        break;
+                    }
+                    default:
+                        break;
+                }
+                break;
+            }
             case net::NetData::EVENT_MESSAGE:
                 pGui->addChatItem(event.message->data);
                 break;
@@ -200,12 +209,12 @@ void PlayState::createNewEntity(ap::MovingObject *newObject, uint32 objectId)
     case ap::OBJECT_TYPE_MECH:
       {
 	float r, g, b;
-	
+
 	ap::Mech *pMech = dynamic_cast<ap::Mech *>(newObject);
 	r = float(pMech->color & 0x0000FF) / 255.0f;
 	g = float(pMech->color & 0x00FF00) / 65535.0f;
 	b = float(pMech->color & 0xFF0000) / 16777215.0f;
-	
+
 	std::string mesh = mDataModel.getMeshFilename(ap::OBJECT_TYPE_MECH);
 	newEntity = pSceneManager->createEntity(ss.str(), mesh);
 	newEntity->getSubEntity(0)->setCustomParameter(1, Ogre::Vector4(r, g, b, 0.0f));
@@ -216,7 +225,7 @@ void PlayState::createNewEntity(ap::MovingObject *newObject, uint32 objectId)
       {
 	std::string mesh = mDataModel.getMeshFilename(ap::OBJECT_TYPE_PROJECTILE);
 	newEntity = pSceneManager->createEntity(ss.str(), mesh);
-	
+
 	ap::Projectile *pProj = dynamic_cast<ap::Projectile *>(newObject);
 	pProj->setEntity(newEntity);
       }

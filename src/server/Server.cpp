@@ -19,8 +19,9 @@
 
 namespace ap {
 namespace server {
-
 using namespace std;
+
+
 
 Server::Server(uint32 port) :
   mScores(new ap::ScoreListing()),
@@ -54,8 +55,10 @@ void Server::start() {
         detectCollisions(netdata);
 
         if (newticks >= nextupdate) {
-            netdata->sendChanges();
-            nextupdate = newticks + 40; // 40 ms between updates, that's 25 network fps.
+            int changes = netdata->sendChanges();
+            nextupdate = newticks + (1000/NetFPS); // 40 ms between updates, that's 25 network fps.
+            cout << "\rData rate: "<<changes<<"      ";
+            cout.flush();
         }                               // Seems to me that up to 100 is still okay!
         // TODO: Ensure that usleep is available on Mac/Windows as well!
         ap::mSleep(1);       // sleep even a little bit so that dt is never 0
@@ -102,8 +105,10 @@ void Server::updateObjects(float dt, ap::net::NetData* pNetData) const {
     // Copy colors from NetUser data to Mechs they own
     // TODO: think of some way of doing this only when necessary!
     while (ap::Mech *pMech = pNetData->eachObject<ap::Mech*>(ap::OBJECT_TYPE_MECH)) {
-        if (pNetData->getUser(pMech->uid))
+        if (pNetData->getUser(pMech->uid)) {
             pMech->color = pNetData->getUser(pMech->uid)->color;
+            pNetData->alertObject(pMech->id);
+        }
 
     }
 } // void Server::updateObjects
@@ -134,24 +139,25 @@ void Server::detectCollisions(ap::net::NetData *pNetData) const {
             if (proj->testCollision(*mech)) {
                 relocateSpawnedMech(mech);
 
-		// update scores.
-		ap::ScoreTuple projOwner;
-		projOwner.uid = proj->uid;
-		projOwner.kills = 1;
-		projOwner.deaths = 0;
-		projOwner.score = 1;
-		ap::ScoreTuple mechOwner;
-		mechOwner.uid = mech->uid;
-		mechOwner.kills = 0;
-		mechOwner.deaths = 1;
-		mechOwner.score = -1;
-		mScores->addScore(projOwner, false);
-		mScores->addScore(mechOwner, false);
-		mScores->setChanged();
+                // update scores.
+                ap::ScoreTuple projOwner;
+                projOwner.uid = proj->uid;
+                projOwner.kills = 1;
+                projOwner.deaths = 0;
+                projOwner.score = 1;
+                ap::ScoreTuple mechOwner;
+                mechOwner.uid = mech->uid;
+                mechOwner.kills = 0;
+                mechOwner.deaths = 1;
+                mechOwner.score = -1;
+                mScores->addScore(projOwner, false);
+                mScores->addScore(mechOwner, false);
+                mScores->setChanged();
 
-		mScores->print();
+                mScores->print();
 
                 pNetData->delObject(proj->id);
+                pNetData->alertObject(mScores->id);
             }
 	  }
       }

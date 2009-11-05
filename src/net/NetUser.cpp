@@ -10,9 +10,9 @@ namespace net {
 NetUser::NetUser():
     peer(0),
     uid(0),
+    color(0xFFFFFF),
     nick("uninitialized"),
-    ping(0),
-    color(0xFFFFFF)
+    ping(0)
 {
     controls = 0;
     changed = false;
@@ -21,9 +21,9 @@ NetUser::NetUser():
 NetUser::NetUser(uint32 _uid, ENetPeer *_peer) :
     peer(_peer),
     uid(_uid),
+    color(0xFFFFFF),
     nick("uninitialized"),
-    ping(0),
-    color(0xFFFFFF)
+    ping(0)
 {
     controls = 0;
     changed = false;

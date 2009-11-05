@@ -1,18 +1,11 @@
 #include "serializer.h"
 
-// If this library is used for other purposes than Apmech, define NO_OGRE
-#ifndef NO_OGRE
- #ifndef WIN32
-  #include <Ogre.h>
- #else
-  #include <Ogre/Ogre.h>
- #endif
-#endif
+#include <string.h> // for strcpy only
 
 namespace ap {
 namespace net {
 
-#ifdef OGRE_VERSION
+#ifdef SERIALIZER_WITH_OGRE
 int serialize(const Ogre::Vector3 &vect, uint8 *buffer, int start, int buflength)
 {
     // TODO: Vector3 is composed of 3 Real:s. Real is by default a float, but with DOUBLE_PRECISION-flag
@@ -63,7 +56,7 @@ int unserialize(Ogre::Quaternion &quat, uint8 *buffer, int start)
 
     return length;
 }
-#endif // defined(OGRE_VERSION)
+#endif // defined(WITH_OGRE)
 
 
 // FIXME! Floating point numbers will really cause interoperability issues between platforms!

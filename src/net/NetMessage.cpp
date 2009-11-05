@@ -52,9 +52,9 @@ int NetMessage::serialize(ap::uint8 buffer[], int start, int buflength) const
     int length = 0;
 
     length += serialize(sender, buffer, start+length, buflength-length);
-    if (!recipients) length += serialize(int(0), buffer, start+length, buflength-length);
+    if (!recipients) length += serialize(uint8(0), buffer, start+length, buflength-length);
     else {
-        length += serialize(recipients->size(), buffer, start+length, buflength-length);
+        length += serialize(uint8(recipients->size()), buffer, start+length, buflength-length);
         for (std::list<uint32>::iterator i = recipients->begin(); i != recipients->end(); i++)
             length += serialize(*i, buffer, start+length, buflength-length);
     }
@@ -66,9 +66,10 @@ int NetMessage::serialize(ap::uint8 buffer[], int start, int buflength) const
 int NetMessage::unserialize(ap::uint8 buffer[], int start)
 {
     using ap::net::unserialize;
-    int length = 0, numrecipients;
+    int length = 0;
     uint32 r;
-
+    uint8 numrecipients;
+   
     length += unserialize(sender, buffer, start+length);
     length += unserialize(numrecipients, buffer, start+length);
 

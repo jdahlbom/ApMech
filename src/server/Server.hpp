@@ -28,6 +28,8 @@ class Server
     uint64              newticks;   // These here for tracking time
     uint32              mPort;
 
+    static const uint32        NetFPS = 25;
+
     void processEvents(ap::net::NetData *pNetData);
     void updateObjects(float dt, ap::net::NetData* pNetData) const;
     void fireWeapons(uint64 tstamp, ap::net::NetData *pNetData);

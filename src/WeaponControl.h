@@ -3,7 +3,6 @@
 
 #include "types.h"
 #include "net/Controller.h"
-#include "net/serializer.h"
 #include <iostream>
 
 namespace ap {

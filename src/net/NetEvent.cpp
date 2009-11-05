@@ -11,9 +11,8 @@ NetEvent::NetEvent() {
     message = NULL;
 }
 
-NetEvent::NetEvent(ap::uint8 _type, ap::int32 _uid) {
-    type = _type;
-    uid = _uid;
+NetEvent::NetEvent(ap::uint8 _type, ap::int32 _uid, ap::uint32 _id, ap::uint8 _objectType) {
+    type = _type;    uid = _uid;    id = _id;    objectType = _objectType;
     message = NULL;
 }
 
@@ -24,13 +23,13 @@ NetEvent::NetEvent(ap::uint8 _type, NetMessage *_message) {
 
 NetEvent::NetEvent(NetEvent &e)
 {
-    type = e.type;  uid = e.uid;
+    type = e.type;  uid = e.uid;  id = e.id;  objectType = e.objectType;
     if (e.message) message = new NetMessage(*e.message);
 }
 
 void NetEvent::operator=(NetEvent &e)
 {
-    type = e.type;  uid = e.uid;
+    type = e.type;  uid = e.uid;  id = e.id;  objectType = e.objectType;
     if (message) { delete message; message = NULL; }
     if (e.message) message = new NetMessage(*e.message);
 }

@@ -6,7 +6,6 @@
 #include <Ogre/OgreVector3.h>
 #endif
 
-#include "net/netdata.h"
 #include "net/serializer.h"
 
 namespace ap {
