@@ -4,6 +4,7 @@
 #include "MovingObject.hpp"
 #include "types.h"
 #include "constants.h"
+#include "ObjectDataModel.h"
 
 #ifndef WIN32
 #include <OgreVector3.h>
@@ -18,7 +19,7 @@ class Mech : public MovingObject
  public:
     uint32 color;
 
-    Mech(Ogre::Vector3 velocity = Ogre::Vector3::ZERO);
+    Mech(Ogre::Vector3 velocity = Ogre::Vector3::ZERO, ObjectDataModel *model = NULL);
     ~Mech() {}
 
     // NetObject interface .. that was not implemented by MovingObject

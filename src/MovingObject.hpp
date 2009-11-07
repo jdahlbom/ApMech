@@ -17,6 +17,7 @@
 #include "MovableControl.h"
 #include "WeaponControl.h"
 #include "CombinedControls.h"
+#include "ObjectDataModel.h"
 
 namespace ap {
 
@@ -24,7 +25,8 @@ using namespace ap::net;
 
 class MovingObject : public net::NetObject {
  public:
-    MovingObject(float nFriction = 0.05f, Ogre::Vector3 startingSpeed = Ogre::Vector3::ZERO);
+    MovingObject(float nFriction = 0.05f, Ogre::Vector3 startingSpeed = Ogre::Vector3::ZERO,
+            ObjectDataModel *model = NULL, uint8 type_id = 0);
     virtual ~MovingObject();
 
     void setWorldBoundaries(float top, float bottom, float left, float right);
@@ -40,8 +42,8 @@ class MovingObject : public net::NetObject {
     void addForwardAcceleration(float amount);
     void addClockwiseTurningSpeed(float amountRad);
 
-    void setForwardAcceleration(float amount) { control->accelerationFwd = amount; }
-    void setClockwiseTurningSpeed(float amount) { control->velocityCWiseTurning = amount; }
+    void setForwardAcceleration(float amount);
+    void setClockwiseTurningSpeed(float amount);
 
     Ogre::Vector3 getFacing() const;
     void setFacing(Ogre::Vector3 f);
@@ -94,6 +96,12 @@ class MovingObject : public net::NetObject {
     void updateVelocity(float sSinceLast);
     void updateFacing(float sSinceLast);
     void updatePosition(float sSinceLast);
+
+    ObjectDataModel *model;
+    
+    float maxForwardAcceleration;
+    float maxBackwardAcceleration;
+    float turningRate;
 };
 
 } // namespace ap

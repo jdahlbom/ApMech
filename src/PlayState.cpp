@@ -44,7 +44,7 @@ PlayState::PlayState( GameStateManager *gameStateManager,
 
     createGUIWindow();
 
-    mDataModel = ObjectDataModel();
+    pDataModel = ObjectDataModel::getInstance();
 }
 
 PlayState::~PlayState() {}
@@ -215,7 +215,7 @@ void PlayState::createNewEntity(ap::MovingObject *newObject, uint32 objectId)
 	g = float(pMech->color & 0x00FF00) / 65535.0f;
 	b = float(pMech->color & 0xFF0000) / 16777215.0f;
 
-	std::string mesh = mDataModel.getMeshFilename(ap::OBJECT_TYPE_MECH);
+	std::string mesh = pDataModel->getMeshFilename(ap::OBJECT_TYPE_MECH);
 	newEntity = pSceneManager->createEntity(ss.str(), mesh);
 	newEntity->getSubEntity(0)->setCustomParameter(1, Ogre::Vector4(r, g, b, 0.0f));
 	pMech->setEntity(newEntity);
@@ -223,7 +223,7 @@ void PlayState::createNewEntity(ap::MovingObject *newObject, uint32 objectId)
       break;
     case ap::OBJECT_TYPE_PROJECTILE:
       {
-	std::string mesh = mDataModel.getMeshFilename(ap::OBJECT_TYPE_PROJECTILE);
+	std::string mesh = pDataModel->getMeshFilename(ap::OBJECT_TYPE_PROJECTILE);
 	newEntity = pSceneManager->createEntity(ss.str(), mesh);
 
 	ap::Projectile *pProj = dynamic_cast<ap::Projectile *>(newObject);
@@ -324,28 +324,28 @@ bool PlayState::keyPressed( const ap::ooinput::KeyEvent &e ) {
             return 1;
         case ooinput::AP_K_a:
             if(mObject) {
-                mObject->addClockwiseTurningSpeed(5);
+                mObject->setClockwiseTurningSpeed(1.0f);
                 setNetDataDirty();
                 return 1;
             }
             return 0;
         case ooinput::AP_K_w:
             if(mObject) {
-                mObject->addForwardAcceleration(15);
+                mObject->setForwardAcceleration(1.0f);
                 setNetDataDirty();
                 return 1;
             }
             return 0;
         case ooinput::AP_K_s:
             if(mObject) {
-                mObject->addForwardAcceleration(-9);
+                mObject->setForwardAcceleration(-1.0f);
                 setNetDataDirty();
                 return 1;
             }
             return 0;
         case ooinput::AP_K_d:
             if(mObject) {
-                mObject->addClockwiseTurningSpeed(-5);
+                mObject->setClockwiseTurningSpeed(-1.0f);
                 setNetDataDirty();
                 return 1;
             }
@@ -365,64 +365,64 @@ bool PlayState::keyPressed( const ap::ooinput::KeyEvent &e ) {
 }
 
 bool PlayState::keyReleased( const ap::ooinput::KeyEvent &e ) {
-  if (e.key == ooinput::AP_K_TAB) {
-    pGui->hideScoreWindow();
-    return true;
-  }
+    if (e.key == ooinput::AP_K_TAB) {
+        pGui->hideScoreWindow();
+        return true;
+    }
 
-  if(pGui->keyReleased(e)) {
-    return 1;
-  }
+    if(pGui->keyReleased(e)) {
+        return true;
+    }
 
     switch( e.key ) {
         case ooinput::AP_K_a:
             if(mObject) {
-                mObject->addClockwiseTurningSpeed(-5);
+                mObject->setClockwiseTurningSpeed(0);
                 setNetDataDirty();
-		return 1;
+                return true;
             }
-	    return 0;
+            return false;
         case ooinput::AP_K_w:
             if(mObject) {
-                mObject->addForwardAcceleration(-15);
+                mObject->setForwardAcceleration(0);
                 setNetDataDirty();
-		return 1;
+                return true;
             }
-	    return 0;
+            return false;
         case ooinput::AP_K_s:
             if(mObject) {
-                mObject->addForwardAcceleration(9);
+                mObject->setForwardAcceleration(0);
                 setNetDataDirty();
-		return 1;
+                return true;
             }
-	    return 0;
+            return false;
         case ooinput::AP_K_d:
             if(mObject) {
-                mObject->addClockwiseTurningSpeed(5);
+                mObject->setClockwiseTurningSpeed(0);
                 setNetDataDirty();
-		return 1;
+                return true;
             }
-	    return 0;
+            return false;
         case ooinput::AP_K_SPACE:
             mObject->setFiring(false);
             setNetDataDirty();
-	    return 1;
+            return true;
         default:
-	  return 0;
+            return false;
     }
-    return 0;
+    return false;
 }
 
-  bool PlayState::mousePressed(const ap::ooinput::MouseClickedEvent &e)
-  {
+bool PlayState::mousePressed(const ap::ooinput::MouseClickedEvent &e)
+{
     pGui->activateChatBox(false);
     return pGui->mousePressed(e);
-  }
+}
 
-  bool PlayState::mouseReleased(const ap::ooinput::MouseClickedEvent &e)
-  {
+bool PlayState::mouseReleased(const ap::ooinput::MouseClickedEvent &e)
+{
     return pGui->mouseReleased(e);
-  }
+}
 
   bool PlayState::mouseMoved(const ap::ooinput::MouseMovedEvent &e)
   {

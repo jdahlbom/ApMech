@@ -70,7 +70,7 @@ private:
 
     std::string                 ipAddress;
     std::string                 playerName;
-    ObjectDataModel             mDataModel;
+    ObjectDataModel             *pDataModel;
 
     static const int            idForNoAvatar=-1;
     int                         mAvatarId;

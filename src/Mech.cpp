@@ -7,6 +7,7 @@
 #endif
 
 #include "net/serializer.h"
+#include "ObjectDataModel.h"
 
 namespace ap {
 /**//* This mystical part here pushes exactly ONE object of this type to the prototype map, */
@@ -15,20 +16,20 @@ namespace ap {
 /**/  public:
 /**/    MechInject() {
 /**/      ap::net::netobjectprototypes().insert(
-/**/        std::make_pair(ap::OBJECT_TYPE_MECH, new Mech(Ogre::Vector3::ZERO)));
+/**/        std::make_pair(ap::OBJECT_TYPE_MECH, new Mech(Ogre::Vector3::ZERO, NULL)));
 /**/    }
 /**/};
 /**/static MechInject __projectileinject;
 
-Mech::Mech(Ogre::Vector3 velocity) :
-    MovingObject(0.0f, velocity)
+Mech::Mech(Ogre::Vector3 velocity, ObjectDataModel *model) :
+    MovingObject(0.0f, velocity, model, ap::OBJECT_TYPE_MECH)
 {
     objectType = ap::OBJECT_TYPE_MECH;
 }
 
 net::NetObject *Mech::create(uint32 _id) const
 {
-    Mech *mech = new Mech(Ogre::Vector3::ZERO);
+    Mech *mech = new Mech(Ogre::Vector3::ZERO, ObjectDataModel::getInstance());
     mech->id = _id;
     return mech;
 }
@@ -48,6 +49,7 @@ int Mech::serialize(uint8 *buffer, int start, int buflength) const
     length += serialize(color, buffer, start+length, buflength);
     return length;
 }
+
 int Mech::unserialize(uint8 *buffer, int start)
 {
     using ap::net::unserialize;

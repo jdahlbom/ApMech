@@ -15,10 +15,12 @@
 #include "MovableControl.h"
 #include "WeaponControl.h"
 #include "CombinedControls.h"
+#include "ObjectDataModel.h"
 
 namespace ap {
 
-MovingObject::MovingObject(float nFriction, Ogre::Vector3 startingVelocity):
+MovingObject::MovingObject(float nFriction, Ogre::Vector3 startingVelocity,
+        ObjectDataModel *model, uint8 type_id):
     objectType(ap::OBJECT_TYPE_UNDEFINED),
     initialFacing(-Ogre::Vector3::UNIT_Z),
     state(new MovableState(startingVelocity)),
@@ -29,10 +31,17 @@ MovingObject::MovingObject(float nFriction, Ogre::Vector3 startingVelocity):
     worldBoundaries(0.0f, 0.0f, 0.0f, 0.0f),
     maxSpeedSquared(625.0),
     pOwnerNode(0),
-    pEntity(0)
+    pEntity(0),
+    model(model)
 {
     id = 0;
     uid = 0;
+
+    if (model) {
+        maxForwardAcceleration = model->getMaxForwardAcceleration(type_id);
+        maxBackwardAcceleration = model->getMaxBackwardAcceleration(type_id);
+        turningRate = model->getMaxTurningRate(type_id);
+    }
 }
 
 MovingObject::~MovingObject()
@@ -72,14 +81,33 @@ void MovingObject::setVelocity(Ogre::Vector3 newVelocity)
 
 void MovingObject::addForwardAcceleration(float amount)
 {
-    float maxAbsAcceleration = 70;  // was 25
     control->accelerationFwd += amount;
+}
 
-    if(control->accelerationFwd > maxAbsAcceleration) {
-        control->accelerationFwd = maxAbsAcceleration;
-    } else if (control->accelerationFwd < (-maxAbsAcceleration)) {
-        control->accelerationFwd = 0-maxAbsAcceleration;
+void MovingObject::setForwardAcceleration(float amount)
+{
+    if (amount < -1.0f) {
+        amount = -1.0f;
+    } else if (amount > 1.0f) {
+        amount = 1.0f;
     }
+
+    if (amount < 0.0f) {
+        control->accelerationFwd = amount * maxBackwardAcceleration;
+    } else {
+        control->accelerationFwd = amount * maxForwardAcceleration;
+    }
+}
+
+void MovingObject::setClockwiseTurningSpeed(float amount)
+{
+    if (amount < -1.0f) {
+        amount = -1.0f;
+    } else if (amount > 1.0f) {
+        amount = 1.0f;
+    }
+
+    control->velocityCWiseTurning = amount * turningRate;
 }
 
 void MovingObject::addClockwiseTurningSpeed(float amount)

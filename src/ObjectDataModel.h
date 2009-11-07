@@ -7,21 +7,27 @@
 #include "constants.h"
 #include "types.h"
 
-namespace ap{
+namespace ap {
 
-  class ObjectDataModel {
-  public:
-    ObjectDataModel();
-    ~ObjectDataModel() {}
+    class ObjectDataModel {
+        public:
+            static ObjectDataModel *getInstance();
+            ~ObjectDataModel() {}
 
-    // TODO: Should not take NetObject:ey objectType,
-    //       instead some scheme of specific object type identification
-    //       should be hatched. Good enough for this proto, though.
-    std::string getMeshFilename(ap::uint8 objectType);
-    
-  private:
-    std::map<ap::uint8, std::string> fileMap;
-  }; // class ObjectDataModel
+            // TODO: Should not take NetObject:ey objectType,
+            //       instead some scheme of specific object type identification
+            //       should be hatched. Good enough for this proto, though.
+            std::string getMeshFilename(ap::uint8 objectType);
+            
+            float getMaxForwardAcceleration(ap::uint8 objectType);
+            float getMaxBackwardAcceleration(ap::uint8 objectType);
+            float getMaxTurningRate(ap::uint8 objectType);
+
+        private:
+            ObjectDataModel();
+            std::map<ap::uint8, std::string> fileMap;
+            static ObjectDataModel *instance;
+    }; // class ObjectDataModel
 
 } // namespace ap
 
