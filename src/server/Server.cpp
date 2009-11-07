@@ -109,7 +109,9 @@ void Server::processPendingClients(ap::net::NetData *pNetData) {
     std::set<uint32>::iterator i = pendingClients.begin();
 
     while (i != pendingClients.end()) {
-        if (pNetData->getUser(*i)->initialized) {
+        if (!pNetData->getUser(*i)) {
+            pendingClients.erase(i++);      // The user disconnected before finishing connection
+        } else if (pNetData->getUser(*i)->initialized) {
             createNewConnection(*i, pNetData);
             NetMessage connectMessage("!!! "+pNetData->getUser(*i)->nick+" has joined the game !!!");
             pNetData->sendMessage(connectMessage);
