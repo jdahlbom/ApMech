@@ -26,6 +26,8 @@ profile
 *.ilk
 *.pdb
 
+makefiles/vc2008/Debug
+
 # executables
 apmech
 apserver
