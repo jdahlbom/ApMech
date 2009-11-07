@@ -1,0 +1,25 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE mech SYSTEM "mech.dtd">
+
+<mech>
+    <name>hybridfalcon-15</name>
+    <stats>
+        <maxTurnRate>10</maxTurnRate>
+        <maxForwardAcceleration>25</maxForwardAcceleration>
+        <maxBackwardAcceleration>15</maxBackwardAcceleration>
+    </stats>
+    <design>
+        <torso turningRadius="180">
+            <slot />
+            <slot />
+        </torso>
+        <arm>
+            <slot />
+        </arm>
+        <arm>
+            <slot />
+        </arm>
+        <leg />
+        <leg />
+    </design>
+</mech>

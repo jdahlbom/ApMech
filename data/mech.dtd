@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE mech [
+  <!ELEMENT mech   (name,stats,design?)
+  <!ELEMENT stats  (maxTurnRate, maxForwardAcceleration, maxBackwardAcceleration)>
+  <!ELEMENT design (torso, arm*, leg*)>
+  <!ELEMENT torso  (slot*)>
+  <!ATTLIST torso turningRadius CDATA #REQUIRED>
+  <!ELEMENT arm    (slot*)>
+  <!ELEMENT leg    (EMPTY)>
+  <!ELEMENT slot   (weapon)>
+  <!ELEMENT weapon (#PCDATA)>
+]>
+
+
+
