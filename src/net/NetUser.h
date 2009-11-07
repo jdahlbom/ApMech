@@ -23,6 +23,7 @@ class NetUser : public NetObject
     static const enet_uint8 CONTROL_NOT_SET = 5;
     static const enet_uint8 CONTROL_BLOCK_FINISHED=6;
 
+    bool initialized;
     ENetPeer *peer;
     uint32 uid;
     uint32 color;

@@ -4,6 +4,7 @@
 #include "net/NetObject.h"
 
 #include <map>
+#include <string>
 
 #include "types.h"
 #include "net/Serializable.h"
@@ -17,6 +18,7 @@ namespace ap {
     ap::uint16 kills;
     ap::uint16 deaths;
     ap::int16 score;
+    std::string nick;
 
     int serialize(uint8 buffer[], int start, int buflength) const;
     int unserialize(uint8 buffer[], int start);

@@ -65,6 +65,7 @@ void Server::start() {
         ap::mSleep(1);       // sleep even a little bit so that dt is never 0
 
         processEvents(netdata);
+        if (!pendingClients.empty()) processPendingClients(netdata);
     } // Main loop
 } // void Server::start()
 
@@ -79,9 +80,11 @@ void Server::processEvents(ap::net::NetData *pNetData) {
             cout << "[SERVER] Received a connection from "
                 << uint2ipv4(pNetData->getUser(event.uid)->peer->address.host)
                 <<", uid " << event.uid;
-            createNewConnection(event.uid, pNetData);
-            NetMessage connectMessage("!!! "+pNetData->getUser(event.uid)->nick+" has joined the game !!!");
-            pNetData->sendMessage(connectMessage);
+            pendingClients.insert(event.uid);   // Remember him until later!
+                                                // If we add now, his NetUser is still uninitialized.
+//            createNewConnection(event.uid, pNetData);
+//            NetMessage connectMessage("!!! "+pNetData->getUser(event.uid)->nick+" has joined the game !!!");
+//            pNetData->sendMessage(connectMessage);
             break;
         }
         case ap::net::NetData::EVENT_DISCONNECT:
@@ -102,6 +105,18 @@ void Server::processEvents(ap::net::NetData *pNetData) {
     }
 } // void Server::processEvents(netdata*)
 
+void Server::processPendingClients(ap::net::NetData *pNetData) {
+    std::set<uint32>::iterator i = pendingClients.begin();
+
+    while (i != pendingClients.end()) {
+        if (pNetData->getUser(*i)->initialized) {
+            createNewConnection(*i, pNetData);
+            NetMessage connectMessage("!!! "+pNetData->getUser(*i)->nick+" has joined the game !!!");
+            pNetData->sendMessage(connectMessage);
+            pendingClients.erase(i++);
+        } else i++;
+    }
+}
 
 void Server::updateObjects(float dt, ap::net::NetData* pNetData) const {
 
@@ -194,6 +209,7 @@ void Server::createNewConnection(ap::uint32 userId, ap::net::NetData *pNetData)
   // Add scores:
   ap::ScoreTuple newPlayer;
   newPlayer.uid = userId;
+  newPlayer.nick = pNetData->getUser(userId)->nick;
   newPlayer.kills = 0;
   newPlayer.deaths = 0;
   newPlayer.score = 0;

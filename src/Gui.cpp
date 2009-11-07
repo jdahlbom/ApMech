@@ -192,7 +192,7 @@ namespace ap {
 
 	if (addNew) {
 	  // Explicitly set the last argument (AutoDelete) to true (even though it's default)
-	  ListboxItem *name = new ListboxTextItem(to_string(tuple.uid),0,0,false,true);
+	  ListboxItem *name = new ListboxTextItem(to_string(tuple.nick),0,0,false,true);
 	  ListboxItem *kills = new ListboxTextItem(to_string(tuple.kills),0,0,false,true);
 	  ListboxItem *deaths = new ListboxTextItem(to_string(tuple.deaths),0,0,false,true);
 	  ListboxItem *score = new ListboxTextItem(to_string(tuple.score),0,0,false,true);
@@ -210,7 +210,7 @@ namespace ap {
 	  try {
 	    // name
 	    ListboxItem *item = multiCL->getItemAtGridReference(MCLGridRef(rowIndex,nameIndex));
-	    item->setText(to_string(tuple.uid));
+	    item->setText(to_string(tuple.nick));
 	    //kills
 	    item = multiCL->getItemAtGridReference(MCLGridRef(rowIndex, killIndex));
 	    item->setText(to_string(tuple.kills));

@@ -12,7 +12,8 @@ NetUser::NetUser():
     uid(0),
     color(0xFFFFFF),
     nick("uninitialized"),
-    ping(0)
+    ping(0),
+    initialized(false)
 {
     controls = 0;
     changed = false;
@@ -23,7 +24,8 @@ NetUser::NetUser(uint32 _uid, ENetPeer *_peer) :
     uid(_uid),
     color(0xFFFFFF),
     nick("uninitialized"),
-    ping(0)
+    ping(0),
+    initialized(false)
 {
     controls = 0;
     changed = false;
@@ -65,6 +67,7 @@ int NetUser::unserialize(enet_uint8 buffer[], int start)
     using ap::net::unserialize;
     int length = 0;
     length += unserialize(uid, buffer, start+length);
+    initialized = true;
 
     if (uid) {
         length += unserialize(ping, buffer, start+length);

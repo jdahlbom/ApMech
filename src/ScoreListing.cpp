@@ -22,6 +22,7 @@ namespace ap {
     length += ap::net::serialize(kills, buffer, start+length, buflength-length);
     length += ap::net::serialize(deaths, buffer, start+length, buflength-length);
     length += ap::net::serialize(score, buffer, start+length, buflength-length);
+    length += ap::net::serialize(nick, buffer, start+length, buflength-length);
     return length;
   }
 
@@ -32,12 +33,14 @@ namespace ap {
     length += ap::net::unserialize(kills, buffer, start+length);
     length += ap::net::unserialize(deaths, buffer, start+length);
     length += ap::net::unserialize(score, buffer, start+length);
+    length += ap::net::unserialize(nick, buffer, start+length);
     return length;
   }
 
   void ScoreTuple::print() const
   {
     std::cout << "uid: " << uid
+          <<", nick: " << nick
 	      <<", kills: " << kills
 	      <<", deaths: " << deaths
 	      <<", score: " << score
@@ -61,12 +64,12 @@ namespace ap {
 
     if(it != scoreList.end()) {
       if (replace) {
-	scoreList.erase(it->first);
+        scoreList.erase(it->first);
       } else {
-	it->second.kills += tuple.kills;
-	it->second.deaths += tuple.deaths;
-	it->second.score += tuple.score;
-	return;
+        it->second.kills += tuple.kills;
+        it->second.deaths += tuple.deaths;
+        it->second.score += tuple.score;
+        return;
       }
     }
     scoreList.insert(std::make_pair<ap::uint32, ScoreTuple>(tuple.uid, tuple));
@@ -96,6 +99,7 @@ namespace ap {
       result.kills = scoreIterator->second.kills;
       result.deaths = scoreIterator->second.deaths;
       result.score = scoreIterator->second.score;
+      result.nick = scoreIterator->second.nick;
       ++scoreIterator;
       return true;
     } else {

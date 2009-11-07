@@ -11,6 +11,8 @@
 #include "../ScoreListing.h"
 #include "../types.h"
 
+#include <set>
+
 namespace ap {
 namespace server {
 
@@ -28,9 +30,12 @@ class Server
     uint64              newticks;   // These here for tracking time
     uint32              mPort;
 
-    static const uint32        NetFPS = 25;
+    std::set<uint32>   pendingClients; // A new client is added here, and removed when first data comes from him.
+
+    static const uint32        NetFPS = 20;
 
     void processEvents(ap::net::NetData *pNetData);
+    void processPendingClients(ap::net::NetData *pNetData);
     void updateObjects(float dt, ap::net::NetData* pNetData) const;
     void fireWeapons(uint64 tstamp, ap::net::NetData *pNetData);
     void weaponFired(ap::net::NetData *pNetData, ap::MovingObject *source);
