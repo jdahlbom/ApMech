@@ -13,6 +13,7 @@
 #include "Gui.h"
 #include "types.h"
 #include "functions.h"
+#include "net/netdata.h"
 
 namespace ap {
 
@@ -125,15 +126,42 @@ bool LoginState::keyReleased( const ap::ooinput::KeyEvent &e ) {
 
 void LoginState::attemptLogin(const std::string &ipAddress, const std::string &playerName)
   {
+    int ret;
+    net::NetData *netdata = NULL;
     // First, save our login settings, overwriting the previous file
     std::ofstream lastLoginSettings("login.cfg", std::ios::trunc);
     lastLoginSettings << "IPaddress="<<ipAddress<<std::endl;
     lastLoginSettings << "PlayerName="<<playerName<<std::endl;
     lastLoginSettings << "PlayerColor="<<pGui->getColorSliderValue()<<std::endl;
     lastLoginSettings.close();
+    
+    // attempt to actually connect to the server
+    netdata = new net::NetData(net::NetData::CLIENT);
+
+    pGui->addConsoleItem("Connecting to server " + ipAddress);
+    
+    ret = netdata->connect(ipAddress, 50740);
+
+    switch(ret) {
+        case 1:
+            // success
+            pGui->addConsoleItem("Connection to server succeeded");
+            break;
+        default:
+            std::stringstream out;
+            out << ret;
+            pGui->addConsoleItem("Connection to server failed: " + out.str());
+            return;
+    }
+
+    netdata->me.nick = playerName;
+    netdata->me.color = getColorFromPseudoHue(pGui->getColorSliderValue());
+    netdata->me.changed = true;         // Mark this info for transmission
+    netdata->sendChanges();             // Send changes without waiting!
 
     // Then, login.
-    getStateManager()->loginToGame(ipAddress, playerName);
+    
+    getStateManager()->loginToGame(netdata, playerName);
   }
 
 void LoginState::requestQuit()

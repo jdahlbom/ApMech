@@ -20,19 +20,19 @@
 
 namespace ap {
 
-PlayState::PlayState( GameStateManager *gameStateManager,
-                      Ogre::SceneManager *sceneManager,
-		      ap::Gui *gui,
-		      const std::string &_ipAddress,
-		      const std::string &_playerName) :
-                      pSceneManager(sceneManager),
-                      mCameraNodeParent(0),
-		      pGui(gui),
-                      mAvatarId(idForNoAvatar),
-                      mObject(0),
-		      ipAddress(_ipAddress),
-		      playerName(_playerName)
-{
+    PlayState::PlayState( GameStateManager *gameStateManager,
+            Ogre::SceneManager *sceneManager,
+            ap::Gui *gui,
+            net::NetData *netdata,
+            const std::string &_playerName) :
+        pSceneManager(sceneManager),
+        mCameraNodeParent(0),
+        pGui(gui),
+        mAvatarId(idForNoAvatar),
+        mObject(0),
+        netdata(netdata),
+        playerName(_playerName)
+    {
     initStateManager(gameStateManager);
 
     pRoot = Ogre::Root::getSingletonPtr();
@@ -63,12 +63,6 @@ void PlayState::enter( void ) {
     // Create lighting
     createLighting(pSceneManager);
 
-    netdata = new net::NetData(net::NetData::CLIENT);
-    netdata->connect(ipAddress, 50740);
-    netdata->me.nick = playerName;
-    netdata->me.color = getColorFromPseudoHue(pGui->getColorSliderValue());
-    netdata->me.changed = true;         // Mark this info for transmission
-    netdata->sendChanges();             // Send changes without waiting!
     std::cout << "Entering PlayState" << std::endl;
 }
 

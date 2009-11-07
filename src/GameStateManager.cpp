@@ -127,10 +127,10 @@ void GameStateManager::popState() {
     }
 }
 
-void GameStateManager::loginToGame(const std::string &ipAddress, const std::string &playerName)
+void GameStateManager::loginToGame(net::NetData *netdata, const std::string &playerName)
 {
   // FIXME: Kinda ugly initializing playstate here.
-  mPlayState = new PlayState(this, mSceneMgr, pGui, ipAddress, playerName);
+  mPlayState = new PlayState(this, mSceneMgr, pGui, netdata, playerName);
   changeState(mPlayState);
 }
 

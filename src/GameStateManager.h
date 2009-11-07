@@ -13,6 +13,7 @@
 #include <Ogre/Ogre.h>
 #endif
 
+#include "net/netdata.h"
 #include "ooinput/InputSystem.h"
 #include "ooinput/KeyboardListener.h"
 #include "ooinput/MouseListener.h"
@@ -37,7 +38,7 @@ public:
 
     void startGame();
     void requestShutdown( void );
-    void loginToGame(const std::string &ipAddress, const std::string &playerName);
+    void loginToGame(net::NetData *netdata, const std::string &playerName);
 
     // input listeners
     bool keyPressed( const ooinput::KeyEvent &e );

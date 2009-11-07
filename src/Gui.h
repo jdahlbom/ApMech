@@ -36,6 +36,7 @@ class Gui
 
   void setChatReceiver(GuiChatReceiver *receiver);
   void addChatItem(const std::string &item);
+  void addConsoleItem(const std::string &item);
 
   void setLoginReceiver(GuiLoginReceiver *receiver);
   float getColorSliderValue();
@@ -72,6 +73,7 @@ class Gui
   static const std::string loginRootName;
   static const std::string loginNameField;
   static const std::string loginAddressField;
+  static const std::string loginConsoleField;
 
   static const std::string chatLayoutFile;
   static const std::string chatRootName;

@@ -22,6 +22,7 @@ namespace ap {
   const std::string Gui::loginRootName = "LoginRoot";
   const std::string Gui::loginNameField = "/Login/Name";
   const std::string Gui::loginAddressField = "/Login/Address";
+  const std::string Gui::loginConsoleField = "/Login/Console";
 
   const std::string Gui::chatRootName = "ChatBoxRoot";
 
@@ -290,6 +291,14 @@ namespace ap {
     lbox->ensureItemIsVisible(ltItem);
   }
 
+  void Gui::addConsoleItem(const std::string &item)
+  {
+    CEGUI::Listbox *lbox = dynamic_cast<CEGUI::Listbox *>(CEGUI::WindowManager::getSingletonPtr()->getWindow(loginConsoleField));
+    assert (lbox);
+    CEGUI::ListboxTextItem *ltItem = new CEGUI::ListboxTextItem(CEGUI::String(item));
+    lbox->addItem(ltItem);
+    lbox->ensureItemIsVisible(ltItem);
+  }
 
   // Triggerable events
   bool Gui::chatMessageSent(const CEGUI::EventArgs &args)

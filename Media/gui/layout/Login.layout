@@ -4,63 +4,69 @@
         <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
         <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
         <Window Type="ApMechLook/FrameWindow" Name="/LoginWindow" >
-	    <Property Name="Alpha" Value="1" />
+	        <Property Name="Alpha" Value="1" />
             <Property Name="Text" Value="Login" />
             <Property Name="InheritsAlpha" Value="False" />
             <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
             <Property Name="TitlebarEnabled" Value="True" />
             <Property Name="UnifiedAreaRect" Value="{{0,150},{0,50},{0,790},{0,590}}" />
 
-	    <Window Type="ApMechLook/StaticText" Name="/Login/AddressLabel" >
-	    	<Property Name="Text" Value="Server address:" />
-		<Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
-		<Property Name="UnifiedAreaRect" Value="{{0,50},{0,50},{0,500},{0,100}}" />
-	    </Window>
+	        <Window Type="ApMechLook/StaticText" Name="/Login/AddressLabel" >
+	    	    <Property Name="Text" Value="Server address:" />
+		        <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+		        <Property Name="UnifiedAreaRect" Value="{{0,50},{0,50},{0,500},{0,100}}" />
+	        </Window>
 
             <Window Type="ApMechLook/Editbox" Name="/Login/Address" >
                 <Property Name="Text" Value="" />
                 <Property Name="MaxTextLength" Value="20" />
                 <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
-		<Property Name="UnifiedAreaRect" Value="{{0,50},{0,110},{0,500},{0,160}}" />
+		        <Property Name="UnifiedAreaRect" Value="{{0,50},{0,110},{0,500},{0,160}}" />
             </Window>
 
-	    <Window Type="ApMechLook/StaticText" Name="/Login/NameLabel" >
-	    	<Property Name="Text" Value="Your name:" />
-		<Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
-		<Property Name="UnifiedAreaRect" Value="{{0,50},{0,210},{0,500},{0,260}}" />
-	    </Window>
+            <Window Type="ApMechLook/StaticText" Name="/Login/NameLabel" >
+                <Property Name="Text" Value="Your name:" />
+                <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                <Property Name="UnifiedAreaRect" Value="{{0,50},{0,210},{0,500},{0,260}}" />
+            </Window>
 
             <Window Type="ApMechLook/Editbox" Name="/Login/Name" >
                 <Property Name="Text" Value="nameless newbie" />
                 <Property Name="MaxTextLength" Value="20" />
                 <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
-		<Property Name="UnifiedAreaRect" Value="{{0,50},{0,270},{0,500},{0,320}}" />
+                <Property Name="UnifiedAreaRect" Value="{{0,50},{0,270},{0,500},{0,320}}" />
             </Window>
 
-	    <Window Type="ApMechLook/StaticText" Name="/Login/ColorLabel" >
-		<Property Name="VertFormatting" Value="Top" />
-		<Property Name="ZOrderChangeEnabled" Value="False" />
-		<Property Name="Text" Value="Color:" />
-		<Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
-		<Property Name="UnifiedAreaRect" Value="{{0,520},{0,50},{0,590},{0,320}}" />
-	    </Window>		
+	        <Window Type="ApMechLook/StaticText" Name="/Login/ColorLabel" >
+                <Property Name="VertFormatting" Value="Top" />
+                <Property Name="ZOrderChangeEnabled" Value="False" />
+                <Property Name="Text" Value="Color:" />
+                <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                <Property Name="UnifiedAreaRect" Value="{{0,520},{0,50},{0,590},{0,320}}" />
+	        </Window>		
 
-	    <Window Type="ApMechLook/ColorSlider" Name="/Login/ColorSlider" >
-		<Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
-		<Property Name="UnifiedAreaRect" Value="{{0,545},{0,90},{0,565},{0,300}}" />
-		<Property Name="ClickStepSize" Value="0.1" />
-	    </Window>
-
-	    <Window Type="ApMechLook/Button" Name="/Login/LoginButton" >
-	    	<Property Name="Text" Value="Login" />
-		<Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
-		<Property Name="UnifiedAreaRect" Value="{{0,50},{0,470},{0,250},{0,520}}" />
+            <Window Type="ApMechLook/ColorSlider" Name="/Login/ColorSlider" >
+                <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                <Property Name="UnifiedAreaRect" Value="{{0,545},{0,90},{0,565},{0,300}}" />
+                <Property Name="ClickStepSize" Value="0.1" />
+            </Window>
+            
+            <Window Type="ApMechLook/Listbox" Name="/Login/Console" >
+                <Property Name="Text" Value="" />
+                <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                <Property Name="UnifiedAreaRect" Value="{{0,50},{0,360},{0,500},{0,460}}" />
             </Window>
 
-	    <Window Type="ApMechLook/Button" Name="/Login/QuitButton" >
-	    	<Property Name="Text" Value="Quit" />
-		<Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
-		<Property Name="UnifiedAreaRect" Value="{{0,300},{0,470},{0,500},{0,520}}" />
+            <Window Type="ApMechLook/Button" Name="/Login/LoginButton" >
+                <Property Name="Text" Value="Login" />
+                <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                <Property Name="UnifiedAreaRect" Value="{{0,50},{0,470},{0,250},{0,520}}" />
+            </Window>
+
+            <Window Type="ApMechLook/Button" Name="/Login/QuitButton" >
+                <Property Name="Text" Value="Quit" />
+                <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+                <Property Name="UnifiedAreaRect" Value="{{0,300},{0,470},{0,500},{0,520}}" />
             </Window>
 
         </Window>

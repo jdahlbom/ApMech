@@ -29,7 +29,7 @@ public:
     PlayState( GameStateManager *gameStateManager,
 	       Ogre::SceneManager *pSceneManager,
 	       ap::Gui *gui,
-	       const std::string &ipAddress,
+	       ap::net::NetData *netdata,
 	       const std::string &playerName);
     ~PlayState( void );
 
