@@ -9,7 +9,7 @@
 
 #include "net/NetObject.h"
 #include "net/Serializable.h"
-#include "RectBoundaries.hpp"
+#include "RectBoundaries.h"
 #include "types.h"
 
 // For MovableControl
@@ -25,12 +25,11 @@ using namespace ap::net;
 
 class MovingObject : public net::NetObject {
  public:
+    bool clamped;   // Whether this object's location has been clamped to world boundaries
+
     MovingObject(float nFriction = 0.05f, Ogre::Vector3 startingSpeed = Ogre::Vector3::ZERO,
             ObjectDataModel *model = NULL, uint8 type_id = 0);
     virtual ~MovingObject();
-
-    void setWorldBoundaries(float top, float bottom, float left, float right);
-    bool hitWorldBoundaries() const;
 
     void setMaxSpeed(float speed);
     void setVelocity(Ogre::Vector3 velocity);
@@ -91,14 +90,13 @@ class MovingObject : public net::NetObject {
 
     Ogre::SceneNode     *pOwnerNode;
     Ogre::Entity        *pEntity;
-    RectBoundaries      worldBoundaries;
 
     void updateVelocity(float sSinceLast);
     void updateFacing(float sSinceLast);
     void updatePosition(float sSinceLast);
 
     ObjectDataModel *model;
-    
+
     float maxForwardAcceleration;
     float maxBackwardAcceleration;
     float turningRate;

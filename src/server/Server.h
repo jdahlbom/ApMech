@@ -7,9 +7,10 @@
 #include "../net/NetEvent.h"
 
 #include "../Mech.h"
-#include "../MovingObject.hpp"
+#include "../MovingObject.h"
 #include "../ScoreListing.h"
 #include "../types.h"
+#include "../GameWorld.h"
 
 #include <set>
 
@@ -20,11 +21,13 @@ class Server
 {
     public:
     Server(uint32 port);
+    ~Server();
     void start();
 
     private:
     ap::net::NetData    *netdata;
     ap::ScoreListing    *mScores;
+    ap::GameWorld       *gameWorld;
     uint64              nextupdate; // When we will send updates to clients the next time
     uint64              oldticks;   // These here for tracking time
     uint64              newticks;   // These here for tracking time

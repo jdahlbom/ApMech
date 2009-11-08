@@ -1,4 +1,4 @@
-#include "Server.hpp"
+#include "Server.h"
 
 #ifdef __cplusplus
     #include <cstdlib>
@@ -14,7 +14,7 @@
 #include "../functions.h"
 #include "../Mech.h"
 #include "../Projectile.h"
-#include "../MovingObject.hpp"
+#include "../MovingObject.h"
 #include "../types.h"
 #include "../net/NetMessage.h"
 
@@ -44,6 +44,9 @@ void Server::start() {
     std::cout << "[SERVER] Serving "<< ap::net::netobjectprototypes().size()<<" types of objects."<<std::endl;
 
     netdata->insertObject(mScores);
+    netdata->insertObject(gameWorld = new ap::GameWorld());
+    gameWorld->loadMapFile("data/maps/example.map");
+
     newticks = nextupdate = getTicks();
 
     while (1) {             // Server main loop
@@ -69,6 +72,8 @@ void Server::start() {
     } // Main loop
 } // void Server::start()
 
+
+
 void Server::processEvents(ap::net::NetData *pNetData) {
     ap::net::NetEvent event;
     while (pNetData->pollEvent(event))
@@ -82,9 +87,6 @@ void Server::processEvents(ap::net::NetData *pNetData) {
                 <<", uid " << event.uid;
             pendingClients.insert(event.uid);   // Remember him until later!
                                                 // If we add now, his NetUser is still uninitialized.
-//            createNewConnection(event.uid, pNetData);
-//            NetMessage connectMessage("!!! "+pNetData->getUser(event.uid)->nick+" has joined the game !!!");
-//            pNetData->sendMessage(connectMessage);
             break;
         }
         case ap::net::NetData::EVENT_DISCONNECT:
@@ -126,16 +128,10 @@ void Server::updateObjects(float dt, ap::net::NetData* pNetData) const {
         if (nop->advance(dt) == -1) pNetData->delObject(nop->id);
     }
 
-    // Copy colors from NetUser data to Mechs they own
-    // TODO: think of some way of doing this only when necessary!
-    while (ap::Mech *pMech = pNetData->eachObject<ap::Mech*>(ap::OBJECT_TYPE_MECH)) {
-        if (pNetData->getUser(pMech->uid)) {
-            pMech->color = pNetData->getUser(pMech->uid)->color;
-            pNetData->alertObject(pMech->id);
-        }
-
-    }
+    while (Mech *pMech = pNetData->eachObject<Mech *>(ap::OBJECT_TYPE_MECH)) gameWorld->clampToWorldBoundaries(*pMech);
+    while (Projectile *pProj = pNetData->eachObject<Projectile *>(ap::OBJECT_TYPE_PROJECTILE)) gameWorld->clampToWorldBoundaries(*pProj);
 } // void Server::updateObjects
+
 
 void Server::fireWeapons(uint64 tstamp, ap::net::NetData *pNetData) {
     while (ap::Mech *mech = pNetData->eachObject<ap::Mech *>(ap::OBJECT_TYPE_MECH))
@@ -147,7 +143,6 @@ void Server::fireWeapons(uint64 tstamp, ap::net::NetData *pNetData) {
 
     int newid = pNetData->insertObject(new ap::Projectile(facing * 150.0f)); //150 is velocity
     ap::Projectile *bullet = pNetData->getObject<ap::Projectile *>(newid);
-    bullet->setWorldBoundaries(1500.0f,0.0f,0.0f,1500.0f);
     bullet->setMaxSpeed(625.0f);
     bullet->setPosition(source->getPosition() + facing*70.0f + Ogre::Vector3(0.0f, 80.0f, 0.0f));
     bullet->setFacing(facing);
@@ -189,7 +184,7 @@ void Server::detectCollisions(ap::net::NetData *pNetData) const {
 
 void Server::relocateSpawnedMech(ap::Mech *mech) const
 {
-    Ogre::Vector3 newPosition = Ogre::Vector3(rand()%1500, 0, rand()%1500);
+    Ogre::Vector3 newPosition = Ogre::Vector3(rand() % int(gameWorld->boundaries.right), 0, rand() % int(gameWorld->boundaries.top));
     mech->setPosition(newPosition);
     mech->setVelocity(Ogre::Vector3::ZERO);
 }
@@ -199,12 +194,12 @@ void Server::createNewConnection(ap::uint32 userId, ap::net::NetData *pNetData)
   ap::Mech *newAvatar = new ap::Mech();
   int newid = pNetData->insertObject(newAvatar);
 
-  newAvatar->setWorldBoundaries(1500.0f,0.0f,0.0f,1500.0f);
   newAvatar->setMaxSpeed(35.0f);
   newAvatar->setFriction(8.0f);
   newAvatar->uid = userId;
   newAvatar->color = pNetData->getUser(userId)->color;
   relocateSpawnedMech(newAvatar);
+  pNetData->alertObject(newAvatar->id); // Alert clients to paint this mech!
 
   pNetData->getUser(userId)->setControlPtr(newAvatar->getControlPtr());
 
@@ -221,6 +216,10 @@ void Server::createNewConnection(ap::uint32 userId, ap::net::NetData *pNetData)
 
   pNetData->sendChanges();
   pNetData->setAvatarID(userId, newid);
+}
+
+Server::~Server() {
+    if (mScores) delete mScores;
 }
 
 } // namespace server

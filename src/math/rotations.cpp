@@ -1,4 +1,4 @@
-#include "rotations.hpp"
+#include "rotations.h"
 
 #ifndef WIN32
 #include <OgreMath.h>

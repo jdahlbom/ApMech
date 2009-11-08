@@ -1,4 +1,4 @@
-#include "RectBoundaries.hpp"
+#include "RectBoundaries.h"
 
 #include "net/serializer.h"
 
@@ -18,6 +18,11 @@ RectBoundaries::RectBoundaries(const RectBoundaries &source) :
     right(source.right),
     clamped(source.clamped) {}
 
+void RectBoundaries::setBoundaries(float _top, float _bottom, float _left, float _right)
+{
+    top = _top; bottom = _bottom; left = _left; right = _right;
+}
+
 void RectBoundaries::clamp(float &vert, float &horiz)
 {
     if( horiz < left ) {
@@ -32,7 +37,7 @@ void RectBoundaries::clamp(float &vert, float &horiz)
         vert = bottom;
         clamped = true;
     } else if ( vert > top) {
-        horiz = top;
+        vert = top;
         clamped = true;
     }
 }

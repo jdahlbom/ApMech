@@ -15,7 +15,7 @@
 #include "Gui.h"
 #include "GuiChatReceiver.h"
 #include "ObjectDataModel.h"
-#include "MovingObject.hpp"
+#include "MovingObject.h"
 #include "ScoreListing.h"
 #include "net/netdata.h"
 #include "types.h"

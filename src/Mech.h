@@ -1,7 +1,7 @@
 #ifndef AP_MECH_H
 #define AP_MECH_H
 
-#include "MovingObject.hpp"
+#include "MovingObject.h"
 #include "types.h"
 #include "constants.h"
 #include "ObjectDataModel.h"

@@ -1,7 +1,7 @@
 #ifndef AP_PROJECTILE_H
 #define AP_PROJECTILE_H
 
-#include "MovingObject.hpp"
+#include "MovingObject.h"
 #include "types.h"
 #include "constants.h"
 

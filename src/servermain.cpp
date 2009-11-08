@@ -1,4 +1,4 @@
-#include "server/Server.hpp"
+#include "server/Server.h"
 
 #ifdef WIN32
 #include "windows.h"

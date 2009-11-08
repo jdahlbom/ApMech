@@ -19,7 +19,7 @@ namespace ap {
 /**/        std::make_pair(ap::OBJECT_TYPE_MECH, new Mech(Ogre::Vector3::ZERO, NULL)));
 /**/    }
 /**/};
-/**/static MechInject __projectileinject;
+/**/static MechInject __mechinject;
 
 Mech::Mech(Ogre::Vector3 velocity, ObjectDataModel *model) :
     MovingObject(0.0f, velocity, model, ap::OBJECT_TYPE_MECH)

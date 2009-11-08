@@ -99,6 +99,7 @@ class NetData {
     int sendMessage(NetMessage &message);
 
     NetObject *getObject(uint32 id);
+    NetObject *getFirstObjectOfType(uint8 type);
     NetObject *eachObject();
     void removeObject(uint32 id);
 

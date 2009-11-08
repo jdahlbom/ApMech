@@ -1,4 +1,4 @@
-#include "MovingObject.hpp"
+#include "MovingObject.h"
 
 #include <assert.h>
 #ifndef WIN32
@@ -8,7 +8,7 @@
 #endif
 
 #include "net/serializer.h"
-#include "math/rotations.hpp"
+#include "math/rotations.h"
 #include "types.h"
 #include "constants.h"
 
@@ -28,10 +28,10 @@ MovingObject::MovingObject(float nFriction, Ogre::Vector3 startingVelocity,
     weaponControl(new WeaponControl()),
     combinedControls(new CombinedControls(control, weaponControl)),
     friction(nFriction),
-    worldBoundaries(0.0f, 0.0f, 0.0f, 0.0f),
     maxSpeedSquared(625.0),
     pOwnerNode(0),
     pEntity(0),
+    clamped(false),
     model(model)
 {
     id = 0;
@@ -50,16 +50,6 @@ MovingObject::~MovingObject()
     delete(combinedControls);
     delete(weaponControl);
     delete(control);
-}
-
-void MovingObject::setWorldBoundaries(float top, float bottom, float left, float right)
-{
-    worldBoundaries = RectBoundaries(top, bottom, left, right);
-}
-
-bool MovingObject::hitWorldBoundaries() const
-{
-    return worldBoundaries.clamped;
 }
 
 void MovingObject::setMaxSpeed(float speed)
@@ -191,7 +181,6 @@ void MovingObject::updateFacing(float sSinceLast)
 void MovingObject::updatePosition(float sSinceLast)
 {
     state->location = state->location + state->velocity * sSinceLast;
-    worldBoundaries.clamp(state->location.z, state->location.x);
 }
 
 int MovingObject::serialize(uint8 *buffer, int start, int buflength) const
@@ -202,7 +191,6 @@ int MovingObject::serialize(uint8 *buffer, int start, int buflength) const
     length += ap::net::serialize(objectType, buffer, start+length, buflength+length);
     length += state->serialize( buffer, start+length, buflength-length);
     //length += control->serialize( buffer, start+length, buflength-length);
-    length += worldBoundaries.serialize(buffer, start+length, buflength-length);
     return length;
 }
 
@@ -214,7 +202,6 @@ int MovingObject::unserialize(uint8 *buffer, int start)
     length += ap::net::unserialize(objectType, buffer, start+length);
     length += state->unserialize(buffer, start+length);
     //length += control->unserialize(buffer, start+length);
-    length += worldBoundaries.unserialize(buffer, start+length);
     return length;
 }
 

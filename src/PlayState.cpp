@@ -51,11 +51,10 @@ PlayState::~PlayState() {}
 
 void PlayState::enter( void ) {
     // Create the terrain
-
     #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     pSceneManager->setWorldGeometry(macBundlePath() + "/Contents/Resources/Media/terrain.cfg");
     #else
-    pSceneManager->setWorldGeometry("terrain.cfg");
+    pSceneManager->setWorldGeometry("data/maps/example.map");
     #endif
 
     setupCamera(pSceneManager);

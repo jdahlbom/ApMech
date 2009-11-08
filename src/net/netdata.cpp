@@ -462,6 +462,14 @@ NetObject * NetData::getObject(uint32 id)
     return it->second;
 }
 
+/** Returns the first object of specified type, NULL if none found. */
+NetObject *NetData::getFirstObjectOfType(uint8 type)
+{
+    multimap<uint8,NetObject*>::iterator mI = netObjectsByType.find(type);
+    if (mI != netObjectsByType.end()) return (*mI).second;
+    else return NULL;
+}
+
 /** Client side delete. Just delete, delete immediately,
  *  and don't let anyone know. I think this should only be called
  *  when handling an EVENT_DELETEOBJECT.

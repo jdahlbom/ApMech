@@ -13,10 +13,11 @@ class RectBoundaries : public net::Serializable {
     float   right;
     bool    clamped;
 
-    RectBoundaries(float top, float bottom, float left, float right);
+    RectBoundaries(float _top, float _bottom, float _left, float _right);
     ~RectBoundaries() {}
     RectBoundaries(const RectBoundaries &source);
 
+    void setBoundaries(float _top, float _bottom, float _left, float _right);
     void clamp(float &vert, float &horiz);
 
     // NetObject

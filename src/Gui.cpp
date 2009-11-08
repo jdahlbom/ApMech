@@ -306,7 +306,7 @@ namespace ap {
     if(pChatReceiver && pChatBox) {
       std::string message(pChatBox->getText().c_str());
       pChatBox->setText("");
-      pChatReceiver->sendChatMessage(message);
+      if (message != "") pChatReceiver->sendChatMessage(message);   // send only if not empty
       pChatBox->deactivate();
     }
 	return false; // TODO: Why does this function return anything?

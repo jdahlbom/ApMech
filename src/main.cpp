@@ -148,6 +148,7 @@ SDL_Surface* setupSDL(int width, int height) {
     // passing out pointers. Ugly, but ach-well..
     rWin = renderWindow;
     // Create needed scenemanagers
+    // ST_EXTERIOR_CLOSE is Ogre's simple Terrain scene manager. Not paging, otherwise good.
     sceneMgr = root->createSceneManager( Ogre::ST_EXTERIOR_CLOSE, "ST_EXTERIOR_CLOSE" );
     assert(sceneMgr != 0);
 
@@ -199,7 +200,7 @@ void setupOgreResources(void)
 
 CEGUI::Renderer* setupCEGUI(Ogre::RenderWindow* renderWindow, Ogre::SceneManager *sceneMgr)
 {
-  CEGUI::OgreCEGUIRenderer *renderer = 
+  CEGUI::OgreCEGUIRenderer *renderer =
     new CEGUI::OgreCEGUIRenderer(renderWindow,
 				 Ogre::RENDER_QUEUE_OVERLAY,
 				 false, 0,
