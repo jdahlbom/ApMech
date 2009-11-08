@@ -41,7 +41,8 @@ public:
     bool readMechFiles();
     std::vector<std::string> getMechNames();
 
-    // TODO: use shared_ptr?
+    // TODO: use shared_ptr? The MechReader pointers are not usable
+    // after deleting the database.
     MechReader * getMechReader(std::string name) { return mechMap[name]; }
 
 private:

@@ -6,7 +6,11 @@ namespace fs = boost::filesystem;
 namespace ap {
 
 MechDatabase::~MechDatabase(void) {
-    // TODO: delete all mechreader instances in the map
+
+    std::map<std::string, MechReader*>::iterator iter;
+
+    for (iter = mechMap.begin(); iter != mechMap.end(); ++iter)
+        delete iter->second;
 }
 
 bool MechDatabase::readMechFiles() {
@@ -60,7 +64,7 @@ std::vector<std::string> MechDatabase::getMechNames() {
 
 }
 
-#if 0
+#if 1
 // test code, compilation:
 // g++ -lboost_filesystem-mt -lexpat src/ObjectDataBase.cpp src/ObjectReader.cpp -o test_mechdb
 
