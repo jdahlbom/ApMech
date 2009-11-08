@@ -81,7 +81,7 @@ bool MechReader::addData(char *buf, int len) {
 
 bool MechReader::parseFile() {
     
-    int fd;
+    FILE *fp;
     char buf[256];
     ssize_t readBytes;
     int wasLast = 0;
@@ -97,19 +97,19 @@ bool MechReader::parseFile() {
     XML_SetParamEntityParsing(parser, XML_PARAM_ENTITY_PARSING_ALWAYS);
     XML_SetUserData(parser, (void *) this);
 
-    if((fd = open(filename->c_str(), O_RDONLY)) < 0) {
+    if((fp = fopen(filename->c_str(), "r")) == NULL) {
         printf("Cannot open file.\n");
         return false;
     }
 
     do {
-        readBytes = read(fd, buf, 255);
+        readBytes = fread(buf, 1, 255, fp);
 
         if (readBytes < 0) {
             printf("Read error.\n");
             break;
         }
-        else if (readBytes < 255) {
+        else if (feof(fp)) {
             wasLast = 1;
         }
 
@@ -121,7 +121,7 @@ bool MechReader::parseFile() {
         
     } while (!wasLast);
 
-    close(fd);
+    fclose(fp);
 
     XML_ParserFree(parser);
 

@@ -12,7 +12,7 @@
 
 namespace ap {
 
-  class MechReader {
+class MechReader {
 
 public:
     MechReader (const std::string *filename) :
