@@ -15,6 +15,7 @@
 #include "ObjectDataModel.h"
 #include "Projectile.h"
 #include "ScoreListing.h"
+#include "GameWorld.h"
 #include "functions.h"
 #include "types.h"
 
@@ -50,11 +51,19 @@ namespace ap {
 PlayState::~PlayState() {}
 
 void PlayState::enter( void ) {
+    assert(netdata);    // If no netdata, we're doomed! We must be connected too, but that's not checked. FIXME maybe!
+    GameWorld *gWorld;
+    do {
+        mSleep(2);   // sleep 2 milliseconds
+        netdata->receiveChanges();
+        gWorld = dynamic_cast<GameWorld *>(netdata->getFirstObjectOfType(OBJECT_TYPE_GAMEWORLD));
+    } while (gWorld == NULL);   // WAIT until we get a world
+
     // Create the terrain
     #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-    pSceneManager->setWorldGeometry(macBundlePath() + "/Contents/Resources/Media/terrain.cfg");
+    pSceneManager->setWorldGeometry(macBundlePath() + "/Contents/Resources/" + gWorld->mapFileName);
     #else
-    pSceneManager->setWorldGeometry("data/maps/example.map");
+    pSceneManager->setWorldGeometry(gWorld->mapFileName);   // for example "data/maps/example.map"
     #endif
 
     setupCamera(pSceneManager);
@@ -81,9 +90,13 @@ void PlayState::resume( void ) {
 }
 
 void PlayState::update( unsigned long lTimeElapsed ) {
-    netdata->receiveChanges();
+    dt = float(lTimeElapsed)*0.001; // dt is in seconds
 
-  //  TODO: Should update the scenenodes, should not update the state data.
+//    while (ap::MovingObject *pMO = netdata->eachObject<ap::MovingObject *>(ap::OBJECT_TYPE_MECH)) pMO->advance(dt);
+    while (ap::MovingObject *pMO = netdata->eachObject<ap::MovingObject *>(ap::OBJECT_TYPE_PROJECTILE)) pMO->advance(dt);
+
+    netdata->receiveChanges();
+    //  TODO: Should update the scenenodes, should not update the state data.
 
     // NOTE: Aaaargh, this is not optimal! I didn't think of selecting objects to iterate through
     // based on the object's inheritance! Could it be done? Maybe. This is OK until then.
@@ -201,26 +214,26 @@ void PlayState::createNewEntity(ap::MovingObject *newObject, uint32 objectId)
     switch (newObject->getObjectType() ) {
     case ap::OBJECT_TYPE_MECH:
       {
-	float r, g, b;
+        float r, g, b;
 
-	ap::Mech *pMech = dynamic_cast<ap::Mech *>(newObject);
-	r = float(pMech->color & 0x0000FF) / 255.0f;
-	g = float(pMech->color & 0x00FF00) / 65535.0f;
-	b = float(pMech->color & 0xFF0000) / 16777215.0f;
+        ap::Mech *pMech = dynamic_cast<ap::Mech *>(newObject);
+        r = float(pMech->color & 0x0000FF) / 255.0f;
+        g = float(pMech->color & 0x00FF00) / 65535.0f;
+        b = float(pMech->color & 0xFF0000) / 16777215.0f;
 
-	std::string mesh = pDataModel->getMeshFilename(ap::OBJECT_TYPE_MECH);
-	newEntity = pSceneManager->createEntity(ss.str(), mesh);
-	newEntity->getSubEntity(0)->setCustomParameter(1, Ogre::Vector4(r, g, b, 0.0f));
-	pMech->setEntity(newEntity);
+        std::string mesh = pDataModel->getMeshFilename(ap::OBJECT_TYPE_MECH);
+        newEntity = pSceneManager->createEntity(ss.str(), mesh);
+        newEntity->getSubEntity(0)->setCustomParameter(1, Ogre::Vector4(r, g, b, 0.0f));
+        pMech->setEntity(newEntity);
       }
       break;
     case ap::OBJECT_TYPE_PROJECTILE:
       {
-	std::string mesh = pDataModel->getMeshFilename(ap::OBJECT_TYPE_PROJECTILE);
-	newEntity = pSceneManager->createEntity(ss.str(), mesh);
+        std::string mesh = pDataModel->getMeshFilename(ap::OBJECT_TYPE_PROJECTILE);
+        newEntity = pSceneManager->createEntity(ss.str(), mesh);
 
-	ap::Projectile *pProj = dynamic_cast<ap::Projectile *>(newObject);
-	pProj->setEntity(newEntity);
+        ap::Projectile *pProj = dynamic_cast<ap::Projectile *>(newObject);
+        pProj->setEntity(newEntity);
       }
       break;
     default:

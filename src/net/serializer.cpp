@@ -2,6 +2,8 @@
 
 #include <string.h> // for strcpy only
 
+#include <iostream> // TEMP DEBUG
+
 namespace ap {
 namespace net {
 
@@ -10,6 +12,7 @@ int serialize(const Ogre::Vector3 &vect, uint8 *buffer, int start, int buflength
 {
     // TODO: Vector3 is composed of 3 Real:s. Real is by default a float, but with DOUBLE_PRECISION-flag
     // Ogre will use doubles instead. Should be taken into account!
+
     int length = 0;
     length += serialize(static_cast<float>(vect.x), buffer, start+length, buflength-length);
     length += serialize(static_cast<float>(vect.y), buffer, start+length, buflength-length);

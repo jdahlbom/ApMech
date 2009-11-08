@@ -28,7 +28,7 @@ MovingObject::MovingObject(float nFriction, Ogre::Vector3 startingVelocity,
     weaponControl(new WeaponControl()),
     combinedControls(new CombinedControls(control, weaponControl)),
     friction(nFriction),
-    maxSpeedSquared(625.0),
+    maxSpeedSquared(0.0),
     pOwnerNode(0),
     pEntity(0),
     clamped(false),
@@ -163,7 +163,7 @@ void MovingObject::updateVelocity(float sSinceLast)
         state->velocity = state->velocity - unitVelocity*(friction * sSinceLast);
 
         Ogre::Real squaredLength = state->velocity.squaredLength();
-        if ((squaredLength > maxSpeedSquared) && (squaredLength > 0.0f))
+        if ((maxSpeedSquared != 0.0) && (squaredLength > maxSpeedSquared) && (squaredLength > 0.0f))
             state->velocity = (state->velocity / squaredLength) * maxSpeedSquared;
     }
 }

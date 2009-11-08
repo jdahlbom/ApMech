@@ -77,6 +77,8 @@ private:
 
     MovingObject                *mObject;
 
+    float                       dt;                 // delta-t between two updates in seconds. Used in update( )
+
     void fireGun();
     void setAvatar(uint32 avatarId);
     void deleteNetObject(uint32 objectId);

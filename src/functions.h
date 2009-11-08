@@ -4,7 +4,7 @@
 #include <string>
 #include <sstream>
 #include <iostream>
- 
+
 #include "types.h"
 #include <enet/enet.h> // TODO: Why do we need this one?
 

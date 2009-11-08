@@ -76,6 +76,8 @@ class MovingObject : public net::NetObject {
 
  protected:
     uint8              objectType;
+    float               friction;
+    float               maxSpeedSquared;
 
  private:
     Ogre::Vector3       initialFacing;
@@ -85,8 +87,7 @@ class MovingObject : public net::NetObject {
     WeaponControl       *weaponControl;
     CombinedControls    *combinedControls;
 
-    float               friction;
-    float               maxSpeedSquared;
+
 
     Ogre::SceneNode     *pOwnerNode;
     Ogre::Entity        *pEntity;

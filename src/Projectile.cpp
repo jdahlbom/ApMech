@@ -9,6 +9,8 @@
 #include "types.h"
 #include "constants.h"
 
+#include <iostream> // TEMPORARY DEBUG
+
 namespace ap {
 /**//* This mystical part here pushes exactly ONE object of this type to the prototype map, */
 /**//* in order to easily unserialiUntitled3ze stuff. Idea gotten from C++ FAQ Lite by Marshall Cline*/
@@ -21,7 +23,7 @@ namespace ap {
 /**/static ProjectileInject __projectileinject;
 
 Projectile::Projectile(Ogre::Vector3 velocity) :
-    MovingObject(0.0f, velocity),
+    MovingObject(0.0f, velocity), // friction, velocity
     age(0.0f)
 {
     objectType = ap::OBJECT_TYPE_PROJECTILE;

@@ -384,7 +384,7 @@ int NetData::sendClientChanges()
     length += me.serialize(buffer, length, 10000);
     buffer[length++] = NetData::PACKET_EOF;
 
-    ENetPacket *packet = enet_packet_create(buffer, length, 0);//ENET_PACKET_FLAG_RELIABLE);
+    ENetPacket *packet = enet_packet_create(buffer, length, 0);
     enet_peer_send(enetserver, 0, packet);
     me.changed = false;
     return length;
@@ -412,14 +412,15 @@ int NetData::sendChanges()
             buffer[length++] = NetData::PACKET_DELOBJECT;
             *(uint32 *)(buffer+length) = *iDelPkg;     length += 4;
             objectDeleteQueue.erase(iDelPkg++);
+            packetstosend++;
         }
         po = netobjects.begin();
         while (po != netobjects.end()) {
-//            if (po->second->changed) {
-//                po->second->changed = false;
+            if (po->second->changed) {          // Only send stuff that changed!
+                po->second->changed = false;
                 length += createPacketNetObject(po->second, buffer, length, 10000);
                 packetstosend++;
-//            }
+            }
             po++;
         }
         while (iAlertPkg != objectAlertQueue.end()) {
@@ -427,6 +428,7 @@ int NetData::sendChanges()
                 buffer[length++] = NetData::PACKET_ALERTOBJECT;
                 *(uint32 *)(buffer+length) = *iAlertPkg;     length += 4;
                 *(uint8 *)(buffer+length) = netobjects[*iAlertPkg]->getObjectType();    length++;
+                packetstosend++;
             }
             objectAlertQueue.erase(iAlertPkg++);
         }
@@ -436,8 +438,9 @@ int NetData::sendChanges()
         if (packetstosend > 0) {
             ENetPacket *packet = enet_packet_create(buffer, length, 0);//ENET_PACKET_FLAG_RELIABLE);
             enet_host_broadcast(enethost, 0, packet);
+            return length;
         }
-        return length;
+        return 0;
 //        me.changed = false;// Is server's "me" even used like this?!?
     }
 
@@ -466,7 +469,7 @@ NetObject * NetData::getObject(uint32 id)
 NetObject *NetData::getFirstObjectOfType(uint8 type)
 {
     multimap<uint8,NetObject*>::iterator mI = netObjectsByType.find(type);
-    if (mI != netObjectsByType.end()) return (*mI).second;
+    if (mI != netObjectsByType.end()) return mI->second;
     else return NULL;
 }
 

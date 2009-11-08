@@ -128,8 +128,14 @@ void Server::updateObjects(float dt, ap::net::NetData* pNetData) const {
         if (nop->advance(dt) == -1) pNetData->delObject(nop->id);
     }
 
-    while (Mech *pMech = pNetData->eachObject<Mech *>(ap::OBJECT_TYPE_MECH)) gameWorld->clampToWorldBoundaries(*pMech);
-    while (Projectile *pProj = pNetData->eachObject<Projectile *>(ap::OBJECT_TYPE_PROJECTILE)) gameWorld->clampToWorldBoundaries(*pProj);
+    while (Mech *pMech = pNetData->eachObject<Mech *>(ap::OBJECT_TYPE_MECH)) {
+        gameWorld->clampToWorldBoundaries(*pMech);
+        pMech->setChanged();                        // Send mechs always. For now.
+    }
+    while (Projectile *pProj = pNetData->eachObject<Projectile *>(ap::OBJECT_TYPE_PROJECTILE)) {
+        gameWorld->clampToWorldBoundaries(*pProj);
+//        pProj->setChanged();
+    }
 } // void Server::updateObjects
 
 
@@ -147,6 +153,7 @@ void Server::fireWeapons(uint64 tstamp, ap::net::NetData *pNetData) {
     bullet->setPosition(source->getPosition() + facing*70.0f + Ogre::Vector3(0.0f, 80.0f, 0.0f));
     bullet->setFacing(facing);
     bullet->uid = source->uid;
+    bullet->setChanged();
 }
 
 void Server::detectCollisions(ap::net::NetData *pNetData) const {
@@ -213,6 +220,7 @@ void Server::createNewConnection(ap::uint32 userId, ap::net::NetData *pNetData)
   mScores->addScore(newPlayer, true);
   mScores->setChanged();
   pNetData->alertObject(mScores->id);       // Refresh the score display to players
+  gameWorld->setChanged();
 
   pNetData->sendChanges();
   pNetData->setAvatarID(userId, newid);
