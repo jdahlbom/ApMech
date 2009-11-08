@@ -26,6 +26,7 @@
 
 #include <iostream>
 #include <map>
+#include <vector>
 #include <string>
 #include "ObjectReader.h"
 
@@ -35,16 +36,20 @@ class MechDatabase {
 
 public:
     MechDatabase(std::string path) : dataPath(path) {}
-    ~MechDatabase(void) {}
+    ~MechDatabase(void);
 
     bool readMechFiles();
+    std::vector<std::string> getMechNames();
+
+    // TODO: use shared_ptr?
+    MechReader * getMechReader(std::string name) { return mechMap[name]; }
 
 private:
     // map of ObjectDataModels (name -> object)
     
     std::string dataPath;
     
-    std::map<std::string, MechReader> mechMap;
+    std::map<std::string, MechReader*> mechMap;
 
 };
 }
