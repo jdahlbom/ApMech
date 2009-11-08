@@ -27,6 +27,7 @@ void characterDataHandler(void *userData, const XML_Char *s, int len) {
 void startHandler(void *userData, const XML_Char *name, const XML_Char **atts) {
 
     MechReader *mech = (MechReader *) userData;
+    mech->resetData();
 
 #if 0
     printf("> startHandler for '%s'\n", name);
@@ -56,6 +57,10 @@ void endHandler(void *userData, const XML_Char *name) {
     else if (strcmp(name, "maxBackwardAcceleration") == 0) {
         int rate = strtol(mech->getData().c_str(), NULL, 10);
         mech->setMaxBackwardAcceleration(rate);
+    }
+    else if (strcmp(name, "name") == 0) {
+        std::string name = mech->getData();
+        mech->setName(name);
     }
 
     // everything is now ready, reset the buffer

@@ -26,14 +26,16 @@ public:
     int getTurnRate() { return turnRate; }
     int getMaxForwardAcceleration() { return maxForwardAcceleration; }
     int getMaxBackwardAcceleration() { return maxBackwardAcceleration; }
+    std::string getName() const { return name; }
     
     void setTurnRate(int rate) { turnRate = rate; }
     void setMaxForwardAcceleration(int acceleration) { maxForwardAcceleration = acceleration; }
     void setMaxBackwardAcceleration(int acceleration) { maxBackwardAcceleration = acceleration; }
+    void setName(std::string name) { this->name = name; }
 
     bool addData(char *buf, int len);
     void resetData() { currentDataBuffer = ""; }
-    std::string &getData() { return currentDataBuffer; };
+    std::string getData() { return currentDataBuffer; };
 
 private:
 
@@ -44,6 +46,7 @@ private:
     const std::string *filename;
     
     std::string currentDataBuffer;
+    std::string name;
 
 };
 
