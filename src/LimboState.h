@@ -42,6 +42,8 @@ public:
 private:
   ap::Gui           *pGui;
   ap::net::NetData  *pNetData;
+
+  void selectVehicleType(const std::string &vehicleType);
 };
 
 } // namespace ap

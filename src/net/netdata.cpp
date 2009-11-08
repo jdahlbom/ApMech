@@ -272,6 +272,7 @@ int NetData::serviceClient()
                 } else if (data[h] == NetData::PACKET_SETAVATAR) {
                     h++;
                     myAvatarID = *(uint32 *)(data+h);
+
                     addEvent(new NetEvent(EVENT_SETAVATAR, 0, myAvatarID));
                     h += 4;
                 } else if (data[h] == NetData::PACKET_NETMESSAGE) {
@@ -493,6 +494,10 @@ void NetData::removeObject(uint32 id)
 //    cout << "[NETDATA] Object removed. Now "<<netobjects.size()<<" / "<<netObjectsByType.size()<<endl;
 }
 
+  /**
+   * Returns a NetUser pointer to the user corresponding to given id.
+   * Returns NULL if user id is not found.
+   */
 NetUser *NetData::getUser(uint32 uid)
 {
     std::map<int, NetUser>::iterator i;

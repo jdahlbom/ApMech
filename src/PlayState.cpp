@@ -61,14 +61,14 @@ void PlayState::enter( void ) {
     // Create lighting
     createLighting(pSceneManager);
 
-    std::cout << "Entering PlayState" << std::endl;
+    if ("" == netdata->me.chosenVehicleType) {
+      getStateManager()->transitionToLimboMenu(netdata);
+    }
 }
 
 void PlayState::exit( void ) {
     pSceneManager->destroyAllCameras(); // See Ogre API for warnings..
     pSceneManager->destroyAllLights();
-
-    std::cout << "Exiting PlayState" << std::endl;
 
     delete(netdata);
 }
@@ -151,6 +151,11 @@ void PlayState::update( unsigned long lTimeElapsed ) {
     netdata->sendChanges();
 }
 
+  /**
+   * Sets the avatar of this client.
+   *
+   * @param ap::uint32 avatarid : The id of the new avatar for this client.
+   */
 void PlayState::setAvatar(uint32 avatarId)
 {
     assert(0!=netdata);
@@ -159,6 +164,8 @@ void PlayState::setAvatar(uint32 avatarId)
 
     // FIXME: Nasty having to cast things...
     ap::MovingObject *pAvatarObject = dynamic_cast<ap::MovingObject *>(netdata->getObject(avatarId));
+    assert(pAvatarObject != NULL);
+
     if (!pAvatarObject->hasOwnerNode()) {
         createSceneNodeForMovable(avatarId);
     }
@@ -399,9 +406,12 @@ bool PlayState::keyReleased( const ap::ooinput::KeyEvent &e ) {
             }
             return false;
         case ooinput::AP_K_SPACE:
+	  if(mObject) {
             mObject->setFiring(false);
             setNetDataDirty();
             return true;
+	  }
+	  return false;
         default:
             return false;
     }
