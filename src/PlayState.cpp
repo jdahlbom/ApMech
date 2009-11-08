@@ -32,7 +32,8 @@ namespace ap {
         pGui(gui),
         mAvatarId(idForNoAvatar),
         mObject(0),
-        netdata(netdata)
+        netdata(netdata),
+	unresolvedAvatarId(0)
     {
     initStateManager(gameStateManager);
 
@@ -141,6 +142,10 @@ void PlayState::update( unsigned long lTimeElapsed ) {
                     {
                         // A mech has probably just been painted! Well, set its color again anyway.
                         ap::Mech *pMech = netdata->getObject<ap::Mech*>(event.id);
+			if(NULL == pMech) {
+			  //TODO: This situation should not occur, really..
+			  break;
+			}
                         float r, g, b;
                         r = float(pMech->color & 0x0000FF) / 255.0f;
                         g = float(pMech->color & 0x00FF00) / 65535.0f;
@@ -162,6 +167,11 @@ void PlayState::update( unsigned long lTimeElapsed ) {
         }
     }
 
+    // Sometimes avatar id gets set before avatar object is created.
+    if (unresolvedAvatarId != 0) {
+      setAvatar(unresolvedAvatarId);
+    }
+
     netdata->sendChanges();
 }
 
@@ -178,6 +188,11 @@ void PlayState::setAvatar(uint32 avatarId)
 
     // FIXME: Nasty having to cast things...
     ap::MovingObject *pAvatarObject = dynamic_cast<ap::MovingObject *>(netdata->getObject(avatarId));
+    if (NULL == pAvatarObject) {
+      unresolvedAvatarId = avatarId;
+      std::cout << "Could not find designated avatar with id " << unresolvedAvatarId << std::endl;
+      return;
+    }
     assert(pAvatarObject != NULL);
 
     if (!pAvatarObject->hasOwnerNode()) {

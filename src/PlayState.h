@@ -74,6 +74,7 @@ private:
 
     static const int            idForNoAvatar=-1;
     int                         mAvatarId;
+    ap::uint32                  unresolvedAvatarId;
 
     MovingObject                *mObject;
 
