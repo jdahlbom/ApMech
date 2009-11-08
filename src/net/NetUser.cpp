@@ -12,6 +12,7 @@ NetUser::NetUser():
     uid(0),
     color(0xFFFFFF),
     nick("uninitialized"),
+    chosenVehicleType(""),
     ping(0),
     initialized(false)
 {
@@ -24,6 +25,7 @@ NetUser::NetUser(uint32 _uid, ENetPeer *_peer) :
     uid(_uid),
     color(0xFFFFFF),
     nick("uninitialized"),
+    chosenVehicleType(""),
     ping(0),
     initialized(false)
 {
@@ -57,6 +59,7 @@ int NetUser::serialize(enet_uint8 buffer[], int start, int buflength) const
     }
     *(buffer+start+length) = CONTROL_BLOCK_FINISHED; ++length;
     length += serialize(nick, buffer, start+length, buflength);
+    length += serialize(chosenVehicleType, buffer, start+length, buflength);
 
     return length;
 }
@@ -93,7 +96,7 @@ int NetUser::unserialize(enet_uint8 buffer[], int start)
         }
 
         length += unserialize(nick, buffer, start+length);
-
+	length += unserialize(chosenVehicleType, buffer, start+length);
 //        cout << uid << ": x "<<x<<", y "<<y<<" nick "<<nick<<endl;
     } else cout << "FOULED in NetUser::unserialize!" << endl;
 

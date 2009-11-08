@@ -30,12 +30,21 @@ namespace ap {
 
   bool LimboState::keyPressed( const ooinput::KeyEvent &e )
   {
+    assert(pNetData != NULL);
     if(pGui->keyPressed(e))
       return true;
 
     switch(e.key) {
     case(ooinput::AP_K_l):
-      getStateManager()->leaveLimboMenu();
+      if ("" != pNetData->me.chosenVehicleType) {
+	getStateManager()->leaveLimboMenu();
+      }
+      break;
+    case(ooinput::AP_K_SPACE):
+      selectVehicleType(std::string("this is supposed to be a valid string"));
+      break;
+    case (ooinput::AP_K_ESCAPE):
+      requestShutdown();
       break;
     default:
       // Intentionally empty.
@@ -65,4 +74,13 @@ namespace ap {
       return true;
     return true;
   }
+
+  void LimboState::selectVehicleType(const std::string &vehicleType) {
+    pNetData->me.chosenVehicleType = vehicleType;
+    pNetData->me.setChanged();
+    pNetData->sendChanges();
+
+    getStateManager()->leaveLimboMenu();
+  }
+
 } // namespace ap

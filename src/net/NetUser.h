@@ -28,6 +28,7 @@ class NetUser : public NetObject
     uint32 uid;
     uint32 color;
     std::string nick;
+    std::string chosenVehicleType;
 
     int ping;
     Controller *controls;
