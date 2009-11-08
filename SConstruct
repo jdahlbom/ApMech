@@ -135,6 +135,7 @@ if platform == 'posix' or platform == 'darwin':
 print "Building Achtung Panzer Mech for platform '" + env['PLATFORM'] +"'..."
 
 commonSources = Split("""
+src/GameWorld.cpp
 src/MovingObject.cpp
 src/CombinedControls.cpp
 src/MovableControl.cpp
