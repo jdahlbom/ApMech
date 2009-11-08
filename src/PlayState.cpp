@@ -9,29 +9,28 @@
 #include <Ogre/Ogre.h>
 #endif
 
-#include "net/netdata.h"
+#include "functions.h"
+#include "GameStateManager.h"
 #include "Gui.h"
 #include "Mech.h"
 #include "ObjectDataModel.h"
 #include "Projectile.h"
 #include "ScoreListing.h"
-#include "functions.h"
 #include "types.h"
+#include "net/netdata.h"
 
 namespace ap {
 
     PlayState::PlayState( GameStateManager *gameStateManager,
             Ogre::SceneManager *sceneManager,
             ap::Gui *gui,
-            net::NetData *netdata,
-            const std::string &_playerName) :
+            net::NetData *netdata) :
         pSceneManager(sceneManager),
         mCameraNodeParent(0),
         pGui(gui),
         mAvatarId(idForNoAvatar),
         mObject(0),
-        netdata(netdata),
-        playerName(_playerName)
+        netdata(netdata)
     {
     initStateManager(gameStateManager);
 
@@ -350,6 +349,9 @@ bool PlayState::keyPressed( const ap::ooinput::KeyEvent &e ) {
         case ooinput::AP_K_t:
             pGui->activateChatBox();
             return true;
+        case ooinput::AP_K_l:
+	  getStateManager()->transitionToLimboMenu(netdata);
+	  return true;	  
         default:
             std::cout << e.unicode << " pressed, not doing anything." << std::endl;
             return 0;

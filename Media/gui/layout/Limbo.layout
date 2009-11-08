@@ -1,0 +1,20 @@
+<GUILayout >
+  <Window Type="ApMechLook/FrameWindow" Name="Limbo" >
+    <Property Name="Alpha" Value="0.8" />
+    <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+    <Property Name="UnifiedAreaRect" Value="{{0,300},{0,100},{0,900},{0,400}}" />
+
+    <Window Type="ApMechLook/StaticText" Name="Limbo/Label">
+      <Property Name="InheritsAlpha" Value="True" />
+      <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+      <Property Name="UnifiedAreaRect" Value="{{0,50},{0,50},{1,-50},{0,90}}" />
+      <Property Name="Text" Value="Select your vehicle" />
+    </Window>
+
+    <Window Type="ApMechLook/Listbox" Name="Limbo/List" >
+      <Property Name="InheritsAlpha" Value="True" />
+      <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+      <Property Name="UnifiedAreaRect" Value="{{0,50},{0,100},{1,-50},{1,-50}}" />
+    </Window>
+  </Window>
+</GUILayout>

@@ -156,6 +156,7 @@ src/math/rotations.cpp
 
 clientSources = Split("""
 src/GameState.cpp
+src/LimboState.cpp
 src/LoginState.cpp
 src/PlayState.cpp
 src/GameStateManager.cpp

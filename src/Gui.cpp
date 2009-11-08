@@ -10,14 +10,13 @@ namespace ap {
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
   std::string mResourcePath = ap::macBundlePath() + "/Contents/Resources/Media/gui/layout/";
+#else
+  std::string mResourcePath = "";
+#endif
   const std::string Gui::loginLayoutFile = mResourcePath + "Login.layout";
   const std::string Gui::chatLayoutFile = mResourcePath + "ChatBox.layout";
   const std::string Gui::scoreLayoutFile = mResourcePath + "ScoreBoard.layout";
-#else
-  const std::string Gui::loginLayoutFile = "Login.layout";
-  const std::string Gui::chatLayoutFile = "ChatBox.layout";
-  const std::string Gui::scoreLayoutFile = "ScoreBoard.layout";
-#endif
+  const std::string Gui::limboLayoutFile = mResourcePath + "Limbo.layout";
 
   const std::string Gui::loginRootName = "LoginRoot";
   const std::string Gui::loginNameField = "/Login/Name";
@@ -27,6 +26,9 @@ namespace ap {
   const std::string Gui::chatRootName = "ChatBoxRoot";
 
   const std::string Gui::scoreWindowName = "ScoreList";
+
+  const std::string Gui::limboWindowName = "Limbo";
+  const std::string Gui::limboListName = "Limbo/List";
 
 
   Gui::Gui(CEGUI::Renderer *renderer) :
@@ -111,6 +113,40 @@ namespace ap {
     pRoot->addChildWindow(scoreRoot);
     scoreRoot->hide();
     scoreRoot->deactivate();
+  }
+
+  void Gui::setupLimboWindow()
+  {
+    assert(pRoot);
+    assert(pWinMgr);
+    CEGUI::Window *limboRoot = NULL;
+    if ( pWinMgr->isWindowPresent(limboWindowName) ) {
+      limboRoot = pWinMgr->getWindow(limboWindowName);
+    } else {
+      limboRoot = pWinMgr->loadWindowLayout(limboLayoutFile);
+      pRoot->addChildWindow(limboRoot);
+    }
+    limboRoot->hide();
+    limboRoot->deactivate();
+  }
+
+  void Gui::setVisibleLimboMenu(bool visible) 
+  {
+    assert(pRoot);
+    assert(pWinMgr);
+    CEGUI::Window *limboRoot = NULL;
+    if ( pWinMgr->isWindowPresent(limboWindowName) ) {
+      limboRoot = pWinMgr->getWindow(limboWindowName);
+    } else return;
+
+    if(visible) {
+      limboRoot->show();
+      limboRoot->activate();
+      limboRoot->setModalState(true);
+    } else {
+      limboRoot->hide();
+      limboRoot->setModalState(false);
+    }
   }
 
   void Gui::exitLoginWindow()
@@ -373,6 +409,7 @@ namespace ap {
   bool Gui::keyReleased(const ap::ooinput::KeyEvent &event)
   {
     assert(mSystem);
+
     bool injectProcessed;
     injectProcessed = mSystem->injectKeyUp(MapKeyToCEGUI(event.key));
 

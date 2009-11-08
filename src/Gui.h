@@ -25,6 +25,9 @@ class Gui
   void setupChatBox();
   void setupLoginWindow(const std::string &ipAddress = "", const std::string &playerName = "", const float colorIndex = 0.0f);
   void setupScoreWindow();
+  void setupLimboWindow();
+
+  void setVisibleLimboMenu(bool visible);
 
   void exitLoginWindow();
 
@@ -80,6 +83,11 @@ class Gui
 
   static const std::string scoreWindowName;
   static const std::string scoreLayoutFile;
+
+  static const std::string limboWindowName;
+  static const std::string limboListName;
+  static const std::string limboLayoutFile;
+  
 };
 
 } // namespace ap

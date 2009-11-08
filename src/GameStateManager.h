@@ -24,6 +24,7 @@ class Gui;
 class GameState;
 class PlayState;
 class LoginState;
+class LimboState;
 
 //-----------------------------------------------------------------------------
  class GameStateManager : public ap::ooinput::KeyboardListener,
@@ -38,7 +39,10 @@ public:
 
     void startGame();
     void requestShutdown( void );
-    void loginToGame(net::NetData *netdata, const std::string &playerName);
+    void loginToGame(net::NetData *netdata);
+    
+    void transitionToLimboMenu(net::NetData *netdata);
+    void leaveLimboMenu();
 
     // input listeners
     bool keyPressed( const ooinput::KeyEvent &e );
@@ -55,6 +59,7 @@ public:
 
     LoginState              *mLoginState;
     PlayState               *mPlayState;
+    LimboState              *mLimboState;
 
     bool                    bShutdown;
     std::vector<GameState*> mStates;
