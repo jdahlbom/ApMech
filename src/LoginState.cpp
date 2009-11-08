@@ -161,7 +161,7 @@ void LoginState::attemptLogin(const std::string &ipAddress, const std::string &p
 
     // Then, login.
     
-    getStateManager()->loginToGame(netdata, playerName);
+    getStateManager()->loginToGame(netdata);
   }
 
 void LoginState::requestQuit()

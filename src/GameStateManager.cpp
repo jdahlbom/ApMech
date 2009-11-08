@@ -13,6 +13,7 @@
 #include "Gui.h"
 
 #include "GameState.h"
+#include "LimboState.h"
 #include "LoginState.h"
 #include "PlayState.h"
 #include "functions.h"
@@ -28,8 +29,9 @@ GameStateManager::GameStateManager(
     mSceneMgr(sceneManager),
     pGui(gui),
     pInputMgr( inputSystem ),
-    mLoginState(0),
-    mPlayState(0),
+    mLoginState(NULL),
+    mPlayState(NULL),
+    mLimboState(NULL),
     bShutdown( false ) {}
 
 GameStateManager::~GameStateManager( void )
@@ -75,7 +77,11 @@ void GameStateManager::startGame() {
         pInputMgr->capture();
 
         // Update current state
-        mStates.back()->update( lTimeSinceLastFrame );
+	std::vector<GameState*>::iterator stateIterator = mStates.begin();
+	while(stateIterator != mStates.end()) {
+	  (*stateIterator)->update( lTimeSinceLastFrame );
+	  ++stateIterator;
+	}
 
         // Render next frame
         mRoot->renderOneFrame();
@@ -124,16 +130,40 @@ void GameStateManager::popState() {
     // Resume previous state
     if( !mStates.empty() ) {
         mStates.back()->resume();
+    } else {
+      bShutdown = true;
+      // If this occurs, the state transitions are faulty!
+      assert(1==0);
     }
 }
 
-void GameStateManager::loginToGame(net::NetData *netdata, const std::string &playerName)
+void GameStateManager::loginToGame(net::NetData *netdata)
 {
+  // TODO Precondition: Only allowed from login state
+
   // FIXME: Kinda ugly initializing playstate here.
-  mPlayState = new PlayState(this, mSceneMgr, pGui, netdata, playerName);
+  if (mPlayState != NULL)
+    delete mPlayState;
+
+  mPlayState = new PlayState(this, mSceneMgr, pGui, netdata);
   changeState(mPlayState);
 }
 
+void GameStateManager::transitionToLimboMenu(net::NetData *netdata)
+{
+  // TODO Precondition: Only allowed from PlayState
+  if(NULL == mLimboState) {
+    mLimboState = new LimboState(this, pGui, netdata);
+  }
+  pushState(mLimboState);
+}
+
+void GameStateManager::leaveLimboMenu()
+{
+  // TODO Precondition: Limbo menu is on top of the stack!
+  popState();
+}
+  
 void GameStateManager::requestShutdown( void ) {
     bShutdown = true;
 }

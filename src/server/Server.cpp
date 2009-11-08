@@ -26,7 +26,8 @@ using namespace std;
 
 Server::Server(uint32 port) :
   mScores(new ap::ScoreListing()),
-  mPort(port)
+  mPort(port),
+  usersWithoutAvatar(std::list<ap::uint32>())
 {
     std::cout << "[SERVER] Created a server."<< std::endl;
 }
@@ -54,9 +55,11 @@ void Server::start() {
         oldticks = newticks; newticks = getTicks();
         dt = float(newticks - oldticks)*0.001; // dt is in seconds
 
+	
         updateObjects(dt, netdata);
         fireWeapons(newticks, netdata);
         detectCollisions(netdata);
+	spawnNewAvatars(netdata);
 
         if (newticks >= nextupdate) {
             int changes = netdata->sendChanges();
@@ -107,6 +110,10 @@ void Server::processEvents(ap::net::NetData *pNetData) {
     }
 } // void Server::processEvents(netdata*)
 
+  /**
+   * Make sure multiple connection attempts from one client do
+   * not break the server by leaving hanging pending clients.
+   */
 void Server::processPendingClients(ap::net::NetData *pNetData) {
     std::set<uint32>::iterator i = pendingClients.begin();
 
@@ -198,17 +205,9 @@ void Server::relocateSpawnedMech(ap::Mech *mech) const
 
 void Server::createNewConnection(ap::uint32 userId, ap::net::NetData *pNetData)
 {
-  ap::Mech *newAvatar = new ap::Mech();
-  int newid = pNetData->insertObject(newAvatar);
-
-  newAvatar->setMaxSpeed(35.0f);
-  newAvatar->setFriction(8.0f);
-  newAvatar->uid = userId;
-  newAvatar->color = pNetData->getUser(userId)->color;
-  relocateSpawnedMech(newAvatar);
-  pNetData->alertObject(newAvatar->id); // Alert clients to paint this mech!
-
-  pNetData->getUser(userId)->setControlPtr(newAvatar->getControlPtr());
+  // Only create a new avatar if client has chosen the vehicle type.
+  NetUser *newUser = pNetData->getUser(userId);
+  assert(newUser != NULL);
 
   // Add scores:
   ap::ScoreTuple newPlayer;
@@ -222,8 +221,42 @@ void Server::createNewConnection(ap::uint32 userId, ap::net::NetData *pNetData)
   pNetData->alertObject(mScores->id);       // Refresh the score display to players
   gameWorld->setChanged();
 
+  usersWithoutAvatar.push_back(userId);
   pNetData->sendChanges();
-  pNetData->setAvatarID(userId, newid);
+}
+
+void Server::spawnNewAvatars(ap::net::NetData *pNetData) {
+  std::list<ap::uint32>::iterator it = usersWithoutAvatar.begin();
+  while(it != usersWithoutAvatar.end()) {
+    ap::uint32 userId = *it;
+    ap::net::NetUser *pUser = pNetData->getUser(userId);
+
+    if (NULL == pUser) {
+      it = usersWithoutAvatar.erase(it);
+      continue;
+    }
+
+    if ("" != pUser->chosenVehicleType) {
+      ap::Mech *newAvatar = new ap::Mech();
+      int newid = pNetData->insertObject(newAvatar);
+
+      newAvatar->setMaxSpeed(35.0f);
+      newAvatar->setFriction(8.0f);
+      newAvatar->uid = userId;
+      newAvatar->color = pUser->color;
+      relocateSpawnedMech(newAvatar);
+      pNetData->alertObject(newAvatar->id); // Alert clients to paint this mech!
+
+      pUser->setControlPtr(newAvatar->getControlPtr());
+
+      it = usersWithoutAvatar.erase(it);
+      pNetData->sendChanges(); // Shouldn't this occur in the main loop??
+
+      pNetData->setAvatarID(userId, newid);
+    } else {
+      ++it;
+    }
+  }
 }
 
 Server::~Server() {

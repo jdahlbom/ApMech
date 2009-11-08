@@ -9,7 +9,8 @@
 #include <Ogre/Ogre.h>
 #endif
 
-#include "net/netdata.h"
+#include "functions.h"
+#include "GameStateManager.h"
 #include "Gui.h"
 #include "Mech.h"
 #include "ObjectDataModel.h"
@@ -18,21 +19,20 @@
 #include "GameWorld.h"
 #include "functions.h"
 #include "types.h"
+#include "net/netdata.h"
 
 namespace ap {
 
     PlayState::PlayState( GameStateManager *gameStateManager,
             Ogre::SceneManager *sceneManager,
             ap::Gui *gui,
-            net::NetData *netdata,
-            const std::string &_playerName) :
+            net::NetData *netdata) :
         pSceneManager(sceneManager),
         mCameraNodeParent(0),
         pGui(gui),
         mAvatarId(idForNoAvatar),
         mObject(0),
-        netdata(netdata),
-        playerName(_playerName)
+        netdata(netdata)
     {
     initStateManager(gameStateManager);
 
@@ -71,14 +71,14 @@ void PlayState::enter( void ) {
     // Create lighting
     createLighting(pSceneManager);
 
-    std::cout << "Entering PlayState" << std::endl;
+    if ("" == netdata->me.chosenVehicleType) {
+      getStateManager()->transitionToLimboMenu(netdata);
+    }
 }
 
 void PlayState::exit( void ) {
     pSceneManager->destroyAllCameras(); // See Ogre API for warnings..
     pSceneManager->destroyAllLights();
-
-    std::cout << "Exiting PlayState" << std::endl;
 
     delete(netdata);
 }
@@ -165,6 +165,11 @@ void PlayState::update( unsigned long lTimeElapsed ) {
     netdata->sendChanges();
 }
 
+  /**
+   * Sets the avatar of this client.
+   *
+   * @param ap::uint32 avatarid : The id of the new avatar for this client.
+   */
 void PlayState::setAvatar(uint32 avatarId)
 {
     assert(0!=netdata);
@@ -173,6 +178,8 @@ void PlayState::setAvatar(uint32 avatarId)
 
     // FIXME: Nasty having to cast things...
     ap::MovingObject *pAvatarObject = dynamic_cast<ap::MovingObject *>(netdata->getObject(avatarId));
+    assert(pAvatarObject != NULL);
+
     if (!pAvatarObject->hasOwnerNode()) {
         createSceneNodeForMovable(avatarId);
     }
@@ -363,6 +370,9 @@ bool PlayState::keyPressed( const ap::ooinput::KeyEvent &e ) {
         case ooinput::AP_K_t:
             pGui->activateChatBox();
             return true;
+        case ooinput::AP_K_l:
+	  getStateManager()->transitionToLimboMenu(netdata);
+	  return true;
         default:
             std::cout << e.unicode << " pressed, not doing anything." << std::endl;
             return 0;
@@ -410,9 +420,12 @@ bool PlayState::keyReleased( const ap::ooinput::KeyEvent &e ) {
             }
             return false;
         case ooinput::AP_K_SPACE:
+	  if(mObject) {
             mObject->setFiring(false);
             setNetDataDirty();
             return true;
+	  }
+	  return false;
         default:
             return false;
     }

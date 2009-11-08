@@ -24,13 +24,14 @@
 
 namespace ap {
 
+  class GameStateManager;
+
   class PlayState : public GameState, public GuiChatReceiver{
 public:
     PlayState( GameStateManager *gameStateManager,
 	       Ogre::SceneManager *pSceneManager,
 	       ap::Gui *gui,
-	       ap::net::NetData *netdata,
-	       const std::string &playerName);
+	       ap::net::NetData *netdata);
     ~PlayState( void );
 
     void enter( void );
@@ -69,7 +70,6 @@ private:
     ap::net::NetData            *netdata;
 
     std::string                 ipAddress;
-    std::string                 playerName;
     ObjectDataModel             *pDataModel;
 
     static const int            idForNoAvatar=-1;
