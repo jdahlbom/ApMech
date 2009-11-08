@@ -64,7 +64,7 @@ std::vector<std::string> MechDatabase::getMechNames() {
 
 }
 
-#if 1
+#if 0
 // test code, compilation:
 // g++ -lboost_filesystem-mt -lexpat src/ObjectDataBase.cpp src/ObjectReader.cpp -o test_mechdb
 
