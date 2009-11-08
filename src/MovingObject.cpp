@@ -47,6 +47,8 @@ MovingObject::MovingObject(float nFriction, Ogre::Vector3 startingVelocity,
 MovingObject::~MovingObject()
 {
     delete(state);
+    delete(combinedControls);
+    delete(weaponControl);
     delete(control);
 }
 
