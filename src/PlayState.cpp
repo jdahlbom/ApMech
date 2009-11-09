@@ -9,6 +9,7 @@
 #include <Ogre/Ogre.h>
 #endif
 
+#include "ActionKeyMap.h"
 #include "functions.h"
 #include "GameStateManager.h"
 #include "Gui.h"
@@ -24,15 +25,18 @@
 namespace ap {
 
     PlayState::PlayState( GameStateManager *gameStateManager,
-            Ogre::SceneManager *sceneManager,
-            ap::Gui *gui,
-            net::NetData *netdata) :
+			  Ogre::SceneManager *sceneManager,
+			  ap::Gui *gui,
+			  net::NetData *netdata,
+			  ActionKeyMap *akMap
+			  ) :
         pSceneManager(sceneManager),
         mCameraNodeParent(0),
         pGui(gui),
         mAvatarId(idForNoAvatar),
         mObject(0),
         netdata(netdata),
+	pActionKMap(akMap),
 	unresolvedAvatarId(0)
     {
     initStateManager(gameStateManager);
@@ -336,7 +340,10 @@ void PlayState::createGUIWindow()
 }
 
 bool PlayState::keyPressed( const ap::ooinput::KeyEvent &e ) {
-  if (e.key == ooinput::AP_K_TAB) {
+  IngameAction action = pActionKMap->getActionForKey(e.key);
+
+  // TODO: SCORES ei aina ole Tab, joten tämä oletus menee rikki!
+  if (action == TOGGLE_SCORES) {
     pGui->showScoreWindow();
     return true;
   }
@@ -344,107 +351,117 @@ bool PlayState::keyPressed( const ap::ooinput::KeyEvent &e ) {
   if (pGui->keyPressed(e)) {
     return 1;
   }
-    switch( e.key ) {
-        case ooinput::AP_K_ESCAPE:
-            std::cout << "Escape pressed, quitting." << std::endl;
-            netdata->disconnect();
-            this->requestShutdown();
-            return 1;
-        case ooinput::AP_K_a:
-            if(mObject) {
-                mObject->setClockwiseTurningSpeed(1.0f);
-                setNetDataDirty();
-                return 1;
-            }
-            return 0;
-        case ooinput::AP_K_w:
-            if(mObject) {
-                mObject->setForwardAcceleration(1.0f);
-                setNetDataDirty();
-                return 1;
-            }
-            return 0;
-        case ooinput::AP_K_s:
-            if(mObject) {
-                mObject->setForwardAcceleration(-1.0f);
-                setNetDataDirty();
-                return 1;
-            }
-            return 0;
-        case ooinput::AP_K_d:
-            if(mObject) {
-                mObject->setClockwiseTurningSpeed(-1.0f);
-                setNetDataDirty();
-                return 1;
-            }
-            return 0;
-        case ooinput::AP_K_SPACE:
-            mObject->setFiring(true);
-            setNetDataDirty();
-            return 1;
-        case ooinput::AP_K_t:
-            pGui->activateChatBox();
-            return true;
-        case ooinput::AP_K_l:
-	  getStateManager()->transitionToLimboMenu(netdata);
-	  return true;
-        default:
-            std::cout << e.unicode << " pressed, not doing anything." << std::endl;
-            return 0;
-    }
-  return 0;
+
+  switch( action ) {
+  case UNDEFINED:
+    return true;
+
+  case QUIT_GAME:
+    std::cout << "Escape pressed, quitting." << std::endl;
+    netdata->disconnect();
+    this->requestShutdown();
+    return true;
+
+  case TURN_COUNTERCLOCKWISE:
+    if(mObject) {
+      mObject->setClockwiseTurningSpeed(1.0f);
+      setNetDataDirty();
+      return true;
+    } return false;
+
+  case ACCELERATE_FORWARD:
+    if(mObject) {
+      mObject->setForwardAcceleration(1.0f);
+      setNetDataDirty();
+      return true;
+    } return false;
+
+  case ACCELERATE_BACKWARD:
+    if(mObject) {
+      mObject->setForwardAcceleration(-1.0f);
+      setNetDataDirty();
+      return true;
+    } return false;
+
+  case TURN_CLOCKWISE:
+    if(mObject) {
+      mObject->setClockwiseTurningSpeed(-1.0f);
+      setNetDataDirty();
+      return true;
+    } return false;
+
+  case FIRE_WEAPON:
+    if (mObject) {
+      mObject->setFiring(true);
+      setNetDataDirty();
+      return true;
+    } return false;
+
+  case START_MESSAGE:
+    pGui->activateChatBox();
+    return true;
+
+  case TOGGLE_LIMBOMENU:
+    getStateManager()->transitionToLimboMenu(netdata);
+    return true;
+
+  default:
+    std::cout << e.unicode << " pressed, not doing anything." << std::endl;
+    return false;
+  }
+  return false;
 }
 
 bool PlayState::keyReleased( const ap::ooinput::KeyEvent &e ) {
-    if (e.key == ooinput::AP_K_TAB) {
-        pGui->hideScoreWindow();
-        return true;
-    }
+  IngameAction action = pActionKMap->getActionForKey(e.key);
+  if (action == TOGGLE_SCORES) {
+    pGui->hideScoreWindow();
+    return true;
+  }
 
-    if(pGui->keyReleased(e)) {
-        return true;
-    }
+  if(pGui->keyReleased(e)) {
+    return true;
+  }
 
-    switch( e.key ) {
-        case ooinput::AP_K_a:
-            if(mObject) {
-                mObject->setClockwiseTurningSpeed(0);
-                setNetDataDirty();
-                return true;
-            }
-            return false;
-        case ooinput::AP_K_w:
-            if(mObject) {
-                mObject->setForwardAcceleration(0);
-                setNetDataDirty();
-                return true;
-            }
-            return false;
-        case ooinput::AP_K_s:
-            if(mObject) {
-                mObject->setForwardAcceleration(0);
-                setNetDataDirty();
-                return true;
-            }
-            return false;
-        case ooinput::AP_K_d:
-            if(mObject) {
-                mObject->setClockwiseTurningSpeed(0);
-                setNetDataDirty();
-                return true;
-            }
-            return false;
-        case ooinput::AP_K_SPACE:
-	  if(mObject) {
-            mObject->setFiring(false);
-            setNetDataDirty();
-            return true;
-	  }
-	  return false;
-        default:
-            return false;
-    }
+  switch( action ) {
+  case TURN_COUNTERCLOCKWISE:
+    if(mObject) {
+      mObject->setClockwiseTurningSpeed(0);
+      setNetDataDirty();
+      return true;
+    } return false;
+
+  case ACCELERATE_FORWARD:
+    if(mObject) {
+      mObject->setForwardAcceleration(0);
+      setNetDataDirty();
+      return true;
+    } return false;
+
+  case ACCELERATE_BACKWARD:
+    if(mObject) {
+      mObject->setForwardAcceleration(0);
+      setNetDataDirty();
+      return true;
+    } return false;
+
+  case TURN_CLOCKWISE:
+    if(mObject) {
+      mObject->setClockwiseTurningSpeed(0);
+      setNetDataDirty();
+      return true;
+    } return false;
+
+  case FIRE_WEAPON:
+    if(mObject) {
+      mObject->setFiring(false);
+      setNetDataDirty();
+      return true;
+    } return false;
+  default:
     return false;
+  }
+  return false;
 }
 
 bool PlayState::mousePressed(const ap::ooinput::MouseClickedEvent &e)

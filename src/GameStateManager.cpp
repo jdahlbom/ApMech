@@ -10,13 +10,14 @@
 #include <SDL/SDL.h>
 #endif
 
+#include "ActionKeyMap.h"
+#include "functions.h"
 #include "Gui.h"
 
 #include "GameState.h"
 #include "LimboState.h"
 #include "LoginState.h"
 #include "PlayState.h"
-#include "functions.h"
 
 namespace ap {
 
@@ -29,6 +30,7 @@ GameStateManager::GameStateManager(
     mSceneMgr(sceneManager),
     pGui(gui),
     pInputMgr( inputSystem ),
+    mActionKMap(new ActionKeyMap()),
     mLoginState(NULL),
     mPlayState(NULL),
     mLimboState(NULL),
@@ -43,10 +45,13 @@ GameStateManager::~GameStateManager( void )
     }
 
     delete mLoginState;
-    mLoginState = 0;
+    mLoginState = NULL;
 
     delete mPlayState;
-    mPlayState  = 0;
+    mPlayState  = NULL;
+
+    delete mActionKMap;
+    mActionKMap = NULL;
 }
 
 void GameStateManager::startGame() {
@@ -145,7 +150,7 @@ void GameStateManager::loginToGame(net::NetData *netdata)
   if (mPlayState != NULL)
     delete mPlayState;
 
-  mPlayState = new PlayState(this, mSceneMgr, pGui, netdata);
+  mPlayState = new PlayState(this, mSceneMgr, pGui, netdata, mActionKMap);
   changeState(mPlayState);
 }
 
@@ -153,7 +158,7 @@ void GameStateManager::transitionToLimboMenu(net::NetData *netdata)
 {
   // TODO Precondition: Only allowed from PlayState
   if(NULL == mLimboState) {
-    mLimboState = new LimboState(this, pGui, netdata);
+    mLimboState = new LimboState(this, pGui, netdata, mActionKMap);
   }
   pushState(mLimboState);
 }

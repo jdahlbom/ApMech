@@ -20,6 +20,7 @@
 
 namespace ap {
 
+class ActionKeyMap;
 class Gui;
 class GameState;
 class PlayState;
@@ -52,17 +53,18 @@ public:
     bool mouseMoved( const ap::ooinput::MouseMovedEvent &e);
 
  private:
-    Ogre::Root		    *mRoot;
-    Ogre::SceneManager      *mSceneMgr;
-    ap::Gui                 *pGui;
-    ooinput::InputSystem    *pInputMgr;
+    Ogre::Root		     *mRoot;
+    Ogre::SceneManager       *mSceneMgr;
+    ap::Gui                  *pGui;
+    ap::ooinput::InputSystem *pInputMgr;
+    ap::ActionKeyMap         *mActionKMap;
 
-    LoginState              *mLoginState;
-    PlayState               *mPlayState;
-    LimboState              *mLimboState;
+    LoginState               *mLoginState;
+    PlayState                *mPlayState;
+    LimboState               *mLimboState;
 
-    bool                    bShutdown;
-    std::vector<GameState*> mStates;
+    bool                     bShutdown;
+    std::vector<GameState*>  mStates;
 
     // state management
     void changeState( GameState *gameState );

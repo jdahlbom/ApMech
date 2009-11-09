@@ -1,13 +1,17 @@
 #include "LimboState.h"
+
+#include "ActionKeyMap.h"
 #include "GameStateManager.h"
 #include "Gui.h"
 #include "net/netdata.h"
 
 namespace ap {
   LimboState::LimboState(ap::GameStateManager *gameStateManager,
-	     ap::Gui *gui, ap::net::NetData *netdata):
+			 ap::Gui *gui, ap::net::NetData *netdata,
+			 ap::ActionKeyMap *akMap):
     pGui(gui),
-    pNetData(netdata)
+    pNetData(netdata),
+    pActionKMap(akMap)
   {
     assert(NULL != pGui);
     initStateManager(gameStateManager);
@@ -34,16 +38,18 @@ namespace ap {
     if(pGui->keyPressed(e))
       return true;
 
-    switch(e.key) {
-    case(ooinput::AP_K_l):
+    IngameAction action = pActionKMap->getActionForKey(e.key);
+
+    switch( action ) {
+    case(TOGGLE_LIMBOMENU):
       if ("" != pNetData->me.chosenVehicleType) {
 	getStateManager()->leaveLimboMenu();
       }
       break;
-    case(ooinput::AP_K_SPACE):
+    case(FIRE_WEAPON):
       selectVehicleType(std::string("this is supposed to be a valid string"));
       break;
-    case (ooinput::AP_K_ESCAPE):
+    case (QUIT_GAME):
       requestShutdown();
       break;
     default:

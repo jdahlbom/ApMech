@@ -16,13 +16,15 @@
 
 namespace ap {
 
+class ActionKeyMap;
 class GameStateManager;
 
 class LimboState: public GameState {
 public:
   LimboState(GameStateManager *gameStateManager,
 	     ap::Gui *gui,
-	     ap::net::NetData *netdata);
+	     ap::net::NetData *netdata,
+	     ap::ActionKeyMap *akMap);
   ~LimboState( void ) { }
 
   void enter( void );
@@ -42,6 +44,7 @@ public:
 private:
   ap::Gui           *pGui;
   ap::net::NetData  *pNetData;
+  ap::ActionKeyMap  *pActionKMap;
 
   void selectVehicleType(const std::string &vehicleType);
 };

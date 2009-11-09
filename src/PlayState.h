@@ -23,7 +23,7 @@
 
 
 namespace ap {
-
+  class ActionKeyMap;
   class GameStateManager;
 
   class PlayState : public GameState, public GuiChatReceiver{
@@ -31,7 +31,8 @@ public:
     PlayState( GameStateManager *gameStateManager,
 	       Ogre::SceneManager *pSceneManager,
 	       ap::Gui *gui,
-	       ap::net::NetData *netdata);
+	       ap::net::NetData *netdata,
+	       ap::ActionKeyMap *akMap);
     ~PlayState( void );
 
     void enter( void );
@@ -68,6 +69,7 @@ private:
 
     ap::Gui                     *pGui;
     ap::net::NetData            *netdata;
+    ap::ActionKeyMap            *pActionKMap;
 
     std::string                 ipAddress;
     ObjectDataModel             *pDataModel;
