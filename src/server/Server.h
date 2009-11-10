@@ -25,6 +25,9 @@ class Server
     void start();
 
     private:
+
+    Ogre::ConfigFile serverConfig;
+
     ap::net::NetData    *netdata;
     ap::ScoreListing    *mScores;
     ap::GameWorld       *gameWorld;
@@ -36,7 +39,7 @@ class Server
     std::set<uint32>   pendingClients; // A new client is added here, and removed when first data comes from him.
     std::list<ap::uint32> usersWithoutAvatar;
 
-    static const uint32        NetFPS = 20;
+    uint32              NetworkFPS; // How many times per second we try to send updates to clients
 
     void processEvents(ap::net::NetData *pNetData);
     void processPendingClients(ap::net::NetData *pNetData);

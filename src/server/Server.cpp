@@ -6,6 +6,12 @@
     #include <stdlib.h>
 #endif
 
+#ifndef WIN32
+#include <OgreConfigFile.h>
+#else
+#include <Ogre/OgreConfigFile.h>
+#endif
+
 #include <iostream>
 #include <cstdlib>  // for random
 #include <cmath>    // for sin,cos in the server
@@ -46,7 +52,10 @@ void Server::start() {
 
     netdata->insertObject(mScores);
     netdata->insertObject(gameWorld = new ap::GameWorld());
-    gameWorld->loadMapFile("data/maps/glacier.map");
+
+    serverConfig.load("apserver.cfg");
+    gameWorld->loadMapFile("data/maps/" + serverConfig.getSetting("Map") + ".map");
+    if (!from_string<uint32>(NetworkFPS, serverConfig.getSetting("NetworkFPS"), std::dec)) NetworkFPS = 20;
 
     newticks = nextupdate = getTicks();
 
@@ -62,7 +71,7 @@ void Server::start() {
 
         if (newticks >= nextupdate) {
             int changes = netdata->sendChanges();
-            nextupdate = newticks + (1000/NetFPS); // 40 ms between updates, that's 25 network fps.
+            nextupdate = newticks + (1000/NetworkFPS); // 40 ms between updates would be 25 network fps.
             cout << "\rData rate: "<<changes<<"      ";
             cout.flush();
         }                               // Seems to me that up to 100 is still okay!
