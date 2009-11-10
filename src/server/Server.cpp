@@ -46,7 +46,7 @@ void Server::start() {
 
     netdata->insertObject(mScores);
     netdata->insertObject(gameWorld = new ap::GameWorld());
-    gameWorld->loadMapFile("data/maps/example.map");
+    gameWorld->loadMapFile("data/maps/glacier.map");
 
     newticks = nextupdate = getTicks();
 
@@ -55,11 +55,10 @@ void Server::start() {
         oldticks = newticks; newticks = getTicks();
         dt = float(newticks - oldticks)*0.001; // dt is in seconds
 
-	
         updateObjects(dt, netdata);
         fireWeapons(newticks, netdata);
         detectCollisions(netdata);
-	spawnNewAvatars(netdata);
+        spawnNewAvatars(netdata);
 
         if (newticks >= nextupdate) {
             int changes = netdata->sendChanges();
@@ -135,13 +134,13 @@ void Server::updateObjects(float dt, ap::net::NetData* pNetData) const {
         if (nop->advance(dt) == -1) pNetData->delObject(nop->id);
     }
 
-    while (Mech *pMech = pNetData->eachObject<Mech *>(ap::OBJECT_TYPE_MECH)) {
-        gameWorld->clampToWorldBoundaries(*pMech);
-        pMech->setChanged();                        // Send mechs always. For now.
-    }
     while (Projectile *pProj = pNetData->eachObject<Projectile *>(ap::OBJECT_TYPE_PROJECTILE)) {
         gameWorld->clampToWorldBoundaries(*pProj);
-//        pProj->setChanged();
+    }
+
+    while (Mech *pMech = pNetData->eachObject<Mech *>(ap::OBJECT_TYPE_MECH)) {
+        gameWorld->clampToWorldBoundaries(*pMech);
+        pMech->setChanged();                        // Send mechs always. For now. Everything else is predicted / as needed.
     }
 } // void Server::updateObjects
 
@@ -172,21 +171,29 @@ void Server::detectCollisions(ap::net::NetData *pNetData) const {
             if (proj->testCollision(*mech)) {
                 relocateSpawnedMech(mech);
 
-                // update scores.
-                ap::ScoreTuple projOwner;
-                projOwner.uid = proj->uid;
-                projOwner.kills = 1;
-                projOwner.deaths = 0;
-                projOwner.score = 1;
-                ap::ScoreTuple mechOwner;
-                mechOwner.uid = mech->uid;
-                mechOwner.kills = 0;
-                mechOwner.deaths = 1;
-                mechOwner.score = -1;
-                mScores->addScore(projOwner, false);
-                mScores->addScore(mechOwner, false);
-                mScores->setChanged();
+                if (proj->uid == mech->uid) {   // He killed himself!
+                    ap::ScoreTuple selfKiller;
+                    selfKiller.uid = proj->uid;
+                    selfKiller.kills = 0;
+                    selfKiller.deaths = 1;
+                    selfKiller.score = -1;
+                    mScores->addScore(selfKiller, false);
+                } else {                        // update scores normally.
+                    ap::ScoreTuple projOwner;
+                    projOwner.uid = proj->uid;
+                    projOwner.kills = 1;
+                    projOwner.deaths = 0;
+                    projOwner.score = 1;
+                    ap::ScoreTuple mechOwner;
+                    mechOwner.uid = mech->uid;
+                    mechOwner.kills = 0;
+                    mechOwner.deaths = 1;
+                    mechOwner.score = -1;
+                    mScores->addScore(projOwner, false);
+                    mScores->addScore(mechOwner, false);
+                }
 
+                mScores->setChanged();
                 mScores->print();
 
                 pNetData->delObject(proj->id);
@@ -198,7 +205,8 @@ void Server::detectCollisions(ap::net::NetData *pNetData) const {
 
 void Server::relocateSpawnedMech(ap::Mech *mech) const
 {
-    Ogre::Vector3 newPosition = Ogre::Vector3(rand() % int(gameWorld->boundaries.right), 0, rand() % int(gameWorld->boundaries.top));
+    Ogre::Vector3 newPosition = Ogre::Vector3(rand() % int(gameWorld->boundaries.right - gameWorld->boundaries.left) + gameWorld->boundaries.left,
+                                            0, rand() % int(gameWorld->boundaries.top - gameWorld->boundaries.bottom) + gameWorld->boundaries.bottom);
     mech->setPosition(newPosition);
     mech->setVelocity(Ogre::Vector3::ZERO);
 }

@@ -13,7 +13,7 @@ namespace ap {
 class GameWorld : public ap::net::NetObject
 {
  public:
-    std::string mapFileName;
+    std::string mapFileName, terrainFileName;
     RectBoundaries boundaries;
 
     GameWorld();

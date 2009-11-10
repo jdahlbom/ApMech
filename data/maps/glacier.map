@@ -1,11 +1,11 @@
 # Example map file
 
-TerrainFile=example.terrain
+TerrainFile=glacier.terrain
 
-MapBorderTop=1400
-MapBorderBottom=100
-MapBorderLeft=100
-MapBorderRight=1400
+MapBorderTop=1700
+MapBorderBottom=300
+MapBorderLeft=300
+MapBorderRight=1700
 
 #AmbientLightColor=1,1,1
 #DirectionalLightColor=0.5,0.5,0.5

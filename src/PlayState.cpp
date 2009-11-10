@@ -66,9 +66,9 @@ void PlayState::enter( void ) {
 
     // Create the terrain
     #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-    pSceneManager->setWorldGeometry(macBundlePath() + "/Contents/Resources/" + gWorld->mapFileName);
+    pSceneManager->setWorldGeometry(macBundlePath() + "/Contents/Resources/" + gWorld->terrainFileName);
     #else
-    pSceneManager->setWorldGeometry(gWorld->mapFileName);   // for example "data/maps/example.map"
+    pSceneManager->setWorldGeometry(gWorld->terrainFileName);   // for example "data/maps/example.map"
     #endif
 
     setupCamera(pSceneManager);
@@ -488,6 +488,8 @@ bool PlayState::mouseReleased(const ap::ooinput::MouseClickedEvent &e)
 
 void PlayState::createLighting(Ogre::SceneManager *sceneManager)
 {
+    sceneManager->destroyAllLights();
+
     sceneManager->setAmbientLight(Ogre::ColourValue(1,1,1));
 
     Ogre::Light *myLight= sceneManager->createLight("MyLight");
@@ -496,11 +498,13 @@ void PlayState::createLighting(Ogre::SceneManager *sceneManager)
     myLight->setSpecularColour(Ogre::ColourValue(0.5f, 0.5f, 0.5f));
     myLight->setDirection(Ogre::Vector3(0,-1,1));
 
+
     Ogre::Light *myLight2= sceneManager->createLight("MyLight2");
     myLight2->setType(Ogre::Light::LT_DIRECTIONAL);
     myLight2->setDiffuseColour(Ogre::ColourValue(0.5f, 0.5f, 0.5f));
     myLight2->setSpecularColour(Ogre::ColourValue(0.5f, 0.5f, 0.5f));
     myLight2->setDirection(Ogre::Vector3(1,0,-1));
+
 }
 
  void PlayState::updateScores() const {

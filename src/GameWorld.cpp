@@ -37,15 +37,24 @@ GameWorld::GameWorld(std::string fname) : boundaries(1.0, 0.0, 0.0, 1.0) {
 
 void GameWorld::loadMapFile(std::string fname) {
     mapFileName = fname;
-    float top, bottom, left, right;
+    float top, bottom, left, right, tmp;
 
     bottom = left = 0.0;
 
-    Ogre::ConfigFile mapConfig;
-//    try {
+    //    try { // FIXME: Should we try-catch or not? It's all well that all goes fubar if files are wrong/missing
+    Ogre::ConfigFile mapConfig, terrainConfig;
     mapConfig.load(mapFileName);
-    if (!from_string<float>(top, mapConfig.getSetting("PageWorldZ"), std::dec)) top = 1.0f;
-    if (!from_string<float>(right, mapConfig.getSetting("PageWorldX"), std::dec)) right = 1.0f;
+    terrainFileName = "data/maps/" + mapConfig.getSetting("TerrainFile");
+    terrainConfig.load(terrainFileName);
+
+    if (!from_string<float>(top, terrainConfig.getSetting("PageWorldZ"), std::dec)) top = 1.0f;
+    if (!from_string<float>(right, terrainConfig.getSetting("PageWorldX"), std::dec)) right = 1.0f;
+
+    if (from_string<float>(tmp, mapConfig.getSetting("MapBorderTop"), std::dec)) top = tmp;
+    if (from_string<float>(tmp, mapConfig.getSetting("MapBorderBottom"), std::dec)) bottom = tmp;
+    if (from_string<float>(tmp, mapConfig.getSetting("MapBorderLeft"), std::dec)) left = tmp;
+    if (from_string<float>(tmp, mapConfig.getSetting("MapBorderRight"), std::dec)) right = tmp;
+
 //    } catch (Ogre::FileNotFoundException e) {
 //        top = right = 1.0;      // Bad values, but should be, as this is an error!
 //    }
@@ -87,6 +96,7 @@ int GameWorld::serialize(uint8 buffer[], int start, int buflength) const
 {
     int length = 0;
     length += ap::net::serialize(mapFileName, buffer, start+length, buflength-length);
+    length += ap::net::serialize(terrainFileName, buffer, start+length, buflength-length);
     length += boundaries.serialize(buffer, start+length, buflength-length);
     return length;
 }
@@ -95,6 +105,7 @@ int GameWorld::unserialize(uint8 buffer[], int start)
 {
     int length = 0;
     length += ap::net::unserialize(mapFileName, buffer, start+length);
+    length += ap::net::unserialize(terrainFileName, buffer, start+length);
     length += boundaries.unserialize(buffer, start+length);
     return length;
 }
