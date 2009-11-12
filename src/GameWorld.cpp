@@ -35,9 +35,13 @@ GameWorld::GameWorld(std::string fname) : boundaries(1.0, 0.0, 0.0, 1.0) {
     loadMapFile(mapFileName);
 }
 
+GameWorld::~GameWorld() {
+    if (heightMap) delete heightMap;
+}
+
 void GameWorld::loadMapFile(std::string fname) {
     mapFileName = fname;
-    float top, bottom, left, right, tmp;
+    float top, bottom, left, right, tmp, maxHeight;
 
     bottom = left = 0.0;
 
@@ -49,6 +53,10 @@ void GameWorld::loadMapFile(std::string fname) {
 
     if (!from_string<float>(top, terrainConfig.getSetting("PageWorldZ"), std::dec)) top = 1.0f;
     if (!from_string<float>(right, terrainConfig.getSetting("PageWorldX"), std::dec)) right = 1.0f;
+    if (!from_string<float>(maxHeight, terrainConfig.getSetting("MaxHeight"), std::dec)) maxHeight = 256.0f;
+
+    std::string heightMapFile = "Media/materials/textures/" + terrainConfig.getSetting("Heightmap.image");
+    heightMap = new TerrainHeightMap(0, right, maxHeight, heightMapFile, false);    // FIXME: If level is not square, this fails silently. BAD.
 
     if (from_string<float>(tmp, mapConfig.getSetting("MapBorderTop"), std::dec)) top = tmp;
     if (from_string<float>(tmp, mapConfig.getSetting("MapBorderBottom"), std::dec)) bottom = tmp;
@@ -84,6 +92,12 @@ bool GameWorld::clampToWorldBoundaries(ap::MovingObject &movingObject) // state-
 
     if (movingObject.clamped) movingObject.setPosition(loc);
     return movingObject.clamped;
+}
+
+float GameWorld::getHeightAt(float x, float z)
+{
+    if (heightMap) return heightMap->getHeightAt(x, z);
+    else return 0.0f;
 }
 
 ap::net::NetObject* GameWorld::create(ap::uint32 _id) const {

@@ -1,18 +1,28 @@
+# Crater's Edge
+# Map for APMech
+# Based on Victoria Crater, Meridiani Planum, Mars
+#
+# Source picture: http://hirise.lpl.arizona.edu/ESP_013954_1780
+# Image: NASA/JPL/University of Arizona 
+# Thanks to them for putting it in public domain!
+#
+# More nice Mars pics: http://www.boston.com/bigpicture/2009/11/martian_landscapes.html
+#
+
 # The main world texture (if you wish the terrain manager to create a material for you)
-WorldTexture=terrain_texture.jpg
+WorldTexture=ap_cratersedge_terrain.jpg
 
 # The detail texture (if you wish the terrain manager to create a material for you)
 #DetailTexture=terrain_detail.jpg
-DetailTexture=terr_dirt-grass.jpg
 
 #number of times the detail texture will tile in a terrain tile
-DetailTile=1
+#DetailTile=3
 
 # Heightmap source
 PageSource=Heightmap
 
 # Heightmap-source specific settings
-Heightmap.image=terrain.png
+Heightmap.image=ap_cratersedge_height.png
 
 # If you use RAW, fill in the below too
 # RAW-specific setting - size (horizontal/vertical)
@@ -30,10 +40,10 @@ TileSize=65
 MaxPixelError=3
 
 # The size of a terrain page, in world units
-PageWorldX=1500
-PageWorldZ=1500
+PageWorldX=2500
+PageWorldZ=2500
 # Maximum height of the terrain 
-MaxHeight=100
+MaxHeight=400
 
 # Upper LOD limit
 MaxMipMapLevel=5

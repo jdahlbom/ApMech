@@ -8,8 +8,10 @@
 
 #ifndef WIN32
 #include <OgreConfigFile.h>
+#include <OgreVector3.h>
 #else
 #include <Ogre/OgreConfigFile.h>
+#include <Ogre/OgreVector3.h>
 #endif
 
 #include <iostream>
@@ -53,8 +55,9 @@ void Server::start() {
     netdata->insertObject(mScores);
     netdata->insertObject(gameWorld = new ap::GameWorld());
 
-    serverConfig.load("apserver.cfg");
-    gameWorld->loadMapFile("data/maps/" + serverConfig.getSetting("Map") + ".map");
+    serverConfig.load(bundlePath() + "apserver.cfg");
+    gameWorld->loadMapFile(bundlePath() + "data/maps/" + serverConfig.getSetting("Map") + ".map");
+
     if (!from_string<uint32>(NetworkFPS, serverConfig.getSetting("NetworkFPS"), std::dec)) NetworkFPS = 20;
 
     newticks = nextupdate = getTicks();
@@ -149,6 +152,9 @@ void Server::updateObjects(float dt, ap::net::NetData* pNetData) const {
 
     while (Mech *pMech = pNetData->eachObject<Mech *>(ap::OBJECT_TYPE_MECH)) {
         gameWorld->clampToWorldBoundaries(*pMech);
+        Ogre::Vector3 mechLoc = pMech->getPosition();
+        mechLoc.y = gameWorld->getHeightAt(mechLoc.x, mechLoc.z);
+        pMech->setPosition(mechLoc);
         pMech->setChanged();                        // Send mechs always. For now. Everything else is predicted / as needed.
     }
 } // void Server::updateObjects

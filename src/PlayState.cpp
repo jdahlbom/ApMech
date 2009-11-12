@@ -65,11 +65,7 @@ void PlayState::enter( void ) {
     } while (gWorld == NULL);   // WAIT until we get a world
 
     // Create the terrain
-    #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-    pSceneManager->setWorldGeometry(macBundlePath() + "/Contents/Resources/" + gWorld->terrainFileName);
-    #else
-    pSceneManager->setWorldGeometry(gWorld->terrainFileName);   // for example "data/maps/example.map"
-    #endif
+    pSceneManager->setWorldGeometry(bundlePath() + gWorld->terrainFileName);   // for example "data/maps/example.map"
 
     setupCamera(pSceneManager);
 

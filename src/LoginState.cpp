@@ -47,7 +47,7 @@ void LoginState::createGUIWindow()
   float colorSelection = 0.0f;
   Ogre::ConfigFile loginConfig;
   try {
-      loginConfig.load("login.cfg");
+      loginConfig.load(bundlePath() + "login.cfg");
       ipAddress = loginConfig.getSetting("IPaddress");
       playerName = loginConfig.getSetting("PlayerName");
       if (!from_string<float>(colorSelection, loginConfig.getSetting("PlayerColor"), std::dec))
@@ -134,12 +134,12 @@ void LoginState::attemptLogin(const std::string &ipAddress, const std::string &p
     lastLoginSettings << "PlayerName="<<playerName<<std::endl;
     lastLoginSettings << "PlayerColor="<<pGui->getColorSliderValue()<<std::endl;
     lastLoginSettings.close();
-    
+
     // attempt to actually connect to the server
     netdata = new net::NetData(net::NetData::CLIENT);
 
     pGui->addConsoleItem("Connecting to server " + ipAddress);
-    
+
     ret = netdata->connect(ipAddress, 50740);
 
     switch(ret) {
@@ -160,7 +160,7 @@ void LoginState::attemptLogin(const std::string &ipAddress, const std::string &p
     netdata->sendChanges();             // Send changes without waiting!
 
     // Then, login.
-    
+
     getStateManager()->loginToGame(netdata);
   }
 

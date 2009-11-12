@@ -6,7 +6,7 @@ LIBS = OGRE CEGUI-OGRE CEGUI
 CXX = g++
 CXXFLAGS = $(shell pkg-config --cflags $(LIBS)) $(DEFINES) -I$(INCLUDES) $(shell sdl-config --cflags) -I/usr/local/boost_1_39_0 -DSERIALIZER_WITH_OGRE -Wall
 LD = gcc
-LDFLAGS = $(shell pkg-config --libs $(LIBS)) $(shell sdl-config --libs) -lenet
+LDFLAGS = $(shell pkg-config --libs $(LIBS)) $(shell sdl-config --libs) -lSDL_image -lenet
 OBJDIR = obj
 
 ## Files in subdirectories
@@ -35,11 +35,11 @@ OBJS = InputSystem.o SDLInputSystem.o GameState.o PlayState.o GameStateManager.o
 	MovingObject.o serializer.o RectBoundaries.o netdata.o functions.o NetUser.o NetEvent.o \
 	NetMessage.o Mech.o Projectile.o rotations.o MovableControl.o WeaponControl.o \
 	CombinedControls.o Gui.o LoginState.o LimboState.o ScoreListing.o ObjectDataModel.o \
-	GameWorld.o ActionKeyMap.o
+	GameWorld.o TerrainHeightMap.o ActionKeyMap.o
 SERVEROBJS = servermain.o Server.o MovingObject.o RectBoundaries.o serializer.o netdata.o \
 	functions.o NetUser.o NetEvent.o NetMessage.o Mech.o Projectile.o rotations.o \
 	MovableControl.o WeaponControl.o CombinedControls.o ScoreListing.o ObjectDataModel.o \
-	GameWorld.o
+	GameWorld.o TerrainHeightMap.o
 
 ## Compilation and linking occurs here
 all: tempDirectories application server

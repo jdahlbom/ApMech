@@ -6,6 +6,8 @@
 #include "RectBoundaries.h"
 #include "MovingObject.h"
 #include "net/NetObject.h"
+#include "TerrainHeightMap.h"
+
 #include <string>
 
 namespace ap {
@@ -18,10 +20,11 @@ class GameWorld : public ap::net::NetObject
 
     GameWorld();
     GameWorld(std::string fname);
-    ~GameWorld() {}
+    ~GameWorld();
 
     void loadMapFile(std::string fname);
     bool clampToWorldBoundaries(ap::MovingObject &movingObject);
+	float getHeightAt(float x, float z);
 
     // NetObject interface
     net::NetObject *create(uint32 id) const;
@@ -30,6 +33,9 @@ class GameWorld : public ap::net::NetObject
     //NetObject serialization
     int serialize(uint8 *buffer, int start, int buflength) const;
     int unserialize(uint8 *buffer, int start);
+
+ private:
+    TerrainHeightMap *heightMap;
 };
 
 } // namespace ap

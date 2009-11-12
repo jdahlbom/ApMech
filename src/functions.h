@@ -42,13 +42,9 @@ ap::uint32 getTicks();
 
 ap::uint32 getColorFromPseudoHue(float phue);
 
-#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-
-// This function will locate the path to our application on OS X,
-// unlike windows you can not rely on the current working directory
-// for locating your configuration files and resources.
-std::string macBundlePath();
-#endif
+/// Returns the location of application files. Empty (expecting that we're in the working directory),
+/// except on OS X where it's set as required. On OS X, it will locate the path to our application.
+std::string bundlePath();
 
 } // namespace ap
 
