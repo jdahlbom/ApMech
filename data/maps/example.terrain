@@ -32,7 +32,7 @@ MaxPixelError=3
 PageWorldX=1500
 PageWorldZ=1500
 # Maximum height of the terrain 
-MaxHeight=100
+MaxHeight=150
 
 # Upper LOD limit
 MaxMipMapLevel=5

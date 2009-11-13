@@ -32,6 +32,7 @@ makefiles/vc2008/Debug
 apmech
 apserver
 jonni/cegui_sdl_test/jonnin
+jonni/nabla-wing/nablawing
 
 # SConstruct database
 .sconsign.dblite
