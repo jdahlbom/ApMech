@@ -47,9 +47,9 @@ void GameWorld::loadMapFile(std::string fname) {
 
     //    try { // FIXME: Should we try-catch or not? It's all well that all goes fubar if files are wrong/missing
     Ogre::ConfigFile mapConfig, terrainConfig;
-    mapConfig.load(mapFileName);
+    mapConfig.load(bundlePath() + "data/maps/" + mapFileName);
     terrainFileName = "data/maps/" + mapConfig.getSetting("TerrainFile");
-    terrainConfig.load(terrainFileName);
+    terrainConfig.load(bundlePath() + terrainFileName);
 
     if (!from_string<float>(top, terrainConfig.getSetting("PageWorldZ"), std::dec)) top = 1.0f;
     if (!from_string<float>(right, terrainConfig.getSetting("PageWorldX"), std::dec)) right = 1.0f;

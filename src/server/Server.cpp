@@ -56,7 +56,7 @@ void Server::start() {
     netdata->insertObject(gameWorld = new ap::GameWorld());
 
     serverConfig.load(bundlePath() + "apserver.cfg");
-    gameWorld->loadMapFile(bundlePath() + "data/maps/" + serverConfig.getSetting("Map") + ".map");
+    gameWorld->loadMapFile(serverConfig.getSetting("Map") + ".map");
 
     if (!from_string<uint32>(NetworkFPS, serverConfig.getSetting("NetworkFPS"), std::dec)) NetworkFPS = 20;
 
@@ -148,6 +148,8 @@ void Server::updateObjects(float dt, ap::net::NetData* pNetData) const {
 
     while (Projectile *pProj = pNetData->eachObject<Projectile *>(ap::OBJECT_TYPE_PROJECTILE)) {
         gameWorld->clampToWorldBoundaries(*pProj);
+        if (pProj->getPosition().y < gameWorld->getHeightAt(pProj->getPosition().x, pProj->getPosition().z))
+            pProj->clamped = true;          // Then Xplode!
     }
 
     while (Mech *pMech = pNetData->eachObject<Mech *>(ap::OBJECT_TYPE_MECH)) {

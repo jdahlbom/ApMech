@@ -45,17 +45,17 @@ TerrainHeightMap::TerrainHeightMap(int width, float widthScale, float heightScal
             m_Vertices = new float[m_Width * m_Width];
         }
 
+        cout << "[TerrainHeightMap] Horizontal scale: "<<m_WidthScale<<", vertical scale: "<<m_HeightScale<<", map width: "<<m_Width<<endl;
+
         if (SDL_MUSTLOCK(imageSurface)) SDL_LockSurface(imageSurface);
         if (imageSurface->w != imageSurface->h) { cout << "[TerrainHeightMap] Image is not rectangular!"<<endl; }
-        if ((width != 0) && (imageSurface->w != width)) { cout << "[TerrainHeightMap] Image is not of specified size ("<<width<<")!"<<endl; }
+        if (imageSurface->w != m_Width) { cout << "[TerrainHeightMap] Image is not of specified size ("<<width<<")!"<<endl; }
         if (pixFormat->palette) { cout << "[TerrainHeightMap] Image has a palette! Possible problem!"<<endl; }
 
-        cout << "Image pixel format:"<<endl;
-        cout << "BitsPerPixel = "<<int(pixFormat->BitsPerPixel)<<endl;
-        cout << "BytesPerPixel = "<<int(pixFormat->BytesPerPixel)<<endl;
-        cout << "Rshift, Gshift, Bshift = "<<int(pixFormat->Rshift)<<","<<int(pixFormat->Gshift)<<","<<int(pixFormat->Bshift)<<endl;
-        cout.setf( ios::hex );
-        cout << "Rmask, Gmask, Bmask = "<<pixFormat->Rmask<<","<<pixFormat->Gmask<<","<<pixFormat->Bmask<<endl;
+        cout << "[TerrainHeightMap] Image format: ";
+        cout << "BytesPerPixel = "<<int(pixFormat->BytesPerPixel)<<"  ";
+        cout << "RGBshift = "<<int(pixFormat->Rshift)<<","<<int(pixFormat->Gshift)<<","<<int(pixFormat->Bshift)<<"  ";
+        cout << hex << "RGBmask = "<<pixFormat->Rmask<<","<<pixFormat->Gmask<<","<<pixFormat->Bmask<<endl;
 
         for(int y = 0; y < m_Width; ++y) {                      // loop through and populate the vertices
             for(int x = 0; x < m_Width; ++x) {
@@ -66,7 +66,6 @@ TerrainHeightMap::TerrainHeightMap(int width, float widthScale, float heightScal
                 m_Vertices[y*m_Width + x] = max(r,g,b) * invScale;
             }
         }
-        cout << "xScale: "<<m_WidthScale<<", zScale: "<<m_HeightScale<<", width: "<<m_Width<<endl;
 
         if (SDL_MUSTLOCK(imageSurface)) SDL_UnlockSurface(imageSurface);
         SDL_FreeSurface(imageSurface);

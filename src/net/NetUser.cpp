@@ -10,11 +10,11 @@ namespace net {
 NetUser::NetUser():
     peer(0),
     uid(0),
+    ping(0),
+    initialized(false),
     color(0xFFFFFF),
     nick("uninitialized"),
-    chosenVehicleType(""),
-    ping(0),
-    initialized(false)
+    chosenVehicleType("")
 {
     controls = 0;
     changed = false;
@@ -23,11 +23,11 @@ NetUser::NetUser():
 NetUser::NetUser(uint32 _uid, ENetPeer *_peer) :
     peer(_peer),
     uid(_uid),
+    ping(0),
+    initialized(false),
     color(0xFFFFFF),
     nick("uninitialized"),
-    chosenVehicleType(""),
-    ping(0),
-    initialized(false)
+    chosenVehicleType("")
 {
     controls = 0;
     changed = false;

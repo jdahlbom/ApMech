@@ -21,17 +21,17 @@ namespace ap {
 
 MovingObject::MovingObject(float nFriction, Ogre::Vector3 startingVelocity,
         ObjectDataModel *model, uint8 type_id):
+    clamped(false),
     objectType(ap::OBJECT_TYPE_UNDEFINED),
+    friction(nFriction),
+    maxSpeedSquared(0.0),
     initialFacing(-Ogre::Vector3::UNIT_Z),
     state(new MovableState(startingVelocity)),
     control(new MovableControl()),
     weaponControl(new WeaponControl()),
     combinedControls(new CombinedControls(control, weaponControl)),
-    friction(nFriction),
-    maxSpeedSquared(0.0),
     pOwnerNode(0),
     pEntity(0),
-    clamped(false),
     model(model)
 {
     id = 0;
@@ -130,7 +130,7 @@ void MovingObject::setFacing(Ogre::Vector3 f)
 {
    Ogre::Vector3 axes[3];
    state->orientation.ToAxes(axes);
-   state->orientation = axes[0].getRotationTo(f);
+   state->orientation = axes[2].getRotationTo(-f);
 }
 
 

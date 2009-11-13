@@ -33,12 +33,12 @@ namespace ap {
         pSceneManager(sceneManager),
         mCameraNodeParent(0),
         pGui(gui),
-        mAvatarId(idForNoAvatar),
-        mObject(0),
         netdata(netdata),
-	pActionKMap(akMap),
-	unresolvedAvatarId(0)
-    {
+        pActionKMap(akMap),
+        mAvatarId(idForNoAvatar),
+        unresolvedAvatarId(0),
+        mObject(0)
+{
     initStateManager(gameStateManager);
 
     pRoot = Ogre::Root::getSingletonPtr();

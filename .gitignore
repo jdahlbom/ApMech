@@ -10,6 +10,9 @@ build/*
 # temp files
 *~
 
+# Image thumbnails (?)
+.directory
+
 # osx noise
 .DS_Store
 profile

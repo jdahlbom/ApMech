@@ -75,7 +75,7 @@ private:
     ObjectDataModel             *pDataModel;
 
     static const int            idForNoAvatar=-1;
-    int                         mAvatarId;
+    uint32                      mAvatarId;
     ap::uint32                  unresolvedAvatarId;
 
     MovingObject                *mObject;

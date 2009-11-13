@@ -129,7 +129,7 @@ void LoginState::attemptLogin(const std::string &ipAddress, const std::string &p
     int ret;
     net::NetData *netdata = NULL;
     // First, save our login settings, overwriting the previous file
-    std::ofstream lastLoginSettings("login.cfg", std::ios::trunc);
+    std::ofstream lastLoginSettings((bundlePath() + "login.cfg").c_str(), std::ios::trunc);
     lastLoginSettings << "IPaddress="<<ipAddress<<std::endl;
     lastLoginSettings << "PlayerName="<<playerName<<std::endl;
     lastLoginSettings << "PlayerColor="<<pGui->getColorSliderValue()<<std::endl;
