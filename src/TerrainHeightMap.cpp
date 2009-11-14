@@ -38,7 +38,7 @@ TerrainHeightMap::TerrainHeightMap(int width, float widthScale, float heightScal
         float invScale = heightScale / 256.0f;
         float r, g, b;
         SDL_PixelFormat *pixFormat = imageSurface->format;
-        uint32 pixel;
+        uint32_t pixel;
 
         if (m_Width == 0) {
             m_Width = imageSurface->w;
@@ -59,7 +59,7 @@ TerrainHeightMap::TerrainHeightMap(int width, float widthScale, float heightScal
 
         for(int y = 0; y < m_Width; ++y) {                      // loop through and populate the vertices
             for(int x = 0; x < m_Width; ++x) {
-                pixel = ((uint8 *)imageSurface->pixels)[x*pixFormat->BytesPerPixel + y*imageSurface->pitch];
+                pixel = ((uint8_t *)imageSurface->pixels)[x*pixFormat->BytesPerPixel + y*imageSurface->pitch];
                 r = (pixel & pixFormat->Rmask) >> pixFormat->Rshift;
                 g = (pixel & pixFormat->Gmask) >> pixFormat->Gshift;
                 b = (pixel & pixFormat->Bmask) >> pixFormat->Bshift;

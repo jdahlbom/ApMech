@@ -9,7 +9,7 @@
 namespace ap {
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-  std::string mResourcePath = ap::macBundlePath() + "/Contents/Resources/Media/gui/layout/";
+  std::string mResourcePath = ap::bundlePath() + "/Contents/Resources/Media/gui/layout/";
 #else
   std::string mResourcePath = "";
 #endif

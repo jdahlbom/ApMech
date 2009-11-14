@@ -97,7 +97,7 @@ SDL_Surface* setupSDL(int width, int height) {
   #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 
     Ogre::String resourcePath;
-    resourcePath = ap::macBundlePath() + "/Contents/Resources/";
+    resourcePath = ap::bundlePath() + "/Contents/Resources/";
     root = new Ogre::Root(resourcePath + "plugins.cfg",
                           resourcePath + "ogre.cfg", resourcePath + "Ogre.log");
   #else
@@ -162,7 +162,7 @@ void setupOgreResources(void)
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     Ogre::String mResourcePath;
-    mResourcePath = ap::macBundlePath() + "/Contents/Resources/";
+    mResourcePath = ap::bundlePath() + "/Contents/Resources/";
     cf.load(mResourcePath + "resources.cfg");
 #else
     cf.load("resources.cfg");
@@ -186,7 +186,7 @@ void setupOgreResources(void)
             // In order to make things portable on OS X we need to provide
             // the loading with it's own bundle path location
             Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
-                    Ogre::String(ap::macBundlePath() + "/" + archName), typeName, secName);
+                    Ogre::String(ap::bundlePath() + "/" + archName), typeName, secName);
 #else
             Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
                     archName, typeName, secName);

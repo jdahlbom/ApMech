@@ -125,6 +125,7 @@ elif platform == 'win32':
 if platform == 'posix' or platform == 'darwin':
 	env.ParseConfig('sdl-config --cflags')
 	env.ParseConfig('sdl-config --libs')
+	env.Append(LIBS = ['SDL_image'])
 	
 	env['CPPFLAGS'] = ["-g"]
 # elif platform == 'win32':
@@ -152,6 +153,7 @@ src/functions.cpp
 src/Mech.cpp
 src/Projectile.cpp
 src/math/rotations.cpp
+src/TerrainHeightMap.cpp
 """)
 
 clientSources = Split("""
