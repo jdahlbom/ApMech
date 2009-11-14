@@ -123,9 +123,13 @@ ap::uint32 getColorFromPseudoHue(float phue)
     return r + (g<<8) + (b<<16);
 }
 
-
+  /**
+   * Returns the location of application files. 
+   * Empty on non-OSX. On OS X, it will locate the path to our application.
+   */
 std::string bundlePath()
 {
+  #ifdef OGRE_PLATFORM
     #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
         char path[1024];
         CFBundleRef mainBundle = CFBundleGetMainBundle();
@@ -142,10 +146,10 @@ std::string bundlePath()
         CFRelease(mainBundleURL);
         CFRelease(cfStringRef);
 
-        return std::string(path); // Should +.. be here? Ismo, check! TODO
-    #else
-        return std::string();
+        return std::string(path);
     #endif
+  #endif
+	return std::string();
 }
 
 } // namespace ap

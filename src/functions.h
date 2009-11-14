@@ -8,12 +8,6 @@
 #include "types.h"
 #include <enet/enet.h> // TODO: Why do we need this one?
 
-#ifndef WIN32
-#include <Ogre.h>
-#else
-#include <Ogre/Ogre.h>
-#endif
-
 namespace ap {
 
 std::string uint2ipv4(unsigned int ip);  // Convert a uint32 to a string with the corresponding IP address
@@ -42,8 +36,6 @@ ap::uint32 getTicks();
 
 ap::uint32 getColorFromPseudoHue(float phue);
 
-/// Returns the location of application files. Empty (expecting that we're in the working directory),
-/// except on OS X where it's set as required. On OS X, it will locate the path to our application.
 std::string bundlePath();
 
 } // namespace ap
