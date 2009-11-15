@@ -15,6 +15,7 @@
 
 #include <CEGUI/CEGUI.h>
 
+#include "definitions.h"
 #include "GameStateManager.h"
 #include "Gui.h"
 #include "ooinput/InputSystem.h"
@@ -27,7 +28,7 @@ void setupOgreResources();
 CEGUI::Renderer *setupCEGUI(Ogre::RenderWindow *rWin, Ogre::SceneManager *sceneMgr);
 
 
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+#if AP_PLATFORM == AP_PLATFORM_WIN32
 #define WIN32_LEAN_AND_MEAN
 #include "windows.h"
 INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT ) {
@@ -94,7 +95,7 @@ SDL_Surface* setupSDL(int width, int height) {
  void setupOgre(int width, int height, Ogre::RenderWindow *&rWin, Ogre::SceneManager *&sceneMgr, Ogre::Root *&root) {
   // TODO: use a ogre.cfg or similar with proper information.
 
-  #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+  #if AP_PLATFORM == AP_PLATFORM_OSX
 
     Ogre::String resourcePath;
     resourcePath = ap::bundlePath() + "/Contents/Resources/";
@@ -181,7 +182,7 @@ void setupOgreResources(void)
         {
             typeName = i->first;
             archName = i->second;
-#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+#if AP_PLATFORM == AP_PLATFORM_OSX
             // OS X does not set the working directory relative to the app,
             // In order to make things portable on OS X we need to provide
             // the loading with it's own bundle path location

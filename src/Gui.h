@@ -29,7 +29,7 @@ class Gui
 
   void setVisibleLimboMenu(bool visible);
 
-  void exitLoginWindow();
+  void hideLoginWindow();
 
   void showScoreWindow();
   void hideScoreWindow();
@@ -71,6 +71,10 @@ class Gui
   bool chatMessageSent(const CEGUI::EventArgs &args);
   bool attemptLogin(const CEGUI::EventArgs &args);
   bool requestQuit(const CEGUI::EventArgs &args);
+
+  void setupFileLoadedWindow(const std::string &windowName,
+			     const std::string &layoutFile);
+  void hideNamedWindow(const std::string &windowName);
 
   static const std::string loginLayoutFile;
   static const std::string loginRootName;

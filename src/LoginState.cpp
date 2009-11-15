@@ -62,7 +62,7 @@ void LoginState::createGUIWindow()
 void LoginState::terminateGUIWindow()
 {
   assert(pGui);
-  pGui->exitLoginWindow();
+  pGui->hideLoginWindow();
   removeCamera(pSceneManager);
 }
 

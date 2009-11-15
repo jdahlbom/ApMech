@@ -5,11 +5,11 @@
 #include <sstream>
 #include <iostream>
 
+#include "definitions.h"
+
 #ifndef WIN32
-#include <Ogre.h>
 #include <SDL.h>
 #else
-#include <Ogre/Ogre.h>
 #include <SDL/SDL.h>
 #endif
 
@@ -129,27 +129,25 @@ ap::uint32 getColorFromPseudoHue(float phue)
    */
 std::string bundlePath()
 {
-  #ifdef OGRE_PLATFORM
-    #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
-        char path[1024];
-        CFBundleRef mainBundle = CFBundleGetMainBundle();
-        assert(mainBundle);
+ #if AP_PLATFORM == AP_PLATFORM_OSX
+  char path[1024];
+  CFBundleRef mainBundle = CFBundleGetMainBundle();
+  assert(mainBundle);
 
-        CFURLRef mainBundleURL = CFBundleCopyBundleURL(mainBundle);
-        assert(mainBundleURL);
+  CFURLRef mainBundleURL = CFBundleCopyBundleURL(mainBundle);
+  assert(mainBundleURL);
 
-        CFStringRef cfStringRef = CFURLCopyFileSystemPath( mainBundleURL, kCFURLPOSIXPathStyle);
-        assert(cfStringRef);
+  CFStringRef cfStringRef = CFURLCopyFileSystemPath( mainBundleURL, kCFURLPOSIXPathStyle);
+  assert(cfStringRef);
 
-        CFStringGetCString(cfStringRef, path, 1024, kCFStringEncodingASCII);
+  CFStringGetCString(cfStringRef, path, 1024, kCFStringEncodingASCII);
 
-        CFRelease(mainBundleURL);
-        CFRelease(cfStringRef);
+  CFRelease(mainBundleURL);
+  CFRelease(cfStringRef);
 
-        return std::string(path);
-    #endif
-  #endif
-	return std::string();
+  return std::string(path);
+ #endif
+  return std::string();
 }
 
 } // namespace ap

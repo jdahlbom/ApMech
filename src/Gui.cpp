@@ -1,14 +1,16 @@
 #include "Gui.h"
 
+#include <algorithm>
 #include <iostream>
 
 #include <CEGUI/CEGUI.h>
 
+#include "definitions.h"
 #include "functions.h"
 
 namespace ap {
 
-#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+#if AP_PLATFORM == AP_PLATFORM_OSX
   std::string mResourcePath = ap::bundlePath() + "/Contents/Resources/Media/gui/layout/";
 #else
   std::string mResourcePath = "";
@@ -99,35 +101,44 @@ namespace ap {
     dynamic_cast<CEGUI::Slider *>(pWinMgr->getWindow("/Login/ColorSlider"))->setCurrentValue(colorIndex);
   }
 
-  void Gui::setupScoreWindow()
-  {
-    assert(pWinMgr);
-    if ( pWinMgr->isWindowPresent(scoreWindowName) ) {
-      CEGUI::Window *scoreRoot = pWinMgr->getWindow(scoreWindowName);
-      scoreRoot->hide();
-      scoreRoot->deactivate();
-      return;
-    }
-
-    CEGUI::Window *scoreRoot = pWinMgr->loadWindowLayout(scoreLayoutFile);
-    pRoot->addChildWindow(scoreRoot);
-    scoreRoot->hide();
-    scoreRoot->deactivate();
+  void Gui::setupScoreWindow() {
+    setupFileLoadedWindow(scoreWindowName,
+			  scoreLayoutFile);
   }
 
-  void Gui::setupLimboWindow()
+  /**
+   * Helper method to create a named window.
+   * @param Name of the window
+   * @param Name of the layout file defining the window.
+   **/
+  void Gui::setupFileLoadedWindow(const std::string &windowName,
+				  const std::string &layoutFile)
   {
     assert(pRoot);
     assert(pWinMgr);
-    CEGUI::Window *limboRoot = NULL;
-    if ( pWinMgr->isWindowPresent(limboWindowName) ) {
-      limboRoot = pWinMgr->getWindow(limboWindowName);
+    CEGUI::Window *windowRoot = NULL;
+    if ( pWinMgr->isWindowPresent(windowName) ) {
+      windowRoot = pWinMgr->getWindow(windowName);
     } else {
-      limboRoot = pWinMgr->loadWindowLayout(limboLayoutFile);
-      pRoot->addChildWindow(limboRoot);
+      windowRoot = pWinMgr->loadWindowLayout(layoutFile);
+      pRoot->addChildWindow(windowRoot);
     }
-    limboRoot->hide();
-    limboRoot->deactivate();
+    windowRoot->hide();
+    windowRoot->deactivate();
+  }  
+
+  void Gui::hideNamedWindow(const std::string &windowName) {
+    assert(pWinMgr);
+    if ( pWinMgr->isWindowPresent(windowName) ) {
+     CEGUI::Window *windowRoot = pWinMgr->getWindow(windowName);
+     windowRoot->hide();
+    }
+  }
+
+  // LIMBO MENU:
+  void Gui::setupLimboWindow() {
+    setupFileLoadedWindow(limboWindowName,
+			  limboLayoutFile);
   }
 
   void Gui::setVisibleLimboMenu(bool visible) 
@@ -149,13 +160,8 @@ namespace ap {
     }
   }
 
-  void Gui::exitLoginWindow()
-  {
-    assert(pWinMgr);
-    if ( pWinMgr->isWindowPresent(loginRootName) ) {
-     CEGUI::Window *loginRoot = pWinMgr->getWindow(loginRootName);
-     loginRoot->hide();
-    }
+  void Gui::hideLoginWindow() {
+    hideNamedWindow(loginRootName);
   }
 
   void Gui::showScoreWindow()
@@ -169,14 +175,8 @@ namespace ap {
     }
   }
 
-  void Gui::hideScoreWindow()
-  {
-    assert(pWinMgr);
-    if ( pWinMgr->isWindowPresent(scoreWindowName) ) {
-      CEGUI::Window *scoreRoot = pWinMgr->getWindow(scoreWindowName);
-      scoreRoot->hide();
-      return;
-    }
+  void Gui::hideScoreWindow() {
+    hideNamedWindow(scoreWindowName);
   }
 
   void Gui::updateScores(const ScoreListing &scores)
@@ -267,7 +267,6 @@ namespace ap {
       } // while(scores)
 
     // Remove score list rows that were NOT in the recent scores
-    // TODO: Maybe this should be done by user sending removable uid's, instead?
     std::list<ap::uint32>::iterator it;
     for(it=scoreListUIDs.begin(); it!=scoreListUIDs.end(); )
       {
