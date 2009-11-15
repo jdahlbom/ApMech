@@ -17,6 +17,7 @@
 #include "GameState.h"
 #include "LimboState.h"
 #include "LoginState.h"
+#include "MainMenuState.h"
 #include "PlayState.h"
 
 namespace ap {
@@ -34,6 +35,7 @@ GameStateManager::GameStateManager(
     mLoginState(NULL),
     mPlayState(NULL),
     mLimboState(NULL),
+    mMainMenuState(NULL),
     bShutdown( false ) {}
 
 GameStateManager::~GameStateManager( void )
@@ -57,7 +59,7 @@ GameStateManager::~GameStateManager( void )
 void GameStateManager::startGame() {
 
     // Setup states
-  mLoginState  = new LoginState( this, mSceneMgr, pGui);
+  mMainMenuState  = new MainMenuState( this, mSceneMgr, pGui);
 
 
     // Setup input
@@ -65,7 +67,7 @@ void GameStateManager::startGame() {
     pInputMgr->addMouseListener( this );
 
     // Change to first state
-    this->changeState( mLoginState );
+    this->changeState( mMainMenuState );
 
     // lTimeLastFrame remembers the last time that it was checked
     // We use it to calculate the time since last frame
@@ -140,6 +142,13 @@ void GameStateManager::popState() {
       // If this occurs, the state transitions are faulty!
       assert(1==0);
     }
+}
+
+void GameStateManager::enterLoginMenu() {
+  if(mLoginState == NULL) {
+    mLoginState  = new LoginState( this, mSceneMgr, pGui);  
+  }
+  changeState(mLoginState);
 }
 
 void GameStateManager::loginToGame(net::NetData *netdata)

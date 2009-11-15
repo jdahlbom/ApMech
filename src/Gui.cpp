@@ -2,11 +2,21 @@
 
 #include <algorithm>
 #include <iostream>
+#include <list>
 
 #include <CEGUI/CEGUI.h>
 
 #include "definitions.h"
 #include "functions.h"
+#include "GuiChatReceiver.h"
+#include "GuiLoginReceiver.h"
+#include "GuiMainMenuReceiver.h"
+#include "ScoreListing.h"
+#include "ooinput/KeyboardListener.h"
+#include "ooinput/KeyEvent.h"
+#include "ooinput/MouseClickedEvent.h"
+#include "ooinput/MouseListener.h"
+#include "ooinput/MouseMovedEvent.h"
 
 namespace ap {
 
@@ -19,6 +29,8 @@ namespace ap {
   const std::string Gui::chatLayoutFile = mResourcePath + "ChatBox.layout";
   const std::string Gui::scoreLayoutFile = mResourcePath + "ScoreBoard.layout";
   const std::string Gui::limboLayoutFile = mResourcePath + "Limbo.layout";
+  const std::string Gui::keyConfLayoutFile = mResourcePath + "KeyConfigurationMenu.layout";
+  const std::string Gui::mainMenuLayoutFile = mResourcePath + "MainMenu.layout";
 
   const std::string Gui::loginRootName = "LoginRoot";
   const std::string Gui::loginNameField = "/Login/Name";
@@ -32,6 +44,9 @@ namespace ap {
   const std::string Gui::limboWindowName = "Limbo";
   const std::string Gui::limboListName = "Limbo/List";
 
+  const std::string Gui::keyConfWindowName = "KeyConfiguration";
+
+  const std::string Gui::mainMenuWindowName = "MainMenu";
 
   Gui::Gui(CEGUI::Renderer *renderer) :
     keysBeingPressed(0),
@@ -88,11 +103,14 @@ namespace ap {
     CEGUI::Window *loginLayout = pWinMgr->loadWindowLayout(loginLayoutFile);
     pRoot->addChildWindow(loginLayout);
 
-    CEGUI::Window *loginButton = pWinMgr->getWindow("/Login/LoginButton");
+    CEGUI::Window *loginButton = getNamedWindowPtr("/Login/LoginButton");
+    assert(loginButton != NULL);
     loginButton->subscribeEvent(CEGUI::PushButton::EventClicked,
 				CEGUI::Event::Subscriber(&Gui::attemptLogin, this));
 
-    CEGUI::Window *quitButton = pWinMgr->getWindow("/Login/QuitButton");
+    CEGUI::Window *quitButton = getNamedWindowPtr("/Login/QuitButton");
+    assert(quitButton != NULL);
+
     quitButton->subscribeEvent(CEGUI::PushButton::EventClicked,
 			       CEGUI::Event::Subscriber(&Gui::requestQuit, this));
 
@@ -134,6 +152,78 @@ namespace ap {
      windowRoot->hide();
     }
   }
+
+  /**
+   * Returns a pointer to a named window, or NULL if no such window exists.
+   */
+  CEGUI::Window *Gui::getNamedWindowPtr(const std::string &windowName) {
+    assert(pWinMgr != NULL);
+    if (pWinMgr->isWindowPresent(windowName)) {
+      return pWinMgr->getWindow(windowName);
+    }
+    return NULL;
+  }
+
+  // KEY CONFIGURATION MENU:
+  void Gui::setupKeyConfWindow() {
+    setupFileLoadedWindow(keyConfWindowName,
+			  keyConfLayoutFile);
+  }
+
+  void Gui::hideKeyConfWindow() {
+    hideNamedWindow(keyConfWindowName);
+  }
+
+  // MAIN MENU:
+  void Gui::setupMainMenuWindow() {
+    setupFileLoadedWindow(mainMenuWindowName,
+			  mainMenuLayoutFile);
+
+    CEGUI::Window *playButton = getNamedWindowPtr("MainMenu/Selection/Play");
+    assert(playButton != NULL);
+
+    playButton->subscribeEvent(CEGUI::PushButton::EventClicked,
+			       CEGUI::Event::Subscriber(&Gui::mainMenuPlay, this));
+
+    CEGUI::Window *quitButton = getNamedWindowPtr("MainMenu/Selection/Quit");
+    assert(playButton != NULL);
+
+    quitButton->subscribeEvent(CEGUI::PushButton::EventClicked,
+			       CEGUI::Event::Subscriber(&Gui::mainMenuQuit, this));
+
+    CEGUI::Window *confButton = getNamedWindowPtr("MainMenu/Selection/Controls");
+    assert(confButton != NULL);
+
+    confButton->subscribeEvent(CEGUI::PushButton::EventClicked,
+			       CEGUI::Event::Subscriber(&Gui::mainMenuConfKeyboard, this));
+
+    CEGUI::Window *mainMenuWindow = getNamedWindowPtr(mainMenuWindowName);
+    mainMenuWindow->show();
+    mainMenuWindow->activate();
+  }
+
+  void Gui::hideMainMenuWindow() {
+    hideNamedWindow(mainMenuWindowName);
+  }
+
+  void Gui::setMainMenuReceiver(GuiMainMenuReceiver *gMMReceiver) {
+    pMainMenuReceiver = gMMReceiver;
+  }
+
+  bool Gui::mainMenuPlay(const CEGUI::EventArgs &args) {
+    assert(pMainMenuReceiver);
+    pMainMenuReceiver->receivePlayGame();
+  }  
+
+  bool Gui::mainMenuQuit(const CEGUI::EventArgs &args) {
+    assert(pMainMenuReceiver);
+    pMainMenuReceiver->receiveQuitGame();
+  }  
+
+  bool Gui::mainMenuConfKeyboard(const CEGUI::EventArgs &args) {
+    assert(pMainMenuReceiver);
+    pMainMenuReceiver->receiveConfigureKeyboard();
+  }  
 
   // LIMBO MENU:
   void Gui::setupLimboWindow() {

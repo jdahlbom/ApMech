@@ -1,0 +1,40 @@
+<GUILayout >
+  <Window Type="DefaultWindow" Name="MainMenu" >
+    <Property Name="Alpha" Value="1.0" />
+    <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+    <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{1,0},{1,0}}" />
+
+    <Window Type="ApMechLook/StaticText" Name="MainMenu/ApMechTitle" >
+      <Property Name="Alpha" Value="1" />
+      <Property Name="Text" Value="Achtung Panzer Mech" />
+      <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+      <Property Name="UnifiedAreaRect" Value="{{0,0},{0,0},{0,250},{0,50}}"/>
+    </Window>
+
+    <Window Type="ApMechLook/FrameWindow" Name="MainMenu/Selection" >
+      <Property Name="Alpha" Value="0.7" />
+      <Property Name="DragMovingEnabled" Value="False" />
+      <Property Name="UnifiedSize" Value="{{1,0},{1,0}}" />
+      <Property Name="UnifiedAreaRect" Value="{{1,-550},{0,200},{1,-150},{0,560}}" />
+
+      <Window Type="ApMechLook/Button" Name="MainMenu/Selection/Play" >
+        <Property Name="Text" Value="Play" />
+        <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+        <Property Name="UnifiedAreaRect" Value="{{0,30},{0,30},{1,-30},{0,80}}" />
+      </Window>
+
+      <Window Type="ApMechLook/Button" Name="MainMenu/Selection/Controls" >
+        <Property Name="Text" Value="Controls" />
+        <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+        <Property Name="UnifiedAreaRect" Value="{{0,30},{0,130},{1,-30},{0,180}}" />
+      </Window>
+
+      <Window Type="ApMechLook/Button" Name="MainMenu/Selection/Quit" >
+        <Property Name="Text" Value="Quit" />
+        <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+        <Property Name="UnifiedAreaRect" Value="{{0,30},{0,230},{1,-30},{0,280}}" />
+      </Window>
+
+    </Window>
+  </Window>
+</GUILayout>
