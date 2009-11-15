@@ -11,6 +11,7 @@
 
 #include "GameStateManager.h"
 #include "Gui.h"
+#include "MenuStateViewport.h"
 #include "types.h"
 #include "functions.h"
 #include "net/netdata.h"
@@ -21,6 +22,7 @@ LoginState::LoginState( GameStateManager *gameStateManager,
 			Ogre::SceneManager *sceneManager,
 		      ap::Gui *gui) :
   pGui(gui),
+  mViewport(NULL),
   pSceneManager(sceneManager)
 {
     initStateManager(gameStateManager);
@@ -56,36 +58,18 @@ void LoginState::createGUIWindow()
 
   pGui->setupLoginWindow(ipAddress, playerName, colorSelection);
   pGui->setLoginReceiver(this);
-  setupOgreViewport(pSceneManager);
+
+  mViewport = new MenuStateViewport(pSceneManager);
 }
 
 void LoginState::terminateGUIWindow()
 {
   assert(pGui);
   pGui->hideLoginWindow();
-  removeCamera(pSceneManager);
+  delete(mViewport);
 }
 
-  void LoginState::setupOgreViewport(Ogre::SceneManager *sceneMgr)
-{
-  Ogre::Root *pRoot = Ogre::Root::getSingletonPtr();
-  mCamera = sceneMgr->createCamera( "LoginCamera" );
-
-  // REQUIRES for the RenderTarget named "ApMech" to exist..
-  Ogre::RenderTarget *renderWindow = pRoot->getRenderTarget("ApMech");
-  assert(renderWindow);
-
-  Ogre::ColourValue bgColor(0.0f, 0.0f, 0.0f);
-  renderWindow->addViewport(mCamera)->setBackgroundColour(bgColor);
-}
-
-  void LoginState::removeCamera(Ogre::SceneManager *sceneMgr)
-  {
-    sceneMgr->destroyCamera(mCamera);
-
-    Ogre::Root *pRoot = Ogre::Root::getSingletonPtr();
-    pRoot->getRenderTarget("ApMech")->removeAllViewports();
-  }
+// -------------------------------------------------------------
 
 bool LoginState::keyPressed( const ap::ooinput::KeyEvent &e ) {
   if (pGui->keyPressed(e)) {
@@ -123,6 +107,8 @@ bool LoginState::keyReleased( const ap::ooinput::KeyEvent &e ) {
   {
     return pGui->mouseMoved(e);
   }
+
+//---------------------------------------------------------------------
 
 void LoginState::attemptLogin(const std::string &ipAddress, const std::string &playerName)
   {

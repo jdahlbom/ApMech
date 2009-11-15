@@ -165,6 +165,7 @@ src/PlayState.cpp
 src/GameStateManager.cpp
 src/Gui.cpp
 src/main.cpp
+src/MenuStateViewport.cpp
 src/ooinput/InputSystem.cpp
 src/ooinput/SDLInputSystem.cpp
 """)+commonSources

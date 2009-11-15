@@ -21,6 +21,8 @@
 
 namespace ap {
 
+  class MenuStateViewport;
+
   class LoginState : public GameState, public GuiLoginReceiver{
 public:
     LoginState( GameStateManager *gameStateManager,
@@ -52,13 +54,11 @@ public:
 
 private:
     ap::Gui                     *pGui;
-    Ogre::Camera                *mCamera;
+    ap::MenuStateViewport       *mViewport;
     Ogre::SceneManager          *pSceneManager;
 
     void createGUIWindow();
     void terminateGUIWindow();
-    void setupOgreViewport(Ogre::SceneManager *sceneMgr);
-    void removeCamera(Ogre::SceneManager *sceneMgr);
 };
 
 } // namespace ap
