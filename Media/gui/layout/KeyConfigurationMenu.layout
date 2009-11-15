@@ -1,0 +1,16 @@
+<GUILayout>
+  <Window Type="ApMechLook/MultiColumnList" Name="KeyConfiguration" > 
+    <Property Name="Alpha" Value="1.0" />
+    <Property Name="Text" Value="Keyboard Configuration" />
+    <Property Name="ColumnsMovable" Value="False" />
+    <Property Name="ColumnsSizable" Value="False" />
+    <Property Name="ForceHorzScrollbar" Value="False" />
+    <Property Name="InheritsAlpha" Value="False" />
+    <Property Name="UnifiedMaxSize" Value="{{1,0},{1,0}}" />
+    <Property Name="TitlebarEnabled" Value="True" />
+    <Property Name="UnifiedAreaRect" Value="{{0,300},{0,100},{0,900},{1,-100}}" />
+    <Property Name="SelectionMode" Value="CellSingle" />
+    <Property Name="ColumnHeader" Value="text:Action width:{0.6,0} id:1" />
+    <Property Name="ColumnHeader" Value="text:Key width:{0.4,0} id:2" />
+  </Window>
+</GUILayout>
