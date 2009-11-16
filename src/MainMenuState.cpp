@@ -100,7 +100,9 @@ bool MainMenuState::mouseMoved(const ap::ooinput::MouseMovedEvent &e)
     requestShutdown();
   }
 
-  void MainMenuState::receiveConfigureKeyboard() {}
+  void MainMenuState::receiveConfigureKeyboard() {
+    this->getStateManager()->enterKeyConfMenu();
+  }
 
   void MainMenuState::receivePlayGame() {
     this->getStateManager()->enterLoginMenu();

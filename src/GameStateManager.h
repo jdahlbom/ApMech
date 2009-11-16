@@ -23,6 +23,7 @@ namespace ap {
 class ActionKeyMap;
 class Gui;
 class GameState;
+class KeyConfMenuState;
 class PlayState;
 class LoginState;
 class LimboState;
@@ -48,6 +49,9 @@ public:
 
     void enterLoginMenu();
 
+    void enterKeyConfMenu();
+    void leaveKeyConfMenu();
+
     // input listeners
     bool keyPressed( const ooinput::KeyEvent &e );
     bool keyReleased( const ooinput::KeyEvent &e );
@@ -65,7 +69,8 @@ public:
     LoginState               *mLoginState;
     PlayState                *mPlayState;
     LimboState               *mLimboState;
-    MainMenuState            *mMainMenuState;
+    KeyConfMenuState         *mKeyConfState;
+    MainMenuState            *mMainMenuState;    
 
     bool                     bShutdown;
     std::vector<GameState*>  mStates;

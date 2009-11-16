@@ -15,6 +15,7 @@
 #include "Gui.h"
 
 #include "GameState.h"
+#include "KeyConfMenuState.h"
 #include "LimboState.h"
 #include "LoginState.h"
 #include "MainMenuState.h"
@@ -35,6 +36,7 @@ GameStateManager::GameStateManager(
     mLoginState(NULL),
     mPlayState(NULL),
     mLimboState(NULL),
+    mKeyConfState(NULL),
     mMainMenuState(NULL),
     bShutdown( false ) {}
 
@@ -144,6 +146,8 @@ void GameStateManager::popState() {
     }
 }
 
+  // ---- State transitions ----------------------------------
+
 void GameStateManager::enterLoginMenu() {
   if(mLoginState == NULL) {
     mLoginState  = new LoginState( this, mSceneMgr, pGui);  
@@ -181,6 +185,21 @@ void GameStateManager::leaveLimboMenu()
 void GameStateManager::requestShutdown( void ) {
     bShutdown = true;
 }
+
+void GameStateManager::enterKeyConfMenu() {
+  if (NULL == mKeyConfState) {
+    mKeyConfState = new KeyConfMenuState(this, mSceneMgr, pGui, mActionKMap);
+  }
+  changeState(mKeyConfState);
+}
+
+void GameStateManager::leaveKeyConfMenu() {
+  assert(mMainMenuState != NULL);
+  changeState(mMainMenuState);
+}
+
+
+  // ---- Input listeners ------------------------------------
 
   // Keyboard listener
   bool GameStateManager::keyPressed( const ap::ooinput::KeyEvent &e ) {

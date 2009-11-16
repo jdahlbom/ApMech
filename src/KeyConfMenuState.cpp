@@ -23,6 +23,7 @@ namespace ap {
     assert(NULL != pGui);
     pGui->setupKeyConfWindow();
     mViewport = new MenuStateViewport(pSceneMgr);
+    pGui->refreshKeyConfiguration(pActionKMap);
   }
 
   void KeyConfMenuState::exit( void ) {

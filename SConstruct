@@ -159,6 +159,7 @@ src/TerrainHeightMap.cpp
 clientSources = Split("""
 src/ActionKeyMap.cpp
 src/GameState.cpp
+src/KeyConfMenuState.cpp
 src/LimboState.cpp
 src/LoginState.cpp
 src/PlayState.cpp

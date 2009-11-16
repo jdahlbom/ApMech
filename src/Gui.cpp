@@ -1,6 +1,7 @@
 #include "Gui.h"
 
 #include <algorithm>
+#include <cassert>
 #include <iostream>
 #include <list>
 
@@ -25,27 +26,27 @@ namespace ap {
 #else
   std::string mResourcePath = "";
 #endif
-  const std::string Gui::loginLayoutFile = mResourcePath + "Login.layout";
-  const std::string Gui::chatLayoutFile = mResourcePath + "ChatBox.layout";
-  const std::string Gui::scoreLayoutFile = mResourcePath + "ScoreBoard.layout";
-  const std::string Gui::limboLayoutFile = mResourcePath + "Limbo.layout";
-  const std::string Gui::keyConfLayoutFile = mResourcePath + "KeyConfigurationMenu.layout";
-  const std::string Gui::mainMenuLayoutFile = mResourcePath + "MainMenu.layout";
 
+  const std::string Gui::loginLayoutFile = mResourcePath + "Login.layout";
   const std::string Gui::loginRootName = "LoginRoot";
   const std::string Gui::loginNameField = "/Login/Name";
   const std::string Gui::loginAddressField = "/Login/Address";
   const std::string Gui::loginConsoleField = "/Login/Console";
 
+  const std::string Gui::chatLayoutFile = mResourcePath + "ChatBox.layout";
   const std::string Gui::chatRootName = "ChatBoxRoot";
 
+  const std::string Gui::scoreLayoutFile = mResourcePath + "ScoreBoard.layout";
   const std::string Gui::scoreWindowName = "ScoreList";
 
+  const std::string Gui::limboLayoutFile = mResourcePath + "Limbo.layout";
   const std::string Gui::limboWindowName = "Limbo";
   const std::string Gui::limboListName = "Limbo/List";
 
+  const std::string Gui::keyConfLayoutFile = mResourcePath + "KeyConfigurationMenu.layout";
   const std::string Gui::keyConfWindowName = "KeyConfiguration";
 
+  const std::string Gui::mainMenuLayoutFile = mResourcePath + "MainMenu.layout";
   const std::string Gui::mainMenuWindowName = "MainMenu";
 
   Gui::Gui(CEGUI::Renderer *renderer) :
@@ -168,10 +169,47 @@ namespace ap {
   void Gui::setupKeyConfWindow() {
     setupFileLoadedWindow(keyConfWindowName,
 			  keyConfLayoutFile);
+    CEGUI::Window *confWindow = getNamedWindowPtr(keyConfWindowName);
+    
+    // input handling here..
+
+    confWindow->show();
+    confWindow->activate();
   }
 
   void Gui::hideKeyConfWindow() {
     hideNamedWindow(keyConfWindowName);
+  }
+
+  void Gui::refreshKeyConfiguration(const ActionKeyMap *const pActionKMap)
+  {
+    using CEGUI::MultiColumnList;
+    using CEGUI::ListboxItem;
+    using CEGUI::ListboxTextItem;
+
+    MultiColumnList *multiCL = dynamic_cast<MultiColumnList *>(pWinMgr->getWindow(keyConfWindowName));
+    assert(NULL != multiCL);
+    multiCL->resetList();
+
+    const CEGUI::uint nameCol = 1;
+    const CEGUI::uint keyCol = 2;
+
+    std::string actionName;
+    CEGUI::uint currentRow;
+    while (pActionKMap->getEachActionName(actionName)) {
+      currentRow = multiCL->addRow();
+
+      ListboxItem *name = new ListboxTextItem(actionName,0,0,false,true);
+      ListboxItem *key = new ListboxTextItem(pActionKMap->getMappedKeyName(actionName),
+					     0,0,false,true);      
+      try {
+	multiCL->setItem(name, nameCol, currentRow);
+	multiCL->setItem(key, keyCol, currentRow);
+      } catch (CEGUI::InvalidRequestException) {
+	std::cout << "Mismatch between Gui::updateScores column IDs and layout file!" << std::endl;
+	throw;
+      }
+    }
   }
 
   // MAIN MENU:
@@ -286,18 +324,16 @@ namespace ap {
     const uint deathCol = 3;
     const uint scoreCol = 4;
 
+
     uint nameIndex, killIndex, deathIndex, scoreIndex;
     try {
-      // TODO: this should only be done once!
       nameIndex = multiCL->getColumnWithID(nameCol);
       killIndex = multiCL->getColumnWithID(killCol);
       deathIndex = multiCL->getColumnWithID(deathCol);
       scoreIndex = multiCL->getColumnWithID(scoreCol);
     } catch (CEGUI::InvalidRequestException) {
-      // Uh-oh.
-      // TODO: Figure out a exception handling structure to manage this or kill the game.
       std::cout << "Mismatch between Gui::updateScores column IDs and layout file!" << std::endl;
-      throw 0;
+      throw;
     }
 
     std::list<ap::uint32> recentUIDList = std::list<ap::uint32>();
@@ -326,10 +362,15 @@ namespace ap {
 
 	  rowIndex = multiCL->addRow(tuple.uid);
 
-	  multiCL->setItem(name, nameCol, rowIndex);
-	  multiCL->setItem(kills, killCol, rowIndex);
-	  multiCL->setItem(deaths, deathCol, rowIndex);
-	  multiCL->setItem(score, scoreCol, rowIndex);
+	  try {
+	    multiCL->setItem(name, nameCol, rowIndex);
+	    multiCL->setItem(kills, killCol, rowIndex);
+	    multiCL->setItem(deaths, deathCol, rowIndex);
+	    multiCL->setItem(score, scoreCol, rowIndex);
+	  } catch (CEGUI::InvalidRequestException) {
+	    std::cout << "Mismatch between Gui::updateScores column IDs and layout file!" << std::endl;
+	    throw;
+	  }
 
 	  scoreListUIDs.push_back(tuple.uid);
 	} else {

@@ -4,6 +4,7 @@
 #include <CEGUI/CEGUI.h>
 #include <list>
 
+#include "ActionKeyMap.h"
 #include "GuiChatReceiver.h"
 #include "GuiLoginReceiver.h"
 #include "GuiMainMenuReceiver.h"
@@ -28,6 +29,7 @@ class Gui
 
   void setupKeyConfWindow();
   void hideKeyConfWindow();
+  void refreshKeyConfiguration(const ActionKeyMap *const pActionKMap);
 
   void setupScoreWindow();
   void showScoreWindow();
