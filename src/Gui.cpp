@@ -7,6 +7,7 @@
 
 #include <CEGUI/CEGUI.h>
 
+#include "ActionKeyMap.h"
 #include "definitions.h"
 #include "functions.h"
 #include "GuiChatReceiver.h"
@@ -53,6 +54,9 @@ namespace ap {
     keysBeingPressed(0),
     pChatReceiver(0),
     pLoginReceiver(0),
+    pMainMenuReceiver(0),
+    pActionKMap(0),
+    keyConfWaitingForKey(""),
     scoreListUIDs(std::list<ap::uint32>())
   {
     assert(renderer);
@@ -166,7 +170,8 @@ namespace ap {
   }
 
   // KEY CONFIGURATION MENU:
-  void Gui::setupKeyConfWindow() {
+  void Gui::setupKeyConfWindow(ActionKeyMap *pAKMap) {
+    pActionKMap = pAKMap;
     setupFileLoadedWindow(keyConfWindowName,
 			  keyConfLayoutFile);
     CEGUI::Window *confWindow = getNamedWindowPtr(keyConfWindowName);
@@ -175,13 +180,22 @@ namespace ap {
 
     confWindow->show();
     confWindow->activate();
+
+    using CEGUI::MultiColumnList;
+    using CEGUI::Event;
+    MultiColumnList *multiCL = dynamic_cast<MultiColumnList *>(confWindow);
+    assert(NULL != multiCL);
+    multiCL->subscribeEvent(MultiColumnList::EventSelectionChanged,
+			    Event::Subscriber(&Gui::keyConfSelectionChanged, this));
+    multiCL->setUserSortControlEnabled(false);
+    refreshKeyConfiguration(pActionKMap);
   }
 
   void Gui::hideKeyConfWindow() {
     hideNamedWindow(keyConfWindowName);
   }
 
-  void Gui::refreshKeyConfiguration(const ActionKeyMap *const pActionKMap)
+  void Gui::refreshKeyConfiguration(const ActionKeyMap *const pAKMap)
   {
     using CEGUI::MultiColumnList;
     using CEGUI::ListboxItem;
@@ -196,12 +210,16 @@ namespace ap {
 
     std::string actionName;
     CEGUI::uint currentRow;
-    while (pActionKMap->getEachActionName(actionName)) {
+    CEGUI::colour selColour = CEGUI::colour(0.5f, 0.5f, 0.9f, 1.0f);
+    while (pAKMap->getEachActionName(actionName)) {
       currentRow = multiCL->addRow();
 
       ListboxItem *name = new ListboxTextItem(actionName,0,0,false,true);
-      ListboxItem *key = new ListboxTextItem(pActionKMap->getMappedKeyName(actionName),
-					     0,0,false,true);      
+      ListboxItem *key = new ListboxTextItem(pAKMap->getMappedKeyName(actionName),0,0,false,true);
+
+      name->setSelectionColours(selColour, selColour, selColour, selColour);
+      key->setSelectionColours(selColour, selColour, selColour, selColour);
+
       try {
 	multiCL->setItem(name, nameCol, currentRow);
 	multiCL->setItem(key, keyCol, currentRow);
@@ -210,6 +228,29 @@ namespace ap {
 	throw;
       }
     }
+  }
+
+  bool Gui::keyConfSelectionChanged(const CEGUI::EventArgs &args) {
+    using CEGUI::ListboxItem;
+    using CEGUI::MultiColumnList;
+    using CEGUI::WindowEventArgs;
+    using CEGUI::EventArgs;
+
+    // FIXME: Uh-huh, static casting, no way of checking validity...
+    const WindowEventArgs &arg = static_cast<const WindowEventArgs &>(args);
+    MultiColumnList *multiCL = dynamic_cast<MultiColumnList *>(arg.window);
+    assert(multiCL != NULL);
+
+    ListboxItem *nameItem = multiCL->getFirstSelectedItem();
+    if (NULL == nameItem)
+      return true;
+
+    ListboxItem *keyItem = multiCL->getNextSelected(nameItem);
+    assert(NULL != keyItem); // Should always exist if nameItem exists!
+
+    keyItem->setText("?");
+    keyConfWaitingForKey = to_string(nameItem->getText());
+    return true;
   }
 
   // MAIN MENU:
@@ -518,6 +559,16 @@ namespace ap {
   {
     assert(mSystem);
 
+    if ("" != keyConfWaitingForKey) {
+      bool isValidKey = pActionKMap->setKeyForAction(event, keyConfWaitingForKey);
+      if( !isValidKey )
+	return true;
+
+      keyConfWaitingForKey = "";
+      refreshKeyConfiguration(pActionKMap);
+      return true;
+    }
+
     bool keysymProcessed = false, charProcessed = false;
     keysymProcessed = mSystem->injectKeyDown(MapKeyToCEGUI(event.key));
     if (event.unicode != 0) {
@@ -562,6 +613,9 @@ namespace ap {
   {
     using namespace ap::ooinput;
 
+    if("" != keyConfWaitingForKey)
+      return true;
+
     switch(event.button) {
     case AP_B_LEFT: return mSystem->injectMouseButtonDown(CEGUI::LeftButton);
     case AP_B_RIGHT: return mSystem->injectMouseButtonDown(CEGUI::RightButton);
@@ -578,6 +632,9 @@ namespace ap {
   bool Gui::mouseReleased(const ap::ooinput::MouseClickedEvent &event)
   {
     using namespace ap::ooinput;
+
+    if("" != keyConfWaitingForKey)
+      return true;
 
     assert(mSystem);
     // assumption: WHEELUP/WHEELDOWN do not cause released events.

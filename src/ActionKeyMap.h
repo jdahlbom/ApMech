@@ -38,7 +38,8 @@ namespace ap {
   public:
     ActionKeyMap();
     ~ActionKeyMap();
-    // getActionNames(); // Miten tämä tehdään??
+
+    bool setKeyForAction(const ap::ooinput::KeyEvent &e, std::string actionName);
     IngameAction getActionForKey(ap::ooinput::KeySymbol keysym) const;
     std::string getMappedKeyName(std::string actionName) const;
     bool getEachActionName(std::string &name) const;
@@ -48,10 +49,12 @@ namespace ap {
     std::map<IngameAction, std::string> actionNames;
     mutable std::map<IngameAction, std::string>::const_iterator eachIt;
 
-    // TODO: this is a 1-to-1 mapping between key and action
     std::string getKeyNameForAction(IngameAction action) const;
     void fillActionNames();
     void resetKeyMapToDefaults();
+
+    bool isValidKeySymToUse(ap::ooinput::KeySymbol keysym) const;
+    std::string getProperKeyName(ap::ooinput::KeySymbol key, ap::uint16 unicode) const;
   }; // class ActionKeyMap
 } // namespace ap
 

@@ -27,9 +27,8 @@ class Gui
   void setupLimboWindow();
   void setVisibleLimboMenu(bool visible);
 
-  void setupKeyConfWindow();
+  void setupKeyConfWindow(ActionKeyMap *pActionKMap);
   void hideKeyConfWindow();
-  void refreshKeyConfiguration(const ActionKeyMap *const pActionKMap);
 
   void setupScoreWindow();
   void showScoreWindow();
@@ -75,6 +74,9 @@ class Gui
   GuiChatReceiver     *pChatReceiver;
   GuiLoginReceiver    *pLoginReceiver;
   GuiMainMenuReceiver *pMainMenuReceiver;
+  ActionKeyMap        *pActionKMap;
+
+  std::string         keyConfWaitingForKey;
 
   std::list<ap::uint32> scoreListUIDs;
 
@@ -82,6 +84,9 @@ class Gui
   bool chatMessageSent(const CEGUI::EventArgs &args);
   bool attemptLogin(const CEGUI::EventArgs &args);
   bool requestQuit(const CEGUI::EventArgs &args);
+
+  bool keyConfSelectionChanged(const CEGUI::EventArgs &args);
+  void refreshKeyConfiguration(const ActionKeyMap *const pActionKMap);
 
   bool mainMenuPlay(const CEGUI::EventArgs &args);  
   bool mainMenuQuit(const CEGUI::EventArgs &args);

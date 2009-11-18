@@ -21,9 +21,8 @@ namespace ap {
 
   void KeyConfMenuState::enter( void ) {
     assert(NULL != pGui);
-    pGui->setupKeyConfWindow();
+    pGui->setupKeyConfWindow(pActionKMap);
     mViewport = new MenuStateViewport(pSceneMgr);
-    pGui->refreshKeyConfiguration(pActionKMap);
   }
 
   void KeyConfMenuState::exit( void ) {
