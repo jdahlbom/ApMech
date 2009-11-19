@@ -40,18 +40,14 @@ namespace ap {
     if(pGui->keyPressed(e))
       return true;
 
-    IngameAction action = pActionKMap->getActionForKey(e.key);
-
-    switch( action ) {
-    case QUIT_GAME:
+    if (e.key == ap::ooinput::AP_K_ESCAPE) {
       this->getStateManager()->leaveKeyConfMenu();
-      break;
-    default:
-      // Intentionally empty.
-      break;
+      return true;
     }
+
     return true;
   }
+
   bool KeyConfMenuState::keyReleased( const ooinput::KeyEvent &e ) {
     if(pGui->keyReleased(e))
       return true;

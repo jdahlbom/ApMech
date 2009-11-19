@@ -368,17 +368,17 @@ bool PlayState::keyPressed( const ap::ooinput::KeyEvent &e ) {
   }
 
   if (pGui->keyPressed(e)) {
-    return 1;
+    return true;
+  }
+
+  if (ap::ooinput::AP_K_ESCAPE == e.key) {
+    netdata->disconnect();
+    this->requestShutdown();
+    return true;
   }
 
   switch( action ) {
   case UNDEFINED:
-    return true;
-
-  case QUIT_GAME:
-    std::cout << "Escape pressed, quitting." << std::endl;
-    netdata->disconnect();
-    this->requestShutdown();
     return true;
 
   case TURN_COUNTERCLOCKWISE:

@@ -46,6 +46,9 @@ namespace ap {
     if ( !isValidKeySymToUse(e.key) )
       return false;
 
+    if ( "" == getProperKeyName(e.key, e.unicode) )
+      return false;
+
     // remove previous action mapped to this key    
     std::map<ap::ooinput::KeySymbol, KeyMapTuple>::iterator existingIt;
     existingIt = currentKeyMap.find(e.key);
@@ -68,7 +71,6 @@ namespace ap {
     newEntry.unicode = e.unicode; // TODO: Should not use unicode in this class.
     newEntry.keyname = getProperKeyName(e.key, e.unicode);
     currentKeyMap.insert(std::make_pair(e.key, newEntry));
-    std::cout << "new value: " << newEntry.keyname << std::endl;
     return true;
   }
 
@@ -125,7 +127,9 @@ namespace ap {
     case AP_K_x: return "X";
     case AP_K_y: return "Y";
     case AP_K_z: return "Z";
+    default: return "";
     }
+    return "";
   }
 
   IngameAction ActionKeyMap::getActionForKey(ap::ooinput::KeySymbol keysym) const {
@@ -194,7 +198,6 @@ namespace ap {
     actionNames.insert(make_pair(START_MESSAGE, "Tell"));
     actionNames.insert(make_pair(TOGGLE_LIMBOMENU, "Limbo menu"));
     actionNames.insert(make_pair(TOGGLE_SCORES, "Show scores"));
-    actionNames.insert(make_pair(QUIT_GAME, "Quit"));
     eachIt = actionNames.begin();
   }
 
@@ -236,10 +239,6 @@ namespace ap {
     temp.keyname=getProperKeyName(AP_K_SPACE,0);
     temp.action = FIRE_WEAPON;
     currentKeyMap.insert(make_pair(AP_K_SPACE, temp));
-
-    temp.keyname=getProperKeyName(AP_K_ESCAPE,0);
-    temp.action = QUIT_GAME;
-    currentKeyMap.insert(make_pair(AP_K_ESCAPE, temp));
 
     temp.keyname=getProperKeyName(AP_K_TAB,0);
     temp.action = TOGGLE_SCORES;

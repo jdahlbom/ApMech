@@ -19,8 +19,7 @@ namespace ap {
     // [Miscallaneous]
     START_MESSAGE         = 128,
     TOGGLE_LIMBOMENU      = 129,
-    QUIT_GAME             = 130,
-    TOGGLE_SCORES         = 131
+    TOGGLE_SCORES         = 130
   } IngameAction;
 
   // TODO:: This should be an inner class to ActionKeyMap, not used elsewhere.

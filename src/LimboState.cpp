@@ -38,6 +38,11 @@ namespace ap {
     if(pGui->keyPressed(e))
       return true;
 
+    if(ap::ooinput::AP_K_ESCAPE == e.key) {
+      requestShutdown();
+      return true;
+    }
+
     IngameAction action = pActionKMap->getActionForKey(e.key);
 
     switch( action ) {
@@ -48,9 +53,6 @@ namespace ap {
       break;
     case(FIRE_WEAPON):
       selectVehicleType(std::string("this is supposed to be a valid string"));
-      break;
-    case (QUIT_GAME):
-      requestShutdown();
       break;
     default:
       // Intentionally empty.
