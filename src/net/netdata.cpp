@@ -406,14 +406,6 @@ int NetData::sendChanges()
         std::map<int, NetObject*>::iterator po = netobjects.begin();
         std::set<uint32>::iterator iDelPkg = objectDeleteQueue.begin(), iAlertPkg = objectAlertQueue.begin();
 
-        while (iDelPkg != objectDeleteQueue.end()) {
-            buffer[length++] = NetData::PACKET_DELOBJECT;
-            *(uint32 *)(buffer+length) = *iDelPkg;                              length += 4;
-            *(uint8 *)(buffer+length) = getObject(*iDelPkg)->getObjectType();   length++;
-            removeObject(*iDelPkg);                         // Now, actually remove an object
-            objectDeleteQueue.erase(iDelPkg++);
-            packetstosend++;
-        }
         po = netobjects.begin();
         while (po != netobjects.end()) {
             if (po->second->changed) {          // Only send stuff that changed!
@@ -423,6 +415,18 @@ int NetData::sendChanges()
             }
             po++;
         }
+
+        // Note! FIRST send all (changed) objects, then destroy. Thus, clients get to see
+        // every object, even if it was destroyed immediately after its creation.
+        while (iDelPkg != objectDeleteQueue.end()) {
+            buffer[length++] = NetData::PACKET_DELOBJECT;
+            *(uint32 *)(buffer+length) = *iDelPkg;                              length += 4;
+            *(uint8 *)(buffer+length) = getObject(*iDelPkg)->getObjectType();   length++;
+            removeObject(*iDelPkg);                         // Now, actually remove an object
+            objectDeleteQueue.erase(iDelPkg++);
+            packetstosend++;
+        }
+
         while (iAlertPkg != objectAlertQueue.end()) {
             if (netobjects.find(*iAlertPkg) != netobjects.end()) { // If the object still exists
                 buffer[length++] = NetData::PACKET_ALERTOBJECT;

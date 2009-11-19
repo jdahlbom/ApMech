@@ -78,7 +78,7 @@ void Server::start() {
             cout << "\rData rate: "<<changes<<"      ";
             cout.flush();
         }                               // Seems to me that up to 100 is still okay!
-        // TODO: Ensure that usleep is available on Mac/Windows as well!
+
         ap::mSleep(1);       // sleep even a little bit so that dt is never 0
 
         processEvents(netdata);
@@ -167,7 +167,7 @@ void Server::fireWeapons(uint64 tstamp, ap::net::NetData *pNetData) {
         if (mech->fireGun(tstamp)) weaponFired(pNetData, mech);
 }
 
-  void Server::weaponFired(ap::net::NetData *pNetData, ap::MovingObject *source) {
+void Server::weaponFired(ap::net::NetData *pNetData, ap::MovingObject *source) {
     Ogre::Vector3 facing = source->getFacing();
 
     int newid = pNetData->insertObject(new ap::Projectile(facing * 150.0f)); //150 is velocity
@@ -182,9 +182,9 @@ void Server::fireWeapons(uint64 tstamp, ap::net::NetData *pNetData) {
 void Server::detectCollisions(ap::net::NetData *pNetData) const {
 
     while (ap::Mech *mech = pNetData->eachObject<ap::Mech *>(ap::OBJECT_TYPE_MECH))
-      {
+    {
         while (ap::Projectile *proj = pNetData->eachObject<ap::Projectile *>(ap::OBJECT_TYPE_PROJECTILE))
-	  {
+        {
             if (proj->testCollision(*mech)) {
                 relocateSpawnedMech(mech);
 
@@ -216,8 +216,8 @@ void Server::detectCollisions(ap::net::NetData *pNetData) const {
                 pNetData->delObject(proj->id);
                 pNetData->alertObject(mScores->id);       // Refresh the score display to players
             }
-	  }
-      }
+        }
+    }
 }
 
 void Server::relocateSpawnedMech(ap::Mech *mech) const
