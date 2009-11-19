@@ -80,7 +80,8 @@ void PlayState::enter( void ) {
 void PlayState::exit( void ) {
     pSceneManager->destroyAllCameras(); // See Ogre API for warnings..
     pSceneManager->destroyAllLights();
-
+    pSceneManager->destroyAllParticleSystems();     particleSystemList.clear();
+    // Why not scenenodes?
     delete(netdata);
 }
 
@@ -111,11 +112,28 @@ void PlayState::update( unsigned long lTimeElapsed ) {
                 setAvatar(event.id);
                 break;
             case net::NetData::EVENT_DELETEOBJECT:
+            {
+                switch( event.objectType ) {
+                    case ap::OBJECT_TYPE_PROJECTILE: {
+                        static int explosionIndex = 0;
+                        std::stringstream ss;
+                        ss << "Node/ParticleSystem/Explosion/"<<explosionIndex++;
+                        Ogre::SceneNode* newExplosionNode = pSceneManager->getRootSceneNode()->createChildSceneNode();
+                        Ogre::ParticleSystem* newPSys = pSceneManager->createParticleSystem(ss.str(), "ApMech/Explosion1");
+                        newExplosionNode->translate(netdata->getObject<Projectile *>(event.id)->getPosition() );
+                        newExplosionNode->attachObject(newPSys);
+                        particleSystemList.push_back(newPSys);
+                        break;
+                    }
+                    default:
+                        break;
+                }
                 deleteNetObject(event.id);
                 break;
+            }
             case net::NetData::EVENT_CREATEOBJECT:
             {
-                NetObject *pObject = netdata->getObject(event.uid);
+                NetObject *pObject = netdata->getObject(event.id);
                 if (pObject) {
                     switch (pObject->getObjectType()) {
                         case ap::OBJECT_TYPE_SCORELISTING:
@@ -124,7 +142,7 @@ void PlayState::update( unsigned long lTimeElapsed ) {
                             break;
                         case ap::OBJECT_TYPE_MECH:
                         case ap::OBJECT_TYPE_PROJECTILE:
-                            createSceneNodeForMovable(event.uid);
+                            createSceneNodeForMovable(event.id);
                             break;
                         default:
                             break;
@@ -142,10 +160,10 @@ void PlayState::update( unsigned long lTimeElapsed ) {
                     {
                         // A mech has probably just been painted! Well, set its color again anyway.
                         ap::Mech *pMech = netdata->getObject<ap::Mech*>(event.id);
-			if(NULL == pMech) {
-			  //TODO: This situation should not occur, really..
-			  break;
-			}
+                        if(NULL == pMech) {
+                            //TODO: This situation should not occur, really..
+                            break;
+                        }
                         float r, g, b;
                         r = float(pMech->color & 0x0000FF) / 255.0f;
                         g = float(pMech->color & 0x00FF00) / 65535.0f;
@@ -170,6 +188,15 @@ void PlayState::update( unsigned long lTimeElapsed ) {
     // Sometimes avatar id gets set before avatar object is created.
     if (unresolvedAvatarId != 0) {
       setAvatar(unresolvedAvatarId);
+    }
+
+    // Check the oldest particle system and destroy if it's finished already.
+    // This needs to be done more often than new particle systems are created.
+    // Maybe not every frame though, but optimizing that if clause probably wouldn't be worth it.. -JL
+    if ((particleSystemList.size() > 0) && (particleSystemList.front()->getEmitter(0)->getEnabled() == false) && (particleSystemList.front()->getNumParticles() == 0)) {
+        pSceneManager->destroySceneNode( particleSystemList.front()->getParentSceneNode() );
+        pSceneManager->destroyParticleSystem( particleSystemList.front() );
+        particleSystemList.pop_front();
     }
 
     netdata->sendChanges();
@@ -202,10 +229,6 @@ void PlayState::setAvatar(uint32 avatarId)
     attachCameraNode(pAvatarNode);
     netdata->me.setControlPtr(pAvatarObject->getControlPtr());
     mObject = pAvatarObject;
-
-    // Phew! This is *some* trouble to get the Entity for our avatar object.
-    // TODO: Maybe there is (or should be made) a simpler way to get the Entity..
-//    dynamic_cast<Ogre::Entity*>(pAvatarObject->getOwnerNode()->getAttachedObject(0))->getSubEntity(0)->setCustomParameter(1, Ogre::Vector4(1.f, 0.f, 0.8f, 0.0f));
 }
 
 void PlayState::createSceneNodeForMovable(uint32 objectId)

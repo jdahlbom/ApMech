@@ -80,6 +80,8 @@ private:
 
     MovingObject                *mObject;
 
+    std::list<Ogre::ParticleSystem *> particleSystemList;
+
     float                       dt;                 // delta-t between two updates in seconds. Used in update( )
 
     void fireGun();

@@ -266,15 +266,13 @@ int NetData::serviceClient()
                     h += processPacketNetObject(data+h);
                 } else if (data[h] == NetData::PACKET_DELOBJECT) {
                     h++;
-                    id = *(uint32 *)(data+h);
-                    addEvent(new NetEvent(EVENT_DELETEOBJECT, 0, id));
-                    h += 4;
+                    id = *(uint32 *)(data+h);           h += 4;
+                    uint8 objtype = *(uint8 *)(data+h); h++;
+                    addEvent(new NetEvent(EVENT_DELETEOBJECT, 0, id, objtype));
                 } else if (data[h] == NetData::PACKET_SETAVATAR) {
                     h++;
-                    myAvatarID = *(uint32 *)(data+h);
-
+                    myAvatarID = *(uint32 *)(data+h);   h += 4;
                     addEvent(new NetEvent(EVENT_SETAVATAR, 0, myAvatarID));
-                    h += 4;
                 } else if (data[h] == NetData::PACKET_NETMESSAGE) {
                     NetMessage *netmsg = new NetMessage();
                     h++;
@@ -289,7 +287,7 @@ int NetData::serviceClient()
                 } else if (data[h] == NetData::PACKET_DISCONNECT) {
                     h++;
                     uid = *(uint32 *)(data+h);
-                    addEvent(new NetEvent(EVENT_DISCONNECT, 0));
+                    addEvent(new NetEvent(EVENT_DISCONNECT, uid));
                     h+=4;
                     cout << "[NETDATA] Player "<<uid<<" disconnected!"<<endl;
                     // TODO: DO SOMETHING TO INDICATE THIS!
@@ -338,10 +336,10 @@ uint32 NetData::processPacketNetObject(enet_uint8 *data)
     if (netobjects.find(id) != netobjects.end()) {
         length += netobjects.find(id)->second->unserialize(data, length);
     } else {
-        insertObject(ap::net::netobjectprototypes()[objtype]->create(id), id);
-	// FIXME: Ugh, chaining map-find and methods operating on it. Looks bad. -JD
-        length += netobjects.find(id)->second->unserialize(data, length);
-        addEvent(new NetEvent(EVENT_CREATEOBJECT, id));
+        NetObject *newObject = ap::net::netobjectprototypes()[objtype]->create(id);
+        insertObject(newObject, id);
+        length += newObject->unserialize(data, length);
+        addEvent(new NetEvent(EVENT_CREATEOBJECT, 0, id, objtype));
     }
 
     return length;
@@ -409,9 +407,10 @@ int NetData::sendChanges()
         std::set<uint32>::iterator iDelPkg = objectDeleteQueue.begin(), iAlertPkg = objectAlertQueue.begin();
 
         while (iDelPkg != objectDeleteQueue.end()) {
-            removeObject(*iDelPkg);    // Now, actually remove an object
             buffer[length++] = NetData::PACKET_DELOBJECT;
-            *(uint32 *)(buffer+length) = *iDelPkg;     length += 4;
+            *(uint32 *)(buffer+length) = *iDelPkg;                              length += 4;
+            *(uint8 *)(buffer+length) = getObject(*iDelPkg)->getObjectType();   length++;
+            removeObject(*iDelPkg);                         // Now, actually remove an object
             objectDeleteQueue.erase(iDelPkg++);
             packetstosend++;
         }

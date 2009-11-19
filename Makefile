@@ -35,7 +35,8 @@ OBJS = InputSystem.o SDLInputSystem.o GameState.o PlayState.o GameStateManager.o
 	MovingObject.o serializer.o RectBoundaries.o netdata.o functions.o NetUser.o NetEvent.o \
 	NetMessage.o Mech.o Projectile.o rotations.o MovableControl.o WeaponControl.o \
 	CombinedControls.o Gui.o LoginState.o LimboState.o ScoreListing.o ObjectDataModel.o \
-	GameWorld.o TerrainHeightMap.o ActionKeyMap.o
+	GameWorld.o TerrainHeightMap.o ActionKeyMap.o MainMenuState.o MenuStateViewport.o \
+	KeyConfMenuState.o
 SERVEROBJS = servermain.o Server.o MovingObject.o RectBoundaries.o serializer.o netdata.o \
 	functions.o NetUser.o NetEvent.o NetMessage.o Mech.o Projectile.o rotations.o \
 	MovableControl.o WeaponControl.o CombinedControls.o ScoreListing.o ObjectDataModel.o \
