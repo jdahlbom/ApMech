@@ -115,14 +115,17 @@ void PlayState::update( unsigned long lTimeElapsed ) {
             {
                 switch( event.objectType ) {
                     case ap::OBJECT_TYPE_PROJECTILE: {
-                        static int explosionIndex = 0;
-                        std::stringstream ss;
-                        ss << "Node/ParticleSystem/Explosion/"<<explosionIndex++;
-                        Ogre::SceneNode* newExplosionNode = pSceneManager->getRootSceneNode()->createChildSceneNode();
-                        Ogre::ParticleSystem* newPSys = pSceneManager->createParticleSystem(ss.str(), "ApMech/Explosion1");
-                        newExplosionNode->translate(netdata->getObject<Projectile *>(event.id)->getPosition() );
-                        newExplosionNode->attachObject(newPSys);
-                        particleSystemList.push_back(newPSys);
+                        Projectile *exProj = netdata->getObject<Projectile *>(event.id);
+                        if (exProj != NULL) {
+                            static int explosionIndex = 0;
+                            std::stringstream ss;
+                            ss << "Node/ParticleSystem/Explosion/"<<explosionIndex++;
+                            Ogre::SceneNode* newExplosionNode = pSceneManager->getRootSceneNode()->createChildSceneNode();
+                            Ogre::ParticleSystem* newPSys = pSceneManager->createParticleSystem(ss.str(), "ApMech/Explosion1");
+                            newExplosionNode->translate(netdata->getObject<Projectile *>(event.id)->getPosition() );
+                            newExplosionNode->attachObject(newPSys);
+                            particleSystemList.push_back(newPSys);
+                        }
                         break;
                     }
                     default:

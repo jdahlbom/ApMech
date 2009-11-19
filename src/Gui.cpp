@@ -148,7 +148,7 @@ namespace ap {
     }
     windowRoot->hide();
     windowRoot->deactivate();
-  }  
+  }
 
   void Gui::hideNamedWindow(const std::string &windowName) {
     assert(pWinMgr);
@@ -175,7 +175,7 @@ namespace ap {
     setupFileLoadedWindow(keyConfWindowName,
 			  keyConfLayoutFile);
     CEGUI::Window *confWindow = getNamedWindowPtr(keyConfWindowName);
-    
+
     // input handling here..
 
     confWindow->show();
@@ -221,11 +221,11 @@ namespace ap {
       key->setSelectionColours(selColour, selColour, selColour, selColour);
 
       try {
-	multiCL->setItem(name, nameCol, currentRow);
-	multiCL->setItem(key, keyCol, currentRow);
+        multiCL->setItem(name, nameCol, currentRow);
+        multiCL->setItem(key, keyCol, currentRow);
       } catch (CEGUI::InvalidRequestException) {
-	std::cout << "Mismatch between Gui::updateScores column IDs and layout file!" << std::endl;
-	throw;
+        std::cout << "Mismatch between Gui::updateScores column IDs and layout file!" << std::endl;
+        throw;
       }
     }
   }
@@ -292,17 +292,17 @@ namespace ap {
   bool Gui::mainMenuPlay(const CEGUI::EventArgs &args) {
     assert(pMainMenuReceiver);
     pMainMenuReceiver->receivePlayGame();
-  }  
+  }
 
   bool Gui::mainMenuQuit(const CEGUI::EventArgs &args) {
     assert(pMainMenuReceiver);
     pMainMenuReceiver->receiveQuitGame();
-  }  
+  }
 
   bool Gui::mainMenuConfKeyboard(const CEGUI::EventArgs &args) {
     assert(pMainMenuReceiver);
     pMainMenuReceiver->receiveConfigureKeyboard();
-  }  
+  }
 
   // LIMBO MENU:
   void Gui::setupLimboWindow() {
@@ -310,7 +310,7 @@ namespace ap {
 			  limboLayoutFile);
   }
 
-  void Gui::setVisibleLimboMenu(bool visible) 
+  void Gui::setVisibleLimboMenu(bool visible)
   {
     assert(pRoot);
     assert(pWinMgr);
