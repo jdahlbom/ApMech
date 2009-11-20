@@ -13,6 +13,7 @@ namespace ap {
 std::string uint2ipv4(unsigned int ip);  // Convert a uint32 to a string with the corresponding IP address
 
 void hexprint(enet_uint8 *buffer, int length); // Cout a random buffer and maybe understand what's in it!
+void bufprint(enet_uint8 *buffer, int length); // Same, but print bytes as decimal numbers
 
 /**
  * generic to_string() for any pipeable type.

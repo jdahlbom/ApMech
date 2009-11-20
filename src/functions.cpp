@@ -30,21 +30,39 @@ string uint2ipv4(unsigned int ip)
 
 void hexprint(enet_uint8 *buffer, int length)
 {
+    ios::fmtflags coutflags = cout.flags();
     enet_uint8 u;
-    cout << "Buf length = "<<length<<": ";
-    cout << "(";
+
+    cout << "Buf length = "<< dec << length<<": ";
+    cout << "(" << hex;
     for (int i=0; i<length; i++) {
         u = buffer[i];
-
         if ((u > 64) && (u < 91)) cout << char(u);
         else if ((u > 96) && (u < 123)) cout << char(u);
         else cout << int(u);
-
         if (i != length-1) cout << ",";
     }
-
-    cout << ")"<<endl;
+    cout << ")" << dec <<endl;
+    cout.flags(coutflags);
 }
+
+void bufprint(enet_uint8 *buffer, int length)
+{
+    ios::fmtflags coutflags = cout.flags();
+    enet_uint8 u;
+    cout << "Buf length = " << dec << length<<": ";
+    cout << "(";
+    for (int i=0; i<length; i++) {
+        u = buffer[i];
+        if ((u > 64) && (u < 91)) cout << char(u);
+        else if ((u > 96) && (u < 123)) cout << char(u);
+        else cout << int(u);
+        if (i != length-1) cout << ",";
+    }
+    cout << ")"<<endl;
+    cout.flags(coutflags);
+}
+
 
 /**
  * Sleep for defined amount of milliseconds
@@ -124,7 +142,7 @@ ap::uint32 getColorFromPseudoHue(float phue)
 }
 
   /**
-   * Returns the location of application files. 
+   * Returns the location of application files.
    * Empty on non-OSX. On OS X, it will locate the path to our application.
    */
 std::string bundlePath()

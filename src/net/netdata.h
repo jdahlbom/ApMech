@@ -52,7 +52,7 @@ class NetData {
     static const enet_uint8 EVENT_DELETEOBJECT = 23;
     static const enet_uint8 EVENT_CREATEOBJECT = 24;
     static const enet_uint8 EVENT_MESSAGE = 25;
-    static const enet_uint8 EVENT_UPDATEOBJECT = 26;
+    static const enet_uint8 EVENT_ALERTOBJECT = 26;
 
  private:
     enum status_type { enet_error, offline, connected, server };

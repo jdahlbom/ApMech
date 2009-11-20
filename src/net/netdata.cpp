@@ -283,7 +283,7 @@ int NetData::serviceClient()
                     h++;
                     id = *(uint32 *)(data+h);           h += 4;
                     uint8 objtype = *(uint8 *)(data+h); h++;
-                    addEvent(new NetEvent(EVENT_UPDATEOBJECT, 0, id, objtype));
+                    addEvent(new NetEvent(EVENT_ALERTOBJECT, 0, id, objtype));
                 } else if (data[h] == NetData::PACKET_DISCONNECT) {
                     h++;
                     uid = *(uint32 *)(data+h);
@@ -416,7 +416,7 @@ int NetData::sendChanges()
             po++;
         }
 
-        // Note! FIRST send all (changed) objects, then destroy. Thus, clients get to see
+        // Note! FIRST send all (changed) objects (above), then destroy. Thus, clients get to see
         // every object, even if it was destroyed immediately after its creation.
         while (iDelPkg != objectDeleteQueue.end()) {
             buffer[length++] = NetData::PACKET_DELOBJECT;
@@ -438,7 +438,7 @@ int NetData::sendChanges()
         }
 
         buffer[length++] = NetData::PACKET_EOF;
-//        hexprint(buffer, length); // DEBUG INFO
+        //bufprint(buffer, length); // DEBUG INFO
         if (packetstosend > 0) {
             ENetPacket *packet = enet_packet_create(buffer, length, 0);//ENET_PACKET_FLAG_RELIABLE);
             enet_host_broadcast(enethost, 0, packet);

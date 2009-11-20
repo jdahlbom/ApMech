@@ -29,6 +29,8 @@ TerrainHeightMap::TerrainHeightMap(int width, float widthScale, float heightScal
 		: m_Width(width), m_WidthScale(widthScale), m_HeightScale(heightScale)
 {
     std::ifstream ifs;
+    ios::fmtflags coutflags = cout.flags();     // Store cout flags..
+
     SDL_Surface *imageSurface;
 
     imageSurface = IMG_Load(rawFilename.c_str());
@@ -45,7 +47,7 @@ TerrainHeightMap::TerrainHeightMap(int width, float widthScale, float heightScal
             m_Vertices = new float[m_Width * m_Width];
         }
 
-        cout << "[TerrainHeightMap] Horizontal scale: "<<m_WidthScale<<", vertical scale: "<<m_HeightScale<<", map width: "<<m_Width<<endl;
+        cout << ios::dec << "[TerrainHeightMap] Horizontal scale: "<<m_WidthScale<<", vertical scale: "<<m_HeightScale<<", map width: "<<m_Width<<endl;
 
         if (SDL_MUSTLOCK(imageSurface)) SDL_LockSurface(imageSurface);
         if (imageSurface->w != imageSurface->h) { cout << "[TerrainHeightMap] Image is not rectangular!"<<endl; }
@@ -55,7 +57,7 @@ TerrainHeightMap::TerrainHeightMap(int width, float widthScale, float heightScal
         cout << "[TerrainHeightMap] Image format: ";
         cout << "BytesPerPixel = "<<int(pixFormat->BytesPerPixel)<<"  ";
         cout << "RGBshift = "<<int(pixFormat->Rshift)<<","<<int(pixFormat->Gshift)<<","<<int(pixFormat->Bshift)<<"  ";
-        cout << hex << "RGBmask = "<<pixFormat->Rmask<<","<<pixFormat->Gmask<<","<<pixFormat->Bmask<<endl;
+        cout << ios::hex << "RGBmask = "<<pixFormat->Rmask<<","<<pixFormat->Gmask<<","<<pixFormat->Bmask <<endl;
 
         for(int y = 0; y < m_Width; ++y) {                      // loop through and populate the vertices
             for(int x = 0; x < m_Width; ++x) {
@@ -88,6 +90,7 @@ TerrainHeightMap::TerrainHeightMap(int width, float widthScale, float heightScal
         }
     }
 
+    cout.flags(coutflags);      // restore cout flags
     ifs.close();
 }//end HeightMap()
 

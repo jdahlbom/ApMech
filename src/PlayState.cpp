@@ -153,7 +153,7 @@ void PlayState::update( unsigned long lTimeElapsed ) {
                 }
                 break;
 	        }
-            case net::NetData::EVENT_UPDATEOBJECT:
+            case net::NetData::EVENT_ALERTOBJECT:
             {
                 switch (event.objectType) {
                     case ap::OBJECT_TYPE_SCORELISTING:
