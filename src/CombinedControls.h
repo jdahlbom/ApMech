@@ -18,6 +18,7 @@ class CombinedControls : public net::Controller
     int unserialize(uint8 buffer[], int start);
 
     void dump();
+    void reset();
 
     private:
     MovableControl  *moveControl;

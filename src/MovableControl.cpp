@@ -55,6 +55,12 @@ MovableControl::MovableControl():
     accelerationFwd(0),
     velocityCWiseTurning(0) {}
 
+void MovableControl::reset()
+{
+    accelerationFwd = 0.0;
+    velocityCWiseTurning = 0.0;
+}
+
 int MovableControl::serialize(uint8 *buffer, int start, int buflength) const {
     using ap::net::serialize;
     int length = 0;

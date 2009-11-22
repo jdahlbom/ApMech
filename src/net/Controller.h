@@ -17,6 +17,8 @@ class Controller : public ap::net::Serializable
     Controller() {}
     virtual ~Controller() {}
 
+    virtual void reset() = 0;
+
     virtual int serialize(uint8 buffer[], int start, int buflength) const = 0;
     virtual int unserialize(uint8 buffer[], int start) = 0;
 };

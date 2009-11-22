@@ -55,10 +55,13 @@ void Server::start() {
     netdata->insertObject(mScores);
     netdata->insertObject(gameWorld = new ap::GameWorld());
 
+    // TODO: Write a loadSettings method to have this stuff
     serverConfig.load(bundlePath() + "apserver.cfg");
     gameWorld->loadMapFile(serverConfig.getSetting("Map") + ".map");
-
-    if (!from_string<uint32>(NetworkFPS, serverConfig.getSetting("NetworkFPS"), std::dec)) NetworkFPS = 20;
+    if (!from_string<uint32>(networkFPS, serverConfig.getSetting("NetworkFPS"), std::dec)) networkFPS = 20;
+    if ((gameRules = serverConfig.getSetting("DefaultGame")) == "") gameRules = "deathmatch";
+    if (!from_string<uint32>(respawnDelay, serverConfig.getSetting("RespawnDelay", "Rules of "+gameRules), std::dec)) respawnDelay = 2000;
+    cout << "respawnDelay: "<<respawnDelay<<endl;
 
     newticks = nextupdate = getTicks();
 
@@ -74,7 +77,7 @@ void Server::start() {
 
         if (newticks >= nextupdate) {
             int changes = netdata->sendChanges();
-            nextupdate = newticks + (1000/NetworkFPS); // 40 ms between updates would be 25 network fps.
+            nextupdate = newticks + (1000/networkFPS); // 40 ms between updates would be 25 network fps.
             cout << "\rData rate: "<<changes<<"      ";
             cout.flush();
         }                               // Seems to me that up to 100 is still okay!
@@ -83,6 +86,7 @@ void Server::start() {
 
         processEvents(netdata);
         if (!pendingClients.empty()) processPendingClients(netdata);
+        if (!deadClients.empty()) processDeadClients(netdata);
     } // Main loop
 } // void Server::start()
 
@@ -140,6 +144,24 @@ void Server::processPendingClients(ap::net::NetData *pNetData) {
     }
 }
 
+  /**
+   * See if something should be done to connected players who do not
+   * have an avatar because their previous avatar was killed.
+   */
+void Server::processDeadClients(ap::net::NetData *pNetData) {
+    std::map<ap::uint32, ap::uint32>::iterator i = deadClients.begin();
+
+    while (i != deadClients.end()) {
+        if (!pNetData->getUser(i->second)) {
+            deadClients.erase(i++);      // The user disconnected before finishing connection
+        } else if (getTicks() > i->first) {
+            usersWithoutAvatar.push_back(i->second);
+            deadClients.erase(i++);
+        } else i++;
+    }
+}
+
+
 void Server::updateObjects(float dt, ap::net::NetData* pNetData) const {
 
     while (NetObject *nop = pNetData->eachObject()) {
@@ -179,15 +201,13 @@ void Server::weaponFired(ap::net::NetData *pNetData, ap::MovingObject *source) {
     bullet->setChanged();
 }
 
-void Server::detectCollisions(ap::net::NetData *pNetData) const {
+void Server::detectCollisions(ap::net::NetData *pNetData) {
 
     while (ap::Mech *mech = pNetData->eachObject<ap::Mech *>(ap::OBJECT_TYPE_MECH))
     {
         while (ap::Projectile *proj = pNetData->eachObject<ap::Projectile *>(ap::OBJECT_TYPE_PROJECTILE))
         {
-            if (proj->testCollision(*mech)) {
-                relocateSpawnedMech(mech);
-
+            if (proj->testCollision(*mech) && (0 != mech->uid)) {
                 if (proj->uid == mech->uid) {   // He killed himself!
                     ap::ScoreTuple selfKiller;
                     selfKiller.uid = proj->uid;
@@ -209,6 +229,13 @@ void Server::detectCollisions(ap::net::NetData *pNetData) const {
                     mScores->addScore(projOwner, false);
                     mScores->addScore(mechOwner, false);
                 }
+
+                // Detach the mech from the user completely.
+//                relocateSpawnedMech(mech);
+                deadClients.insert(make_pair(getTicks() + respawnDelay, mech->uid));
+                pNetData->getUser(mech->uid)->setControlPtr(NULL);
+                mech->getControlPtr()->reset();     // Dead girls don't say shoot
+                mech->uid = 0;                      // The mech's not owned anymore
 
                 mScores->setChanged();
                 mScores->print();

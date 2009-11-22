@@ -38,6 +38,9 @@ class MovableControl : public net::Controller {
 
     MovableControl();
     ~MovableControl() { /* Do nothing */ }
+
+    void reset();
+
     int serialize(uint8 *buffer, int start, int buflength) const;
     int unserialize(uint8 *buffer, int start);
     void dump();

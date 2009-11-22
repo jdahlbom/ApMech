@@ -16,6 +16,11 @@ void WeaponControl::setFiring(bool firingStatus) {
     }
 }
 
+void WeaponControl::reset()
+{
+    isFiring = NOT_FIRING;
+}
+
 int WeaponControl::serialize(uint8 buffer[], int start, int buflength) const {
     return ap::net::serialize(isFiring, buffer, start, buflength);
 }

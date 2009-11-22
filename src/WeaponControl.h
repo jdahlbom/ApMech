@@ -15,6 +15,8 @@ class WeaponControl : public net::Controller {
     WeaponControl(uint32 msFiringInterval = 1000);
     ~WeaponControl() {}
 
+    void reset();
+
     void setFiring(bool firingStatus);
 
     int serialize(uint8 buffer[], int start, int buflength) const;

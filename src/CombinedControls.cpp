@@ -34,6 +34,12 @@ int CombinedControls::unserialize(uint8 buffer[], int start) {
     return length;
 }
 
+void CombinedControls::reset()
+{
+    moveControl->reset();
+    firingControl->reset();
+}
+
 void CombinedControls::dump() {
     moveControl->dump();
     firingControl->dump();
