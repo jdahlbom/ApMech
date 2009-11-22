@@ -298,7 +298,7 @@ void Server::createNewConnection(ap::uint32 userId, ap::net::NetData *pNetData)
     pNetData->alertObject(mScores->id);       // Refresh the score display to players
     gameWorld->setChanged();
 
-    std::vector<std::string> mechNames = mechDB->getMechNames();
+//    std::vector<std::string> mechNames = mechDB->getMechNames(); // This ain't used
 
     // trigger the mech data to be sent to the new connection
     while (ap::MechData *mechData =
