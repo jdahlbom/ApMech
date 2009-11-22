@@ -51,7 +51,7 @@ elif platform == 'posix':
     env = Environment()
     env['CPPPATH'] = '/usr/local/boost_1_39_0'
     env['CPPDEFINES'] = ['SERIALIZER_WITH_OGRE']
-    env.ParseConfig('pkg-config --cflags --libs OGRE CEGUI-OGRE CEGUI SDL_image')
+    env.ParseConfig('pkg-config --cflags --libs OGRE CEGUI-OGRE CEGUI')
     env.ParseConfig('pkg-config --libs enet')
 
 elif platform == 'win32':
@@ -125,7 +125,7 @@ elif platform == 'win32':
 if platform == 'posix' or platform == 'darwin':
 	env.ParseConfig('sdl-config --cflags')
 	env.ParseConfig('sdl-config --libs')
-	env.Append(LIBS = ['SDL_image'])
+	env.Append(LIBS = ['SDL_image', 'expat', 'boost_filesystem-mt'])
 	
 	env['CPPFLAGS'] = ["-g"]
 # elif platform == 'win32':
@@ -154,6 +154,7 @@ src/Mech.cpp
 src/Projectile.cpp
 src/math/rotations.cpp
 src/TerrainHeightMap.cpp
+src/MechData.cpp
 """)
 
 clientSources = Split("""
@@ -175,6 +176,8 @@ src/ooinput/SDLInputSystem.cpp
 serverSources = Split("""
 src/servermain.cpp
 src/server/Server.cpp
+src/ObjectDataBase.cpp
+src/ObjectReader.cpp
 """)+commonSources
 
 client = env.Program(target='apmech', source=clientSources)

@@ -11,6 +11,7 @@
 #include "../ScoreListing.h"
 #include "../types.h"
 #include "../GameWorld.h"
+#include "../ObjectDataBase.h"
 
 #include <set>
 #include <list>
@@ -33,6 +34,7 @@ class Server
     ap::net::NetData    *netdata;
     ap::ScoreListing    *mScores;
     ap::GameWorld       *gameWorld;
+    ap::MechDatabase    *mechDB;
     uint64              nextupdate; // When we will send updates to clients the next time
     uint64              oldticks;   // These here for tracking time
     uint64              newticks;   // These here for tracking time

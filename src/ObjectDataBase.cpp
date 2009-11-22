@@ -61,7 +61,6 @@ std::vector<std::string> MechDatabase::getMechNames() {
     return keys;
 }
 
-
 }
 
 #if 0

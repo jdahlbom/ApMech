@@ -39,6 +39,7 @@ namespace ap {
         return it->second;  
     }
 
+#if 0
     float ObjectDataModel::getMaxForwardAcceleration(ap::uint8 objectType) {
         return 15.0f;
     }
@@ -50,4 +51,5 @@ namespace ap {
     float ObjectDataModel::getMaxTurningRate(ap::uint8 objectType) {
         return 3.0f;
     }
+#endif
 } // namespace ap

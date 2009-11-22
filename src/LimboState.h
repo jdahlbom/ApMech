@@ -47,6 +47,12 @@ private:
   ap::ActionKeyMap  *pActionKMap;
 
   void selectVehicleType(const std::string &vehicleType);
+
+  // I have no idea how CEGUI list selection actually works. This is an
+  // index-based hack to work around the selection thing...
+  int selectedVehicleIndex;
+  int vehicleCount;
+
 };
 
 } // namespace ap

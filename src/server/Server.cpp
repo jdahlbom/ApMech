@@ -23,6 +23,7 @@
 #include "../Mech.h"
 #include "../Projectile.h"
 #include "../MovingObject.h"
+#include "../MechData.h"
 #include "../types.h"
 #include "../net/NetMessage.h"
 
@@ -50,6 +51,14 @@ void Server::start() {
         return;
     }
 
+    // the mech data files are in directory data/mechs
+    mechDB = new MechDatabase("data/mechs");
+    if (mechDB == NULL) {
+        std::cout << "[SERVER] Error accessing mech data files, exiting!" << std::endl;
+        return;
+    }
+    mechDB->readMechFiles();
+
     std::cout << "[SERVER] Serving "<< ap::net::netobjectprototypes().size()<<" types of objects."<<std::endl;
 
     netdata->insertObject(mScores);
@@ -62,6 +71,22 @@ void Server::start() {
     if ((gameRules = serverConfig.getSetting("DefaultGame")) == "") gameRules = "deathmatch";
     if (!from_string<uint32>(respawnDelay, serverConfig.getSetting("RespawnDelay", "Rules of "+gameRules), std::dec)) respawnDelay = 2000;
     cout << "respawnDelay: "<<respawnDelay<<endl;
+
+    std::vector<std::string> mechNames = mechDB->getMechNames();
+    for (int i = 0; i < mechNames.size(); i++) {
+
+        MechData *data = new ap::MechData();
+
+        // copy the data in place to a netobject
+        ap::MechReader *reader = mechDB->getMechReader(mechNames[i]);
+
+        data->setName(reader->getName());
+        data->setTurnRate(reader->getTurnRate());
+        data->setMaxForwardAcceleration(reader->getMaxForwardAcceleration());
+        data->setMaxBackwardAcceleration(reader->getMaxBackwardAcceleration());
+
+        netdata->insertObject(data);
+    }
 
     newticks = nextupdate = getTicks();
 
@@ -257,24 +282,32 @@ void Server::relocateSpawnedMech(ap::Mech *mech) const
 
 void Server::createNewConnection(ap::uint32 userId, ap::net::NetData *pNetData)
 {
-  // Only create a new avatar if client has chosen the vehicle type.
-  NetUser *newUser = pNetData->getUser(userId);
-  assert(newUser != NULL);
+    // Only create a new avatar if client has chosen the vehicle type.
+    NetUser *newUser = pNetData->getUser(userId);
+    assert(newUser != NULL);
 
-  // Add scores:
-  ap::ScoreTuple newPlayer;
-  newPlayer.uid = userId;
-  newPlayer.nick = pNetData->getUser(userId)->nick;
-  newPlayer.kills = 0;
-  newPlayer.deaths = 0;
-  newPlayer.score = 0;
-  mScores->addScore(newPlayer, true);
-  mScores->setChanged();
-  pNetData->alertObject(mScores->id);       // Refresh the score display to players
-  gameWorld->setChanged();
+    // Add scores:
+    ap::ScoreTuple newPlayer;
+    newPlayer.uid = userId;
+    newPlayer.nick = pNetData->getUser(userId)->nick;
+    newPlayer.kills = 0;
+    newPlayer.deaths = 0;
+    newPlayer.score = 0;
+    mScores->addScore(newPlayer, true);
+    mScores->setChanged();
+    pNetData->alertObject(mScores->id);       // Refresh the score display to players
+    gameWorld->setChanged();
 
-  usersWithoutAvatar.push_back(userId);
-  pNetData->sendChanges();
+    std::vector<std::string> mechNames = mechDB->getMechNames();
+
+    // trigger the mech data to be sent to the new connection
+    while (ap::MechData *mechData =
+            pNetData->eachObject<ap::MechData *>(ap::OBJECT_TYPE_MECHDATA)) {
+        mechData->setChanged();
+    }
+
+    usersWithoutAvatar.push_back(userId);
+    pNetData->sendChanges();
 }
 
 void Server::spawnNewAvatars(ap::net::NetData *pNetData) {
@@ -289,9 +322,17 @@ void Server::spawnNewAvatars(ap::net::NetData *pNetData) {
     }
 
     if ("" != pUser->chosenVehicleType) {
+      // std::cout << "User has selected vehicle type " << pUser->chosenVehicleType << std::endl;
+      Ogre::Vector3 initialSpeed(0,0,0);
       ap::Mech *newAvatar = new ap::Mech();
       int newid = pNetData->insertObject(newAvatar);
+      ap::MechReader *reader = mechDB->getMechReader(pUser->chosenVehicleType);
 
+      if (reader) {
+        newAvatar->setMaxTurnRate(reader->getTurnRate());
+        newAvatar->setMaxForwardAcceleration(reader->getMaxForwardAcceleration());
+        newAvatar->setMaxBackwardAcceleration(reader->getMaxBackwardAcceleration());
+      }
       newAvatar->setMaxSpeed(35.0f);
       newAvatar->setFriction(8.0f);
       newAvatar->uid = userId;

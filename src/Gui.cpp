@@ -329,6 +329,37 @@ namespace ap {
     }
   }
 
+  void Gui::addLimboVehicle(const std::string &item)
+  {
+      CEGUI::Listbox *lbox = dynamic_cast<CEGUI::Listbox *>(CEGUI::WindowManager::getSingletonPtr()->getWindow(limboListName));
+      assert (lbox);
+      CEGUI::ListboxTextItem *ltItem = new CEGUI::ListboxTextItem(CEGUI::String(item));
+
+      // This is supposed to highlight the selected name in the list.
+      // Doesn't appear do it, though... wonder why.
+
+      CEGUI::colour green(0.0, 1.0, 0.0, 0.5);
+      ltItem->setSelectionColours(green);
+
+      lbox->addItem(ltItem);
+      lbox->ensureItemIsVisible(ltItem);
+  }
+
+  void Gui::selectLimboVehicle(int index)
+  {
+      CEGUI::Listbox *lbox = dynamic_cast<CEGUI::Listbox *>(CEGUI::WindowManager::getSingletonPtr()->getWindow(limboListName));
+      lbox->setItemSelectState(index, true);
+  }
+
+  std::string Gui::getLimboVehicle(int index)
+  {
+      CEGUI::Listbox *lbox = dynamic_cast<CEGUI::Listbox *>(CEGUI::WindowManager::getSingletonPtr()->getWindow(limboListName));
+      CEGUI::ListboxItem *ltItem = lbox->getListboxItemFromIndex(index);
+      std::string name(ltItem->getText().c_str());
+
+      return name;
+  }
+
   void Gui::hideLoginWindow() {
     hideNamedWindow(loginRootName);
   }

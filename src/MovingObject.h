@@ -38,6 +38,10 @@ class MovingObject : public net::NetObject {
     void setPosition(Ogre::Vector3 pos) { state->location = pos; }
     Ogre::Vector3 getPosition() const { return state->location; }
 
+    void setMaxForwardAcceleration(float amount);
+    void setMaxBackwardAcceleration(float amount);
+    void setMaxTurnRate(float amount);
+
     void addForwardAcceleration(float amount);
     void addClockwiseTurningSpeed(float amountRad);
 

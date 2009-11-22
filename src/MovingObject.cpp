@@ -36,12 +36,6 @@ MovingObject::MovingObject(float nFriction, Ogre::Vector3 startingVelocity,
 {
     id = 0;
     uid = 0;
-
-    if (model) {
-        maxForwardAcceleration = model->getMaxForwardAcceleration(type_id);
-        maxBackwardAcceleration = model->getMaxBackwardAcceleration(type_id);
-        turningRate = model->getMaxTurningRate(type_id);
-    }
 }
 
 MovingObject::~MovingObject()
@@ -89,6 +83,21 @@ void MovingObject::setForwardAcceleration(float amount)
     } else {
         control->accelerationFwd = amount * maxForwardAcceleration;
     }
+}
+
+void MovingObject::setMaxForwardAcceleration(float amount)
+{
+    maxForwardAcceleration = amount;
+}
+
+void MovingObject::setMaxBackwardAcceleration(float amount)
+{
+    maxBackwardAcceleration = amount;
+}
+
+void MovingObject::setMaxTurnRate(float amount)
+{
+    turningRate = amount;
 }
 
 void MovingObject::setClockwiseTurningSpeed(float amount)
@@ -188,9 +197,12 @@ int MovingObject::serialize(uint8 *buffer, int start, int buflength) const
     using ap::net::serialize;
     int length = 0;
     length += ap::net::serialize(id, buffer, start+length, buflength-length);
-    length += ap::net::serialize(objectType, buffer, start+length, buflength+length);
+    length += ap::net::serialize(objectType, buffer, start+length, buflength-length);
     length += state->serialize( buffer, start+length, buflength-length);
-    //length += control->serialize( buffer, start+length, buflength-length);
+    // length += control->serialize( buffer, start+length, buflength-length);
+    length += ap::net::serialize(turningRate, buffer, start+length, buflength-length);
+    length += ap::net::serialize(maxForwardAcceleration, buffer, start+length, buflength-length);
+    length += ap::net::serialize(maxBackwardAcceleration, buffer, start+length, buflength-length);
     return length;
 }
 
@@ -201,7 +213,10 @@ int MovingObject::unserialize(uint8 *buffer, int start)
     length += ap::net::unserialize(id, buffer, start+length);
     length += ap::net::unserialize(objectType, buffer, start+length);
     length += state->unserialize(buffer, start+length);
-    //length += control->unserialize(buffer, start+length);
+    // length += control->unserialize(buffer, start+length);
+    length += ap::net::unserialize(turningRate, buffer, start+length);
+    length += ap::net::unserialize(maxForwardAcceleration, buffer, start+length);
+    length += ap::net::unserialize(maxBackwardAcceleration, buffer, start+length);
     return length;
 }
 
