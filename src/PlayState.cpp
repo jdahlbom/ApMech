@@ -17,6 +17,7 @@
 #include "ObjectDataModel.h"
 #include "Projectile.h"
 #include "ScoreListing.h"
+#include "MechData.h"
 #include "GameWorld.h"
 #include "functions.h"
 #include "types.h"
@@ -147,7 +148,15 @@ void PlayState::update( unsigned long lTimeElapsed ) {
                         case ap::OBJECT_TYPE_PROJECTILE:
                             createSceneNodeForMovable(event.id);
                             break;
+                        case ap::OBJECT_TYPE_MECHDATA:
+                            {
+                            std::cout << "Received a new MechData object" << std::endl;
+                            ap::MechData *pMechData = netdata->getObject<ap::MechData*>(event.id);
+                            std::cout << "type name: " << pMechData->getName() << std::endl;
+                            break;
+                            }
                         default:
+                            std::cout << "Received an unknown created object" << std::endl;
                             break;
                     }
                 }

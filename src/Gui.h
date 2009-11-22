@@ -26,6 +26,9 @@ class Gui
 
   void setupLimboWindow();
   void setVisibleLimboMenu(bool visible);
+  void addLimboVehicle(const std::string &item);
+  void selectLimboVehicle(int index);
+  std::string getLimboVehicle(int index);
 
   void setupKeyConfWindow(ActionKeyMap *pActionKMap);
   void hideKeyConfWindow();

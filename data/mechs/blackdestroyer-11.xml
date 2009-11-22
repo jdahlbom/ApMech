@@ -2,14 +2,14 @@
 <!DOCTYPE mech SYSTEM "mech.dtd">
 
 <mech>
-    <name>hybridfalcon-15</name>
+    <name>blackdestroyer-11</name>
     <stats>
-        <maxTurnRate>10</maxTurnRate>
-        <maxForwardAcceleration>125</maxForwardAcceleration>
+        <maxTurnRate>12</maxTurnRate>
+        <maxForwardAcceleration>205</maxForwardAcceleration>
         <maxBackwardAcceleration>15</maxBackwardAcceleration>
     </stats>
     <design>
-        <torso turningRadius="180">
+        <torso turningRadius="30">
             <slot />
             <slot />
         </torso>

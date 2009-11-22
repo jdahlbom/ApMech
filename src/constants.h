@@ -10,6 +10,7 @@ namespace ap {
     static const uint8 OBJECT_TYPE_NETUSER = 3;
     static const uint8 OBJECT_TYPE_SCORELISTING = 4;
     static const uint8 OBJECT_TYPE_GAMEWORLD = 5;
+    static const uint8 OBJECT_TYPE_MECHDATA = 6;
 }
 
 
