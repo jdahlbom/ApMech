@@ -162,6 +162,13 @@ void MovingObject::updateNode()
 
 void MovingObject::updateVelocity(float sSinceLast)
 {
+  if (state->velocity.squaredLength() > 17) {
+    std::cout <<  "before: " << state->velocity.length() << ", " << getFacing() << std::endl;
+    state->velocity = getFacing() * state->velocity.dotProduct(getFacing());
+    std::cout <<  "after: " << state->velocity.length() << ", " << getFacing() << std::endl;
+    std::cout << "---" << std::endl;
+  }
+
     state->velocity += control->accelerationFwd * sSinceLast * getFacing();
     Ogre::Real length = state->velocity.length();
 
