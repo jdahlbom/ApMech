@@ -51,42 +51,12 @@ void Server::start() {
         return;
     }
 
-    // the mech data files are in directory data/mechs
-    mechDB = new MechDatabase("data/mechs");
-    if (mechDB == NULL) {
-        std::cout << "[SERVER] Error accessing mech data files, exiting!" << std::endl;
-        return;
-    }
-    mechDB->readMechFiles();
-
     std::cout << "[SERVER] Serving "<< ap::net::netobjectprototypes().size()<<" types of objects."<<std::endl;
+
+    loadSettings("apserver.cfg");
 
     netdata->insertObject(mScores);
     netdata->insertObject(gameWorld = new ap::GameWorld());
-
-    // TODO: Write a loadSettings method to have this stuff
-    serverConfig.load(bundlePath() + "apserver.cfg");
-    gameWorld->loadMapFile(serverConfig.getSetting("Map") + ".map");
-    if (!from_string<uint32>(networkFPS, serverConfig.getSetting("NetworkFPS"), std::dec)) networkFPS = 20;
-    if ((gameRules = serverConfig.getSetting("DefaultGame")) == "") gameRules = "deathmatch";
-    if (!from_string<uint32>(respawnDelay, serverConfig.getSetting("RespawnDelay", "Rules of "+gameRules), std::dec)) respawnDelay = 2000;
-    cout << "respawnDelay: "<<respawnDelay<<endl;
-
-    std::vector<std::string> mechNames = mechDB->getMechNames();
-    for (int i = 0; i < mechNames.size(); i++) {
-
-        MechData *data = new ap::MechData();
-
-        // copy the data in place to a netobject
-        ap::MechReader *reader = mechDB->getMechReader(mechNames[i]);
-
-        data->setName(reader->getName());
-        data->setTurnRate(reader->getTurnRate());
-        data->setMaxForwardAcceleration(reader->getMaxForwardAcceleration());
-        data->setMaxBackwardAcceleration(reader->getMaxBackwardAcceleration());
-
-        netdata->insertObject(data);
-    }
 
     newticks = nextupdate = getTicks();
 
@@ -116,6 +86,41 @@ void Server::start() {
 } // void Server::start()
 
 
+    /** Load game-specific settings and mech data into apserver and initialize gameWorld */
+bool Server::loadSettings(std::string serverConfigFile)
+{
+    // First, load the generic config parameters
+    serverConfig.load(bundlePath() + serverConfigFile);
+    if (!from_string<uint32>(networkFPS, serverConfig.getSetting("NetworkFPS"), std::dec)) networkFPS = 20;
+    if ((gameRules = serverConfig.getSetting("DefaultGame")) == "") gameRules = "deathmatch";
+    if (!from_string<uint32>(respawnDelay, serverConfig.getSetting("RespawnDelay", "Rules of "+gameRules), std::dec)) respawnDelay = 2000;
+    cout << "[SERVER:loadSettings] respawnDelay = "<<respawnDelay<<endl;
+
+    gameWorld->loadMapFile(serverConfig.getSetting("Map") + ".map");
+
+    mechDB = new MechDatabase("data/mechs");    // the mech data files are in directory data/mechs
+    if (mechDB == NULL) {
+        std::cout << "[SERVER:loadSettings] Error accessing mech data files, exiting!" << std::endl;
+        return false;
+    }
+    mechDB->readMechFiles();
+
+    std::vector<std::string> mechNames = mechDB->getMechNames();
+    for (int i = 0; i < mechNames.size(); i++) {
+        MechData *data = new ap::MechData();
+
+        // copy the data in place to a netobject
+        ap::MechReader *reader = mechDB->getMechReader(mechNames[i]);
+
+        data->setName(reader->getName());
+        data->setTurnRate(reader->getTurnRate());
+        data->setMaxForwardAcceleration(reader->getMaxForwardAcceleration());
+        data->setMaxBackwardAcceleration(reader->getMaxBackwardAcceleration());
+
+        netdata->insertObject(data);
+    }
+    return true;
+}
 
 void Server::processEvents(ap::net::NetData *pNetData) {
     ap::net::NetEvent event;

@@ -51,6 +51,7 @@ class Server
     std::string         gameRules;      // What rules to use in the game. Deathmatch currently only implemented set of rules.
 // end
 
+    bool loadSettings(std::string serverConfigFile);
     void processEvents(ap::net::NetData *pNetData);
     void processPendingClients(ap::net::NetData *pNetData);
     void processDeadClients(ap::net::NetData *pNetData);
