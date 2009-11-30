@@ -29,7 +29,7 @@ namespace ap {
 /**/static GameWorldInject __gameworldinject;
 
 
-GameWorld::GameWorld() : boundaries(1.0, 0.0, 0.0, 1.0) {}
+GameWorld::GameWorld() : boundaries(1.0, 0.0, 0.0, 1.0), mapFileName(""), terrainFileName("") {}
 
 GameWorld::GameWorld(std::string fname) : boundaries(1.0, 0.0, 0.0, 1.0) {
     loadMapFile(mapFileName);
@@ -39,7 +39,9 @@ GameWorld::~GameWorld() {
     if (heightMap) delete heightMap;
 }
 
-void GameWorld::loadMapFile(std::string fname) {
+void GameWorld::loadMapFile(const std::string fname) {
+    std::cout << "mnap = \""<<mapFileName<<"\""<<std::endl;
+    std::cout << "fname = \""<<fname<<"\""<<std::endl;
     mapFileName = fname;
     float top, bottom, left, right, tmp, maxHeight;
 

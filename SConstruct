@@ -49,9 +49,9 @@ if platform == 'darwin':
 
 elif platform == 'posix':
     env = Environment()
-    env['CPPPATH'] = '/usr/local/boost_1_39_0'
+    #env['CPPPATH'] = '/usr/local/boost_1_39_0'
     env['CPPDEFINES'] = ['SERIALIZER_WITH_OGRE']
-    env.ParseConfig('pkg-config --cflags --libs OGRE CEGUI-OGRE CEGUI')
+    env.ParseConfig('pkg-config --cflags --libs OGRE CEGUI-OGRE CEGUI SDL_image')
     env.ParseConfig('pkg-config --libs enet')
 
 elif platform == 'win32':

@@ -241,6 +241,7 @@ void PlayState::setAvatar(uint32 avatarId)
     attachCameraNode(pAvatarNode);
     netdata->me.setControlPtr(pAvatarObject->getControlPtr());
     mObject = pAvatarObject;
+    unresolvedAvatarId = 0;
 }
 
 void PlayState::createSceneNodeForMovable(uint32 objectId)
@@ -354,7 +355,7 @@ void PlayState::setupCamera(Ogre::SceneManager *sceneManager) {
 
 void PlayState::attachCameraNode(Ogre::SceneNode *newParentNode)
 {
-    if (0 != mCameraNodeParent) {
+    if (NULL != mCameraNodeParent) {
         mCameraNodeParent->removeChild(mCameraNode);
     }
     newParentNode->addChild(mCameraNode);

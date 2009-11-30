@@ -22,7 +22,7 @@ class GameWorld : public ap::net::NetObject
     GameWorld(std::string fname);
     ~GameWorld();
 
-    void loadMapFile(std::string fname);
+    void loadMapFile(const std::string fname);
     bool clampToWorldBoundaries(ap::MovingObject &movingObject);
 	float getHeightAt(float x, float z);
 

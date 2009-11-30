@@ -162,6 +162,10 @@ void MovingObject::updateNode()
 
 void MovingObject::updateVelocity(float sSinceLast)
 {
+  if (state->velocity.squaredLength() > 4) {
+    state->velocity = getFacing() * state->velocity.dotProduct(getFacing());
+  }
+
     state->velocity += control->accelerationFwd * sSinceLast * getFacing();
     Ogre::Real length = state->velocity.length();
 

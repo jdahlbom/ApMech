@@ -56,7 +56,7 @@ void Server::start() {
     loadSettings("apserver.cfg");
 
     netdata->insertObject(mScores);
-    netdata->insertObject(gameWorld = new ap::GameWorld());
+    netdata->insertObject(gameWorld);
 
     newticks = nextupdate = getTicks();
 
@@ -96,6 +96,7 @@ bool Server::loadSettings(std::string serverConfigFile)
     if (!from_string<uint32>(respawnDelay, serverConfig.getSetting("RespawnDelay", "Rules of "+gameRules), std::dec)) respawnDelay = 2000;
     cout << "[SERVER:loadSettings] respawnDelay = "<<respawnDelay<<endl;
 
+    if (!gameWorld) gameWorld = new ap::GameWorld();
     gameWorld->loadMapFile(serverConfig.getSetting("Map") + ".map");
 
     mechDB = new MechDatabase("data/mechs");    // the mech data files are in directory data/mechs
@@ -106,7 +107,7 @@ bool Server::loadSettings(std::string serverConfigFile)
     mechDB->readMechFiles();
 
     std::vector<std::string> mechNames = mechDB->getMechNames();
-    for (int i = 0; i < mechNames.size(); i++) {
+    for (uint32 i = 0; i < mechNames.size(); i++) {
         MechData *data = new ap::MechData();
 
         // copy the data in place to a netobject
@@ -209,7 +210,7 @@ void Server::updateObjects(float dt, ap::net::NetData* pNetData) const {
         Ogre::Vector3 mechLoc = pMech->getPosition();
         mechLoc.y = gameWorld->getHeightAt(mechLoc.x, mechLoc.z);
         pMech->setPosition(mechLoc);
-        pMech->setChanged();                        // Send mechs always. For now. Everything else is predicted / as needed.
+        if (pMech->uid > 0) pMech->setChanged(); // Send living mechs always. For now. Everything else is predicted / as needed.
     }
 } // void Server::updateObjects
 
@@ -222,10 +223,10 @@ void Server::fireWeapons(uint64 tstamp, ap::net::NetData *pNetData) {
 void Server::weaponFired(ap::net::NetData *pNetData, ap::MovingObject *source) {
     Ogre::Vector3 facing = source->getFacing();
 
-    int newid = pNetData->insertObject(new ap::Projectile(facing * 150.0f)); //150 is velocity
+    int newid = pNetData->insertObject(new ap::Projectile(facing * 250.0f)); //150 is velocity
     ap::Projectile *bullet = pNetData->getObject<ap::Projectile *>(newid);
     bullet->setMaxSpeed(625.0f);
-    bullet->setPosition(source->getPosition() + facing*70.0f + Ogre::Vector3(0.0f, 80.0f, 0.0f));
+    bullet->setPosition(source->getPosition() + facing*70.0f + Ogre::Vector3(0.0f, 60.0f, 0.0f));
     bullet->setFacing(facing);
     bullet->uid = source->uid;
     bullet->setChanged();
@@ -338,7 +339,7 @@ void Server::spawnNewAvatars(ap::net::NetData *pNetData) {
         newAvatar->setMaxForwardAcceleration(reader->getMaxForwardAcceleration());
         newAvatar->setMaxBackwardAcceleration(reader->getMaxBackwardAcceleration());
       }
-      newAvatar->setMaxSpeed(35.0f);
+      newAvatar->setMaxSpeed(60.0f);
       newAvatar->setFriction(8.0f);
       newAvatar->uid = userId;
       newAvatar->color = pUser->color;

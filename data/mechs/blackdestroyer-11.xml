@@ -4,9 +4,9 @@
 <mech>
     <name>blackdestroyer-11</name>
     <stats>
-        <maxTurnRate>3</maxTurnRate>
-        <maxForwardAcceleration>15</maxForwardAcceleration>
-        <maxBackwardAcceleration>15</maxBackwardAcceleration>
+        <maxTurnRate>2</maxTurnRate>
+        <maxForwardAcceleration>25</maxForwardAcceleration>
+        <maxBackwardAcceleration>25</maxBackwardAcceleration>
     </stats>
     <design>
         <torso turningRadius="30">
