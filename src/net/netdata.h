@@ -78,6 +78,7 @@ class NetData {
 
     std::map <int, NetObject*> netobjects;
     std::multimap <ap::uint8, NetObject*> netObjectsByType; // Index table for efficient eachObject
+    std::multimap <ap::uint32, NetObject*> netObjectsByParent; // Index table for efficient each by parent id
     std::map <int, NetUser> users;   // This is, users contacted to US! Should be empty unless we're server.
     std::map <int, NetUser> pastUsers;// Users who disconnected already. A non-strict storage
 

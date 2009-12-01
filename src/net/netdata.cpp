@@ -50,7 +50,9 @@ NetData::~NetData() {
     for(objIterator = netobjects.begin(); objIterator!=netobjects.end(); ++objIterator) {
         delete(objIterator->second);
     }
-    netobjects.erase(netobjects.begin(), netobjects.end());
+    netobjects.clear();
+    netObjectsByType.clear();
+    netObjectsByParent.clear();
     return;
 }
 
@@ -486,14 +488,24 @@ void NetData::removeObject(uint32 id)
     // I had nabla-wing crash once because of double-delete, but couldn't reproduce..
     // checking doesn't harm anyway.
     if (netobjects.find(id) != netobjects.end()) {
+
+        // First, remove the corresponding entry from netObjectsByType
         pair<multimap<uint8,NetObject*>::iterator, multimap<uint8,NetObject*>::iterator> ii;
         ii = netObjectsByType.equal_range(netobjects.find(id)->second->getObjectType());
-
         while (ii.first != ii.second) {
             if (ii.first->second == netobjects.find(id)->second) netObjectsByType.erase(ii.first++);
             else ii.first++;
         }
 
+        // Then, from netObjectsByParent
+        pair<multimap<uint32,NetObject*>::iterator, multimap<uint32,NetObject*>::iterator> ii;
+        ii = netObjectsByParent.equal_range(netobjects.find(id)->second->getParentId());
+        while (ii.first != ii.second) {
+            if (ii.first->second == netobjects.find(id)->second) netObjectsByParent.erase(ii.first++);
+            else ii.first++;
+        }
+
+        // Finally, delete the object, and remove from netobjects
         delete netobjects.find(id)->second;
         netobjects.erase(id); // TODO: Shouldn't erase call the destructor anyways??
     }
@@ -570,6 +582,7 @@ uint32 NetData::insertObject(NetObject *obj, uint32 id)
     netobjects.insert(make_pair(newid, obj));
 
     netObjectsByType.insert(make_pair(obj->getObjectType(), obj));
+    netObjectsByParent.insert(make_pair(obj->getParentId(), obj));
 
 //    cout << "[NETDATA] Object of type "<<int(obj->getObjectType())<< " inserted. Now "<<netobjects.size()<<" / "<<netObjectsByType.size()<<endl;
     return newid;

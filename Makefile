@@ -7,6 +7,7 @@ CXX = g++
 CXXFLAGS = $(shell pkg-config --cflags $(LIBS)) $(DEFINES) -I$(INCLUDES) $(shell sdl-config --cflags) -I/usr/local/boost_1_39_0 -DSERIALIZER_WITH_OGRE -Wall
 LD = gcc
 LDFLAGS = $(shell pkg-config --libs $(LIBS)) $(shell sdl-config --libs) -lSDL_image -lenet -lboost_filesystem-mt -lexpat
+SERVERLDFLAGS = $(shell pkg-config --libs OGRE) -lSDL_image -lenet -lboost_filesystem-mt -lexpat
 OBJDIR = obj
 
 ## Files in subdirectories
@@ -52,7 +53,7 @@ application: $(OBJS)
 	$(LD) $(OBJS:%=$(OBJDIR)/%) -o $(BIN) $(LDFLAGS)
 
 server: $(SERVEROBJS)
-	$(LD) $(SERVEROBJS:%=$(OBJDIR)/%) -o apserver $(LDFLAGS)
+	$(LD) $(SERVEROBJS:%=$(OBJDIR)/%) -o apserver $(SERVERLDFLAGS)
 
 %.o: %.cpp
 	$(CXX) -c $^ -o $(OBJDIR)/$@ $(CXXFLAGS)
