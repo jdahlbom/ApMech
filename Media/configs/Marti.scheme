@@ -1,0 +1,51 @@
+<?xml version="1.0" ?>
+<GUIScheme Name="MartiSkin">
+	<Imageset Name="Marti" Filename="Marti.imageset" />
+	<LookNFeel Filename="Marti.looknfeel" />
+	<WindowSet Filename="CEGUIFalagardBase" />
+	<FalagardMapping WindowType="Marti/Titlebar" TargetType="Falagard/Titlebar" LookNFeel="Marti/Titlebar" />
+	<FalagardMapping WindowType="Marti/FrameWindow" TargetType="Falagard/FrameWindow" LookNFeel="Marti/FrameWindow" />
+	<FalagardMapping WindowType="Marti/Editbox" TargetType="Falagard/Editbox" LookNFeel="Marti/Editbox" />
+	<FalagardMapping WindowType="Marti/VerticalScrollbarThumb" TargetType="Falagard/Thumb" LookNFeel="Marti/VerticalScrollbarThumb" />
+	<FalagardMapping WindowType="Marti/VerticalScrollbar" TargetType="Falagard/Scrollbar" LookNFeel="Marti/VerticalScrollbar" />
+	<FalagardMapping WindowType="Marti/HorizontalScrollbarThumb" TargetType="Falagard/Thumb" LookNFeel="Marti/HorizontalScrollbarThumb" />
+	<FalagardMapping WindowType="Marti/HorizontalScrollbar" TargetType="Falagard/Scrollbar" LookNFeel="Marti/HorizontalScrollbar" />
+	<FalagardMapping WindowType="Marti/StaticImage" TargetType="Falagard/StaticImage" LookNFeel="Marti/StaticImage" />
+	<FalagardMapping WindowType="Marti/StaticText" TargetType="Falagard/StaticText" LookNFeel="Marti/StaticText" />
+	<FalagardMapping WindowType="Marti/MultiLineEditbox" TargetType="Falagard/MultiLineEditbox" LookNFeel="Marti/MultiLineEditbox" />
+	<FalagardMapping WindowType="Marti/Tooltip" TargetType="Falagard/Tooltip" LookNFeel="Marti/Tooltip" />
+	<FalagardMapping WindowType="Marti/ScrollablePane" TargetType="Falagard/ScrollablePane" LookNFeel="Marti/ScrollablePane" />
+
+	<FalagardMapping WindowType="Marti/Button" TargetType="Falagard/Button" LookNFeel="Marti/Button" />
+	<FalagardMapping WindowType="Marti/ButtonUp" TargetType="Falagard/Button" LookNFeel="Marti/ButtonUp" />
+	<FalagardMapping WindowType="Marti/ButtonDown" TargetType="Falagard/Button" LookNFeel="Marti/ButtonDown" />
+	<FalagardMapping WindowType="Marti/ButtonLeft" TargetType="Falagard/Button" LookNFeel="Marti/ButtonLeft" />
+	<FalagardMapping WindowType="Marti/ButtonRight" TargetType="Falagard/Button" LookNFeel="Marti/ButtonRight" />
+	<FalagardMapping WindowType="Marti/Checkbox" TargetType="Falagard/Checkbox" LookNFeel="Marti/Checkbox" />
+	<FalagardMapping WindowType="Marti/RadioButton" TargetType="Falagard/RadioButton" LookNFeel="Marti/RadioButton" />
+	<FalagardMapping WindowType="Marti/IconButton" TargetType="Falagard/Button" LookNFeel="Marti/IconButton" />
+	<FalagardMapping WindowType="Marti/CloseButton" TargetType="Falagard/SystemButton" LookNFeel="Marti/CloseButton" />
+	
+	<FalagardMapping WindowType="Marti/Spinner" TargetType="Falagard/Spinner" LookNFeel="Marti/Spinner" />
+
+	<FalagardMapping WindowType="Marti/TabButton" TargetType="Falagard/TabButton" LookNFeel="Marti/TabButton" />
+	<FalagardMapping WindowType="Marti/TabControl" TargetType="Falagard/TabControl" LookNFeel="Marti/TabControl" />
+	<FalagardMapping WindowType="Marti/TabPane" TargetType="Falagard/TabPane" LookNFeel="Marti/TabPane" />
+
+	<FalagardMapping WindowType="Marti/ListHeader" TargetType="Falagard/ListHeader" LookNFeel="Marti/ListHeader" />
+	<FalagardMapping WindowType="Marti/ListHeaderSegment" TargetType="Falagard/ListHeaderSegment" LookNFeel="Marti/ListHeaderSegment" />
+	<FalagardMapping WindowType="Marti/Listbox" TargetType="Falagard/Listbox" LookNFeel="Marti/Listbox" />
+	<FalagardMapping WindowType="Marti/MultiColumnList" TargetType="Falagard/MultiColumnList" LookNFeel="Marti/MultiColumnList" />
+	<FalagardMapping WindowType="Marti/Combobox" TargetType="Falagard/Combobox" LookNFeel="Marti/Combobox" />
+	<FalagardMapping WindowType="Marti/ComboDropList" TargetType="Falagard/ComboDropList" LookNFeel="Marti/ComboDropList" />
+
+	<FalagardMapping WindowType="Marti/Menubar" TargetType="Falagard/Menubar" LookNFeel="Marti/Menubar" />
+	<FalagardMapping WindowType="Marti/MenuItem" TargetType="Falagard/MenuItem" LookNFeel="Marti/MenuItem" />
+	<FalagardMapping WindowType="Marti/PopupMenu" TargetType="Falagard/PopupMenu" LookNFeel="Marti/PopupMenu" />
+
+<!--	<FalagardMapping WindowType="Marti/ComboboxButton" TargetType="Falagard/Button" LookNFeel="Marti/ComboboxButton" />
+	<FalagardMapping WindowType="Marti/ProgressBar" TargetType="Falagard/ProgressBar" LookNFeel="Marti/ProgressBar" />
+	<FalagardMapping WindowType="Marti/ScrollablePane" TargetType="Falagard/ScrollablePane" LookNFeel="Marti/ScrollablePane" />
+	<FalagardMapping WindowType="Marti/ScrollablePane" TargetType="Falagard/ScrollablePane" LookNFeel="Marti/ScrollablePane" />
+-->
+</GUIScheme>

@@ -1,0 +1,578 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<GUILayout>
+  <Window Type="DefaultWindow" Name="root" >
+    <Property Name="UnifiedAreaRect" Value="{{0.000000,0.000000},{0.000000,0.000000},{1.000000,0.000000},{1.000000,0.000000}}" />
+    <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+    <Window Type="TaharezLook/Combobox" Name="MeshViewer/GroupBox" >
+      <Property Name="ActiveEditSelectionColour" Value="FF607FFF" />
+      <Property Name="InactiveEditSelectionColour" Value="FFFFFFFF" />
+      <Property Name="MaxEditTextLength" Value="1073741823" />
+      <Property Name="NormalEditTextColour" Value="AAAAAAFF" />
+      <Property Name="ReadOnly" Value="True" />
+      <Property Name="SelectedEditTextColour" Value="FFFFFFFF" />
+      <Property Name="Text" Value="Select Group" />
+      <Property Name="UnifiedAreaRect" Value="{{-0.001006,0.000000},{0.004980,0.000000},{0.180723,0.000000},{0.872882,0.000000}}" />
+      <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+    </Window>
+    <Window Type="TaharezLook/Combobox" Name="MeshViewer/MeshBox" >
+      <Property Name="ActiveEditSelectionColour" Value="FF607FFF" />
+      <Property Name="InactiveEditSelectionColour" Value="FFFFFFFF" />
+      <Property Name="MaxEditTextLength" Value="1073741823" />
+      <Property Name="NormalEditTextColour" Value="AAAAAAFF" />
+      <Property Name="ReadOnly" Value="True" />
+      <Property Name="SelectedEditTextColour" Value="FFFFFFFF" />
+      <Property Name="Text" Value="Select Mesh" />
+      <Property Name="UnifiedAreaRect" Value="{{0.192424,0.000000},{0.004980,0.000000},{0.365785,0.000000},{0.865527,0.000000}}" />
+      <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+    </Window>
+    <Window Type="TaharezLook/Combobox" Name="MeshViewer/MaterialBox" >
+      <Property Name="ActiveEditSelectionColour" Value="FF607FFF" />
+      <Property Name="InactiveEditSelectionColour" Value="FFFFFFFF" />
+      <Property Name="MaxEditTextLength" Value="1073741823" />
+      <Property Name="NormalEditTextColour" Value="AAAAAAFF" />
+      <Property Name="ReadOnly" Value="True" />
+      <Property Name="SelectedEditTextColour" Value="FFFFFFFF" />
+      <Property Name="Text" Value="Select Material" />
+      <Property Name="UnifiedAreaRect" Value="{{0.361993,0.000000},{0.004980,0.000000},{0.550942,0.000000},{0.827001,0.000000}}" />
+      <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+    </Window>
+    <Window Type="TaharezLook/TabControl" Name="MeshViewer/LogInfo/MainTabs" >
+      <Property Name="Alpha" Value="0.700000" />
+      <Property Name="TabButtonType" Value="TaharezLook/TabButton" />
+      <Property Name="UnifiedAreaRect" Value="{{0.001180,0.000000},{0.850420,0.000000},{0.849706,0.000000},{0.999066,0.000000}}" />
+      <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+      <Window Type="DefaultWindow" Name="MeshViewer/LogInfo/MainTabs/MeshLogInfo" >
+        <Property Name="Text" Value="MeshLog" />
+        <Property Name="UnifiedAreaRect" Value="{{0.006027,0.000000},{0.017184,0.000000},{0.981950,0.000000},{0.878043,0.000000}}" />
+        <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+        <Window Type="TaharezLook/MultiLineEditbox" Name="MeshViewer/MeshLogInfo" >
+          <Property Name="ActiveSelectionColour" Value="FF607FFF" />
+          <Property Name="Alpha" Value="0.950000" />
+          <Property Name="MaxTextLength" Value="1073741823" />
+          <Property Name="NormalTextColour" Value="AAAAAAFF" />
+          <Property Name="ReadOnly" Value="True" />
+          <Property Name="SelectedTextColour" Value="FFFFFFFF" />
+          <Property Name="SelectionBrushImage" Value="set:TaharezLook image:GenericBrush" />
+          <Property Name="Text" Value="
+" />
+          <Property Name="UnifiedAreaRect" Value="{{0.007511,0.000000},{0.003162,0.000000},{0.947021,0.000000},{1.000000,0.000000}}" />
+          <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+        </Window>
+      </Window>
+      <Window Type="DefaultWindow" Name="MeshViewer/LogInfo/MainTabs/OgreLogInfo" >
+        <Property Name="Text" Value="OgreLog" />
+        <Property Name="UnifiedAreaRect" Value="{{0.010834,0.000000},{0.002830,0.000000},{0.979546,0.000000},{0.879638,0.000000}}" />
+        <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+        <Property Name="Visible" Value="False" />
+        <Window Type="TaharezLook/MultiLineEditbox" Name="MeshViewer/OgreLog" >
+          <Property Name="ActiveSelectionColour" Value="FF607FFF" />
+          <Property Name="Alpha" Value="0.950000" />
+          <Property Name="MaxTextLength" Value="1073741823" />
+          <Property Name="NormalTextColour" Value="AAAAAAFF" />
+          <Property Name="ReadOnly" Value="True" />
+          <Property Name="SelectedTextColour" Value="FFFFFFFF" />
+          <Property Name="SelectionBrushImage" Value="set:TaharezLook image:GenericBrush" />
+          <Property Name="Text" Value="
+" />
+          <Property Name="UnifiedAreaRect" Value="{{0.003118,0.000000},{0.058348,0.000000},{1.001312,0.000000},{1.000000,0.000000}}" />
+          <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+        </Window>
+      </Window>
+    </Window>
+    <Window Type="TaharezLook/Button" Name="MeshViewer/FPSButton" >
+      <Property Name="Alpha" Value="0.750000" />
+      <Property Name="DisabledTextColour" Value="FF888888" />
+      <Property Name="Text" Value="FPS: " />
+      <Property Name="UnifiedAreaRect" Value="{{0.855093,0.000000},{0.953290,0.000000},{0.933614,0.000000},{1.002028,0.000000}}" />
+      <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+      <Property Name="WantsMultiClickEvents" Value="False" />
+    </Window>
+    <Window Type="TaharezLook/Button" Name="MeshViewer/TriButton" >
+      <Property Name="Alpha" Value="0.750000" />
+      <Property Name="DisabledTextColour" Value="FF888888" />
+      <Property Name="Text" Value="TriCount: " />
+      <Property Name="UnifiedAreaRect" Value="{{0.856239,0.000000},{0.907650,0.000000},{0.996127,0.000000},{0.956389,0.000000}}" />
+      <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+      <Property Name="WantsMultiClickEvents" Value="False" />
+    </Window>
+    <Window Type="TaharezLook/Button" Name="MeshViewer/ExitButton" >
+      <Property Name="Alpha" Value="0.750000" />
+      <Property Name="DisabledTextColour" Value="FF888888" />
+      <Property Name="Text" Value="Exit" />
+      <Property Name="UnifiedAreaRect" Value="{{0.935008,0.000000},{0.958480,0.000000},{0.994518,0.000000},{0.998480,0.000000}}" />
+      <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+      <Property Name="WantsMultiClickEvents" Value="False" />
+    </Window>
+    <Window Type="TaharezLook/Button" Name="MeshViewer/LogButton" >
+      <Property Name="Alpha" Value="0.750000" />
+      <Property Name="ClippedByParent" Value="False" />
+      <Property Name="DisabledTextColour" Value="FF888888" />
+      <Property Name="Text" Value="Log" />
+      <Property Name="UnifiedAreaRect" Value="{{0.549495,0.000000},{0.004197,0.000000},{0.607949,0.000000},{0.036770,0.000000}}" />
+      <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+      <Property Name="WantsMultiClickEvents" Value="False" />
+    </Window>
+    <Window Type="TaharezLook/Button" Name="MeshViewer/MeshInfoButton" >
+      <Property Name="Alpha" Value="0.750000" />
+      <Property Name="DisabledTextColour" Value="FF888888" />
+      <Property Name="Text" Value="Mesh" />
+      <Property Name="UnifiedAreaRect" Value="{{0.695918,0.000000},{0.004197,0.000000},{0.751200,0.000000},{0.036770,0.000000}}" />
+      <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+      <Property Name="WantsMultiClickEvents" Value="False" />
+    </Window>
+    <Window Type="TaharezLook/Button" Name="MeshViewer/MaterialInfoButton" >
+      <Property Name="Alpha" Value="0.750000" />
+      <Property Name="DisabledTextColour" Value="FF888888" />
+      <Property Name="Text" Value="Material" />
+      <Property Name="UnifiedAreaRect" Value="{{0.607206,0.000000},{0.004197,0.000000},{0.697096,0.000000},{0.036770,0.000000}}" />
+      <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+      <Property Name="WantsMultiClickEvents" Value="False" />
+    </Window>
+    <Window Type="TaharezLook/Button" Name="MeshViewer/AddResourcePath" >
+      <Property Name="Alpha" Value="0.750000" />
+      <Property Name="DisabledTextColour" Value="FF888888" />
+      <Property Name="Text" Value="Add Group" />
+      <Property Name="UnifiedAreaRect" Value="{{0.859810,0.000000},{0.845216,0.000000},{0.990422,0.000000},{0.907695,0.000000}}" />
+      <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+      <Property Name="WantsMultiClickEvents" Value="False" />
+    </Window>
+    <Window Type="TaharezLook/FrameWindow" Name="MeshViewer/MeshInfo" >
+      <Property Name="Alpha" Value="0.650000" />
+      <Property Name="CaptionColour" Value="FFFFFFFF" />
+      <Property Name="EWSizingCursorImage" Value="set:TaharezLook image:MouseEsWeCursor" />
+      <Property Name="NESWSizingCursorImage" Value="set:TaharezLook image:MouseNeSwCursor" />
+      <Property Name="NSSizingCursorImage" Value="set:TaharezLook image:MouseNoSoCursor" />
+      <Property Name="NWSESizingCursorImage" Value="set:TaharezLook image:MouseNwSeCursor" />
+      <Property Name="RollUpEnabled" Value="False" />
+      <Property Name="Text" Value="Mesh Viewer" />
+      <Property Name="TitlebarEnabled" Value="True" />
+      <Property Name="TitlebarFont" Value="bluehighway-10" />
+      <Property Name="UnifiedAreaRect" Value="{{0.006154,0.000000},{0.046919,0.000000},{0.299975,0.000000},{0.857914,0.000000}}" />
+      <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+      <Window Type="TaharezLook/TabControl" Name="MeshViewer/MeshInfo/MainTabs" >
+        <Property Name="TabButtonType" Value="TaharezLook/TabButton" />
+        <Property Name="UnifiedAreaRect" Value="{{-0.002487,0.000000},{0.066702,0.000000},{0.977360,0.000000},{0.980492,0.000000}}" />
+        <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+        <Window Type="DefaultWindow" Name="MeshViewer/MeshInfo/MainTabs/TreeViewPage" >
+          <Property Name="Text" Value="Tree" />
+          <Property Name="UnifiedAreaRect" Value="{{0.018059,0.000000},{-0.004754,0.000000},{0.969405,0.000000},{0.989210,0.000000}}" />
+          <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          <Window Type="TaharezLook/Listbox" Name="MeshViewer/MeshInfo/MainTabs/TreeViewPage/Tree" >
+            <Property Name="Alpha" Value="0.850000" />
+            <Property Name="Sort" Value="True" />
+            <Property Name="UnifiedAreaRect" Value="{{-0.011368,0.000000},{-0.008803,0.000000},{0.987786,0.000000},{1.001247,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          </Window>
+        </Window>
+        <Window Type="DefaultWindow" Name="MeshViewer/MeshInfo/MainTabs/SubEntityPage" >
+          <Property Name="Text" Value="Subs" />
+          <Property Name="UnifiedAreaRect" Value="{{0.016676,0.000000},{0.002765,0.000000},{0.968022,0.000000},{0.994849,0.000000}}" />
+          <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          <Property Name="Visible" Value="False" />
+          <Window Type="TaharezLook/StaticText" Name="MeshViewer/MeshInfo/MainTabs/SubEntityPage/SubMeshesTitle" >
+            <Property Name="FrameEnabled" Value="False" />
+            <Property Name="Text" Value="SubMeshes" />
+            <Property Name="UnifiedAreaRect" Value="{{-0.009574,0.000000},{-0.000776,0.000000},{0.963703,0.000000},{0.058201,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          </Window>
+          <Window Type="TaharezLook/Listbox" Name="MeshViewer/MeshInfo/MainTabs/SubEntityPage/SubMeshList" >
+            <Property Name="Alpha" Value="0.850000" />
+            <Property Name="Sort" Value="True" />
+            <Property Name="UnifiedAreaRect" Value="{{0.003171,0.000000},{0.045196,0.000000},{0.990694,0.000000},{0.437860,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          </Window>
+          <Window Type="TaharezLook/StaticText" Name="MeshViewer/MeshInfo/MainTabs/SubEntityPage/MaterialsTitle" >
+            <Property Name="FrameEnabled" Value="False" />
+            <Property Name="Text" Value="Materials" />
+            <Property Name="UnifiedAreaRect" Value="{{-0.000727,0.000000},{0.518714,0.000000},{0.972549,0.000000},{0.577690,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          </Window>
+          <Window Type="TaharezLook/Listbox" Name="MeshViewer/MeshInfo/MainTabs/SubEntityPage/MaterialList" >
+            <Property Name="Alpha" Value="0.850000" />
+            <Property Name="Sort" Value="True" />
+            <Property Name="UnifiedAreaRect" Value="{{0.003844,0.000000},{0.554319,0.000000},{0.991099,0.000000},{0.990144,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          </Window>
+          <Window Type="TaharezLook/Combobox" Name="MeshViewer/MeshInfo/MainTabs/SubEntityPage/SelectLOD" >
+            <Property Name="ActiveEditSelectionColour" Value="FF607FFF" />
+            <Property Name="Alpha" Value="1.400000" />
+            <Property Name="InactiveEditSelectionColour" Value="FFFFFFFF" />
+            <Property Name="MaxEditTextLength" Value="1073741823" />
+            <Property Name="NormalEditTextColour" Value="AAAAAAFF" />
+            <Property Name="ReadOnly" Value="True" />
+            <Property Name="SelectedEditTextColour" Value="FFFFFFFF" />
+            <Property Name="Text" Value="Select Level Of Detail" />
+            <Property Name="UnifiedAreaRect" Value="{{0.007308,0.000000},{0.453958,0.000000},{0.988772,0.000000},{1.036733,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          </Window>
+        </Window>
+        <Window Type="DefaultWindow" Name="MeshViewer/MeshInfo/MainTabs/AnimPage/AnimPage" >
+          <Property Name="Text" Value="Anims" />
+          <Property Name="UnifiedAreaRect" Value="{{0.037978,0.000000},{0.002738,0.000000},{0.943653,0.000000},{0.978873,0.000000}}" />
+          <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          <Property Name="Visible" Value="False" />
+          <Window Type="TaharezLook/StaticText" Name="MeshViewer/MeshInfo/MainTabs/AnimPage/Text1" >
+            <Property Name="FrameEnabled" Value="False" />
+            <Property Name="Text" Value="Animation States" />
+            <Property Name="UnifiedAreaRect" Value="{{-0.023152,0.000000},{0.164918,0.000000},{0.571021,0.000000},{0.246214,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          </Window>
+          <Window Type="TaharezLook/Listbox" Name="MeshViewer/MeshInfo/MainTabs/AnimPage/AnimList" >
+            <Property Name="Sort" Value="True" />
+            <Property Name="UnifiedAreaRect" Value="{{-0.021825,0.000000},{0.217463,0.000000},{1.009752,0.000000},{0.487631,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          </Window>
+          <Window Type="TaharezLook/Button" Name="MeshViewer/MeshInfo/MainTabs/AnimPage/AnimPlay" >
+            <Property Name="DisabledTextColour" Value="FF888888" />
+            <Property Name="Text" Value="Play" />
+            <Property Name="UnifiedAreaRect" Value="{{0.007438,0.000000},{0.099652,0.000000},{0.217328,0.000000},{0.154286,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+            <Property Name="WantsMultiClickEvents" Value="False" />
+          </Window>
+          <Window Type="TaharezLook/Button" Name="MeshViewer/MeshInfo/MainTabs/AnimPage/AnimStop" >
+            <Property Name="DisabledTextColour" Value="FF888888" />
+            <Property Name="Text" Value="Stop" />
+            <Property Name="UnifiedAreaRect" Value="{{0.429656,0.000000},{0.099652,0.000000},{0.687306,0.000000},{0.154286,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+            <Property Name="WantsMultiClickEvents" Value="False" />
+          </Window>
+          <Window Type="TaharezLook/StaticText" Name="MeshViewer/MeshInfo/MainTabs/AnimPage/Text2" >
+            <Property Name="FrameEnabled" Value="False" />
+            <Property Name="Text" Value="Animation Speed" />
+            <Property Name="UnifiedAreaRect" Value="{{0.006591,0.000000},{0.001953,0.000000},{0.914553,0.000000},{0.067767,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          </Window>
+          <Window Type="TaharezLook/HorizontalScrollbar" Name="MeshViewer/MeshInfo/MainTabs/AnimPage/AnimSpeed" >
+            <Property Name="DocumentSize" Value="10.000000" />
+            <Property Name="OverlapSize" Value="1.000000" />
+            <Property Name="PageSize" Value="2.000000" />
+            <Property Name="ScrollPosition" Value="5.000000" />
+            <Property Name="UnifiedAreaRect" Value="{{0.023189,0.000000},{0.060610,0.000000},{0.888952,0.000000},{0.089112,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          </Window>
+          <Window Type="TaharezLook/Button" Name="MeshViewer/MeshInfo/MainTabs/AnimPage/SpeedPause" >
+            <Property Name="DisabledTextColour" Value="FF888888" />
+            <Property Name="Text" Value="Pause" />
+            <Property Name="UnifiedAreaRect" Value="{{0.212429,0.000000},{0.099652,0.000000},{0.422353,0.000000},{0.154286,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+            <Property Name="WantsMultiClickEvents" Value="False" />
+          </Window>
+          <Window Type="TaharezLook/Button" Name="MeshViewer/MeshInfo/MainTabs/AnimPage/SwitchHardwareAnimation" >
+            <Property Name="DisabledTextColour" Value="FF888888" />
+            <Property Name="Text" Value="Hardware Animation On/Off" />
+            <Property Name="UnifiedAreaRect" Value="{{0.000879,0.000000},{0.486258,0.000000},{0.872382,0.000000},{0.550282,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+            <Property Name="WantsMultiClickEvents" Value="False" />
+          </Window>
+          <Window Type="TaharezLook/Listbox" Name="MeshViewer/MeshInfo/MainTabs/AnimPage/PoseList" >
+            <Property Name="Font" Value="bluehighway-10" />
+            <Property Name="Sort" Value="True" />
+            <Property Name="UnifiedAreaRect" Value="{{-0.000445,0.000000},{0.698589,0.000000},{0.889106,0.000000},{1.001686,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          </Window>
+          <Window Type="TaharezLook/StaticText" Name="MeshViewer/MeshInfo/MainTabs/AnimPage/Text12" >
+            <Property Name="Font" Value="bluehighway-10" />
+            <Property Name="FrameEnabled" Value="False" />
+            <Property Name="Text" Value="Poses States" />
+            <Property Name="UnifiedAreaRect" Value="{{-0.012462,0.000000},{0.635067,0.000000},{0.766501,0.000000},{0.716363,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          </Window>
+          <Window Type="TaharezLook/HorizontalScrollbar" Name="MeshViewer/MeshInfo/MainTabs/AnimPage/PoseKey" >
+            <Property Name="DocumentSize" Value="10.000000" />
+            <Property Name="Font" Value="bluehighway-10" />
+            <Property Name="OverlapSize" Value="1.000000" />
+            <Property Name="PageSize" Value="2.000000" />
+            <Property Name="ScrollPosition" Value="0.000000" />
+            <Property Name="UnifiedAreaRect" Value="{{0.012499,0.000000},{0.609422,0.000000},{0.878261,0.000000},{0.637924,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          </Window>
+          <Window Type="TaharezLook/StaticText" Name="MeshViewer/MeshInfo/MainTabs/AnimPage/Text24" >
+            <Property Name="Font" Value="bluehighway-10" />
+            <Property Name="FrameEnabled" Value="False" />
+            <Property Name="Text" Value="Pose key" />
+            <Property Name="UnifiedAreaRect" Value="{{-0.005626,0.000000},{0.548936,0.000000},{0.902336,0.000000},{0.614750,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          </Window>
+        </Window>
+        <Window Type="DefaultWindow" Name="MeshViewer/MeshInfo/MainTabs/BonesPage" >
+          <Property Name="Text" Value="Bones" />
+          <Property Name="UnifiedAreaRect" Value="{{0.037634,0.000000},{0.001303,0.000000},{0.974559,0.000000},{0.982223,0.000000}}" />
+          <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          <Property Name="Visible" Value="False" />
+          <Window Type="TaharezLook/Listbox" Name="MeshViewer/MeshInfo/MainTabs/AnimPage/BoneList" >
+            <Property Name="Sort" Value="True" />
+            <Property Name="UnifiedAreaRect" Value="{{-0.015996,0.000000},{0.175827,0.000000},{0.972974,0.000000},{0.966482,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          </Window>
+          <Window Type="TaharezLook/StaticText" Name="MeshViewer/MeshInfo/MainTabs/AnimPage/Text11" >
+            <Property Name="FrameEnabled" Value="False" />
+            <Property Name="Text" Value="Bone Hierarchy" />
+            <Property Name="UnifiedAreaRect" Value="{{-0.018659,0.000000},{0.121847,0.000000},{0.664527,0.000000},{0.196447,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          </Window>
+          <Window Type="TaharezLook/Button" Name="MeshViewer/MeshInfo/MainTabs/AnimPage/ShowSkeleton" >
+            <Property Name="DisabledTextColour" Value="FF888888" />
+            <Property Name="Font" Value="bluehighway-10" />
+            <Property Name="Text" Value="Show Skeleton" />
+            <Property Name="UnifiedAreaRect" Value="{{0.006143,0.000000},{0.039457,0.000000},{0.672952,0.000000},{0.098091,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+            <Property Name="WantsMultiClickEvents" Value="False" />
+          </Window>
+        </Window>
+        <Window Type="DefaultWindow" Name="MeshViewer/MeshInfo/MainTabs/ToolPage" >
+          <Property Name="Text" Value="Tools" />
+          <Property Name="UnifiedAreaRect" Value="{{0.033485,0.000000},{0.001303,0.000000},{0.970410,0.000000},{0.982223,0.000000}}" />
+          <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          <Property Name="Visible" Value="False" />
+          <Window Type="TaharezLook/Button" Name="MeshViewer/MeshInfo/MainTabs/ToolPage/OptimizeBuffers" >
+            <Property Name="Alpha" Value="0.750000" />
+            <Property Name="DisabledTextColour" Value="FF888888" />
+            <Property Name="Text" Value="Optimize Buffers" />
+            <Property Name="UnifiedAreaRect" Value="{{0.006986,0.000000},{0.733412,0.000000},{0.649755,0.000000},{0.804215,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+            <Property Name="WantsMultiClickEvents" Value="False" />
+          </Window>
+          <Window Type="TaharezLook/Button" Name="MeshViewer/MeshInfo/MainTabs/ToolPage/AddLod" >
+            <Property Name="Alpha" Value="0.750000" />
+            <Property Name="DisabledTextColour" Value="FF888888" />
+            <Property Name="Text" Value="Add Level Of Details" />
+            <Property Name="UnifiedAreaRect" Value="{{0.031987,0.000000},{0.101256,0.000000},{0.307437,0.000000},{0.505039,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+            <Property Name="WantsMultiClickEvents" Value="False" />
+          </Window>
+          <Window Type="TaharezLook/Button" Name="MeshViewer/MeshInfo/MainTabs/ToolPage/Tangentify" >
+            <Property Name="Alpha" Value="0.750000" />
+            <Property Name="DisabledTextColour" Value="FF888888" />
+            <Property Name="Text" Value="Add Tangents" />
+            <Property Name="UnifiedAreaRect" Value="{{0.006986,0.000000},{0.925172,0.000000},{0.649755,0.000000},{0.995975,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+            <Property Name="WantsMultiClickEvents" Value="False" />
+          </Window>
+          <Window Type="TaharezLook/Button" Name="MeshViewer/MeshInfo/MainTabs/ToolPage/SaveButton" >
+            <Property Name="Alpha" Value="0.750000" />
+            <Property Name="DisabledTextColour" Value="FF888888" />
+            <Property Name="Text" Value="Save" />
+            <Property Name="UnifiedAreaRect" Value="{{0.727635,0.000000},{0.931078,0.000000},{0.980210,0.000000},{0.999399,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+            <Property Name="WantsMultiClickEvents" Value="False" />
+          </Window>
+
+          <Window Type="TaharezLook/Button" Name="MeshViewer/MeshInfo/MainTabs/ToolPage/tootleMesh" >
+            <Property Name="Alpha" Value="0.750000" />
+            <Property Name="DisabledTextColour" Value="FF888888" />
+            <Property Name="Text" Value="Ati Tootle" />
+            <Property Name="UnifiedAreaRect" Value="{{0.006986,0.000000},{0.505009,0.000000},{0.649755,0.000000},{0.585009,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+            <Property Name="WantsMultiClickEvents" Value="False" />
+          </Window>
+          
+          <Window Type="TaharezLook/Button" Name="MeshViewer/MeshInfo/MainTabs/ToolPage/OptimizeAll" >
+            <Property Name="Alpha" Value="0.750000" />
+            <Property Name="DisabledTextColour" Value="FF888888" />
+            <Property Name="Text" Value="Optimize ALL." />
+            <Property Name="UnifiedAreaRect" Value="{{0.006986,0.000000},{0.585009,0.000000},{0.649755,0.000000},{0.669602,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+            <Property Name="WantsMultiClickEvents" Value="False" />
+          </Window>
+          <Window Type="TaharezLook/Button" Name="MeshViewer/MeshInfo/MainTabs/ToolPage/OptimizeIndex" >
+            <Property Name="Alpha" Value="0.750000" />
+            <Property Name="DisabledTextColour" Value="FF888888" />
+            <Property Name="Text" Value="Optimize Index" />
+            <Property Name="UnifiedAreaRect" Value="{{0.006986,0.000000},{0.665069,0.000000},{0.649755,0.000000},{0.735872,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+            <Property Name="WantsMultiClickEvents" Value="False" />
+          </Window>
+          <Window Type="TaharezLook/Button" Name="MeshViewer/MeshInfo/MainTabs/ToolPage/BuildEdgeList" >
+            <Property Name="Alpha" Value="0.750000" />
+            <Property Name="DisabledTextColour" Value="FF888888" />
+            <Property Name="Text" Value="Build Edge List" />
+            <Property Name="UnifiedAreaRect" Value="{{0.006986,0.000000},{0.861013,0.000000},{0.649755,0.000000},{0.931816,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+            <Property Name="WantsMultiClickEvents" Value="False" />
+          </Window>
+          <Window Type="TaharezLook/Button" Name="MeshViewer/MeshInfo/MainTabs/ToolPage/OptimizeAnimation" >
+            <Property Name="Alpha" Value="0.750000" />
+            <Property Name="DisabledTextColour" Value="FF888888" />
+            <Property Name="Text" Value="Optimize Animation" />
+            <Property Name="UnifiedAreaRect" Value="{{0.008261,0.000000},{0.797301,0.000000},{0.651030,0.000000},{0.868104,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+            <Property Name="WantsMultiClickEvents" Value="False" />
+          </Window>
+          <Window Type="TaharezLook/Button" Name="MeshViewer/MeshInfo/MainTabs/ToolPage/ExportXML" >
+            <Property Name="Alpha" Value="0.750000" />
+            <Property Name="DisabledTextColour" Value="FF888888" />
+            <Property Name="Text" Value="Export Xml" />
+            <Property Name="UnifiedAreaRect" Value="{{0.721076,0.000000},{0.720644,0.000000},{0.982038,0.000000},{0.859479,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+            <Property Name="WantsMultiClickEvents" Value="False" />
+          </Window>
+          <Window Type="TaharezLook/Checkbox" Name="MeshViewer/MeshInfo/MainTabs/ToolPage/isporpotionalLod" >
+            <Property Name="DisabledTextColour" Value="FF888888" />
+            <Property Name="HoverTextColour" Value="FF000000" />
+            <Property Name="NormalTextColour" Value="FF000000" />
+            <Property Name="PushedTextColour" Value="FF000000" />
+            <Property Name="UnifiedAreaRect" Value="{{0.879294,0.000000},{0.108493,0.000000},{0.998444,0.000000},{0.159236,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          </Window>
+          <Window Type="TaharezLook/StaticText" Name="isproportionalText" >
+            <Property Name="FrameEnabled" Value="False" />
+            <Property Name="Text" Value="Proportinal Lod ? " />
+            <Property Name="UnifiedAreaRect" Value="{{0.305806,0.000000},{0.100754,0.000000},{0.889087,0.000000},{0.169841,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          </Window>
+          <Window Type="TaharezLook/HorizontalScrollbar" Name="MeshViewer/MeshInfo/MainTabs/ToolPage/SelectNumMesh" >
+            <Property Name="DocumentSize" Value="200.000000" />
+            <Property Name="OverlapSize" Value="1.000000" />
+            <Property Name="PageSize" Value="5.000000" />
+            <Property Name="ScrollPosition" Value="1.000000" />
+            <Property Name="UnifiedAreaRect" Value="{{0.048259,0.000000},{0.070476,0.000000},{0.685763,0.000000},{0.098978,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          </Window>
+          <Window Type="TaharezLook/StaticText" Name="MeshViewer/MeshInfo/MainTabs/ToolPage/Text21" >
+            <Property Name="FrameEnabled" Value="False" />
+            <Property Name="Text" Value="Mesh Number (speed test)" />
+            <Property Name="UnifiedAreaRect" Value="{{0.030331,0.000000},{-0.004823,0.000000},{0.938293,0.000000},{0.060991,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          </Window>
+          <Window Type="TaharezLook/Spinner" Name="MeshViewer/MeshInfo/MainTabs/ToolPage/LodDistance" >
+            <Property Name="UnifiedAreaRect" Value="{{0.322914,0.000000},{0.338867,0.000000},{0.966944,0.000000},{0.405769,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          </Window>
+          <Window Type="TaharezLook/Spinner" Name="MeshViewer/MeshInfo/MainTabs/ToolPage/LodPercentage" >
+            <Property Name="UnifiedAreaRect" Value="{{0.318794,0.000000},{0.445605,0.000000},{0.962824,0.000000},{0.512506,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          </Window>
+          <Window Type="TaharezLook/StaticText" Name="interLodDistanceText4" >
+            <Property Name="FrameEnabled" Value="False" />
+            <Property Name="Text" Value="Distance inter-lod" />
+            <Property Name="UnifiedAreaRect" Value="{{0.314930,0.000000},{0.283445,0.000000},{0.961964,0.000000},{0.341912,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          </Window>
+          <Window Type="TaharezLook/StaticText" Name="numberLodText6" >
+            <Property Name="FrameEnabled" Value="False" />
+            <Property Name="Text" Value="Number of Lods " />
+            <Property Name="UnifiedAreaRect" Value="{{0.318755,0.000000},{0.159309,0.000000},{0.970890,0.000000},{0.217776,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          </Window>
+          <Window Type="TaharezLook/Button" Name="MeshViewer/MeshInfo/MainTabs/ToolPage/Reload" >
+            <Property Name="Alpha" Value="0.750000" />
+            <Property Name="DisabledTextColour" Value="FF888888" />
+            <Property Name="Text" Value="Reload" />
+            <Property Name="UnifiedAreaRect" Value="{{0.722535,0.000000},{0.864351,0.000000},{0.975110,0.000000},{0.932672,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+            <Property Name="WantsMultiClickEvents" Value="False" />
+          </Window>
+          <Window Type="TaharezLook/Button" Name="MeshViewer/MeshInfo/MainTabs/ToolPage/SelectNumMeshOk" >
+            <Property Name="Alpha" Value="0.750000" />
+            <Property Name="DisabledTextColour" Value="FF888888" />
+            <Property Name="Text" Value="Ok" />
+            <Property Name="UnifiedAreaRect" Value="{{0.703232,0.000000},{0.058872,0.000000},{0.920093,0.000000},{0.109328,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+            <Property Name="WantsMultiClickEvents" Value="False" />
+          </Window>
+          <Window Type="TaharezLook/Button" Name="MeshViewer/MeshInfo/MainTabs/ToolPage/ImportXML" >
+            <Property Name="Alpha" Value="0.750000" />
+            <Property Name="DisabledTextColour" Value="FF888888" />
+            <Property Name="Font" Value="bluehighway-10" />
+            <Property Name="Text" Value="Import Xml" />
+            <Property Name="UnifiedAreaRect" Value="{{0.717250,0.000000},{0.580989,0.000000},{0.978212,0.000000},{0.719824,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+            <Property Name="WantsMultiClickEvents" Value="False" />
+          </Window>
+          <Window Type="TaharezLook/Spinner" Name="MeshViewer/MeshInfo/MainTabs/ToolPage/LodNum" >
+            <Property Name="Font" Value="bluehighway-10" />
+            <Property Name="UnifiedAreaRect" Value="{{0.315459,0.000000},{0.216694,0.000000},{0.959489,0.000000},{0.283596,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          </Window>
+          <Window Type="TaharezLook/StaticText" Name="reductionAmountText43" >
+            <Property Name="Font" Value="bluehighway-10" />
+            <Property Name="FrameEnabled" Value="False" />
+            <Property Name="Text" Value="Reduction Amount" />
+            <Property Name="UnifiedAreaRect" Value="{{0.316205,0.000000},{0.390674,0.000000},{0.963239,0.000000},{0.449141,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          </Window>
+        </Window>
+      </Window>
+    </Window>
+    <Window Type="TaharezLook/FrameWindow" Name="MeshViewer/MaterialInfo" >
+      <Property Name="Alpha" Value="0.650000" />
+      <Property Name="CaptionColour" Value="FFFFFFFF" />
+      <Property Name="EWSizingCursorImage" Value="set:TaharezLook image:MouseEsWeCursor" />
+      <Property Name="NESWSizingCursorImage" Value="set:TaharezLook image:MouseNeSwCursor" />
+      <Property Name="NSSizingCursorImage" Value="set:TaharezLook image:MouseNoSoCursor" />
+      <Property Name="NWSESizingCursorImage" Value="set:TaharezLook image:MouseNwSeCursor" />
+      <Property Name="RollUpEnabled" Value="False" />
+      <Property Name="Text" Value="Material Viewer" />
+      <Property Name="TitlebarEnabled" Value="True" />
+      <Property Name="TitlebarFont" Value="bluehighway-10" />
+      <Property Name="UnifiedAreaRect" Value="{{0.734432,0.000000},{0.032747,0.000000},{1.000444,0.000000},{0.819617,0.000000}}" />
+      <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+      <Window Type="TaharezLook/TabControl" Name="MeshViewer/MaterialInfo/MainTabs" >
+        <Property Name="TabButtonType" Value="TaharezLook/TabButton" />
+        <Property Name="UnifiedAreaRect" Value="{{0.006810,0.000000},{0.067526,0.000000},{0.999266,0.000000},{0.622359,0.000000}}" />
+        <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+        <Window Type="DefaultWindow" Name="MeshViewer/MaterialInfo/MainTabs/Material" >
+          <Property Name="Text" Value="Material" />
+          <Property Name="UnifiedAreaRect" Value="{{0.058879,0.000000},{0.031341,0.000000},{0.943456,0.000000},{0.983109,0.000000}}" />
+          <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          <Window Type="TaharezLook/Combobox" Name="MeshViewer/MaterialBoxSchemeSelect" >
+            <Property Name="ActiveEditSelectionColour" Value="FF607FFF" />
+            <Property Name="Alpha" Value="1.400000" />
+            <Property Name="InactiveEditSelectionColour" Value="FFFFFFFF" />
+            <Property Name="MaxEditTextLength" Value="1073741823" />
+            <Property Name="NormalEditTextColour" Value="AAAAAAFF" />
+            <Property Name="ReadOnly" Value="True" />
+            <Property Name="SelectedEditTextColour" Value="FFFFFFFF" />
+            <Property Name="Text" Value="Select Scheme" />
+            <Property Name="UnifiedAreaRect" Value="{{-0.023014,0.000000},{0.001796,0.000000},{1.007721,0.000000},{0.949583,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          </Window>
+          <Window Type="TaharezLook/Combobox" Name="MeshViewer/MaterialBoxPassSelect" >
+            <Property Name="ActiveEditSelectionColour" Value="FF607FFF" />
+            <Property Name="Alpha" Value="1.400000" />
+            <Property Name="InactiveEditSelectionColour" Value="FFFFFFFF" />
+            <Property Name="MaxEditTextLength" Value="1073741823" />
+            <Property Name="NormalEditTextColour" Value="AAAAAAFF" />
+            <Property Name="ReadOnly" Value="True" />
+            <Property Name="SelectedEditTextColour" Value="FFFFFFFF" />
+            <Property Name="Text" Value="Select Pass" />
+            <Property Name="UnifiedAreaRect" Value="{{-0.013518,0.000000},{0.165765,0.000000},{1.009065,0.000000},{0.981421,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          </Window>
+          <Window Type="TaharezLook/Combobox" Name="MeshViewer/MaterialBoxTechniqueSelect" >
+            <Property Name="ActiveEditSelectionColour" Value="FF607FFF" />
+            <Property Name="Alpha" Value="1.400000" />
+            <Property Name="InactiveEditSelectionColour" Value="FFFFFFFF" />
+            <Property Name="MaxEditTextLength" Value="1073741823" />
+            <Property Name="NormalEditTextColour" Value="AAAAAAFF" />
+            <Property Name="ReadOnly" Value="True" />
+            <Property Name="SelectedEditTextColour" Value="FFFFFFFF" />
+            <Property Name="Text" Value="Select Technique" />
+            <Property Name="UnifiedAreaRect" Value="{{-0.017579,0.000000},{0.084577,0.000000},{1.002286,0.000000},{0.917745,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          </Window>
+          <Window Type="TaharezLook/Combobox" Name="MeshViewer/MaterialBoxTextureUnitSelect" >
+            <Property Name="ActiveEditSelectionColour" Value="FF607FFF" />
+            <Property Name="Alpha" Value="1.400000" />
+            <Property Name="InactiveEditSelectionColour" Value="FFFFFFFF" />
+            <Property Name="MaxEditTextLength" Value="1073741823" />
+            <Property Name="NormalEditTextColour" Value="AAAAAAFF" />
+            <Property Name="ReadOnly" Value="True" />
+            <Property Name="SelectedEditTextColour" Value="FFFFFFFF" />
+            <Property Name="Text" Value="Select Texture Unit" />
+            <Property Name="UnifiedAreaRect" Value="{{-0.021656,0.000000},{0.246357,0.000000},{1.003645,0.000000},{0.985600,0.000000}}" />
+            <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+          </Window>
+        </Window>
+        
+      </Window>
+      <Window Type="TaharezLook/StaticImage" Name="MeshViewer/MaterialInfo/MainTabs/Material/Preview" >
+        <Property Name="Alpha" Value="0.850000" />
+        <Property Name="BackgroundColours" Value="tl:FFDFDFDF tr:FFDFDFDF bl:FFDFDFDF br:00DFDFDF" />
+        <Property Name="FrameEnabled" Value="False" />
+        <Property Name="UnifiedAreaRect" Value="{{0.031153,0.000000},{0.617423,0.000000},{0.963661,0.000000},{0.968219,0.000000}}" />
+        <Property Name="UnifiedMaxSize" Value="{{1.000000,0.000000},{1.000000,0.000000}}" />
+      </Window>
+    </Window>
+  </Window>
+</GUILayout>

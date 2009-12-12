@@ -1,0 +1,84 @@
+<?xml version="1.0" ?>
+<Imageset Name="Marti" Imagefile="Marti.tga" NativeHorzRes="800" NativeVertRes="600" AutoScaled="false">
+	<Image Name="GenericBrush" XPos="55" YPos="25" Width="1" Height="1" />
+	<Image Name="FrameBorderOutTopLeft" XPos="44" YPos="12" Width="8" Height="8" />
+	<Image Name="FrameBorderOutTopRight" XPos="60" YPos="12" Width="8" Height="8" />
+	<Image Name="FrameBorderOutBottomLeft" XPos="44" YPos="28" Width="8" Height="8" />
+	<Image Name="FrameBorderOutBottomRight" XPos="60" YPos="28" Width="8" Height="8" />
+	<Image Name="FrameBorderOutLeft" XPos="44" YPos="24" Width="8" Height="1" />
+	<Image Name="FrameBorderOutRight" XPos="60" YPos="24" Width="8" Height="1" />
+	<Image Name="FrameBorderOutTop" XPos="56" YPos="12" Width="1" Height="8" />
+	<Image Name="FrameBorderOutBottom" XPos="56" YPos="28" Width="1" Height="8" />
+
+	<Image Name="FrameBorderInTopLeft" XPos="44" YPos="44" Width="8" Height="8" />
+	<Image Name="FrameBorderInTopRight" XPos="60" YPos="44" Width="8" Height="8" />
+	<Image Name="FrameBorderInBottomLeft" XPos="44" YPos="60" Width="8" Height="8" />
+	<Image Name="FrameBorderInBottomRight" XPos="60" YPos="60" Width="8" Height="8" />
+	<Image Name="FrameBorderInLeft" XPos="44" YPos="56" Width="8" Height="1" />
+	<Image Name="FrameBorderInRight" XPos="60" YPos="56" Width="8" Height="1" />
+	<Image Name="FrameBorderInTop" XPos="56" YPos="44" Width="1" Height="8" />
+	<Image Name="FrameBorderInBottom" XPos="56" YPos="60" Width="1" Height="8" />
+
+	<Image Name="ShadowBrush" XPos="40" YPos="9" Width="24" Height="24" />
+
+	<Image Name="TooltipTopLeft" XPos="73" YPos="41" Width="12" Height="12" />
+	<Image Name="TooltipTopRight" XPos="91" YPos="41" Width="12" Height="12" />
+	<Image Name="TooltipBottomLeft" XPos="73" YPos="59" Width="12" Height="12" />
+	<Image Name="TooltipBottomRight" XPos="91" YPos="59" Width="12" Height="12" />
+	<Image Name="TooltipLeftEdge" XPos="73" YPos="53" Width="12" Height="6" />
+	<Image Name="TooltipRightEdge" XPos="91" YPos="53" Width="12" Height="6" />
+	<Image Name="TooltipTopEdge" XPos="85" YPos="41" Width="6" Height="12" />
+	<Image Name="TooltipBottomEdge" XPos="85" YPos="59" Width="6" Height="12" />
+	<Image Name="TooltipMiddle" XPos="85" YPos="53" Width="6" Height="6" />
+
+	<Image Name="CheckboxButton" XPos="78" YPos="110" Width="16" Height="16" />
+	<Image Name="RadioButton" XPos="78" YPos="78" Width="16" Height="16" />
+
+	<!-- <Image Name="TabControlButtonPaneFiller" XPos="160" YPos="60" Width="8" Height="4" /> -->
+	<Image Name="TabControlButtonPaneFiller" XPos="116" YPos="68" Width="8" Height="8" />
+	<Image Name="TabPaneLeft" XPos="108" YPos="64" Width="8" Height="8" />
+	<Image Name="TabPaneRight" XPos="190" YPos="64" Width="8" Height="8" />
+	<Image Name="TabPaneLower" XPos="128" YPos="108" Width="8" Height="8" />
+	<Image Name="TabPaneLowerLeft" XPos="108" YPos="108" Width="8" Height="8" />
+	<Image Name="TabPaneLowerRight" XPos="190" YPos="108" Width="8" Height="8" />
+	<Image Name="TabPaneMiddle" XPos="116" YPos="68" Width="8" Height="8" />
+
+	<Image Name="TabButtonLeftNormal" XPos="132" YPos="52" Width="8" Height="8" />
+	<Image Name="TabButtonRightNormal" XPos="148" YPos="52" Width="8" Height="8" />
+	<Image Name="TabButtonUpperNormal" XPos="140" YPos="44" Width="8" Height="8" />
+	<Image Name="TabButtonLowerNormal" XPos="140" YPos="60" Width="8" Height="8" />
+	<Image Name="TabButtonUpperLeftNormal" XPos="132" YPos="44" Width="8" Height="8" />
+	<Image Name="TabButtonUpperRightNormal" XPos="148" YPos="44" Width="8" Height="8" />
+	<Image Name="TabButtonLowerLeftNormal" XPos="132" YPos="60" Width="8" Height="8" />
+	<Image Name="TabButtonLowerRightNormal" XPos="148" YPos="60" Width="8" Height="8" />
+
+	<Image Name="TabButtonLeftSelected" XPos="108" YPos="52" Width="8" Height="8" />
+	<Image Name="TabButtonRightSelected" XPos="124" YPos="52" Width="8" Height="8" />
+	<Image Name="TabButtonUpperSelected" XPos="116" YPos="44" Width="8" Height="8" />
+	<Image Name="TabButtonLowerSelected" XPos="116" YPos="60" Width="8" Height="8" />
+	<Image Name="TabButtonUpperLeftSelected" XPos="108" YPos="44" Width="8" Height="8" />
+	<Image Name="TabButtonUpperRightSelected" XPos="124" YPos="44" Width="8" Height="8" />
+	<Image Name="TabButtonLowerLeftSelected" XPos="108" YPos="60" Width="8" Height="8" />
+	<Image Name="TabButtonLowerRightSelected" XPos="124" YPos="60" Width="8" Height="8" />
+
+	<Image Name="HeaderMainBrush" XPos="55" YPos="25" Width="1" Height="1" />
+	<Image Name="HeaderBottomEdge" XPos="56" YPos="28" Width="1" Height="8" />
+	<Image Name="HeaderSplitter"  XPos="55" YPos="25" Width="3" Height="1" />
+
+	<Image Name="IconClose" XPos="44" YPos="76" Width="24" Height="24" />
+
+	<Image Name="IconLeftArrow" XPos="48" YPos="112" Width="16" Height="16" />
+	<Image Name="IconRightArrow" XPos="48" YPos="128" Width="16" Height="16" />
+	<Image Name="IconUpArrow" XPos="48" YPos="144" Width="16" Height="16" />
+	<Image Name="IconDownArrow" XPos="48" YPos="160" Width="16" Height="16" />
+	<Image Name="IconVerticalThumb" XPos="48" YPos="176" Width="16" Height="16" />
+	<Image Name="IconHorizontalThumb" XPos="48" YPos="192" Width="16" Height="16" />
+
+	<Image Name="MouseArrow" XPos="0" YPos="0" Width="32" Height="32" XOffset="-9" YOffset="-5" />
+	<Image Name="MouseMoveCursor" XPos="0" YPos="32" Width="32" Height="32" XOffset="-16" YOffset="-16" />
+	<Image Name="MouseNoSoCursor" XPos="0" YPos="64" Width="32" Height="32" XOffset="-16" YOffset="-16" />
+	<Image Name="MouseEsWeCursor" XPos="0" YPos="96" Width="32" Height="32" XOffset="-16" YOffset="-16" />
+	<Image Name="MouseNeSwCursor" XPos="0" YPos="128" Width="32" Height="32" XOffset="-16" YOffset="-16" />
+	<Image Name="MouseNwSeCursor" XPos="0" YPos="160" Width="32" Height="32" XOffset="-16" YOffset="-16" />
+	<Image Name="MouseTextBar" XPos="0" YPos="192" Width="32" Height="32" XOffset="-16" YOffset="-16" />
+</Imageset>
