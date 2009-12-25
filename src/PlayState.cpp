@@ -103,7 +103,10 @@ void PlayState::update( unsigned long lTimeElapsed ) {
 
     // NOTE: Aaaargh, this is not optimal! I didn't think of selecting objects to iterate through
     // based on the object's inheritance! Could it be done? Maybe. This is OK until then.
-    while (ap::MovingObject *pMO = netdata->eachObject<ap::MovingObject *>(ap::OBJECT_TYPE_MECH)) pMO->updateNode();
+    while (ap::MovingObject *pMO = netdata->eachObject<ap::MovingObject *>(ap::OBJECT_TYPE_MECH)) {
+      pMO->updateNode();
+      pMO->hookUpdate(dt);
+    }
     while (ap::MovingObject *pMO = netdata->eachObject<ap::MovingObject *>(ap::OBJECT_TYPE_PROJECTILE)) pMO->updateNode();
 
     net::NetEvent event;
@@ -344,7 +347,7 @@ void PlayState::setupCamera(Ogre::SceneManager *sceneManager) {
 
     // Attach a camera to the player model
     mCameraNode = sceneManager->createSceneNode("Node/MyCamera");
-    mCameraNode->setPosition(Ogre::Vector3(0, 1000, -50));
+    mCameraNode->setPosition(Ogre::Vector3(0, 67, -3));
     mCameraNode->pitch(Ogre::Degree(-85)); // Camera needs to look down.
     mCameraNode->attachObject(mCamera);
     mCamera->setNearClipDistance(5);

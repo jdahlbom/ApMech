@@ -25,6 +25,7 @@ class Projectile : public MovingObject
     // NetObject interface
     net::NetObject *create(uint32 id) const;
     int advance(float dt);
+    void hookUpdate(float sSinceLast) {};
 
     uint8 getObjectType() const;
 };

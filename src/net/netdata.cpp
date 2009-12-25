@@ -498,11 +498,11 @@ void NetData::removeObject(uint32 id)
         }
 
         // Then, from netObjectsByParent
-        pair<multimap<uint32,NetObject*>::iterator, multimap<uint32,NetObject*>::iterator> ii;
-        ii = netObjectsByParent.equal_range(netobjects.find(id)->second->getParentId());
-        while (ii.first != ii.second) {
-            if (ii.first->second == netobjects.find(id)->second) netObjectsByParent.erase(ii.first++);
-            else ii.first++;
+        pair<multimap<uint32,NetObject*>::iterator, multimap<uint32,NetObject*>::iterator> ui;
+        ui = netObjectsByParent.equal_range(netobjects.find(id)->second->getParentId());
+        while (ui.first != ui.second) {
+            if (ui.first->second == netobjects.find(id)->second) netObjectsByParent.erase(ui.first++);
+            else ui.first++;
         }
 
         // Finally, delete the object, and remove from netobjects
