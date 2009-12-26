@@ -22,6 +22,9 @@ class Mech : public MovingObject
     Mech(Ogre::Vector3 velocity = Ogre::Vector3::ZERO, ObjectDataModel *model = NULL);
     ~Mech() {}
 
+    // Overridden MovingObject methods
+    void hookUpdate(float sSinceLast);
+
     // NetObject interface .. that was not implemented by MovingObject
     net::NetObject *create(uint32 id) const;
     uint8 getObjectType() const;
@@ -29,6 +32,10 @@ class Mech : public MovingObject
     //NetObject serialization
     int serialize(uint8 *buffer, int start, int buflength) const;
     int unserialize(uint8 *buffer, int start);
+
+ private:
+    bool                 mIsIdle;
+    Ogre::AnimationState *mAnimState;
 };
 
 } // namespace ap

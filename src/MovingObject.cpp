@@ -25,6 +25,7 @@ MovingObject::MovingObject(float nFriction, Ogre::Vector3 startingVelocity,
     objectType(ap::OBJECT_TYPE_UNDEFINED),
     friction(nFriction),
     maxSpeedSquared(0.0),
+    mIsClient(false),
     initialFacing(-Ogre::Vector3::UNIT_Z),
     state(new MovableState(startingVelocity)),
     control(new MovableControl()),
@@ -142,6 +143,10 @@ void MovingObject::setFacing(Ogre::Vector3 f)
    state->orientation = axes[2].getRotationTo(-f);
 }
 
+int MovingObject::advance(float dt) {
+    update(dt);
+    return 0;
+}
 
 void MovingObject::update(float sSinceLast)
 {

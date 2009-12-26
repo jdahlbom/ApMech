@@ -6,8 +6,8 @@
 particle_system ApMech/Explosion1
 {
     material        Examples/Flare
-    particle_width  60
-    particle_height 60
+    particle_width  0.15
+    particle_height 0.15
     cull_each       false
     quota           10000
     billboard_type  oriented_self
@@ -21,7 +21,7 @@ particle_system ApMech/Explosion1
         time_to_live_max 3
         direction       0 1 0
         velocity_min    0
-        velocity_max    70
+        velocity_max    4
         colour_range_start  0.5 0 0
         colour_range_end    1 0.5 0
 

@@ -503,7 +503,6 @@ void NetData::removeObject(uint32 id)
         while (ii2.first != ii2.second) {
             if (ii2.first->second == netobjects.find(id)->second) netObjectsByParent.erase(ii2.first++);
             else ii2.first++;
-        }
 
         // Finally, delete the object, and remove from netobjects
         delete netobjects.find(id)->second;

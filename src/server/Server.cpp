@@ -226,7 +226,9 @@ void Server::weaponFired(ap::net::NetData *pNetData, ap::MovingObject *source) {
     int newid = pNetData->insertObject(new ap::Projectile(facing * 250.0f)); //150 is velocity
     ap::Projectile *bullet = pNetData->getObject<ap::Projectile *>(newid);
     bullet->setMaxSpeed(625.0f);
-    bullet->setPosition(source->getPosition() + facing*70.0f + Ogre::Vector3(0.0f, 60.0f, 0.0f));
+    Ogre::Vector3 horizDisplacement = facing*5.0f;
+    Ogre::Vector3 vertDisplacement = Ogre::Vector3(0.0f, 6.0f, 0.0f);
+    bullet->setPosition(source->getPosition() + horizDisplacement + vertDisplacement);
     bullet->setFacing(facing);
     bullet->uid = source->uid;
     bullet->setChanged();

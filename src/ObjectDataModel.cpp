@@ -17,7 +17,7 @@ namespace ap {
     ObjectDataModel::ObjectDataModel() :
         fileMap(std::map<ap::uint8, std::string>())
     {
-        fileMap.insert(std::make_pair<ap::uint8, std::string>(ap::OBJECT_TYPE_MECH, "CrudeMech.mesh"));
+        fileMap.insert(std::make_pair<ap::uint8, std::string>(ap::OBJECT_TYPE_MECH, "FullMech.mesh"));
         fileMap.insert(std::make_pair<ap::uint8, std::string>(ap::OBJECT_TYPE_PROJECTILE, "CrudeMissile.mesh"));
     }
 

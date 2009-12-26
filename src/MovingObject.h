@@ -66,6 +66,9 @@ class MovingObject : public net::NetObject {
 
     bool testCollision(const MovingObject &other) const;
 
+    // Update-callback for inheritors. TODO: Refactor MovingObject! 
+    virtual void hookUpdate(float sSinceLast)=0;
+
     // WeaponControl methods
     void setFiring(bool firingStatus);
     bool fireGun(uint64 tstamp);
@@ -74,7 +77,7 @@ class MovingObject : public net::NetObject {
     int serialize(uint8 *buffer, int start, int buflength) const;
     int unserialize(uint8 *buffer, int start);
     ap::net::NetObject *create(uint32 id) { return 0; }; // FIXME: Evil!
-    int advance(float dt) { update(dt); return 0; }
+    int advance(float dt);
     virtual uint8 getObjectType() const = 0;
 
 
@@ -82,6 +85,7 @@ class MovingObject : public net::NetObject {
     uint8              objectType;
     float               friction;
     float               maxSpeedSquared;
+    bool                mIsClient;
 
  private:
     Ogre::Vector3       initialFacing;
