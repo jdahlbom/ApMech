@@ -40,10 +40,10 @@ TileSize=65
 MaxPixelError=3
 
 # The size of a terrain page, in world units
-PageWorldX=2500
-PageWorldZ=2500
+PageWorldX=320
+PageWorldZ=320
 # Maximum height of the terrain 
-MaxHeight=400
+MaxHeight=40
 
 # Upper LOD limit
 MaxMipMapLevel=5

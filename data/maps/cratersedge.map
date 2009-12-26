@@ -2,10 +2,10 @@
 
 TerrainFile=cratersedge.terrain
 
-MapBorderTop=1900
-MapBorderBottom=600
-MapBorderLeft=600
-MapBorderRight=1900
+MapBorderTop=195
+MapBorderBottom=55
+MapBorderLeft=55
+MapBorderRight=195
 
 # Not implemented
 #AmbientLightColor=1,1,1
