@@ -490,19 +490,19 @@ void NetData::removeObject(uint32 id)
     if (netobjects.find(id) != netobjects.end()) {
 
         // First, remove the corresponding entry from netObjectsByType
-        pair<multimap<uint8,NetObject*>::iterator, multimap<uint8,NetObject*>::iterator> ii;
-        ii = netObjectsByType.equal_range(netobjects.find(id)->second->getObjectType());
-        while (ii.first != ii.second) {
-            if (ii.first->second == netobjects.find(id)->second) netObjectsByType.erase(ii.first++);
-            else ii.first++;
+        pair<multimap<uint8,NetObject*>::iterator, multimap<uint8,NetObject*>::iterator> ii1;
+        ii1 = netObjectsByType.equal_range(netobjects.find(id)->second->getObjectType());
+        while (ii1.first != ii1.second) {
+            if (ii1.first->second == netobjects.find(id)->second) netObjectsByType.erase(ii1.first++);
+            else ii1.first++;
         }
 
         // Then, from netObjectsByParent
-        pair<multimap<uint32,NetObject*>::iterator, multimap<uint32,NetObject*>::iterator> ii;
-        ii = netObjectsByParent.equal_range(netobjects.find(id)->second->getParentId());
-        while (ii.first != ii.second) {
-            if (ii.first->second == netobjects.find(id)->second) netObjectsByParent.erase(ii.first++);
-            else ii.first++;
+        pair<multimap<uint32,NetObject*>::iterator, multimap<uint32,NetObject*>::iterator> ii2;
+        ii2 = netObjectsByParent.equal_range(netobjects.find(id)->second->getParentId());
+        while (ii2.first != ii2.second) {
+            if (ii2.first->second == netobjects.find(id)->second) netObjectsByParent.erase(ii2.first++);
+            else ii2.first++;
         }
 
         // Finally, delete the object, and remove from netobjects
