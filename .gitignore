@@ -36,6 +36,7 @@ apmech
 apserver
 jonni/cegui_sdl_test/jonnin
 jonni/nabla-wing/nablawing
+meshviewer
 
 # SConstruct database
 .sconsign.dblite
