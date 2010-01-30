@@ -69,6 +69,8 @@ namespace ap {
                 }
                 // std::cout << "Received key press (up), index: " << selectedVehicleIndex << std::endl;
                 break;
+            default:
+                break;
         }
 
         IngameAction action = pActionKMap->getActionForKey(e.key);

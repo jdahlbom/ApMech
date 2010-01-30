@@ -29,7 +29,7 @@ namespace ap {
 /**/static GameWorldInject __gameworldinject;
 
 
-GameWorld::GameWorld() : boundaries(1.0, 0.0, 0.0, 1.0), mapFileName(""), terrainFileName("") {}
+GameWorld::GameWorld() : mapFileName(""), terrainFileName(""), boundaries(1.0, 0.0, 0.0, 1.0) {}
 
 GameWorld::GameWorld(std::string fname) : boundaries(1.0, 0.0, 0.0, 1.0) {
     loadMapFile(mapFileName);
