@@ -8,6 +8,7 @@
 #include "GuiChatReceiver.h"
 #include "GuiLoginReceiver.h"
 #include "GuiMainMenuReceiver.h"
+#include "GuiMouseReceiver.h"
 #include "ScoreListing.h"
 #include "ooinput/KeyboardListener.h"
 #include "ooinput/KeyEvent.h"
@@ -55,6 +56,9 @@ class Gui
   void hideLoginWindow();
   void setLoginReceiver(GuiLoginReceiver *receiver);
   float getColorSliderValue();
+  
+  void setMouseReceiver(GuiMouseReceiver *receiver);
+  void setTargetState(targetState state);
 
   // KeyboardListener interface
 
@@ -77,6 +81,7 @@ class Gui
   GuiChatReceiver     *pChatReceiver;
   GuiLoginReceiver    *pLoginReceiver;
   GuiMainMenuReceiver *pMainMenuReceiver;
+  GuiMouseReceiver    *pMouseReceiver;
   ActionKeyMap        *pActionKMap;
 
   std::string         keyConfWaitingForKey;
@@ -121,6 +126,8 @@ class Gui
 
   static const std::string mainMenuWindowName;
   static const std::string mainMenuLayoutFile;
+
+  targetState currentState;
 };
 
 } // namespace ap

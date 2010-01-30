@@ -13,6 +13,7 @@
 #include "GuiChatReceiver.h"
 #include "GuiLoginReceiver.h"
 #include "GuiMainMenuReceiver.h"
+#include "GuiMouseReceiver.h"
 #include "ScoreListing.h"
 #include "ooinput/KeyboardListener.h"
 #include "ooinput/KeyEvent.h"
@@ -55,7 +56,9 @@ namespace ap {
     pChatReceiver(0),
     pLoginReceiver(0),
     pMainMenuReceiver(0),
+    pMouseReceiver(0),
     pActionKMap(0),
+    currentState(TARGET_NOT_AVAILABLE),
     keyConfWaitingForKey(""),
     scoreListUIDs(std::list<ap::uint32>())
   {
@@ -512,6 +515,11 @@ namespace ap {
     assert(receiver);
     pLoginReceiver = receiver;
   }
+  
+  void Gui::setMouseReceiver(GuiMouseReceiver *receiver) {
+    pMouseReceiver = receiver;
+  }
+
 
   float Gui::getColorSliderValue()
   {
@@ -670,7 +678,7 @@ namespace ap {
     assert(mSystem);
     // assumption: WHEELUP/WHEELDOWN do not cause released events.
     switch(event.button) {
-    case AP_B_LEFT: return mSystem->injectMouseButtonUp(CEGUI::LeftButton);
+        case AP_B_LEFT: return mSystem->injectMouseButtonUp(CEGUI::LeftButton);
     case AP_B_RIGHT: return mSystem->injectMouseButtonUp(CEGUI::RightButton);
     case AP_B_MIDDLE: return mSystem->injectMouseButtonUp(CEGUI::MiddleButton);
     default: return 0;
@@ -679,11 +687,46 @@ namespace ap {
   } // mouseReleased
 
 
+  void Gui::setTargetState(targetState state)
+  {
+    
+    if (state == currentState) {
+        // no change in cursor state
+        return;
+    }
+        
+    assert(mSystem);
+
+    switch (state) {
+        case TARGET_NOT_AVAILABLE:
+            std::cout << "Cursor changed to TARGET_NOT_AVAILABLE";
+            break;
+        case TARGET_WITHIN_TORSO_TURN_ANGLE:
+            std::cout << "Cursor changed to TARGET_WITHIN_TORSO_TURN_ANGLE";
+            break;
+        case TARGET_LINED_WITH_TORSO:
+            std::cout << "Cursor changed to TARGET_LINED_WITH_TORSO";
+            break;
+    }
+
+    currentState = state;
+  
+    return;
+  }
+
   bool Gui::mouseMoved(const ap::ooinput::MouseMovedEvent &event)
   {
+    bool retval;
     assert(mSystem);
-    return mSystem->injectMousePosition(static_cast<float>(event.xabs),
+    
+    retval = mSystem->injectMousePosition(static_cast<float>(event.xabs),
 					static_cast<float>(event.yabs));
+
+    if (retval) {
+        // Tell the interested parties where the mouse is now
+        pMouseReceiver->receiveMousePosition(event.xabs, event.yabs);
+    }
+    return retval;
   }
 
   CEGUI::uint Gui::MapKeyToCEGUI(ap::ooinput::KeySymbol key)

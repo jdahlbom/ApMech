@@ -372,6 +372,7 @@ void PlayState::createGUIWindow()
   pGui->setupChatBox();
   pGui->setupScoreWindow();
   pGui->setChatReceiver(this);
+  pGui->setMouseReceiver(this);
 }
 
 bool PlayState::keyPressed( const ap::ooinput::KeyEvent &e ) {
@@ -519,6 +520,19 @@ bool PlayState::mouseReleased(const ap::ooinput::MouseClickedEvent &e)
   {
     NetMessage nmessage(message, netdata->me.uid);
     netdata->sendMessage(nmessage);
+  }
+    
+  void PlayState::receiveMousePosition(int x, int y)
+  {
+      /* TODO: check whether the mouse cursor position is available by
+       * just changing the mech torso direction, and use a suitable
+       * targetState based on that. */
+
+      targetState state = TARGET_NOT_AVAILABLE;
+
+      pGui->setTargetState(state);
+      
+      return;
   }
 
 void PlayState::createLighting(Ogre::SceneManager *sceneManager)

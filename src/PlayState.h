@@ -14,6 +14,7 @@
 
 #include "Gui.h"
 #include "GuiChatReceiver.h"
+#include "GuiMouseReceiver.h"
 #include "ObjectDataModel.h"
 #include "MovingObject.h"
 #include "ScoreListing.h"
@@ -26,7 +27,7 @@ namespace ap {
   class ActionKeyMap;
   class GameStateManager;
 
-  class PlayState : public GameState, public GuiChatReceiver{
+  class PlayState : public GameState, public GuiChatReceiver, public GuiMouseReceiver {
 public:
     PlayState( GameStateManager *gameStateManager,
 	       Ogre::SceneManager *pSceneManager,
@@ -53,6 +54,9 @@ public:
 
     // GuiChatReceiver
     void sendChatMessage(const std::string &message);
+
+    // GuiMouseReceiver
+    void receiveMousePosition(int x, int y);
 
 private:
     Ogre::Root                  *pRoot;
