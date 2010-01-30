@@ -63,6 +63,21 @@ void bufprint(enet_uint8 *buffer, int length)
     cout.flags(coutflags);
 }
 
+std::string getbuf(enet_uint8 *buffer, int length)
+{
+    stringstream output;
+    enet_uint8 u;
+    output << "(";
+    for (int i=0; i<length; i++) {
+        u = buffer[i];
+        if ((u > 64) && (u < 91)) output << char(u);
+        else if ((u > 96) && (u < 123)) output << char(u);
+        else output << int(u);
+        if (i != length-1) output << ",";
+    }
+    return output.str();
+}
+
 
 /**
  * Sleep for defined amount of milliseconds

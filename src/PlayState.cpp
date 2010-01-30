@@ -277,11 +277,11 @@ void PlayState::createNewEntity(ap::MovingObject *newObject, uint32 objectId)
         g = float(pMech->color & 0x00FF00) / 65535.0f;
         b = float(pMech->color & 0xFF0000) / 16777215.0f;
 
-	std::string mechName = pMech->getTypeName();
-	const MechData *proto = getMechProto(mechName);
-	assert(proto != NULL);
+        std::string mechName = pMech->getTypeName();
+        const MechData *proto = getMechProto(mechName);
+        assert(proto != NULL);
         std::string torsoMesh = proto->getTorsoMesh();
-	std::string legsMesh = proto->getLegsMesh();
+        std::string legsMesh = proto->getLegsMesh();
 
         newEntity = pSceneManager->createEntity(ss.str(), torsoMesh);
         newEntity->getSubEntity(0)->setCustomParameter(1, Ogre::Vector4(r, g, b, 0.0f));
@@ -310,12 +310,11 @@ void PlayState::createNewEntity(ap::MovingObject *newObject, uint32 objectId)
 const MechData* PlayState::getMechProto(std::string mechName)
 {
     const MechData* proto = NULL;
-    while (ap::MechData *mechData =
-      netdata->eachObject<ap::MechData *>(ap::OBJECT_TYPE_MECHDATA))
+    while (ap::MechData *mechData = netdata->eachObject<ap::MechData *>(ap::OBJECT_TYPE_MECHDATA))
     {
-	if (mechData->getName().compare(mechName)==0) {
-  	    proto = mechData;
-	}
+        if (mechData->getName().compare(mechName)==0) {
+            proto = mechData;
+        }
     }
 
     return proto;
@@ -534,7 +533,7 @@ bool PlayState::mouseReleased(const ap::ooinput::MouseClickedEvent &e)
     NetMessage nmessage(message, netdata->me.uid);
     netdata->sendMessage(nmessage);
   }
-    
+
   void PlayState::receiveMousePosition(int x, int y)
   {
       /* TODO: check whether the mouse cursor position is available by
@@ -544,7 +543,7 @@ bool PlayState::mouseReleased(const ap::ooinput::MouseClickedEvent &e)
       targetState state = TARGET_NOT_AVAILABLE;
 
       pGui->setTargetState(state);
-      
+
       return;
   }
 

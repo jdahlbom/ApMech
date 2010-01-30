@@ -566,6 +566,23 @@ NetUser *NetData::eachUser()
     } else return &(i++)->second;
 }
 
+string NetData::stateDump()
+{
+    stringstream output;
+
+    enet_uint8 buffer[5000];
+    int length=0, packetstosend = 0;
+    std::map <int, NetObject*>::iterator i = netobjects.begin();
+
+    while (i != netobjects.end()) {
+        length = createPacketNetObject(i->second, buffer, 0, 5000);
+        output << "PACKET "<<packetstosend<<": "<<getbuf(buffer, length) << endl;
+        i++;
+    }
+
+    return output.str();
+}
+
 /** Insert an object and give it a new, unique ID.
  *  You can optionally specify the wanted id, but the insertion is then
  *  perhaps more likely to fail.
