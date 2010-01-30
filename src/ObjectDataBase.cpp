@@ -1,6 +1,8 @@
 #include "ObjectDataBase.h"
 #include <boost/filesystem.hpp>
 
+#include "ObjectReader.h"
+
 namespace fs = boost::filesystem;
 
 namespace ap {
@@ -13,6 +15,9 @@ MechDatabase::~MechDatabase(void) {
         delete iter->second;
 }
 
+  /**
+   * @return True if reading succeeded.
+   */
 bool MechDatabase::readMechFiles() {
 
     std::string ending = ".xml";
@@ -47,6 +52,7 @@ bool MechDatabase::readMechFiles() {
 
         }
     }
+    return true;
 }
 
 

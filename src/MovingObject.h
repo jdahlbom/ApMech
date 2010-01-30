@@ -17,7 +17,6 @@
 #include "MovableControl.h"
 #include "WeaponControl.h"
 #include "CombinedControls.h"
-#include "ObjectDataModel.h"
 
 namespace ap {
 
@@ -27,8 +26,7 @@ class MovingObject : public net::NetObject {
  public:
     bool clamped;   // Whether this object's location has been clamped to world boundaries
 
-    MovingObject(float nFriction = 0.05f, Ogre::Vector3 startingSpeed = Ogre::Vector3::ZERO,
-            ObjectDataModel *model = NULL, uint8 type_id = 0);
+    MovingObject(float nFriction = 0.05f, Ogre::Vector3 startingSpeed = Ogre::Vector3::ZERO, uint8 type_id = 0);
     virtual ~MovingObject();
 
     void setMaxSpeed(float speed);
@@ -103,8 +101,6 @@ class MovingObject : public net::NetObject {
     void updateVelocity(float sSinceLast);
     void updateFacing(float sSinceLast);
     void updatePosition(float sSinceLast);
-
-    ObjectDataModel *model;
 
     float maxForwardAcceleration;
     float maxBackwardAcceleration;

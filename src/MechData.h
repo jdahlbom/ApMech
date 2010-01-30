@@ -27,11 +27,14 @@ class MechData : public ap::net::NetObject
     int getMaxForwardAcceleration() { return maxForwardAcceleration; }
     int getMaxBackwardAcceleration() { return maxBackwardAcceleration; }
     std::string getName() const { return name; }
+    std::string getTorsoMesh() const { return "FullMech.mesh"; }
+    std::string getLegsMesh() const { return "CrudeMech.mesh"; }
 
     void setTurnRate(int rate) { maxTurnRate = rate; }
     void setMaxForwardAcceleration(int acceleration) { maxForwardAcceleration = acceleration; }
     void setMaxBackwardAcceleration(int acceleration) { maxBackwardAcceleration = acceleration; }
     void setName(std::string name) { this->name = name; }
+
 
  private:
     std::string name;

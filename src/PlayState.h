@@ -15,7 +15,6 @@
 #include "Gui.h"
 #include "GuiChatReceiver.h"
 #include "GuiMouseReceiver.h"
-#include "ObjectDataModel.h"
 #include "MovingObject.h"
 #include "ScoreListing.h"
 #include "net/netdata.h"
@@ -26,6 +25,7 @@
 namespace ap {
   class ActionKeyMap;
   class GameStateManager;
+  class MechData;
 
   class PlayState : public GameState, public GuiChatReceiver, public GuiMouseReceiver {
 public:
@@ -76,7 +76,6 @@ private:
     ap::ActionKeyMap            *pActionKMap;
 
     std::string                 ipAddress;
-    ObjectDataModel             *pDataModel;
 
     static const int            idForNoAvatar=-1;
     uint32                      mAvatarId;
@@ -98,6 +97,7 @@ private:
     void createLighting(Ogre::SceneManager *sceneManager);
     void setNetDataDirty() { netdata->me.changed = true; }
     void createNewEntity(ap::MovingObject *newObject, uint32 objectId);
+    const MechData* getMechProto(std::string mechName);
     void createGUIWindow();
     void updateScores() const;
 

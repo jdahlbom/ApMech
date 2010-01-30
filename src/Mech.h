@@ -4,7 +4,6 @@
 #include "MovingObject.h"
 #include "types.h"
 #include "constants.h"
-#include "ObjectDataModel.h"
 
 #ifndef WIN32
 #include <OgreVector3.h>
@@ -19,7 +18,7 @@ class Mech : public MovingObject
  public:
     uint32 color;
 
-    Mech(Ogre::Vector3 velocity = Ogre::Vector3::ZERO, ObjectDataModel *model = NULL);
+    Mech(Ogre::Vector3 velocity = Ogre::Vector3::ZERO);
     ~Mech() {}
 
     // Overridden MovingObject methods
@@ -28,6 +27,8 @@ class Mech : public MovingObject
     // NetObject interface .. that was not implemented by MovingObject
     net::NetObject *create(uint32 id) const;
     uint8 getObjectType() const;
+    std::string getTypeName() const;
+    void setTypeName(std::string);
 
     //NetObject serialization
     int serialize(uint8 *buffer, int start, int buflength) const;
@@ -36,6 +37,7 @@ class Mech : public MovingObject
  private:
     bool                 mIsIdle;
     Ogre::AnimationState *mAnimState;
+    std::string          typeName;
 };
 
 } // namespace ap

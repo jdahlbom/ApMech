@@ -336,6 +336,7 @@ void Server::spawnNewAvatars(ap::net::NetData *pNetData) {
       int newid = pNetData->insertObject(newAvatar);
       ap::MechReader *reader = mechDB->getMechReader(pUser->chosenVehicleType);
 
+      newAvatar->setTypeName(pUser->chosenVehicleType);
       if (reader) {
         newAvatar->setMaxTurnRate(reader->getTurnRate());
         newAvatar->setMaxForwardAcceleration(reader->getMaxForwardAcceleration());

@@ -7,7 +7,6 @@
 #endif
 
 #include "net/serializer.h"
-#include "ObjectDataModel.h"
 
 namespace ap {
 
@@ -16,19 +15,27 @@ class MechInject {
 public:
   MechInject() {
     ap::net::netobjectprototypes().insert(
-      std::make_pair(ap::OBJECT_TYPE_MECH, new Mech(Ogre::Vector3::ZERO, NULL)));
+      std::make_pair(ap::OBJECT_TYPE_MECH, new Mech(Ogre::Vector3::ZERO)));
   }
 };
 static MechInject __mechinject;
 
 
-Mech::Mech(Ogre::Vector3 velocity, ObjectDataModel *model) :
-  MovingObject(0.0f, velocity, model, ap::OBJECT_TYPE_MECH),
+Mech::Mech(Ogre::Vector3 velocity) :
+  MovingObject(0.0f, velocity, ap::OBJECT_TYPE_MECH),
   mIsIdle(true),
   mAnimState(0)
 {
     objectType = ap::OBJECT_TYPE_MECH;
 }
+
+  void Mech::setTypeName(std::string newType) {
+    typeName = newType;
+  }
+
+  std::string Mech::getTypeName() const {
+    return typeName;
+  }
 
   void Mech::hookUpdate(float sSinceLast) {
       // if idle
@@ -64,7 +71,7 @@ Mech::Mech(Ogre::Vector3 velocity, ObjectDataModel *model) :
 
 net::NetObject *Mech::create(uint32 _id) const
 {
-    Mech *mech = new Mech(Ogre::Vector3::ZERO, ObjectDataModel::getInstance());
+    Mech *mech = new Mech(Ogre::Vector3::ZERO);
     mech->id = _id;
     return mech;
 }
@@ -82,6 +89,7 @@ int Mech::serialize(uint8 *buffer, int start, int buflength) const
     int length = 0;
     length += MovingObject::serialize(buffer, start+length, buflength);
     length += serialize(color, buffer, start+length, buflength);
+    length += serialize(typeName, buffer, start+length, buflength);
     return length;
 }
 
@@ -92,6 +100,7 @@ int Mech::unserialize(uint8 *buffer, int start)
     int length = 0;
     length += MovingObject::unserialize(buffer, start+length);
     length += unserialize(color, buffer, start+length);
+    length += unserialize(typeName, buffer, start+length);
     return length;
 }
 

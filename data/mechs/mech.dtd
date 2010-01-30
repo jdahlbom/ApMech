@@ -9,6 +9,10 @@
   <!ELEMENT leg    (EMPTY)>
   <!ELEMENT slot   (weapon)>
   <!ELEMENT weapon (#PCDATA)>
+  <!ELEMENT media  (mesh+)>
+   <!ELEMENT mesh>
+    <!ATTLIST mesh type CDATA #REQUIRED>
+    <!ATTLIST mesh file CDATA #REQUIRED> 
 ]>
 
 

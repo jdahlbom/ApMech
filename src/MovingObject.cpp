@@ -15,12 +15,11 @@
 #include "MovableControl.h"
 #include "WeaponControl.h"
 #include "CombinedControls.h"
-#include "ObjectDataModel.h"
 
 namespace ap {
 
 MovingObject::MovingObject(float nFriction, Ogre::Vector3 startingVelocity,
-        ObjectDataModel *model, uint8 type_id):
+        uint8 type_id):
     clamped(false),
     objectType(ap::OBJECT_TYPE_UNDEFINED),
     friction(nFriction),
@@ -32,8 +31,7 @@ MovingObject::MovingObject(float nFriction, Ogre::Vector3 startingVelocity,
     weaponControl(new WeaponControl()),
     combinedControls(new CombinedControls(control, weaponControl)),
     pOwnerNode(0),
-    pEntity(0),
-    model(model)
+    pEntity(0)
 {
     id = 0;
     uid = 0;

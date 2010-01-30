@@ -12,14 +12,12 @@
 #include "ActionKeyMap.h"
 #include "functions.h"
 #include "GameStateManager.h"
+#include "GameWorld.h"
 #include "Gui.h"
 #include "Mech.h"
-#include "ObjectDataModel.h"
+#include "MechData.h"
 #include "Projectile.h"
 #include "ScoreListing.h"
-#include "MechData.h"
-#include "GameWorld.h"
-#include "functions.h"
 #include "types.h"
 #include "net/netdata.h"
 
@@ -50,8 +48,6 @@ namespace ap {
     mWorldCenter->setPosition(Ogre::Vector3(750,0,750));
 
     createGUIWindow();
-
-    pDataModel = ObjectDataModel::getInstance();
 }
 
 PlayState::~PlayState() {}
@@ -159,7 +155,7 @@ void PlayState::update( unsigned long lTimeElapsed ) {
                             break;
                             }
                         default:
-                            std::cout << "Received an unknown created object" << std::endl;
+			  std::cout << "Received an unhandled object creation of type: (" << pObject->getObjectType() << ")" << std::endl;
                             break;
                     }
                 }
@@ -282,15 +278,21 @@ void PlayState::createNewEntity(ap::MovingObject *newObject, uint32 objectId)
         g = float(pMech->color & 0x00FF00) / 65535.0f;
         b = float(pMech->color & 0xFF0000) / 16777215.0f;
 
-        std::string mesh = pDataModel->getMeshFilename(ap::OBJECT_TYPE_MECH);
-        newEntity = pSceneManager->createEntity(ss.str(), mesh);
+	std::string mechName = pMech->getTypeName();
+	const MechData *proto = getMechProto(mechName);
+	assert(proto != NULL);
+        std::string torsoMesh = proto->getTorsoMesh();
+	std::string legsMesh = proto->getLegsMesh();
+
+        newEntity = pSceneManager->createEntity(ss.str(), torsoMesh);
         newEntity->getSubEntity(0)->setCustomParameter(1, Ogre::Vector4(r, g, b, 0.0f));
         pMech->setEntity(newEntity);
       }
       break;
     case ap::OBJECT_TYPE_PROJECTILE:
       {
-        std::string mesh = pDataModel->getMeshFilename(ap::OBJECT_TYPE_PROJECTILE);
+        std::string mesh = "CrudeMissile.mesh";
+
         newEntity = pSceneManager->createEntity(ss.str(), mesh);
 
         ap::Projectile *pProj = dynamic_cast<ap::Projectile *>(newObject);
@@ -306,6 +308,20 @@ void PlayState::createNewEntity(ap::MovingObject *newObject, uint32 objectId)
         objNode->attachObject(newEntity);
 }
 
+  const MechData* PlayState::getMechProto(std::string mechName)
+  {
+    while (ap::MechData *mechData =
+      netdata->eachObject<ap::MechData *>(ap::OBJECT_TYPE_MECHDATA))
+      {
+	if (mechData->getName().compare(mechName)==0) {
+	  return mechData;
+	} else {
+	  std::cout << mechData->getName() << " != " << mechName << std::endl;
+	}
+      }
+
+    return NULL;
+  }
 
 void PlayState::deleteNetObject(uint32 objectId)
 {
@@ -378,7 +394,6 @@ void PlayState::createGUIWindow()
 bool PlayState::keyPressed( const ap::ooinput::KeyEvent &e ) {
   IngameAction action = pActionKMap->getActionForKey(e.key);
 
-  // TODO: SCORES ei aina ole Tab, joten tämä oletus menee rikki!
   if (action == TOGGLE_SCORES) {
     pGui->showScoreWindow();
     return true;

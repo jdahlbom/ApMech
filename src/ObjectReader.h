@@ -18,8 +18,9 @@ public:
     MechReader (const std::string *filename) :
         turnRate(0), maxForwardAcceleration(0),
         maxBackwardAcceleration(0), filename(filename),
-        currentDataBuffer("") {}
-    ~MechReader (void) {};
+	currentDataBuffer(""), torsoMesh("FullMech.mesh"),
+	  legsMesh("CrudeMech.mesh") {}
+    ~MechReader (void) {}
 
     bool parseFile();
 
@@ -27,11 +28,15 @@ public:
     int getMaxForwardAcceleration() { return maxForwardAcceleration; }
     int getMaxBackwardAcceleration() { return maxBackwardAcceleration; }
     std::string getName() const { return name; }
-    
+    std::string getTorsoMesh() const {return torsoMesh;}
+    std::string getLegsMesh() const {return legsMesh;}
+
     void setTurnRate(int rate) { turnRate = rate; }
     void setMaxForwardAcceleration(int acceleration) { maxForwardAcceleration = acceleration; }
     void setMaxBackwardAcceleration(int acceleration) { maxBackwardAcceleration = acceleration; }
     void setName(std::string name) { this->name = name; }
+    void setTorsoMesh(std::string mesh) { this->torsoMesh = mesh; }
+    void setLegsMesh(std::string mesh) { this->legsMesh = mesh; }
 
     bool addData(char *buf, int len);
     void resetData() { currentDataBuffer = ""; }
@@ -48,6 +53,8 @@ private:
     std::string currentDataBuffer;
     std::string name;
 
+    std::string torsoMesh;
+    std::string legsMesh;
 };
 
 } // namespace ap
