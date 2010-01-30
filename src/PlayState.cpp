@@ -307,19 +307,19 @@ void PlayState::createNewEntity(ap::MovingObject *newObject, uint32 objectId)
         objNode->attachObject(newEntity);
 }
 
-  const MechData* PlayState::getMechProto(std::string mechName)
-  {
+const MechData* PlayState::getMechProto(std::string mechName)
+{
+    const MechData* proto = NULL;
     while (ap::MechData *mechData =
       netdata->eachObject<ap::MechData *>(ap::OBJECT_TYPE_MECHDATA))
-      {
+    {
 	if (mechData->getName().compare(mechName)==0) {
-	  std::cout <<"["<< mechName <<"] proto was found." << std::endl;
-	  return mechData;
+  	    proto = mechData;
 	}
-      }
-    std::cout <<"["<< mechName <<"] proto was not found. ERROR" << std::endl;
-    return NULL;
-  }
+    }
+
+    return proto;
+}
 
 void PlayState::deleteNetObject(uint32 objectId)
 {
