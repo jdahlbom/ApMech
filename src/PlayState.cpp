@@ -262,7 +262,6 @@ void PlayState::createNewEntity(ap::MovingObject *newObject, uint32 objectId)
 {
     Ogre::Entity *newEntity = NULL;
     assert(newObject->hasOwnerNode());
-
     std::stringstream ss;
     ss << "Entity/"<<objectId;
 
@@ -314,12 +313,11 @@ void PlayState::createNewEntity(ap::MovingObject *newObject, uint32 objectId)
       netdata->eachObject<ap::MechData *>(ap::OBJECT_TYPE_MECHDATA))
       {
 	if (mechData->getName().compare(mechName)==0) {
+	  std::cout <<"["<< mechName <<"] proto was found." << std::endl;
 	  return mechData;
-	} else {
-	  std::cout << mechData->getName() << " != " << mechName << std::endl;
 	}
       }
-
+    std::cout <<"["<< mechName <<"] proto was not found. ERROR" << std::endl;
     return NULL;
   }
 
