@@ -86,6 +86,7 @@ int main( int argc, char **argv ) {
 SDL_Surface* setupSDL(int width, int height) {
     SDL_Init(SDL_INIT_VIDEO);
     SDL_Surface *screen = SDL_SetVideoMode(width, height, 0, SDL_OPENGL);
+    SDL_ShowCursor(SDL_DISABLE);
 
     assert(screen);
     return screen;
