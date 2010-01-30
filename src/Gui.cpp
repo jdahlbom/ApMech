@@ -689,6 +689,7 @@ namespace ap {
 
   void Gui::setTargetState(targetState state)
   {
+      CEGUI::utf8 *image = NULL;
     
     if (state == currentState) {
         // no change in cursor state
@@ -700,14 +701,22 @@ namespace ap {
     switch (state) {
         case TARGET_NOT_AVAILABLE:
             std::cout << "Cursor changed to TARGET_NOT_AVAILABLE";
+            image = (CEGUI::utf8*)"MouseArrow";
             break;
         case TARGET_WITHIN_TORSO_TURN_ANGLE:
             std::cout << "Cursor changed to TARGET_WITHIN_TORSO_TURN_ANGLE";
+            image = (CEGUI::utf8*)"MouseTargetSector";
             break;
         case TARGET_LINED_WITH_TORSO:
             std::cout << "Cursor changed to TARGET_LINED_WITH_TORSO";
+            image = (CEGUI::utf8*)"MouseTargetAcquired";
             break;
+        default:
+            return;
     }
+    
+    CEGUI::MouseCursor::getSingleton().setImage(
+            (CEGUI::utf8*)"ApMechLook", image);
 
     currentState = state;
   
