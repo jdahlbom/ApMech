@@ -33,6 +33,24 @@ void startHandler(void *userData, const XML_Char *name, const XML_Char **atts) {
     printf("> startHandler for '%s'\n", name);
 #endif
 
+    if (strcmp(name, "torso") == 0) {
+
+        if (atts) {
+            int i;
+
+            for (i = 0; atts[i]; i += 2) {
+#if 0
+                printf("attribute '%s', value '%s'\n", atts[i], atts[i+1]);
+#endif
+                if (strcmp(atts[i], "turningRadius") == 0 && atts[i+1] != NULL) {
+                    /* TODO: error handling */
+                    int angle = strtol(atts[i+1], NULL, 10);
+                    mech->setMaxTorsoAngle(angle);
+                }
+            }
+        }
+    }
+
     return;
 }
 

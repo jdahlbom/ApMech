@@ -29,6 +29,7 @@ int MechData::serialize(uint8 buffer[], int start, int buflength) const
     length += ap::net::serialize(maxForwardAcceleration, buffer, start+length, buflength-length);
     length += ap::net::serialize(maxBackwardAcceleration, buffer, start+length, buflength-length);
     length += ap::net::serialize(maxTurnRate, buffer, start+length, buflength-length);
+    length += ap::net::serialize(maxTorsoAngle, buffer, start+length, buflength-length);
     return length;
 }
 
@@ -39,6 +40,7 @@ int MechData::unserialize(uint8 buffer[], int start)
     length += ap::net::unserialize(maxForwardAcceleration, buffer, start+length);
     length += ap::net::unserialize(maxBackwardAcceleration, buffer, start+length);
     length += ap::net::unserialize(maxTurnRate, buffer, start+length);
+    length += ap::net::unserialize(maxTorsoAngle, buffer, start+length);
     return length;
 }
 

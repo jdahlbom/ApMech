@@ -27,6 +27,7 @@ public:
     int getTurnRate() { return turnRate; }
     int getMaxForwardAcceleration() { return maxForwardAcceleration; }
     int getMaxBackwardAcceleration() { return maxBackwardAcceleration; }
+    int getMaxTorsoAngle() { return maxTorsoAngle; }
     std::string getName() const { return name; }
     std::string getTorsoMesh() const {return torsoMesh;}
     std::string getLegsMesh() const {return legsMesh;}
@@ -34,6 +35,7 @@ public:
     void setTurnRate(int rate) { turnRate = rate; }
     void setMaxForwardAcceleration(int acceleration) { maxForwardAcceleration = acceleration; }
     void setMaxBackwardAcceleration(int acceleration) { maxBackwardAcceleration = acceleration; }
+    void setMaxTorsoAngle(int angle) { this->maxTorsoAngle = angle; }
     void setName(std::string name) { this->name = name; }
     void setTorsoMesh(std::string mesh) { this->torsoMesh = mesh; }
     void setLegsMesh(std::string mesh) { this->legsMesh = mesh; }
@@ -47,6 +49,7 @@ private:
     int turnRate;
     int maxForwardAcceleration;
     int maxBackwardAcceleration;
+    int maxTorsoAngle;
 
     const std::string *filename;
     
