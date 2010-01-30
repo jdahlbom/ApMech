@@ -83,6 +83,7 @@ class Gui
   GuiLoginReceiver    *pLoginReceiver;
   GuiMainMenuReceiver *pMainMenuReceiver;
   GuiMouseReceiver    *pMouseReceiver;
+  targetState         currentState;
   ActionKeyMap        *pActionKMap;
 
   std::string         keyConfWaitingForKey;
@@ -127,8 +128,6 @@ class Gui
 
   static const std::string mainMenuWindowName;
   static const std::string mainMenuLayoutFile;
-
-  targetState currentState;
 };
 
 } // namespace ap

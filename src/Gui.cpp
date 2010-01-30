@@ -57,8 +57,8 @@ namespace ap {
     pLoginReceiver(0),
     pMainMenuReceiver(0),
     pMouseReceiver(0),
-    pActionKMap(0),
     currentState(TARGET_NOT_AVAILABLE),
+    pActionKMap(0),
     keyConfWaitingForKey(""),
     scoreListUIDs(std::list<ap::uint32>())
   {
@@ -295,16 +295,19 @@ namespace ap {
   bool Gui::mainMenuPlay(const CEGUI::EventArgs &args) {
     assert(pMainMenuReceiver);
     pMainMenuReceiver->receivePlayGame();
+    return true;
   }
 
   bool Gui::mainMenuQuit(const CEGUI::EventArgs &args) {
     assert(pMainMenuReceiver);
     pMainMenuReceiver->receiveQuitGame();
+    return true;
   }
 
   bool Gui::mainMenuConfKeyboard(const CEGUI::EventArgs &args) {
     assert(pMainMenuReceiver);
     pMainMenuReceiver->receiveConfigureKeyboard();
+    return true;
   }
 
   // LIMBO MENU:
