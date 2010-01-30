@@ -30,6 +30,7 @@ class Gui
   void addLimboVehicle(const std::string &item);
   void selectLimboVehicle(int index);
   std::string getLimboVehicle(int index);
+  void clearLimboVehicleList();
 
   void setupKeyConfWindow(ActionKeyMap *pActionKMap);
   void hideKeyConfWindow();

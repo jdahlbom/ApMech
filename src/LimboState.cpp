@@ -24,6 +24,7 @@ namespace ap {
     void LimboState::enter( void ) {
         assert(NULL != pGui);
         pGui->setVisibleLimboMenu(true);
+	pGui->clearLimboVehicleList();
 
         while (ap::MechData *mechData =
                 pNetData->eachObject<ap::MechData *>(ap::OBJECT_TYPE_MECHDATA)) {

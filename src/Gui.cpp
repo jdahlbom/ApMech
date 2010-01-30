@@ -363,6 +363,17 @@ namespace ap {
       return name;
   }
 
+void Gui::clearLimboVehicleList() 
+{
+    CEGUI::Listbox *lbox = dynamic_cast<CEGUI::Listbox *>(CEGUI::WindowManager::getSingletonPtr()->getWindow(limboListName));
+    if (lbox == NULL) {
+      std::cout << "[ERROR] Could not access Limbo menu vehicle listbox by window name!" << std::endl;
+      return;
+    }
+
+    lbox->resetList();
+}
+
   void Gui::hideLoginWindow() {
     hideNamedWindow(loginRootName);
   }
