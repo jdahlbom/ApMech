@@ -127,7 +127,7 @@ if platform == 'posix' or platform == 'darwin':
 	env.ParseConfig('sdl-config --libs')
 	env.Append(LIBS = ['SDL_image', 'expat', 'boost_filesystem-mt'])
 	
-	env['CPPFLAGS'] = ["-g"]
+	env['CPPFLAGS'] = ["-g", "-Wall"]
 # elif platform == 'win32':
 	# Find sdl somehow?
 	
