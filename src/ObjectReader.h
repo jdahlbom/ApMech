@@ -17,10 +17,10 @@ class MechReader {
 public:
     MechReader (const std::string *filename) :
         turnRate(0), maxForwardAcceleration(0),
-        maxBackwardAcceleration(0), maxSpeed(0),
-        maxTorsoAngle(0), filename(filename),
-	currentDataBuffer(""), torsoMesh("FullMech.mesh"),
-	  legsMesh("CrudeMech.mesh") {}
+        maxBackwardAcceleration(0), maxTorsoAngle(0),
+        maxSpeed(0), filename(filename),
+        currentDataBuffer(""), torsoMesh("FullMech.mesh"),
+	    legsMesh("CrudeMech.mesh") {}
     ~MechReader (void) {}
 
     bool parseFile();
