@@ -76,6 +76,10 @@ void endHandler(void *userData, const XML_Char *name) {
         int rate = strtol(mech->getData().c_str(), NULL, 10);
         mech->setMaxBackwardAcceleration(rate);
     }
+    else if (strcmp(name, "maxSpeed") == 0) {
+        int speed = strtol(mech->getData().c_str(), NULL, 10);
+        mech->setMaxSpeed(speed);
+    }
     else if (strcmp(name, "name") == 0) {
         std::string name = mech->getData();
         mech->setName(name);

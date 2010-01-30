@@ -27,6 +27,7 @@ class MechData : public ap::net::NetObject
     int getMaxForwardAcceleration() { return maxForwardAcceleration; }
     int getMaxBackwardAcceleration() { return maxBackwardAcceleration; }
     int getMaxTorsoAngle() { return maxTorsoAngle; }
+    int getMaxSpeed() { return maxSpeed; }
     std::string getName() const { return name; }
     std::string getTorsoMesh() const { return "FullMech.mesh"; }
     std::string getLegsMesh() const { return "CrudeMech.mesh"; }
@@ -35,6 +36,7 @@ class MechData : public ap::net::NetObject
     void setMaxForwardAcceleration(int acceleration) { maxForwardAcceleration = acceleration; }
     void setMaxBackwardAcceleration(int acceleration) { maxBackwardAcceleration = acceleration; }
     void setMaxTorsoAngle(int angle) { maxTorsoAngle = angle; }
+    void setMaxSpeed(int speed) { maxSpeed = speed; }
     void setName(std::string name) { this->name = name; }
 
 
@@ -44,6 +46,7 @@ class MechData : public ap::net::NetObject
     int maxForwardAcceleration;
     int maxBackwardAcceleration;
     int maxTorsoAngle;
+    int maxSpeed;
 };
 
 } // namespace ap

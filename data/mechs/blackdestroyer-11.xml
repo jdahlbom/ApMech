@@ -7,6 +7,7 @@
         <maxTurnRate>2</maxTurnRate>
         <maxForwardAcceleration>25</maxForwardAcceleration>
         <maxBackwardAcceleration>25</maxBackwardAcceleration>
+        <maxSpeed>10</maxSpeed>
     </stats>
     <design>
         <torso turningRadius="30">

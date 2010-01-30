@@ -117,6 +117,7 @@ bool Server::loadSettings(std::string serverConfigFile)
         data->setTurnRate(reader->getTurnRate());
         data->setMaxForwardAcceleration(reader->getMaxForwardAcceleration());
         data->setMaxBackwardAcceleration(reader->getMaxBackwardAcceleration());
+        data->setMaxSpeed(reader->getMaxSpeed());
 
         netdata->insertObject(data);
     }

@@ -28,6 +28,7 @@ public:
     int getMaxForwardAcceleration() { return maxForwardAcceleration; }
     int getMaxBackwardAcceleration() { return maxBackwardAcceleration; }
     int getMaxTorsoAngle() { return maxTorsoAngle; }
+    int getMaxSpeed() { return maxSpeed; }
     std::string getName() const { return name; }
     std::string getTorsoMesh() const {return torsoMesh;}
     std::string getLegsMesh() const {return legsMesh;}
@@ -36,6 +37,7 @@ public:
     void setMaxForwardAcceleration(int acceleration) { maxForwardAcceleration = acceleration; }
     void setMaxBackwardAcceleration(int acceleration) { maxBackwardAcceleration = acceleration; }
     void setMaxTorsoAngle(int angle) { this->maxTorsoAngle = angle; }
+    void setMaxSpeed(int speed) { this->maxSpeed = speed; }
     void setName(std::string name) { this->name = name; }
     void setTorsoMesh(std::string mesh) { this->torsoMesh = mesh; }
     void setLegsMesh(std::string mesh) { this->legsMesh = mesh; }
@@ -50,6 +52,7 @@ private:
     int maxForwardAcceleration;
     int maxBackwardAcceleration;
     int maxTorsoAngle;
+    int maxSpeed;
 
     const std::string *filename;
     
