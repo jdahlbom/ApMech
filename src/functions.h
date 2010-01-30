@@ -14,7 +14,7 @@ std::string uint2ipv4(unsigned int ip);  // Convert a uint32 to a string with th
 
 void hexprint(enet_uint8 *buffer, int length); // Cout a random buffer and maybe understand what's in it!
 void bufprint(enet_uint8 *buffer, int length); // Same, but print bytes as decimal numbers
-std::string getbuf(enet_uint8 *buffer, int length);
+std::string netobject2str(enet_uint8 *buffer, int length); // Get one serialized object as string for debug
 
 /**
  * generic to_string() for any pipeable type.

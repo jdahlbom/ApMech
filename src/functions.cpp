@@ -63,12 +63,18 @@ void bufprint(enet_uint8 *buffer, int length)
     cout.flags(coutflags);
 }
 
-std::string getbuf(enet_uint8 *buffer, int length)
+std::string netobject2str(enet_uint8 *buffer, int length)
 {
     stringstream output;
     enet_uint8 u;
+    if (buffer[0] != 41) {
+        output << "ERROR! NOT PACKET_NETOBJECT!";
+        return output.str();
+    }
+
     output << "(";
-    for (int i=0; i<length; i++) {
+
+    for (int i=1; i<length; i++) {
         u = buffer[i];
         if ((u > 64) && (u < 91)) output << char(u);
         else if ((u > 96) && (u < 123)) output << char(u);

@@ -208,8 +208,12 @@ int NetData::serviceServer()
                         NetMessage netmsg;
                         h++;
                         h += netmsg.unserialize(data, h);
-                        netmsg.data = users[netmsg.sender].nick + ": " + netmsg.data;
-                        sendMessage(netmsg);
+                        if (netmsg.data.compare("/sdump") == 0) {
+                            cout << stateDump();
+                        } else {
+                            netmsg.data = users[netmsg.sender].nick + ": " + netmsg.data;
+                            sendMessage(netmsg);
+                        }
                     } else {
                         cout << "[NETDATA] Received an unknown packet! Error in NetData::serviceServer() !" << endl;
                     }
@@ -576,8 +580,8 @@ string NetData::stateDump()
 
     while (i != netobjects.end()) {
         length = createPacketNetObject(i->second, buffer, 0, 5000);
-        output << "PACKET "<<packetstosend<<": "<<getbuf(buffer, length) << endl;
-        i++;
+        output << "PACKET "<<packetstosend<<": "<<netobject2str(buffer, length) << endl;
+        i++; packetstosend++;
     }
 
     return output.str();
