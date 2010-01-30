@@ -520,7 +520,6 @@ namespace ap {
     pMouseReceiver = receiver;
   }
 
-
   float Gui::getColorSliderValue()
   {
     CEGUI::Slider *slider = dynamic_cast<CEGUI::Slider *>(CEGUI::WindowManager::getSingletonPtr()->getWindow("/Login/ColorSlider"));
@@ -731,7 +730,7 @@ namespace ap {
     retval = mSystem->injectMousePosition(static_cast<float>(event.xabs),
 					static_cast<float>(event.yabs));
 
-    if (retval) {
+    if (retval && pMouseReceiver) {
         // Tell the interested parties where the mouse is now
         pMouseReceiver->receiveMousePosition(event.xabs, event.yabs);
     }
