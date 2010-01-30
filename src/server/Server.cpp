@@ -342,8 +342,8 @@ void Server::spawnNewAvatars(ap::net::NetData *pNetData) {
         newAvatar->setMaxTurnRate(reader->getTurnRate());
         newAvatar->setMaxForwardAcceleration(reader->getMaxForwardAcceleration());
         newAvatar->setMaxBackwardAcceleration(reader->getMaxBackwardAcceleration());
+        newAvatar->setMaxSpeed(reader->getMaxSpeed());
       }
-      newAvatar->setMaxSpeed(60.0f);
       newAvatar->setFriction(8.0f);
       newAvatar->uid = userId;
       newAvatar->color = pUser->color;
