@@ -176,6 +176,7 @@ src/ooinput/SDLInputSystem.cpp
 serverSources = Split("""
 src/servermain.cpp
 src/server/Server.cpp
+src/server/utilities.cpp
 src/ObjectDataBase.cpp
 src/ObjectReader.cpp
 """)+commonSources
