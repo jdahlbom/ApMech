@@ -353,6 +353,7 @@ namespace ap {
 
   void Gui::selectLimboVehicle(int index)
   {
+    std::cout << "selected limbo vehicle " << index << std::endl;
       CEGUI::Listbox *lbox = dynamic_cast<CEGUI::Listbox *>(CEGUI::WindowManager::getSingletonPtr()->getWindow(limboListName));
       lbox->setItemSelectState(index, true);
   }
