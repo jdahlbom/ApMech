@@ -43,6 +43,7 @@ namespace ap {
     pRoot = Ogre::Root::getSingletonPtr();
 
     Ogre::SceneNode *rootNode = pSceneManager->getRootSceneNode();
+    mRaySceneQuery = pSceneManager->createRayQuery(Ogre::Ray());
     mWorldCenter = rootNode->createChildSceneNode("Node/WorldCenter");
 
     mWorldCenter->setPosition(Ogre::Vector3(750,0,750));
@@ -50,7 +51,9 @@ namespace ap {
     createGUIWindow();
 }
 
-PlayState::~PlayState() {}
+PlayState::~PlayState() {
+    pSceneManager->destroyQuery(mRaySceneQuery);
+}
 
 void PlayState::enter( void ) {
     assert(netdata);    // If no netdata, we're doomed! We must be connected too, but that's not checked. FIXME maybe!
@@ -378,6 +381,29 @@ void PlayState::attachCameraNode(Ogre::SceneNode *newParentNode)
     mCameraNodeParent = newParentNode;
 }
 
+Ogre::Vector3 PlayState::mapMouseToPosition(float xRel, float yRel)
+{
+
+    // std::cout << "relative mouse position: (" << xRel << ", " << yRel << ")" << std::endl;
+    Ogre::Vector3 retval(0,0,0);
+    Ogre::Ray ray = mCamera->getCameraToViewportRay(xRel, yRel);
+
+    mRaySceneQuery->setRay(ray);
+    // mRaySceneQuery->setWorldFragmentType(Ogre::SceneQuery::WFT_SINGLE_INTERSECTION);
+
+    Ogre::RaySceneQueryResult &rayResults = mRaySceneQuery->execute();
+
+    Ogre::RaySceneQueryResult::iterator itr = rayResults.begin();
+
+    if (itr != rayResults.end() && itr->worldFragment) {
+        // std::cout << "rayresult! " << std::endl;
+        Ogre::SceneQuery::WorldFragment *wf = itr->worldFragment;
+        retval = wf->singleIntersection;
+    }
+
+    return retval;
+}
+
 //-----------------------------------------------------------------------------
 
 void PlayState::createGUIWindow()
@@ -534,16 +560,59 @@ bool PlayState::mouseReleased(const ap::ooinput::MouseClickedEvent &e)
     netdata->sendMessage(nmessage);
   }
 
-  void PlayState::receiveMousePosition(int x, int y)
+  void PlayState::receiveMousePosition(float xRel, float yRel)
   {
-      /* TODO: check whether the mouse cursor position is available by
-       * just changing the mech torso direction, and use a suitable
-       * targetState based on that. */
-
       targetState state = TARGET_NOT_AVAILABLE;
 
-      pGui->setTargetState(state);
+      // std::cout << "receiveMousePosition: (" << x << ", " << y << ")" << std::endl;
 
+      if (mObject && mObject->getObjectType() == OBJECT_TYPE_MECH) {
+          Mech *mech = dynamic_cast<Mech *>(mObject);
+
+          Ogre::Vector3 facing = mech->getFacing();
+          Ogre::Vector3 position = mech->getPosition();
+          const MechData *data = getMechProto(mech->getTypeName());
+          int maxAngle = data->getMaxTorsoAngle();
+          int currentAngle = mech->getTorsoAngle();
+
+          Ogre::Vector3 mouse = mapMouseToPosition(xRel, yRel);
+
+          // std::cout << "mouse position on map: (" << mouse.x << ", " << mouse.y << ", " << mouse.z << ")" << std::endl;
+
+          /* Check whether the mouse cursor position is available by
+           * just changing the mech torso direction, and use a suitable
+           * targetState based on that. */
+
+          Ogre::Vector3 position_to_mouse = position - mouse;
+          
+          // std::cout << "position - mouse: (" << position_to_mouse.x << ", " << position_to_mouse.y << ", " << position_to_mouse.z << ")" << std::endl;
+
+          /* angle means the angle between the current orientation and
+           * the mouse pointer. */
+
+          Ogre::Degree angle = Ogre::Degree(180.0) - Ogre::Degree(position_to_mouse.angleBetween(facing));
+
+          // std::cout << "angle to mouse: " << angle << ", max: " << maxAngle << std::endl;
+
+          if (angle.valueDegrees() < maxAngle) {
+              // the mech can shoot at the target by just rotating its
+              // torso!
+
+              if ((angle - Ogre::Degree(currentAngle)).valueDegrees() < 2.0) {
+                  state = TARGET_LINED_WITH_TORSO;
+              }
+              else {
+                  state = TARGET_WITHIN_TORSO_TURN_ANGLE;
+              }
+          }
+
+          /* Ask server that the turret is aimed to that direction */
+          mech->setAimCoordinates(mouse);
+          setNetDataDirty();
+      }
+
+      pGui->setTargetState(state);
+    
       return;
   }
 

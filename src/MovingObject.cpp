@@ -29,7 +29,8 @@ MovingObject::MovingObject(float nFriction, Ogre::Vector3 startingVelocity,
     state(new MovableState(startingVelocity)),
     control(new MovableControl()),
     weaponControl(new WeaponControl()),
-    combinedControls(new CombinedControls(control, weaponControl)),
+    turretControl(new TurretControl()),
+    combinedControls(new CombinedControls(control, weaponControl, turretControl)),
     pOwnerNode(0),
     pEntity(0)
 {
@@ -42,6 +43,7 @@ MovingObject::~MovingObject()
     delete(state);
     delete(combinedControls);
     delete(weaponControl);
+    delete(turretControl);
     delete(control);
 }
 
@@ -121,6 +123,10 @@ void MovingObject::setFiring(bool firingStatus) {
 
 bool MovingObject::fireGun(uint64 tstamp) {
     return weaponControl->fire(tstamp);
+}
+
+void MovingObject::setAimCoordinates(Ogre::Vector3 target) {
+    turretControl->setAimCoordinates(target);
 }
 
 

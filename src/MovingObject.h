@@ -16,6 +16,7 @@
 #include "net/Controller.h"
 #include "MovableControl.h"
 #include "WeaponControl.h"
+#include "TurretControl.h"
 #include "CombinedControls.h"
 
 namespace ap {
@@ -71,6 +72,9 @@ class MovingObject : public net::NetObject {
     void setFiring(bool firingStatus);
     bool fireGun(uint64 tstamp);
 
+    // TurretControl methods
+    void setAimCoordinates(Ogre::Vector3 target);
+
     //NetObject serialization
     int serialize(uint8 *buffer, int start, int buflength) const;
     int unserialize(uint8 *buffer, int start);
@@ -91,6 +95,7 @@ class MovingObject : public net::NetObject {
     MovableControl      *control;
 
     WeaponControl       *weaponControl;
+    TurretControl       *turretControl;
     CombinedControls    *combinedControls;
 
 

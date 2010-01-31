@@ -25,6 +25,8 @@ namespace ap {
         assert(NULL != pGui);
         pGui->setVisibleLimboMenu(true);
 	pGui->clearLimboVehicleList();
+	selectedVehicleIndex = 0;
+	vehicleCount = 0;
 
         while (ap::MechData *mechData =
                 pNetData->eachObject<ap::MechData *>(ap::OBJECT_TYPE_MECHDATA)) {

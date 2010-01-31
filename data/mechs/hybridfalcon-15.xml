@@ -10,7 +10,7 @@
         <maxSpeed>18</maxSpeed>
     </stats>
     <design>
-        <torso turningRadius="180">
+        <torso turningRadius="90">
             <slot />
             <slot />
         </torso>
@@ -23,8 +23,10 @@
         <leg />
         <leg />
     </design>
-</mech>
-<media>
-    <mesh type="TORSO" file="FullMech.mesh"/>
+
+  <media>
+    <mesh type="TORSO" file="HybridFalcon-torso.mesh"/>
     <mesh type="LEGS" file="CrudeMesh.mesh"/>
-</media>
+  </media>
+</mech>
+

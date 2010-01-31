@@ -19,6 +19,8 @@
 #include <cmath>    // for sin,cos in the server
 #include <list>
 
+#include "utilities.h"
+
 #include "../functions.h"
 #include "../Mech.h"
 #include "../Projectile.h"
@@ -110,17 +112,9 @@ bool Server::loadSettings(std::string serverConfigFile)
 
     std::vector<std::string> mechNames = mechDB->getMechNames();
     for (uint32 i = 0; i < mechNames.size(); i++) {
-        MechData *data = new ap::MechData();
-
-        // copy the data in place to a netobject
-        ap::MechReader *reader = mechDB->getMechReader(mechNames[i]);
-
-        data->setName(reader->getName());
-        data->setTurnRate(reader->getTurnRate());
-        data->setMaxForwardAcceleration(reader->getMaxForwardAcceleration());
-        data->setMaxBackwardAcceleration(reader->getMaxBackwardAcceleration());
-        data->setMaxSpeed(reader->getMaxSpeed());
-
+        std::cout << "Trying to create proto [" << mechNames[i] << "]" << std::endl;
+        MechData *data = createMechData(mechDB, mechNames[i]);
+	std::cout << "Creating proto [" << data->getName() << "]" << std::endl;
         netdata->insertObject(data);
     }
     return true;
@@ -193,6 +187,13 @@ void Server::updateObjects(float dt, ap::net::NetData* pNetData) const {
     }
 
     while (Mech *pMech = pNetData->eachObject<Mech *>(ap::OBJECT_TYPE_MECH)) {
+
+        /* TODO: rotate the turret toward the mouse coordinates. The
+         * coordinates are given in CombinedControls, the current turret
+         * position is in pMech->getTorsoAngle(), and the maximum angle
+         * that the turret may have can be found in MechData class
+         * object method getTorsoMaxAngle(). */
+
         gameWorld->clampToWorldBoundaries(*pMech);
         Ogre::Vector3 mechLoc = pMech->getPosition();
         mechLoc.y = gameWorld->getHeightAt(mechLoc.x, mechLoc.z);

@@ -353,6 +353,7 @@ namespace ap {
 
   void Gui::selectLimboVehicle(int index)
   {
+    std::cout << "selected limbo vehicle " << index << std::endl;
       CEGUI::Listbox *lbox = dynamic_cast<CEGUI::Listbox *>(CEGUI::WindowManager::getSingletonPtr()->getWindow(limboListName));
       lbox->setItemSelectState(index, true);
   }
@@ -713,15 +714,15 @@ void Gui::clearLimboVehicleList()
 
     switch (state) {
         case TARGET_NOT_AVAILABLE:
-            std::cout << "Cursor changed to TARGET_NOT_AVAILABLE";
+            // std::cout << "Cursor changed to TARGET_NOT_AVAILABLE" << std::endl;
             image = (CEGUI::utf8*)"MouseArrow";
             break;
         case TARGET_WITHIN_TORSO_TURN_ANGLE:
-            std::cout << "Cursor changed to TARGET_WITHIN_TORSO_TURN_ANGLE";
+            // std::cout << "Cursor changed to TARGET_WITHIN_TORSO_TURN_ANGLE" << std::endl;
             image = (CEGUI::utf8*)"MouseTargetSector";
             break;
         case TARGET_LINED_WITH_TORSO:
-            std::cout << "Cursor changed to TARGET_LINED_WITH_TORSO";
+            // std::cout << "Cursor changed to TARGET_LINED_WITH_TORSO" << std::endl;
             image = (CEGUI::utf8*)"MouseTargetAcquired";
             break;
         default:
@@ -739,14 +740,20 @@ void Gui::clearLimboVehicleList()
   bool Gui::mouseMoved(const ap::ooinput::MouseMovedEvent &event)
   {
     bool retval;
+    const CEGUI::Renderer *renderer;
+
     assert(mSystem);
-    
+
+    renderer = mSystem->getRenderer();
+
     retval = mSystem->injectMousePosition(static_cast<float>(event.xabs),
 					static_cast<float>(event.yabs));
 
-    if (retval && pMouseReceiver) {
+    if (pMouseReceiver) {
         // Tell the interested parties where the mouse is now
-        pMouseReceiver->receiveMousePosition(event.xabs, event.yabs);
+        pMouseReceiver->receiveMousePosition(
+                event.xabs / renderer->getWidth(),
+                event.yabs / renderer->getHeight());
     }
     return retval;
   }

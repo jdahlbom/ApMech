@@ -1,3 +1,6 @@
+#ifndef AP_OBJECTDATABASE_H
+#define AP_OBJECTDATABASE_H
+
 // The Mech data handling algorithm:
 //
 // 1. Server reads all XML game object files to the ObjectData
@@ -54,3 +57,5 @@ private:
 
 };
 }
+
+#endif

@@ -36,12 +36,13 @@ OBJS = InputSystem.o SDLInputSystem.o GameState.o PlayState.o GameStateManager.o
 	MovingObject.o serializer.o RectBoundaries.o netdata.o functions.o NetUser.o NetEvent.o \
 	NetMessage.o Mech.o Projectile.o rotations.o MovableControl.o WeaponControl.o \
 	CombinedControls.o Gui.o LoginState.o LimboState.o ScoreListing.o \
-	ObjectDataBase.o ObjectReader.o GameWorld.o TerrainHeightMap.o ActionKeyMap.o \
+	ObjectDataBase.o ObjectReader.o GameWorld.o TerrainHeightMap.o TurretControl.o ActionKeyMap.o \
 	MainMenuState.o MenuStateViewport.o KeyConfMenuState.o MechData.o
-SERVEROBJS = servermain.o Server.o MovingObject.o RectBoundaries.o serializer.o netdata.o \
+SERVEROBJS = servermain.o utilities.o Server.o MovingObject.o RectBoundaries.o serializer.o netdata.o \
 	functions.o NetUser.o NetEvent.o NetMessage.o Mech.o Projectile.o rotations.o \
-	MovableControl.o WeaponControl.o CombinedControls.o ScoreListing.o \
-	ObjectDataBase.o GameWorld.o TerrainHeightMap.o MechData.o ObjectReader.o MatchRules.o
+	MovableControl.o WeaponControl.o TurretControl.o CombinedControls.o \
+	ScoreListing.o ObjectDataBase.o GameWorld.o TerrainHeightMap.o \
+	MechData.o ObjectReader.o MatchRules.o
 
 ## Compilation and linking occurs here
 all: tempDirectories application server

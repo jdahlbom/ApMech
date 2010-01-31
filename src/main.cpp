@@ -51,6 +51,7 @@ int main( int argc, char **argv ) {
     }
 
     SDL_Surface *screen = setupSDL(width, height);
+    assert(screen);
 
     Ogre::SceneManager *sceneMgr = 0;
     Ogre::RenderWindow *renderWindow = 0;
@@ -88,7 +89,6 @@ SDL_Surface* setupSDL(int width, int height) {
     SDL_Surface *screen = SDL_SetVideoMode(width, height, 0, SDL_OPENGL);
     SDL_ShowCursor(SDL_DISABLE);
 
-    assert(screen);
     return screen;
 } // setupSDL
 
