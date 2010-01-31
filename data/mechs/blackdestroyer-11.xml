@@ -23,8 +23,9 @@
         <leg />
         <leg />
     </design>
+    <media>
+      <mesh type="TORSO" file="CrudeMech.mesh"/>
+      <mesh type="LEGS" file="FullMech.mesh"/>
+    </media>
 </mech>
-<media>
-    <mesh type="TORSO" file="CrudeMesh.mesh"/>
-    <mesh type="LEGS" file="FullMech.mesh"/>
-</media>
+

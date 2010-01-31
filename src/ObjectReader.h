@@ -9,18 +9,14 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <string.h>
+#include <vector>
 
 namespace ap {
 
 class MechReader {
 
 public:
-    MechReader (const std::string *filename) :
-        turnRate(0), maxForwardAcceleration(0),
-        maxBackwardAcceleration(0), maxTorsoAngle(0),
-        maxSpeed(0), filename(filename),
-        currentDataBuffer(""), torsoMesh("FullMech.mesh"),
-	    legsMesh("CrudeMech.mesh") {}
+    MechReader (const std::string *filename);
     ~MechReader (void) {}
 
     bool parseFile();
@@ -47,6 +43,9 @@ public:
     void resetData() { currentDataBuffer = ""; }
     std::string getData() { return currentDataBuffer; };
 
+    std::vector<std::string> nodePath;
+    bool isPath(std::string *path, size_t pathLength) const;
+
 private:
 
     int turnRate;
@@ -62,6 +61,7 @@ private:
 
     std::string torsoMesh;
     std::string legsMesh;
+
 };
 
 } // namespace ap
