@@ -207,6 +207,13 @@ void Server::updateObjects(float dt, ap::net::NetData* pNetData) const {
     }
 
     while (Mech *pMech = pNetData->eachObject<Mech *>(ap::OBJECT_TYPE_MECH)) {
+
+        /* TODO: rotate the turret toward the mouse coordinates. The
+         * coordinates are given in CombinedControls, the current turret
+         * position is in pMech->getTorsoAngle(), and the maximum angle
+         * that the turret may have can be found in MechData class
+         * object method getTorsoMaxAngle(). */
+
         gameWorld->clampToWorldBoundaries(*pMech);
         Ogre::Vector3 mechLoc = pMech->getPosition();
         mechLoc.y = gameWorld->getHeightAt(mechLoc.x, mechLoc.z);
