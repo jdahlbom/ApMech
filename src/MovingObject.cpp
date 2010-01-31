@@ -125,8 +125,8 @@ bool MovingObject::fireGun(uint64 tstamp) {
     return weaponControl->fire(tstamp);
 }
 
-void MovingObject::setAimCoordinates(int x, int y) {
-    turretControl->setAimCoordinates(x, y);
+void MovingObject::setAimCoordinates(Ogre::Vector3 target) {
+    turretControl->setAimCoordinates(target);
 }
 
 

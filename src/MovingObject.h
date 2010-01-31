@@ -73,7 +73,7 @@ class MovingObject : public net::NetObject {
     bool fireGun(uint64 tstamp);
 
     // TurretControl methods
-    void setAimCoordinates(int x, int y);
+    void setAimCoordinates(Ogre::Vector3 target);
 
     //NetObject serialization
     int serialize(uint8 *buffer, int start, int buflength) const;

@@ -25,8 +25,9 @@ namespace server {
         data->setMaxForwardAcceleration(reader->getMaxForwardAcceleration());
         data->setMaxBackwardAcceleration(reader->getMaxBackwardAcceleration());
         data->setMaxSpeed(reader->getMaxSpeed());
-	data->setTorsoMesh(reader->getTorsoMesh());
-	data->setLegsMesh(reader->getLegsMesh());
+        data->setMaxTorsoAngle(reader->getMaxTorsoAngle());
+	    data->setTorsoMesh(reader->getTorsoMesh());
+	    data->setLegsMesh(reader->getLegsMesh());
 
         return data;
     }

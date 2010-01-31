@@ -569,7 +569,6 @@ bool PlayState::mouseReleased(const ap::ooinput::MouseClickedEvent &e)
       if (mObject && mObject->getObjectType() == OBJECT_TYPE_MECH) {
           Mech *mech = dynamic_cast<Mech *>(mObject);
 
-          // Ogre::Vector3 mouse(x, y, 0);
           Ogre::Vector3 facing = mech->getFacing();
           Ogre::Vector3 position = mech->getPosition();
           const MechData *data = getMechProto(mech->getTypeName());
@@ -585,10 +584,15 @@ bool PlayState::mouseReleased(const ap::ooinput::MouseClickedEvent &e)
            * targetState based on that. */
 
           Ogre::Vector3 position_to_mouse = position - mouse;
+          
+          // std::cout << "position - mouse: (" << position_to_mouse.x << ", " << position_to_mouse.y << ", " << position_to_mouse.z << ")" << std::endl;
 
           /* angle means the angle between the current orientation and
-           * the mouse pointer, I wonder if it has negative numbers? */
-          Ogre::Degree angle = Ogre::Degree(position_to_mouse.angleBetween(facing));
+           * the mouse pointer. */
+
+          Ogre::Degree angle = Ogre::Degree(180.0) - Ogre::Degree(position_to_mouse.angleBetween(facing));
+
+          // std::cout << "angle to mouse: " << angle << ", max: " << maxAngle << std::endl;
 
           if (angle.valueDegrees() < maxAngle) {
               // the mech can shoot at the target by just rotating its
@@ -603,7 +607,7 @@ bool PlayState::mouseReleased(const ap::ooinput::MouseClickedEvent &e)
           }
 
           /* Ask server that the turret is aimed to that direction */
-          mech->setAimCoordinates(mouse.x, mouse.y);
+          mech->setAimCoordinates(mouse);
           setNetDataDirty();
       }
 

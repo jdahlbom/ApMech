@@ -10,7 +10,7 @@
         <maxSpeed>18</maxSpeed>
     </stats>
     <design>
-        <torso turningRadius="180">
+        <torso turningRadius="90">
             <slot />
             <slot />
         </torso>

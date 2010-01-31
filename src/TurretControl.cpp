@@ -1,33 +1,36 @@
 #include "TurretControl.h"
 
+#ifndef WIN32
+#include <Ogre.h>
+#else
+#include <Ogre/Ogre.h>
+#endif
+
 #include "net/serializer.h"
 
 namespace ap {
 TurretControl::TurretControl():
-    x(0), y(0) {}
+    aim(Ogre::Vector3(0,0,0)) {}
 
 void TurretControl::reset()
 {
-    x = y = 0;
+    aim = Ogre::Vector3(0,0,0);
 }
 
 int TurretControl::serialize(uint8 buffer[], int start, int buflength) const {
-    return ap::net::serialize(x, buffer, start, buflength);
-    return ap::net::serialize(y, buffer, start, buflength);
+    return ap::net::serialize(aim, buffer, start, buflength);
 }
 
 int TurretControl::unserialize(uint8 buffer[], int start) {
-    return ap::net::unserialize(x, buffer, start);
-    return ap::net::unserialize(y, buffer, start);
+    return ap::net::unserialize(aim, buffer, start);
 }
 
-void TurretControl::setAimCoordinates(int aimX, int aimY) {
-    x = aimX;
-    y = aimY;
+void TurretControl::setAimCoordinates(Ogre::Vector3 target) {
+    aim = target;
 }
 
 void TurretControl::dump() {
-    std::cout << "[TURRETCONTROL::dump] aim: (" << ((int)x) << "," << ((int)y) << ")" << std::endl;
+    std::cout << "[TURRETCONTROL::dump] aim: (" << ((float)aim.x) << "," << ((float)aim.z) << ")" << std::endl;
 }
 
 } // namespace ap

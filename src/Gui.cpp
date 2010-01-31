@@ -714,15 +714,15 @@ void Gui::clearLimboVehicleList()
 
     switch (state) {
         case TARGET_NOT_AVAILABLE:
-            std::cout << "Cursor changed to TARGET_NOT_AVAILABLE" << std::endl;
+            // std::cout << "Cursor changed to TARGET_NOT_AVAILABLE" << std::endl;
             image = (CEGUI::utf8*)"MouseArrow";
             break;
         case TARGET_WITHIN_TORSO_TURN_ANGLE:
-            std::cout << "Cursor changed to TARGET_WITHIN_TORSO_TURN_ANGLE" << std::endl;
+            // std::cout << "Cursor changed to TARGET_WITHIN_TORSO_TURN_ANGLE" << std::endl;
             image = (CEGUI::utf8*)"MouseTargetSector";
             break;
         case TARGET_LINED_WITH_TORSO:
-            std::cout << "Cursor changed to TARGET_LINED_WITH_TORSO" << std::endl;
+            // std::cout << "Cursor changed to TARGET_LINED_WITH_TORSO" << std::endl;
             image = (CEGUI::utf8*)"MouseTargetAcquired";
             break;
         default:

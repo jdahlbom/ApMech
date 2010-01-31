@@ -1,6 +1,12 @@
 #ifndef AP_TURRET_CONTROL_H
 #define AP_TURRET_CONTROL_H
 
+#ifndef WIN32
+#include <Ogre.h>
+#else
+#include <Ogre/Ogre.h>
+#endif
+
 #include "types.h"
 #include "net/Controller.h"
 #include <iostream>
@@ -15,7 +21,7 @@ class TurretControl : public net::Controller {
 
     void reset();
 
-    void setAimCoordinates(int x, int y);
+    void setAimCoordinates(Ogre::Vector3 target);
 
     int serialize(uint8 buffer[], int start, int buflength) const;
     int unserialize(uint8 buffer[], int start);
@@ -23,8 +29,8 @@ class TurretControl : public net::Controller {
     void dump();
 
     private:
-    int x;
-    int y;
+    Ogre::Vector3 aim;
+
 }; // class TurretControl
 } // namespace ap
 
