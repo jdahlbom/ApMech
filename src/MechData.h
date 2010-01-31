@@ -23,11 +23,11 @@ class MechData : public ap::net::NetObject
     int serialize(uint8 *buffer, int start, int buflength) const;
     int unserialize(uint8 *buffer, int start);
 
-    int getTurnRate() { return maxTurnRate; }
-    int getMaxForwardAcceleration() { return maxForwardAcceleration; }
-    int getMaxBackwardAcceleration() { return maxBackwardAcceleration; }
-    int getMaxTorsoAngle() { return maxTorsoAngle; }
-    int getMaxSpeed() { return maxSpeed; }
+    int getTurnRate() const { return maxTurnRate; }
+    int getMaxForwardAcceleration() const { return maxForwardAcceleration; }
+    int getMaxBackwardAcceleration() const { return maxBackwardAcceleration; }
+    int getMaxTorsoAngle() const { return maxTorsoAngle; }
+    int getMaxSpeed() const { return maxSpeed; }
     std::string getName() const { return name; }
     std::string getTorsoMesh() const { return "FullMech.mesh"; }
     std::string getLegsMesh() const { return "CrudeMech.mesh"; }

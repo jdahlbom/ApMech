@@ -120,7 +120,7 @@ bool MechReader::parseFile() {
     XML_SetUserData(parser, (void *) this);
 
     if((fp = fopen(filename->c_str(), "r")) == NULL) {
-        printf("Cannot open file.\n");
+        printf("Cannot open file: %s.\n", filename->c_str());
         return false;
     }
 

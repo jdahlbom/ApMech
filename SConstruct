@@ -141,6 +141,7 @@ src/MovingObject.cpp
 src/CombinedControls.cpp
 src/MovableControl.cpp
 src/WeaponControl.cpp
+src/TurretControl.cpp
 src/RectBoundaries.cpp
 src/ScoreListing.cpp
 src/net/serializer.cpp

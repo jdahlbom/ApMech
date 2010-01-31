@@ -29,6 +29,8 @@ class Mech : public MovingObject
     uint8 getObjectType() const;
     std::string getTypeName() const;
     void setTypeName(std::string);
+    int getTorsoAngle();
+    void setTorsoAngle(int angle);
 
     //NetObject serialization
     int serialize(uint8 *buffer, int start, int buflength) const;
@@ -38,6 +40,7 @@ class Mech : public MovingObject
     bool                 mIsIdle;
     Ogre::AnimationState *mAnimState;
     std::string          typeName;
+    int torsoAngle;
 };
 
 } // namespace ap

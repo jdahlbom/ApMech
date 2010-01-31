@@ -536,13 +536,46 @@ bool PlayState::mouseReleased(const ap::ooinput::MouseClickedEvent &e)
 
   void PlayState::receiveMousePosition(int x, int y)
   {
-      /* TODO: check whether the mouse cursor position is available by
-       * just changing the mech torso direction, and use a suitable
-       * targetState based on that. */
-
       targetState state = TARGET_NOT_AVAILABLE;
 
       pGui->setTargetState(state);
+    
+      if (mObject && mObject->getObjectType() == OBJECT_TYPE_MECH) {
+          Mech *mech = dynamic_cast<Mech *>(mObject);
+
+          Ogre::Vector3 mouse(x, y, 0);
+          Ogre::Vector3 facing = mech->getFacing();
+          Ogre::Vector3 position = mech->getPosition();
+          const MechData *data = getMechProto(mech->getTypeName());
+          int maxAngle = data->getMaxTorsoAngle();
+          int currentAngle = mech->getTorsoAngle();
+
+          /* Check whether the mouse cursor position is available by
+           * just changing the mech torso direction, and use a suitable
+           * targetState based on that. */
+
+          Ogre::Vector3 position_to_mouse = position - mouse;
+
+          /* angle means the angle between the current orientation and
+           * the mouse pointer, I wonder if it has negative numbers? */
+          Ogre::Degree angle = Ogre::Degree(position_to_mouse.angleBetween(facing));
+
+          if (angle.valueDegrees() < maxAngle) {
+              // the mech can shoot at the target by just rotating its
+              // torso!
+
+              if ((angle - Ogre::Degree(currentAngle)).valueDegrees() < 2.0) {
+                  state = TARGET_LINED_WITH_TORSO;
+              }
+              else {
+                  state = TARGET_WITHIN_TORSO_TURN_ANGLE;
+              }
+          }
+
+          /* Ask server that the turret is aimed to that direction */
+          mech->setAimCoordinates(x, y);
+          setNetDataDirty();
+      }
 
       return;
   }

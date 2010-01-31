@@ -5,6 +5,7 @@
 #include "net/Controller.h"
 #include "MovableControl.h"
 #include "WeaponControl.h"
+#include "TurretControl.h"
 
 namespace ap {
 class MovableControl;
@@ -12,7 +13,8 @@ class MovableControl;
 class CombinedControls : public net::Controller
 {
     public:
-    CombinedControls(MovableControl *move, WeaponControl *firing);
+    CombinedControls(MovableControl *move,
+            WeaponControl *firing, TurretControl *turret);
     ~CombinedControls(){}
     int serialize(uint8 buffer[], int start, int buflength) const;
     int unserialize(uint8 buffer[], int start);
@@ -23,6 +25,7 @@ class CombinedControls : public net::Controller
     private:
     MovableControl  *moveControl;
     WeaponControl   *firingControl;
+    TurretControl   *turretControl;
 }; // class CombinedControls
 } // namespace ap
 

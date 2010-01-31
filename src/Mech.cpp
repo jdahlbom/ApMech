@@ -24,7 +24,8 @@ static MechInject __mechinject;
 Mech::Mech(Ogre::Vector3 velocity) :
   MovingObject(0.0f, velocity, ap::OBJECT_TYPE_MECH),
   mIsIdle(true),
-  mAnimState(0)
+  mAnimState(0),
+  torsoAngle(0)
 {
     objectType = ap::OBJECT_TYPE_MECH;
 }
@@ -81,6 +82,15 @@ uint8 Mech::getObjectType() const
     return ap::OBJECT_TYPE_MECH;
 }
 
+void Mech::setTorsoAngle(int angle)
+{
+    torsoAngle = angle;
+}
+
+int Mech::getTorsoAngle()
+{
+    return torsoAngle;
+}
 
 int Mech::serialize(uint8 *buffer, int start, int buflength) const
 {
@@ -90,6 +100,7 @@ int Mech::serialize(uint8 *buffer, int start, int buflength) const
     length += MovingObject::serialize(buffer, start+length, buflength);
     length += serialize(color, buffer, start+length, buflength);
     length += serialize(typeName, buffer, start+length, buflength);
+    length += serialize(torsoAngle, buffer, start+length, buflength);
     return length;
 }
 
@@ -101,6 +112,7 @@ int Mech::unserialize(uint8 *buffer, int start)
     length += MovingObject::unserialize(buffer, start+length);
     length += unserialize(color, buffer, start+length);
     length += unserialize(typeName, buffer, start+length);
+    length += unserialize(torsoAngle, buffer, start+length);
     return length;
 }
 
