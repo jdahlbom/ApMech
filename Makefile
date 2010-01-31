@@ -40,8 +40,9 @@ OBJS = InputSystem.o SDLInputSystem.o GameState.o PlayState.o GameStateManager.o
 	MainMenuState.o MenuStateViewport.o KeyConfMenuState.o MechData.o
 SERVEROBJS = servermain.o utilities.o Server.o MovingObject.o RectBoundaries.o serializer.o netdata.o \
 	functions.o NetUser.o NetEvent.o NetMessage.o Mech.o Projectile.o rotations.o \
-	MovableControl.o WeaponControl.o CombinedControls.o ScoreListing.o \
-	ObjectDataBase.o GameWorld.o TerrainHeightMap.o MechData.o ObjectReader.o
+	MovableControl.o WeaponControl.o TurretControl.o CombinedControls.o \
+	ScoreListing.o ObjectDataBase.o GameWorld.o TerrainHeightMap.o \
+	MechData.o ObjectReader.o
 
 ## Compilation and linking occurs here
 all: tempDirectories application server
