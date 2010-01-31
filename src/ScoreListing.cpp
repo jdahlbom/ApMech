@@ -15,6 +15,11 @@ namespace ap {
    };
   static ScoreListingInject __projectileinject;
 
+  void ScoreTuple::clear()
+  {
+    kills = deaths = score = 0;
+  }
+
   int ScoreTuple::serialize(uint8 buffer[], int start, int buflength) const
   {
     int length = 0;

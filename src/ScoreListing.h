@@ -20,6 +20,7 @@ namespace ap {
     ap::int16 score;
     std::string nick;
 
+    void clear();
     int serialize(uint8 buffer[], int start, int buflength) const;
     int unserialize(uint8 buffer[], int start);
     void print() const;

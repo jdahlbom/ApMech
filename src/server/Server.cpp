@@ -80,8 +80,10 @@ void Server::start() {
         ap::mSleep(1);       // sleep even a little bit so that dt is never 0
 
         processEvents(netdata);
+
+        // Does matchRules say somebody is allowed to spawn now?
+        while (int uidSpawner = matchRules.getSpawner()) usersWithoutAvatar.push_back(uidSpawner);
         if (!pendingClients.empty()) processPendingClients(netdata);
-        if (!deadClients.empty()) processDeadClients(netdata);
     } // Main loop
 } // void Server::start()
 
@@ -93,8 +95,8 @@ bool Server::loadSettings(std::string serverConfigFile)
     serverConfig.load(bundlePath() + serverConfigFile);
     if (!from_string<uint32>(networkFPS, serverConfig.getSetting("NetworkFPS"), std::dec)) networkFPS = 20;
     if ((gameRules = serverConfig.getSetting("DefaultGame")) == "") gameRules = "deathmatch";
-    if (!from_string<uint32>(respawnDelay, serverConfig.getSetting("RespawnDelay", "Rules of "+gameRules), std::dec)) respawnDelay = 2000;
-    cout << "[SERVER:loadSettings] respawnDelay = "<<respawnDelay<<endl;
+
+    matchRules.load(gameRules, bundlePath() + serverConfigFile);
 
     if (!gameWorld) gameWorld = new ap::GameWorld();
     gameWorld->loadMapFile(serverConfig.getSetting("Map") + ".map");
@@ -176,22 +178,6 @@ void Server::processPendingClients(ap::net::NetData *pNetData) {
     }
 }
 
-  /**
-   * See if something should be done to connected players who do not
-   * have an avatar because their previous avatar was killed.
-   */
-void Server::processDeadClients(ap::net::NetData *pNetData) {
-    std::map<ap::uint32, ap::uint32>::iterator i = deadClients.begin();
-
-    while (i != deadClients.end()) {
-        if (!pNetData->getUser(i->second)) {
-            deadClients.erase(i++);      // The user disconnected before finishing connection
-        } else if (getTicks() > i->first) {
-            usersWithoutAvatar.push_back(i->second);
-            deadClients.erase(i++);
-        } else i++;
-    }
-}
 
 
 void Server::updateObjects(float dt, ap::net::NetData* pNetData) const {
@@ -242,37 +228,13 @@ void Server::detectCollisions(ap::net::NetData *pNetData) {
         while (ap::Projectile *proj = pNetData->eachObject<ap::Projectile *>(ap::OBJECT_TYPE_PROJECTILE))
         {
             if (proj->testCollision(*mech) && (0 != mech->uid)) {
-                if (proj->uid == mech->uid) {   // He killed himself!
-                    ap::ScoreTuple selfKiller;
-                    selfKiller.uid = proj->uid;
-                    selfKiller.kills = 0;
-                    selfKiller.deaths = 1;
-                    selfKiller.score = -1;
-                    mScores->addScore(selfKiller, false);
-                } else {                        // update scores normally.
-                    ap::ScoreTuple projOwner;
-                    projOwner.uid = proj->uid;
-                    projOwner.kills = 1;
-                    projOwner.deaths = 0;
-                    projOwner.score = 1;
-                    ap::ScoreTuple mechOwner;
-                    mechOwner.uid = mech->uid;
-                    mechOwner.kills = 0;
-                    mechOwner.deaths = 1;
-                    mechOwner.score = -1;
-                    mScores->addScore(projOwner, false);
-                    mScores->addScore(mechOwner, false);
-                }
+                matchRules.killPlayer(mScores, mech->uid, proj->uid);
+                mScores->setChanged();
+                mScores->print();
 
-                // Detach the mech from the user completely.
-//                relocateSpawnedMech(mech);
-                deadClients.insert(make_pair(getTicks() + respawnDelay, mech->uid));
                 pNetData->getUser(mech->uid)->setControlPtr(NULL);
                 mech->getControlPtr()->reset();     // Dead girls don't say shoot
                 mech->uid = 0;                      // The mech's not owned anymore
-
-                mScores->setChanged();
-                mScores->print();
 
                 pNetData->delObject(proj->id);
                 pNetData->alertObject(mScores->id);       // Refresh the score display to players
@@ -297,11 +259,9 @@ void Server::createNewConnection(ap::uint32 userId, ap::net::NetData *pNetData)
 
     // Add scores:
     ap::ScoreTuple newPlayer;
+    newPlayer.clear();
     newPlayer.uid = userId;
     newPlayer.nick = pNetData->getUser(userId)->nick;
-    newPlayer.kills = 0;
-    newPlayer.deaths = 0;
-    newPlayer.score = 0;
     mScores->addScore(newPlayer, true);
     mScores->setChanged();
     pNetData->alertObject(mScores->id);       // Refresh the score display to players
@@ -320,46 +280,46 @@ void Server::createNewConnection(ap::uint32 userId, ap::net::NetData *pNetData)
 }
 
 void Server::spawnNewAvatars(ap::net::NetData *pNetData) {
-  std::list<ap::uint32>::iterator it = usersWithoutAvatar.begin();
-  while(it != usersWithoutAvatar.end()) {
-    ap::uint32 userId = *it;
-    ap::net::NetUser *pUser = pNetData->getUser(userId);
+    std::list<ap::uint32>::iterator it = usersWithoutAvatar.begin();
+    while(it != usersWithoutAvatar.end()) {
+        ap::uint32 userId = *it;
+        ap::net::NetUser *pUser = pNetData->getUser(userId);
 
-    if (NULL == pUser) {
-      it = usersWithoutAvatar.erase(it);
-      continue;
+        if (NULL == pUser) {
+            it = usersWithoutAvatar.erase(it);
+            continue;
+        }
+
+        if ("" != pUser->chosenVehicleType) {
+            // std::cout << "User has selected vehicle type " << pUser->chosenVehicleType << std::endl;
+            Ogre::Vector3 initialSpeed(0,0,0);
+            ap::Mech *newAvatar = new ap::Mech();
+            int newid = pNetData->insertObject(newAvatar);
+            ap::MechReader *reader = mechDB->getMechReader(pUser->chosenVehicleType);
+
+            newAvatar->setTypeName(pUser->chosenVehicleType);
+            if (reader) {
+                newAvatar->setMaxTurnRate(reader->getTurnRate());
+                newAvatar->setMaxForwardAcceleration(reader->getMaxForwardAcceleration());
+                newAvatar->setMaxBackwardAcceleration(reader->getMaxBackwardAcceleration());
+                newAvatar->setMaxSpeed(reader->getMaxSpeed());
+            }
+            newAvatar->setFriction(8.0f);
+            newAvatar->uid = userId;
+            newAvatar->color = pUser->color;
+            relocateSpawnedMech(newAvatar);
+            pNetData->alertObject(newAvatar->id); // Alert clients to paint this mech!
+
+            pUser->setControlPtr(newAvatar->getControlPtr());
+
+            it = usersWithoutAvatar.erase(it);
+            pNetData->sendChanges(); // Shouldn't this occur in the main loop??
+
+            pNetData->setAvatarID(userId, newid);
+        } else {
+            ++it;
+        }
     }
-
-    if ("" != pUser->chosenVehicleType) {
-      // std::cout << "User has selected vehicle type " << pUser->chosenVehicleType << std::endl;
-      Ogre::Vector3 initialSpeed(0,0,0);
-      ap::Mech *newAvatar = new ap::Mech();
-      int newid = pNetData->insertObject(newAvatar);
-      ap::MechReader *reader = mechDB->getMechReader(pUser->chosenVehicleType);
-
-      newAvatar->setTypeName(pUser->chosenVehicleType);
-      if (reader) {
-        newAvatar->setMaxTurnRate(reader->getTurnRate());
-        newAvatar->setMaxForwardAcceleration(reader->getMaxForwardAcceleration());
-        newAvatar->setMaxBackwardAcceleration(reader->getMaxBackwardAcceleration());
-        newAvatar->setMaxSpeed(reader->getMaxSpeed());
-      }
-      newAvatar->setFriction(8.0f);
-      newAvatar->uid = userId;
-      newAvatar->color = pUser->color;
-      relocateSpawnedMech(newAvatar);
-      pNetData->alertObject(newAvatar->id); // Alert clients to paint this mech!
-
-      pUser->setControlPtr(newAvatar->getControlPtr());
-
-      it = usersWithoutAvatar.erase(it);
-      pNetData->sendChanges(); // Shouldn't this occur in the main loop??
-
-      pNetData->setAvatarID(userId, newid);
-    } else {
-      ++it;
-    }
-  }
 }
 
 Server::~Server() {

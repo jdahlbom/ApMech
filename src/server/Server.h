@@ -13,6 +13,8 @@
 #include "../GameWorld.h"
 #include "../ObjectDataBase.h"
 
+#include "MatchRules.h"
+
 #include <set>
 #include <list>
 #include <map>
@@ -43,18 +45,16 @@ class Server
     std::set<uint32>        pendingClients; // A new client is added here, and removed when first data comes from him.
     std::list<ap::uint32>   usersWithoutAvatar;
 
-    std::map<ap::uint32, ap::uint32>    deadClients; // ticks value when respawn, uid whom to respawn
 
 // Server settings
     uint32              networkFPS;     // How many times per second we try to send updates to clients
-    uint32              respawnDelay;   // How many milliseconds players stay dead before re-entering the game
     std::string         gameRules;      // What rules to use in the game. Deathmatch currently only implemented set of rules.
+    MatchRules          matchRules;
 // end
 
     bool loadSettings(std::string serverConfigFile);
     void processEvents(ap::net::NetData *pNetData);
     void processPendingClients(ap::net::NetData *pNetData);
-    void processDeadClients(ap::net::NetData *pNetData);
     void updateObjects(float dt, ap::net::NetData* pNetData) const;
     void fireWeapons(uint64 tstamp, ap::net::NetData *pNetData);
     void weaponFired(ap::net::NetData *pNetData, ap::MovingObject *source);
