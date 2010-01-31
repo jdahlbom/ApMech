@@ -19,7 +19,7 @@ namespace ap {
   class GuiMouseReceiver {
   public:
     virtual ~GuiMouseReceiver() {} // Should not be called directly!
-    virtual void receiveMousePosition(int x, int y)=0;
+    virtual void receiveMousePosition(float xRel, float yRel)=0;
   };
 }
 

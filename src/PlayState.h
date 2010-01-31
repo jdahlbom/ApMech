@@ -56,7 +56,8 @@ public:
     void sendChatMessage(const std::string &message);
 
     // GuiMouseReceiver
-    void receiveMousePosition(int x, int y);
+    void receiveMousePosition(float xRel, float yRel);
+    Ogre::Vector3 mapMouseToPosition(float xRel, float yRel);
 
 private:
     Ogre::Root                  *pRoot;
@@ -68,6 +69,7 @@ private:
     Ogre::SceneNode             *mWorldCenter;
     Ogre::SceneNode             *mCameraNode;
     Ogre::SceneNode             *mCameraNodeParent;
+    Ogre::RaySceneQuery         *mRaySceneQuery;
 
     ap::ScoreListing            *pScoreListing;
 
