@@ -177,6 +177,7 @@ serverSources = Split("""
 src/servermain.cpp
 src/server/Server.cpp
 src/server/utilities.cpp
+src/server/MatchRules.cpp
 src/ObjectDataBase.cpp
 src/ObjectReader.cpp
 """)+commonSources

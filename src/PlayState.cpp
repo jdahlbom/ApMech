@@ -584,6 +584,11 @@ bool PlayState::mouseReleased(const ap::ooinput::MouseClickedEvent &e)
            * targetState based on that. */
 
           Ogre::Vector3 position_to_mouse = position - mouse;
+
+          /* Take off the upwards coordinate to make the turret
+           * calculation more accurate -- it's assumed that the mech
+           * keeps itself upright all the time. */
+          position_to_mouse.y = 0;
           
           // std::cout << "position - mouse: (" << position_to_mouse.x << ", " << position_to_mouse.y << ", " << position_to_mouse.z << ")" << std::endl;
 
@@ -597,13 +602,17 @@ bool PlayState::mouseReleased(const ap::ooinput::MouseClickedEvent &e)
           if (angle.valueDegrees() < maxAngle) {
               // the mech can shoot at the target by just rotating its
               // torso!
+              //
+              float diff = (angle - Ogre::Degree(currentAngle)).valueDegrees();
 
-              if ((angle - Ogre::Degree(currentAngle)).valueDegrees() < 2.0) {
+              if (diff < 2.0) {
                   state = TARGET_LINED_WITH_TORSO;
               }
               else {
                   state = TARGET_WITHIN_TORSO_TURN_ANGLE;
               }
+
+              // std::cout << "angle to mouse: " << angle << ", diff: " << diff << std::endl;
           }
 
           /* Ask server that the turret is aimed to that direction */
