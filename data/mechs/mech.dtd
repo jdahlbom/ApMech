@@ -1,11 +1,10 @@
-<?xml version="1.0"?>
-<!DOCTYPE mech [
-  <!ELEMENT mech   (name,stats,design?, media)
+  <!ELEMENT mech   (name,stats,design?, media)>
     <!ELEMENT name (#PCDATA)>
     <!ELEMENT stats  (maxTurnRate,
           maxForwardAcceleration,
           maxBackwardAcceleration,
           maxSpeed)>
+      <!ELEMENT maxTurnRate (#PCDATA)>
       <!ELEMENT maxForwardAcceleration (#PCDATA)>
       <!ELEMENT maxBackwardAcceleration (#PCDATA)>
       <!ELEMENT maxSpeed (#PCDATA)>
@@ -13,14 +12,11 @@
       <!ELEMENT torso  (slot*)>
         <!ATTLIST torso turningRadius CDATA #REQUIRED>
       <!ELEMENT arm    (slot*)>
-      <!ELEMENT leg    (EMPTY)>
-      <!ELEMENT slot   (weapon)>
+      <!ELEMENT leg    EMPTY>
+      <!ELEMENT slot   (weapon*)>
         <!ELEMENT weapon (#PCDATA)>
     <!ELEMENT media  (mesh+)>
-      <!ELEMENT mesh>
-        <!ATTLIST mesh type CDATA #REQUIRED>
-        <!ATTLIST mesh file CDATA #REQUIRED> 
-]>
-
-
-
+      <!ELEMENT mesh EMPTY>
+        <!ATTLIST mesh type (TORSO|LEGS) #REQUIRED>
+        <!ATTLIST mesh file CDATA #REQUIRED>
+        <!ATTLIST mesh translation CDATA "000.00;000.00;000.00">

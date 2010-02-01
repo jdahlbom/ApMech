@@ -24,8 +24,8 @@
         <leg />
     </design>
     <media>
-      <mesh type="TORSO" file="FullMech.mesh"/>
-      <mesh type="LEGS" file="FullMech.mesh"/>
+      <mesh type="TORSO" file="FullMech.mesh" translation="2.5;0.0;0.0" />
+      <mesh type="LEGS" file="FullMech.mesh" translation="0.0;0.0;0.0" />
     </media>
 </mech>
 
