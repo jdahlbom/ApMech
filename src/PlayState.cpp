@@ -265,8 +265,10 @@ void PlayState::createNewEntity(ap::MovingObject *newObject, uint32 objectId)
 {
     Ogre::Entity *newEntity = NULL;
     assert(newObject->hasOwnerNode());
+    std::string baseId("Entity/");
     std::stringstream ss;
-    ss << "Entity/"<<objectId;
+    ss<<objectId;
+    baseId.append(ss.str());
 
     Ogre::SceneNode *objNode = newObject->getOwnerNode();
 
@@ -297,15 +299,17 @@ void PlayState::createNewEntity(ap::MovingObject *newObject, uint32 objectId)
 	Ogre::SceneNode *torsoRotNode = torsoNode->createChildSceneNode();
 	torsoRotNode->yaw(Ogre::Radian(3.14f/180.0f*15.0f));
 
-	std::stringstream torsoEntity;
-	torsoEntity << ss << "/torso";
-	std::stringstream legsEntity;
-	legsEntity << ss << "/legs";
+	std::string torsoEntity("");
+	torsoEntity.append(baseId);
+	torsoEntity.append("/torso");
+	std::string legsEntity("");
+	legsEntity.append(baseId);
+	legsEntity.append("/legs");
 
-	Ogre::Entity *torsoE = pSceneManager->createEntity(torsoEntity.str(), torsoMesh);
+	Ogre::Entity *torsoE = pSceneManager->createEntity(torsoEntity, torsoMesh);
 	torsoRotNode->attachObject(torsoE);
 
-	Ogre::Entity *legsE = pSceneManager->createEntity(legsEntity.str(), legsMesh);
+	Ogre::Entity *legsE = pSceneManager->createEntity(legsEntity, legsMesh);
 	legsNode->attachObject(legsE);
 
         pMech->setEntity(torsoE);
@@ -315,7 +319,7 @@ void PlayState::createNewEntity(ap::MovingObject *newObject, uint32 objectId)
       {
         std::string mesh = "CrudeMissile.mesh";
 
-        newEntity = pSceneManager->createEntity(ss.str(), mesh);
+        newEntity = pSceneManager->createEntity(baseId, mesh);
 
         ap::Projectile *pProj = dynamic_cast<ap::Projectile *>(newObject);
         pProj->setEntity(newEntity);
