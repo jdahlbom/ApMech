@@ -25,8 +25,8 @@
     </design>
 
   <media>
-    <mesh type="TORSO" file="HybridFalcon-torso.mesh" translation="0.0;10;0.0"/>
-    <mesh type="LEGS" file="CrudeMesh.mesh" translation="0.0;10.0;0.0"/>
+    <mesh type="TORSO" file="HybridFalcon-torso.mesh" translation="000.00;007.82;000.00"/>
+    <mesh type="LEGS" file="HybridFalcon-legs.mesh" translation="000.00;006.07;000.00"/>
   </media>
 </mech>
 

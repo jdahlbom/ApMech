@@ -19,4 +19,6 @@
       <!ELEMENT mesh EMPTY>
         <!ATTLIST mesh type (TORSO|LEGS) #REQUIRED>
         <!ATTLIST mesh file CDATA #REQUIRED>
+	<!-- For now, use 5 numbers, 2 decimals for translation values.
+	     This gives us enough precision, and high enough values -->
         <!ATTLIST mesh translation CDATA "000.00;000.00;000.00">

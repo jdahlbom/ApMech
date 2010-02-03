@@ -1,10 +1,13 @@
 #include "ObjectReader.h"
 #include <stdlib.h>
 
+#include <map>
 #include <string>
 #include <vector>
 
 namespace ap {
+
+void readAttributes(std::map<std::string, std::string> &attributes, const XML_Char **atts);
 
 void characterDataHandler(void *userData, const XML_Char *s, int len) {
     
@@ -60,6 +63,17 @@ void startHandler(void *userData, const XML_Char *name, const XML_Char **atts) {
     std::string path[] = {"mech", "media", "mesh"};
     if (mech->isPath(path, 3))
       {
+	  std::map<std::string, std::string> attributes =
+	      std::map<std::string, std::string>();
+	  readAttributes(attributes, atts);
+
+	  std::map<std::string, std::string>::const_iterator it;
+	  it = attributes.find("type");
+	  if (it->second.compare("TORSO")==0)
+	      mech->setTorsoMesh(attributes.find("file")->second);
+	  if (it->second.compare("LEGS")==0)
+	      mech->setLegsMesh(attributes.find("file")->second);
+#if 0
 	if (atts) {
 	  std::string type = "";
 	  std::string file = "";
@@ -81,10 +95,21 @@ void startHandler(void *userData, const XML_Char *name, const XML_Char **atts) {
 	  }
 	}
 	printf("Read mesh parameters, yay..\n");
+#endif
 	return;
       }
 
     return;
+}
+
+void readAttributes(std::map<std::string, std::string> &attributes, const XML_Char **atts)
+{
+    attributes.clear();
+    for ( int i=0; atts[i]; i+=2) {
+	std::string type(atts[i]);
+	std::string value(atts[i+1]);
+	attributes[type] = value;
+    }
 }
 
 void endHandler(void *userData, const XML_Char *name) {
@@ -127,14 +152,15 @@ void endHandler(void *userData, const XML_Char *name) {
 
 
 MechReader::MechReader (const std::string *filename) :
+    nodePath(std::vector<std::string>()),
     turnRate(0),
     maxForwardAcceleration(0),
     maxBackwardAcceleration(0),
     filename(filename),
     currentDataBuffer(""), 
     torsoMesh("FullMech.mesh"),
-    legsMesh("CrudeMech.mesh"),
-    nodePath(std::vector<std::string>()) {}
+    legsMesh("CrudeMech.mesh")
+ {}
 
 
 bool MechReader::addData(char *buf, int len) {

@@ -1,18 +1,23 @@
 #ifndef AP_MECHDATA_H
 #define AP_MECHDATA_H
 
+#include <OgreVector3.h>
+
 #include "types.h"
 #include "constants.h"
 #include "net/NetObject.h"
 
 #include <string>
+#include <vector>
 
 namespace ap {
+
+    class MechDataMesh;
 
 class MechData : public ap::net::NetObject
 {
  public:
-    MechData() : name(""), maxTurnRate(0), maxForwardAcceleration(0), maxBackwardAcceleration(0) {};
+    MechData();
     ~MechData() {};
 
     // NetObject interface
@@ -52,7 +57,27 @@ class MechData : public ap::net::NetObject
 
     std::string torsoMesh;
     std::string legsMesh;
+
+    std::vector<MechDataMesh> meshes;
 };
+
+class MechDataMesh : public ap::net::Serializable
+    {
+    public:
+	int serialize(uint8 buffer[], int start, int buflength) const;
+	int unserialize(uint8 buffer[], int start);
+
+	std::string getPartName() const { return partName; }
+	std::string getParentName() const { return parentName; }
+	std::string getFileName() const { return fileName; }
+	Ogre::Vector3 getTranslation() const { return translation; }
+
+    private:
+	std::string partName;
+	std::string parentName;
+	std::string fileName;
+	Ogre::Vector3 translation;
+    };
 
 } // namespace ap
 

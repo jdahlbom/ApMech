@@ -283,12 +283,32 @@ void PlayState::createNewEntity(ap::MovingObject *newObject, uint32 objectId)
         std::string mechName = pMech->getTypeName();
         const MechData *proto = getMechProto(mechName);
         assert(proto != NULL);
+
+	// TODO: Remove the temp code as soon as mechreader supports reading the data.
         std::string torsoMesh = proto->getTorsoMesh();
         std::string legsMesh = proto->getLegsMesh();
 
-        newEntity = pSceneManager->createEntity(ss.str(), torsoMesh);
-        newEntity->getSubEntity(0)->setCustomParameter(1, Ogre::Vector4(r, g, b, 0.0f));
-        pMech->setEntity(newEntity);
+	// tempy, tempy: Values correct for hybridfalcon and rotation for testing.
+	Ogre::Vector3 torsoTranslation(0.0f, 7.82f, 0.0f);
+	Ogre::Vector3 legsTranslation(0.0f, 6.07f, 0.0f);
+
+	Ogre::SceneNode *torsoNode = objNode->createChildSceneNode(torsoTranslation);
+	Ogre::SceneNode *legsNode = objNode->createChildSceneNode(legsTranslation);
+	Ogre::SceneNode *torsoRotNode = torsoNode->createChildSceneNode();
+	torsoRotNode->yaw(Ogre::Radian(3.14f/180.0f*15.0f));
+
+	std::stringstream torsoEntity;
+	torsoEntity << ss << "/torso";
+	std::stringstream legsEntity;
+	legsEntity << ss << "/legs";
+
+	Ogre::Entity *torsoE = pSceneManager->createEntity(torsoEntity.str(), torsoMesh);
+	torsoRotNode->attachObject(torsoE);
+
+	Ogre::Entity *legsE = pSceneManager->createEntity(legsEntity.str(), legsMesh);
+	legsNode->attachObject(legsE);
+
+        pMech->setEntity(torsoE);
       }
       break;
     case ap::OBJECT_TYPE_PROJECTILE:
