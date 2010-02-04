@@ -19,8 +19,6 @@
 #include <cmath>    // for sin,cos in the server
 #include <list>
 
-#include "utilities.h"
-
 #include "../functions.h"
 #include "../Mech.h"
 #include "../Projectile.h"
@@ -32,7 +30,6 @@
 namespace ap {
 namespace server {
 using namespace std;
-
 
 
 Server::Server(uint32 port) :
@@ -111,9 +108,11 @@ bool Server::loadSettings(std::string serverConfigFile)
     mechDB->readMechFiles();
 
     std::vector<std::string> mechNames = mechDB->getMechNames();
-    for (uint32 i = 0; i < mechNames.size(); i++) {
-        std::cout << "Trying to create proto [" << mechNames[i] << "]" << std::endl;
-        MechData *data = createMechData(mechDB, mechNames[i]);
+    std::vector<std::string>::const_iterator it;
+    for (it=mechNames.begin(); it!=mechNames.end(); ++it) {
+        std::cout << "Trying to create proto [" << *it << "]" << std::endl;
+        ap::MechReader *reader = mechDB->getMechReader(*it);
+	MechData *data = reader->getMechData();
 	std::cout << "Creating proto [" << data->getName() << "]" << std::endl;
         netdata->insertObject(data);
     }

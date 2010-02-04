@@ -7,8 +7,10 @@
 
 #ifndef WIN32
 #include <OgreVector3.h>
+#include <OgreVector4.h>
 #else
 #include <Ogre/OgreVector3.h>
+#include <Ogre/OgreVector4.h>
 #endif
 
 namespace ap {
@@ -31,6 +33,7 @@ class Mech : public MovingObject
     void setTypeName(std::string);
     int getTorsoAngle();
     void setTorsoAngle(int angle);
+    void colorize(Ogre::Vector4 vector);
 
     //NetObject serialization
     int serialize(uint8 *buffer, int start, int buflength) const;
@@ -38,7 +41,7 @@ class Mech : public MovingObject
 
  private:
     bool                 mIsIdle;
-    Ogre::AnimationState *mAnimState;
+    std::vector<Ogre::AnimationState *> mAnimState;
     std::string          typeName;
     int torsoAngle;
 };

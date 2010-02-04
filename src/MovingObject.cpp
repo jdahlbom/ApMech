@@ -1,5 +1,8 @@
 #include "MovingObject.h"
 
+#include <string>
+#include <map>
+
 #include <assert.h>
 #ifndef WIN32
 #include <Ogre.h>
@@ -32,7 +35,8 @@ MovingObject::MovingObject(float nFriction, Ogre::Vector3 startingVelocity,
     turretControl(new TurretControl()),
     combinedControls(new CombinedControls(control, weaponControl, turretControl)),
     pOwnerNode(0),
-    pEntity(0)
+    pMeshNodes(std::map<std::string, Ogre::SceneNode*>()),
+    pEntities(std::map<std::string, Ogre::Entity*>())
 {
     id = 0;
     uid = 0;
@@ -236,6 +240,12 @@ int MovingObject::unserialize(uint8 *buffer, int start)
 bool MovingObject::testCollision(const MovingObject &other) const
 { return this->state->testCollision(*(other.getStatePtr())); }
 
+void MovingObject::addEntity(std::string name,
+			     Ogre::SceneNode* node, 
+			     Ogre::Entity* entity) {
+    pMeshNodes[name] = node;
+    pEntities[name] = entity;
+}
 
 } // namespace ap
 

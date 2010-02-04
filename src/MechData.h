@@ -12,7 +12,8 @@
 
 namespace ap {
 
-    class MechDataMesh;
+class MechDataMesh;
+class MechDataVisitor;
 
 class MechData : public ap::net::NetObject
 {
@@ -34,11 +35,7 @@ class MechData : public ap::net::NetObject
     int getMaxTorsoAngle() const { return maxTorsoAngle; }
     int getMaxSpeed() const { return maxSpeed; }
     std::string getName() const { return name; }
-    std::string getTorsoMesh() const { return torsoMesh; }
-    std::string getLegsMesh() const { return legsMesh; }
 
-    void setTorsoMesh(const std::string &mesh) { torsoMesh = mesh; }
-    void setLegsMesh(const std::string &mesh) { legsMesh = mesh; }
     void setTurnRate(int rate) { maxTurnRate = rate; }
     void setMaxForwardAcceleration(int acceleration) { maxForwardAcceleration = acceleration; }
     void setMaxBackwardAcceleration(int acceleration) { maxBackwardAcceleration = acceleration; }
@@ -46,6 +43,8 @@ class MechData : public ap::net::NetObject
     void setMaxSpeed(int speed) { maxSpeed = speed; }
     void setName(std::string name) { this->name = name; }
 
+    void accept(MechDataVisitor &visitor) const;
+    void addMesh(const MechDataMesh &mesh);
 
  private:
     std::string name;
@@ -55,9 +54,6 @@ class MechData : public ap::net::NetObject
     int maxTorsoAngle;
     int maxSpeed;
 
-    std::string torsoMesh;
-    std::string legsMesh;
-
     std::vector<MechDataMesh> meshes;
 };
 
@@ -66,6 +62,12 @@ class MechDataMesh : public ap::net::Serializable
     public:
 	int serialize(uint8 buffer[], int start, int buflength) const;
 	int unserialize(uint8 buffer[], int start);
+
+	MechDataMesh();
+	MechDataMesh(std::string name, 
+		     std::string parent, 
+		     std::string file, 
+		     Ogre::Vector3 translation);
 
 	std::string getPartName() const { return partName; }
 	std::string getParentName() const { return parentName; }
@@ -78,6 +80,20 @@ class MechDataMesh : public ap::net::Serializable
 	std::string fileName;
 	Ogre::Vector3 translation;
     };
+
+/**
+ * Accessor interface for meshes-vector.
+ * Implementing class is passed as parameter to accept-method
+ * which performs the actual visitation functionality.
+ * @see Visitor pattern
+ */
+class MechDataVisitor {
+public:
+    /**
+     * @return True, if the visitor wishes to continue the visit.
+     */
+    virtual bool mdv_visit(const MechDataMesh &)=0;
+};
 
 } // namespace ap
 

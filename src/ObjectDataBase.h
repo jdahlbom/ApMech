@@ -31,9 +31,12 @@
 #include <map>
 #include <vector>
 #include <string>
+
 #include "ObjectReader.h"
 
 namespace ap {
+
+class MechData;
 
 class MechDatabase {
 

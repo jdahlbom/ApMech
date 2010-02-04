@@ -11,6 +11,8 @@
 #include <string.h>
 #include <vector>
 
+#include "MechData.h"
+
 namespace ap {
 
 class MechReader {
@@ -21,23 +23,21 @@ public:
 
     bool parseFile();
 
-    int getTurnRate() { return turnRate; }
-    int getMaxForwardAcceleration() { return maxForwardAcceleration; }
-    int getMaxBackwardAcceleration() { return maxBackwardAcceleration; }
-    int getMaxTorsoAngle() { return maxTorsoAngle; }
-    int getMaxSpeed() { return maxSpeed; }
-    std::string getName() const { return name; }
-    std::string getTorsoMesh() const {return torsoMesh;}
-    std::string getLegsMesh() const {return legsMesh;}
+    int getTurnRate() { return data->getTurnRate(); }
+    int getMaxForwardAcceleration() { return data->getMaxForwardAcceleration(); }
+    int getMaxBackwardAcceleration() { return data->getMaxBackwardAcceleration(); }
+    int getMaxTorsoAngle() { return data->getMaxTorsoAngle(); }
+    int getMaxSpeed() { return data->getMaxSpeed(); }
+    std::string getName() const { return data->getName(); }
 
-    void setTurnRate(int rate) { turnRate = rate; }
-    void setMaxForwardAcceleration(int acceleration) { maxForwardAcceleration = acceleration; }
-    void setMaxBackwardAcceleration(int acceleration) { maxBackwardAcceleration = acceleration; }
-    void setMaxTorsoAngle(int angle) { this->maxTorsoAngle = angle; }
-    void setMaxSpeed(int speed) { this->maxSpeed = speed; }
-    void setName(std::string name) { this->name = name; }
-    void setTorsoMesh(std::string mesh) { this->torsoMesh = mesh; }
-    void setLegsMesh(std::string mesh) { this->legsMesh = mesh; }
+    void setTurnRate(int rate) { data->setTurnRate(rate); }
+    void setMaxForwardAcceleration(int acceleration) { data->setMaxForwardAcceleration(acceleration); }
+    void setMaxBackwardAcceleration(int acceleration) { data->setMaxBackwardAcceleration(acceleration); }
+    void setMaxTorsoAngle(int angle) { data->setMaxTorsoAngle(angle); }
+    void setMaxSpeed(int speed) { data->setMaxSpeed(speed); }
+    void setName(std::string name) { data->setName(name); }
+
+    MechData* getMechData() { return data; }
 
     bool addData(char *buf, int len);
     void resetData() { currentDataBuffer = ""; }
@@ -47,21 +47,9 @@ public:
     bool isPath(std::string *path, size_t pathLength) const;
 
 private:
-
-    int turnRate;
-    int maxForwardAcceleration;
-    int maxBackwardAcceleration;
-    int maxTorsoAngle;
-    int maxSpeed;
-
+    MechData *data;
     const std::string *filename;
-    
     std::string currentDataBuffer;
-    std::string name;
-
-    std::string torsoMesh;
-    std::string legsMesh;
-
 };
 
 } // namespace ap

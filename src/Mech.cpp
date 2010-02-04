@@ -2,8 +2,12 @@
 
 #ifndef WIN32
 #include <OgreVector3.h>
+#include <OgreVector4.h>
+#include <OgreAnimationState.h>
 #else
 #include <Ogre/OgreVector3.h>
+#include <Ogre/OgreVector4.h>
+#include <Ogre/OgreAnimationState.h>
 #endif
 
 #include "net/serializer.h"
@@ -24,7 +28,7 @@ static MechInject __mechinject;
 Mech::Mech(Ogre::Vector3 velocity) :
   MovingObject(0.0f, velocity, ap::OBJECT_TYPE_MECH),
   mIsIdle(true),
-  mAnimState(0),
+  mAnimState(std::vector<Ogre::AnimationState *>()),
   torsoAngle(0)
 {
     objectType = ap::OBJECT_TYPE_MECH;
@@ -38,35 +42,48 @@ Mech::Mech(Ogre::Vector3 velocity) :
     return typeName;
   }
 
+/**
+ * Gets called by MovingObject update
+ * Handles animation for now.
+ */
   void Mech::hookUpdate(float sSinceLast) {
       // if idle
     if (mIsIdle) {
     //   if started moving
       if (getVelocity().squaredLength() > 0.0f) {
-	Ogre::Entity *ent = getEntity();
-	assert( ent!=0);
+	  std::map<std::string, Ogre::Entity*>::const_iterator it;
+	  for (it=pEntities.begin(); it != pEntities.end(); ++it) {
+	      Ogre::Entity *ent = it->second;
+	      if (!ent->getMesh()->hasAnimation("Walk"))
+		  continue;
 
-	mAnimState = ent->getAnimationState("Walk");
-	mAnimState->setLoop(true);
-	mAnimState->setEnabled(true);
-	mIsIdle = false;
+	      Ogre::AnimationState *state = ent->getAnimationState("Walk");
+	      state->setLoop(true);
+	      state->setEnabled(true);
+	      mAnimState.push_back(state);
+	      mIsIdle = false;
+	  }
       }
     } else {
       if (getVelocity().squaredLength() == 0.0f) {
-	assert(mAnimState!=0);
-	mAnimState->setEnabled(false);
+	std::vector<Ogre::AnimationState *>::iterator it;
+	for (it = mAnimState.begin(); it !=mAnimState.end(); ++it) {
+	    (*it)->setEnabled(false);
+	}
+	mAnimState.clear();
 	mIsIdle = true;
       }
     }
 
     if (!mIsIdle) {
-      assert(mAnimState != 0);
       float distMovedDuringAnim = 18.0f;
       float durationOfAnim = 3.96f;
       float speedInAnim = distMovedDuringAnim / durationOfAnim;
       float realSpeed = getVelocity().length();
 
-      mAnimState->addTime(realSpeed/speedInAnim * sSinceLast);
+      std::vector<Ogre::AnimationState *>::iterator it;
+      for(it = mAnimState.begin(); it!=mAnimState.end(); ++it)
+	  (*it)->addTime(realSpeed/speedInAnim * sSinceLast);
     }
   }
 
@@ -90,6 +107,13 @@ void Mech::setTorsoAngle(int angle)
 int Mech::getTorsoAngle()
 {
     return torsoAngle;
+}
+
+void Mech::colorize(Ogre::Vector4 color)
+{
+    std::map<std::string, Ogre::Entity *>::iterator it;
+    for (it=pEntities.begin(); it!=pEntities.end(); ++it)
+	it->second->getSubEntity(0)->setCustomParameter(1, color);
 }
 
 int Mech::serialize(uint8 *buffer, int start, int buflength) const

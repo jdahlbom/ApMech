@@ -1,6 +1,9 @@
 #ifndef AP_MOVING_OBJECT
 #define AP_MOVING_OBJECT
 
+#include <string>
+#include <map>
+
 #ifndef WIN32
 #include <Ogre.h>
 #else
@@ -54,8 +57,6 @@ class MovingObject : public net::NetObject {
     Ogre::SceneNode *getOwnerNode() const { return pOwnerNode; }
     void setOwnerNode(Ogre::SceneNode *node) { pOwnerNode = node; }
     bool hasOwnerNode() const { return pOwnerNode; }
-    Ogre::Entity *getEntity() const { return pEntity; }
-    void setEntity(Ogre::Entity *ent) { pEntity = ent; }
     void updateNode();
 
     Controller* getControlPtr() const { return combinedControls; }
@@ -82,12 +83,15 @@ class MovingObject : public net::NetObject {
     int advance(float dt);
     virtual uint8 getObjectType() const = 0;
 
+    void addEntity(std::string name, Ogre::SceneNode* node, Ogre::Entity* entity);
 
  protected:
     uint8              objectType;
     float               friction;
     float               maxSpeedSquared;
     bool                mIsClient;
+    std::map<std::string, Ogre::SceneNode*> pMeshNodes;
+    std::map<std::string, Ogre::Entity*>    pEntities;
 
  private:
     Ogre::Vector3       initialFacing;
@@ -98,10 +102,7 @@ class MovingObject : public net::NetObject {
     TurretControl       *turretControl;
     CombinedControls    *combinedControls;
 
-
-
-    Ogre::SceneNode     *pOwnerNode;
-    Ogre::Entity        *pEntity;
+    Ogre::SceneNode             *pOwnerNode;
 
     void updateVelocity(float sSinceLast);
     void updateFacing(float sSinceLast);

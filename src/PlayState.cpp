@@ -55,21 +55,35 @@ PlayState::~PlayState() {
     pSceneManager->destroyQuery(mRaySceneQuery);
 }
 
+class PlayState_MechDataVisitor : public MechDataVisitor
+{
+public:
+    PlayState_MechDataVisitor(std::vector<MechDataMesh> &meshVector) :
+	pMeshVector(meshVector) {}
+    bool mdv_visit(const MechDataMesh &mesh) {
+	pMeshVector.push_back(MechDataMesh(mesh));
+	return true;
+    }
+private:
+    std::vector<MechDataMesh> &pMeshVector;
+};
+
+
 void PlayState::enter( void ) {
-    assert(netdata);    // If no netdata, we're doomed! We must be connected too, but that's not checked. FIXME maybe!
+    assert(netdata);    
+
     GameWorld *gWorld;
     do {
-        mSleep(2);   // sleep 2 milliseconds
+        mSleep(2); 
         netdata->receiveChanges();
         gWorld = dynamic_cast<GameWorld *>(netdata->getFirstObjectOfType(OBJECT_TYPE_GAMEWORLD));
     } while (gWorld == NULL);   // WAIT until we get a world
 
     // Create the terrain
-    pSceneManager->setWorldGeometry(bundlePath() + gWorld->terrainFileName);   // for example "data/maps/example.map"
+    pSceneManager->setWorldGeometry(bundlePath() + gWorld->terrainFileName);
 
     setupCamera(pSceneManager);
 
-    // Create lighting
     createLighting(pSceneManager);
 
     if ("" == netdata->me.chosenVehicleType) {
@@ -94,14 +108,10 @@ void PlayState::resume( void ) {
 void PlayState::update( unsigned long lTimeElapsed ) {
     dt = float(lTimeElapsed)*0.001; // dt is in seconds
 
-//    while (ap::MovingObject *pMO = netdata->eachObject<ap::MovingObject *>(ap::OBJECT_TYPE_MECH)) pMO->advance(dt);
     while (ap::MovingObject *pMO = netdata->eachObject<ap::MovingObject *>(ap::OBJECT_TYPE_PROJECTILE)) pMO->advance(dt);
 
     netdata->receiveChanges();
-    //  TODO: Should update the scenenodes, should not update the state data.
 
-    // NOTE: Aaaargh, this is not optimal! I didn't think of selecting objects to iterate through
-    // based on the object's inheritance! Could it be done? Maybe. This is OK until then.
     while (ap::MovingObject *pMO = netdata->eachObject<ap::MovingObject *>(ap::OBJECT_TYPE_MECH)) {
       pMO->updateNode();
       pMO->hookUpdate(dt);
@@ -182,8 +192,8 @@ void PlayState::update( unsigned long lTimeElapsed ) {
                         r = float(pMech->color & 0x0000FF) / 255.0f;
                         g = float(pMech->color & 0x00FF00) / 65535.0f;
                         b = float(pMech->color & 0xFF0000) / 16777215.0f;
-                        if (pMech->getEntity())
-                            pMech->getEntity()->getSubEntity(0)->setCustomParameter(1, Ogre::Vector4(r, g, b, 0.0f));
+			pMech->colorize(Ogre::Vector4(r, g, b, 0.0f));
+
                         break;
                     }
                     default:
@@ -286,33 +296,24 @@ void PlayState::createNewEntity(ap::MovingObject *newObject, uint32 objectId)
         const MechData *proto = getMechProto(mechName);
         assert(proto != NULL);
 
-	// TODO: Remove the temp code as soon as mechreader supports reading the data.
-        std::string torsoMesh = proto->getTorsoMesh();
-        std::string legsMesh = proto->getLegsMesh();
+	// get all meshes.
+	std::vector<MechDataMesh> meshes = std::vector<MechDataMesh>();
+	PlayState_MechDataVisitor mdv = PlayState_MechDataVisitor(meshes);
+	proto->accept(mdv); // populates the meshes vector with mesh data.
 
-	// tempy, tempy: Values correct for hybridfalcon and rotation for testing.
-	Ogre::Vector3 torsoTranslation(0.0f, 7.82f, 0.0f);
-	Ogre::Vector3 legsTranslation(0.0f, 6.07f, 0.0f);
+	std::vector<MechDataMesh>::const_iterator it = meshes.begin();
+	for (it=meshes.begin(); it!=meshes.end(); ++it) {
+	    MechDataMesh mesh(*it);
+	    std::string meshName("");
+	    meshName.append(baseId);
+	    meshName.append(mesh.getPartName());
 
-	Ogre::SceneNode *torsoNode = objNode->createChildSceneNode(torsoTranslation);
-	Ogre::SceneNode *legsNode = objNode->createChildSceneNode(legsTranslation);
-	Ogre::SceneNode *torsoRotNode = torsoNode->createChildSceneNode();
-	torsoRotNode->yaw(Ogre::Radian(3.14f/180.0f*15.0f));
-
-	std::string torsoEntity("");
-	torsoEntity.append(baseId);
-	torsoEntity.append("/torso");
-	std::string legsEntity("");
-	legsEntity.append(baseId);
-	legsEntity.append("/legs");
-
-	Ogre::Entity *torsoE = pSceneManager->createEntity(torsoEntity, torsoMesh);
-	torsoRotNode->attachObject(torsoE);
-
-	Ogre::Entity *legsE = pSceneManager->createEntity(legsEntity, legsMesh);
-	legsNode->attachObject(legsE);
-
-        pMech->setEntity(torsoE);
+	    /* TODO: Still needs the scenenode parenting code! */
+	    Ogre::SceneNode *node = objNode->createChildSceneNode(mesh.getTranslation());
+	    Ogre::Entity *entity = pSceneManager->createEntity(meshName, mesh.getFileName());
+	    node->attachObject(entity);
+	    pMech->addEntity(mesh.getPartName(), node, entity);
+	}
       }
       break;
     case ap::OBJECT_TYPE_PROJECTILE:
@@ -321,8 +322,7 @@ void PlayState::createNewEntity(ap::MovingObject *newObject, uint32 objectId)
 
         newEntity = pSceneManager->createEntity(baseId, mesh);
 
-        ap::Projectile *pProj = dynamic_cast<ap::Projectile *>(newObject);
-        pProj->setEntity(newEntity);
+//        ap::Projectile *pProj = dynamic_cast<ap::Projectile *>(newObject);
       }
       break;
     default:
@@ -355,9 +355,6 @@ void PlayState::deleteNetObject(uint32 objectId)
         netdata->me.setControlPtr(0);
     }
 
-    // TODO: Jukka, check this. Should destroy all entities in a scenenode and finally the node
-    // itself. Every ap::MovingObject has its own scenenode, always, and these nodes have
-    // nothing else, right? RIGHT?
     ap::MovingObject *pMO = dynamic_cast<ap::MovingObject *>(netdata->getObject(objectId));
     if (NULL != pMO) if (pMO->hasOwnerNode())
     {
@@ -675,5 +672,6 @@ void PlayState::createLighting(Ogre::SceneManager *sceneManager)
      pGui->updateScores(*pScoreListing);
    }
  }
+
 
 } // namespace ap

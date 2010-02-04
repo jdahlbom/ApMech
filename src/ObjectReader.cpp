@@ -1,9 +1,14 @@
 #include "ObjectReader.h"
 #include <stdlib.h>
 
+#include <iostream>
 #include <map>
 #include <string>
 #include <vector>
+
+#include <OgreVector3.h>
+
+#include "MechData.h"
 
 namespace ap {
 
@@ -69,36 +74,21 @@ void startHandler(void *userData, const XML_Char *name, const XML_Char **atts) {
 
 	  std::map<std::string, std::string>::const_iterator it;
 	  it = attributes.find("type");
-	  if (it->second.compare("TORSO")==0)
-	      mech->setTorsoMesh(attributes.find("file")->second);
-	  if (it->second.compare("LEGS")==0)
-	      mech->setLegsMesh(attributes.find("file")->second);
-#if 0
-	if (atts) {
-	  std::string type = "";
-	  std::string file = "";
-	  for (int i=0; atts[i]; i+=2) {
-	    printf("Found attribute (%s=%s)\n", atts[i], atts[i+1]);
-	    if (strcmp(atts[i], "type") == 0) {
-	      type = std::string(atts[i+1]);
-	    } else if (strcmp(atts[i], "file") == 0) {
-	      file = std::string(atts[i+1]);
-	    }
-	  }
-	  printf("Type: %s, File: %s\n", type.c_str(), file.c_str());
-
-	  if (type.compare("TORSO")==0) {
-	    printf("TORSO mesh: %s", file.c_str());
-	    mech->setTorsoMesh(file);
-	  } else if (type.compare("LEGS")==0) {
-	    mech->setLegsMesh(file);
-	  }
-	}
-	printf("Read mesh parameters, yay..\n");
-#endif
-	return;
+	  std::string type(it->second);
+	  it = attributes.find("file");
+	  std::string file(it->second);
+	  it = attributes.find("translation");
+	  std::string translation(it->second);
+	  std::string parent("");
+	  if (attributes.find("parent") != attributes.end())
+	      parent = (attributes.find("parent"))->second;
+	  
+	  // TODO: parse translation here.
+	  Ogre::Vector3 transl(0.0f, 10.0f, 0.0f);
+	  MechDataMesh mesh(type, parent, file, transl);
+	  mech->getMechData()->addMesh(mesh);
       }
-
+    
     return;
 }
 
@@ -106,9 +96,10 @@ void readAttributes(std::map<std::string, std::string> &attributes, const XML_Ch
 {
     attributes.clear();
     for ( int i=0; atts[i]; i+=2) {
+	std::cout << "Param: " << atts[i] << ", Value: " << atts[i+1] << std::endl;
 	std::string type(atts[i]);
 	std::string value(atts[i+1]);
-	attributes[type] = value;
+	attributes.insert(std::make_pair<std::string, std::string>(type, value));
     }
 }
 
@@ -153,14 +144,12 @@ void endHandler(void *userData, const XML_Char *name) {
 
 MechReader::MechReader (const std::string *filename) :
     nodePath(std::vector<std::string>()),
-    turnRate(0),
-    maxForwardAcceleration(0),
-    maxBackwardAcceleration(0),
+    data(NULL),
     filename(filename),
-    currentDataBuffer(""), 
-    torsoMesh("FullMech.mesh"),
-    legsMesh("CrudeMech.mesh")
- {}
+    currentDataBuffer("")
+{
+    data = new MechData();
+}
 
 
 bool MechReader::addData(char *buf, int len) {
