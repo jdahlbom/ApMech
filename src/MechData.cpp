@@ -43,7 +43,6 @@ int MechData::serialize(uint8 buffer[], int start, int buflength) const
     length += ap::net::serialize(numMeshes, buffer, start+length, buflength-length);
     std::vector<MechDataMesh>::const_iterator it;
     for (it = meshes.begin(); it!=meshes.end(); ++it) {
-	std::cout << "Serializing mesh [" << (*it).getPartName() << "]=[" << (*it).getFileName() <<"]" << std::endl;
 	length += (*it).serialize(buffer, start+length, buflength-length);
     }
 
@@ -67,7 +66,6 @@ int MechData::unserialize(uint8 buffer[], int start)
 	MechDataMesh newMesh = MechDataMesh();
 	length += newMesh.unserialize(buffer, start+length);
 	meshes.push_back(newMesh);
-	std::cout << "Serializing mesh [" << newMesh.getPartName() << "]=[" << newMesh.getFileName() <<"]" << std::endl;
     }
 
     return length;

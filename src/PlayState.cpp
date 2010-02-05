@@ -162,9 +162,7 @@ void PlayState::update( unsigned long lTimeElapsed ) {
                             break;
                         case ap::OBJECT_TYPE_MECHDATA:
                             {
-                            std::cout << "Received a new MechData object" << std::endl;
                             ap::MechData *pMechData = netdata->getObject<ap::MechData*>(event.id);
-                            std::cout << "type name: " << pMechData->getName() << std::endl;
                             break;
                             }
                         default:
@@ -192,7 +190,8 @@ void PlayState::update( unsigned long lTimeElapsed ) {
                         r = float(pMech->color & 0x0000FF) / 255.0f;
                         g = float(pMech->color & 0x00FF00) / 65535.0f;
                         b = float(pMech->color & 0xFF0000) / 16777215.0f;
-			pMech->colorize(Ogre::Vector4(r, g, b, 0.0f));
+			Ogre::Vector4 color(r,g,b,0.0f);
+			pMech->colorize(color);
 
                         break;
                     }
@@ -291,6 +290,7 @@ void PlayState::createNewEntity(ap::MovingObject *newObject, uint32 objectId)
         r = float(pMech->color & 0x0000FF) / 255.0f;
         g = float(pMech->color & 0x00FF00) / 65535.0f;
         b = float(pMech->color & 0xFF0000) / 16777215.0f;
+	Ogre::Vector4 color(r,g,b,0.0f);
 
         std::string mechName = pMech->getTypeName();
         const MechData *proto = getMechProto(mechName);
@@ -314,6 +314,7 @@ void PlayState::createNewEntity(ap::MovingObject *newObject, uint32 objectId)
 	    node->attachObject(entity);
 	    pMech->addEntity(mesh.getPartName(), node, entity);
 	}
+	pMech->colorize(color);
       }
       break;
     case ap::OBJECT_TYPE_PROJECTILE:

@@ -1,0 +1,35 @@
+// -----------------------------------------------------------
+// Taken from example code and modified -JL 3.10.2009
+
+float4 main_fp(	in float4 color    : COLOR,
+		in float3 TexelPos : TEXCOORD0
+,		uniform float4 modColor) : COLOR
+{
+    return modColor * color;
+}
+
+/* Notes ^^^ :
+ * ooo. If I input a float3 color and output that, I get white without light,
+ * Merely changing that to float4: wow, I get light effects!
+ */
+
+
+// This is from some other example.
+// NOT USED!
+// Probably does nothing useful.
+void MechColor_vp(	float4 objectPosition : POSITION,
+     			float4 color	      : COLOR,
+			float4 decalCoord     : TEXCOORD0,
+			float4 lightMapCoord  : TEXCOORD1,
+		    out float4 clipPosition   : POSITION,
+		    out float4 oColor	      : COLOR,
+		    out float4 oDecalCoord    : TEXCOORD0,
+		    out float4 oLightMapCoord : TEXCOORD1,
+		uniform float  brightness,
+		uniform float4x4 modelViewProjection)
+{
+ clipPosition = mul(modelViewProjection, objectPosition);
+ oColor = brightness * color;
+ oDecalCoord = decalCoord;
+ oLightMapCoord = lightMapCoord;
+}

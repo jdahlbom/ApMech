@@ -96,7 +96,6 @@ void readAttributes(std::map<std::string, std::string> &attributes, const XML_Ch
 {
     attributes.clear();
     for ( int i=0; atts[i]; i+=2) {
-	std::cout << "Param: " << atts[i] << ", Value: " << atts[i+1] << std::endl;
 	std::string type(atts[i]);
 	std::string value(atts[i+1]);
 	attributes.insert(std::make_pair<std::string, std::string>(type, value));
