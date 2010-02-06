@@ -162,7 +162,6 @@ void PlayState::update( unsigned long lTimeElapsed ) {
                             break;
                         case ap::OBJECT_TYPE_MECHDATA:
                             {
-                            ap::MechData *pMechData = netdata->getObject<ap::MechData*>(event.id);
                             break;
                             }
                         default:
@@ -313,6 +312,14 @@ void PlayState::createNewEntity(ap::MovingObject *newObject, uint32 objectId)
 	    Ogre::Entity *entity = pSceneManager->createEntity(meshName, mesh.getFileName());
 	    node->attachObject(entity);
 	    pMech->addEntity(mesh.getPartName(), node, entity);
+
+	    if (entity->getSkeleton()->hasBone("bTorso")) {
+		Ogre::Bone *bone = entity->getSkeleton()->getBone("bTorso");
+		bone->setManuallyControlled(true);
+		// TODO: TransformSpace should be TS_LOCAL preferably,
+		//       but it seems to point into wrong direction..
+		bone->yaw(Ogre::Radian(30.0f * 3.14f / 180.0f), Ogre::Node::TS_WORLD);
+	    }
 	}
 	pMech->colorize(color);
       }
