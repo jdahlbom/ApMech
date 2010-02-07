@@ -54,7 +54,7 @@ Mech::Mech(Ogre::Vector3 velocity) :
 	  std::map<std::string, Ogre::Entity*>::const_iterator it;
 	  for (it=pEntities.begin(); it != pEntities.end(); ++it) {
 	      Ogre::Entity *ent = it->second;
-	      if (!ent->getMesh()->hasAnimation("Walk"))
+	      if (!ent->getSkeleton()->hasAnimation("Walk"))
 		  continue;
 
 	      Ogre::AnimationState *state = ent->getAnimationState("Walk");
