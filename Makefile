@@ -66,3 +66,7 @@ clean:
 	rm -R -f $(OBJDIR)
 	- rm -f $(BIN) apserver
 	- rm -f Ogre.log CEGUI.log
+	- rm -f docs/doxygen/*
+
+docs:
+	doxygen doxygen.cfg

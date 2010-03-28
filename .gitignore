@@ -43,3 +43,9 @@ meshviewer
 
 # Login data persistency file
 login.cfg
+
+# Code::Blocks project files
+*.cbp
+
+# Doxygen output
+docs/doxygen/*
