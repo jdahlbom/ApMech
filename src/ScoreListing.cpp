@@ -44,12 +44,14 @@ namespace ap {
 
   void ScoreTuple::print() const
   {
+#if 0
     std::cout << "uid: " << uid
           <<", nick: " << nick
 	      <<", kills: " << kills
 	      <<", deaths: " << deaths
 	      <<", score: " << score
 	      <<std::endl;
+#endif
   }
 
   ScoreListing::ScoreListing() :

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+echo [autogen for ApMech]
+echo Running aclocal...
+aclocal
+echo Running autoconf...
+autoconf
+echo Running automake...
+automake
