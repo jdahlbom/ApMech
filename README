@@ -1,5 +1,9 @@
 README and instructions for building APMech for different platforms
 
+./autogen.sh
+./configure
+make
+Do not make install, unless you want apmech executables in /usr/local/bin
 
 OS X:
 
