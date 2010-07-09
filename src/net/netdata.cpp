@@ -52,7 +52,6 @@ NetData::~NetData() {
     }
     netobjects.clear();
     netObjectsByType.clear();
-    netObjectsByParent.clear();
     return;
 }
 
@@ -501,14 +500,6 @@ void NetData::removeObject(uint32 id)
             else ii1.first++;
         }
 
-        // Then, from netObjectsByParent
-        pair<multimap<uint32,NetObject*>::iterator, multimap<uint32,NetObject*>::iterator> ii2;
-        ii2 = netObjectsByParent.equal_range(netobjects.find(id)->second->getParentId());
-        while (ii2.first != ii2.second) {
-            if (ii2.first->second == netobjects.find(id)->second) netObjectsByParent.erase(ii2.first++);
-            else ii2.first++;
-        }
-
         // Finally, delete the object, and remove from netobjects
         delete netobjects.find(id)->second;
         netobjects.erase(id); // TODO: Shouldn't erase call the destructor anyways??
@@ -603,7 +594,6 @@ uint32 NetData::insertObject(NetObject *obj, uint32 id)
     netobjects.insert(make_pair(newid, obj));
 
     netObjectsByType.insert(make_pair(obj->getObjectType(), obj));
-    netObjectsByParent.insert(make_pair(obj->getParentId(), obj));
 
 //    cout << "[NETDATA] Object of type "<<int(obj->getObjectType())<< " inserted. Now "<<netobjects.size()<<" / "<<netObjectsByType.size()<<endl;
     return newid;

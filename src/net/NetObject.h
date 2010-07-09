@@ -11,16 +11,12 @@ namespace net {
 class NetObject : public Serializable {
  public:
     ap::uint32 id;
-    ap::uint32 pid;     // parent object id
     ap::uint32 uid;     // owner id
     bool changed;       // Whether the object was updated since last serialization
 
-    NetObject(uint32 _id = 0, uint32 _pid = 0) { id = _id; pid = _pid;}
+    NetObject(uint32 _id = 0) { id = _id; }
     inline bool isChanged() { return changed; }
     inline void setChanged() { changed = true; }
-    /** Does this object belong under some other netobject in some hierarchy?
-     *  If so, return its id. Otherwise return zero (default). */
-    uint32 getParentId() { return pid; }
 
     /** A method for returning a unique type identifier as a 8-bit uint. */
     virtual uint8 getObjectType() const = 0;
