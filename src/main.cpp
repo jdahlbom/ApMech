@@ -2,7 +2,8 @@
 #include <OgreRoot.h>
 #include <OgreException.h>
 #include <OgreRenderSystem.h>
-#include <OgreCEGUIRenderer.h>
+// #include <OgreCEGUIRenderer.h>
+#include <CEGUI/RendererModules/Ogre/CEGUIOgreRenderer.h>
 #include <SDL.h>
 #else
 #include <CEGUIRenderer/OgreCEGUIRenderer.h>
@@ -26,7 +27,7 @@ SDL_Surface* setupSDL(int width, int height);
 void setupOgre(int width, int height, Ogre::RenderWindow *&rWin, Ogre::SceneManager *&sceneMgr, Ogre::Root *&root);
 void setupOgreResources();
 CEGUI::Renderer *setupCEGUI(Ogre::RenderWindow *rWin, Ogre::SceneManager *sceneMgr);
-
+//CEGUI::OgreRenderer renderer;
 
 #if AP_PLATFORM == AP_PLATFORM_WIN32
 #define WIN32_LEAN_AND_MEAN
@@ -202,11 +203,13 @@ void setupOgreResources(void)
 
 CEGUI::Renderer* setupCEGUI(Ogre::RenderWindow* renderWindow, Ogre::SceneManager *sceneMgr)
 {
-  CEGUI::OgreCEGUIRenderer *renderer =
-    new CEGUI::OgreCEGUIRenderer(renderWindow,
+
+  CEGUI::OgreRenderer &renderer =
+        CEGUI::OgreRenderer::bootstrapSystem(*renderWindow);//, Ogre::RENDER_QUEUE_OVERLAY, false, 0, sceneMgr);
+/*    new CEGUI::OgreCEGUIRenderer(renderWindow, // JL porting 4.6.2011 AGAIN! //
 				 Ogre::RENDER_QUEUE_OVERLAY,
 				 false, 0,
-				 sceneMgr);
-  assert(renderer);
-  return renderer;
+				 sceneMgr);*/
+// JL port //  assert(renderer);
+  return &renderer;
 } // setupCEGUI

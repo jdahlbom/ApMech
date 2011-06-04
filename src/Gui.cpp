@@ -6,6 +6,7 @@
 #include <list>
 
 #include <CEGUI/CEGUI.h>
+#include <CEGUI/RendererModules/Ogre/CEGUIOgreRenderer.h>
 
 #include "ActionKeyMap.h"
 #include "definitions.h"
@@ -66,13 +67,15 @@ namespace ap {
     using namespace CEGUI;
 
 	try {
-		mSystem = new System( renderer );
+//	JL 4.6.2011 porting // 	mSystem = new System( renderer );
+        mSystem = &CEGUI::System::create( *renderer );
 	} catch (CEGUI::GenericException genException) {
 		std::cout << "Could not create CEGUI::System!" << std::endl;
 		std::cout << genException.getMessage() << std::endl;
 		throw; // GUI cannot function without CEGUI, rethrow the exception.
 	}
-    SchemeManager::getSingleton().loadScheme((CEGUI::utf8*)"ApMechLookSkin.scheme");
+    // JL 4.6.2011, porting to CEGUI 0.7.5 // SchemeManager::getSingleton().loadScheme((CEGUI::utf8*)"ApMechLookSkin.scheme");
+    SchemeManager::getSingleton().create((CEGUI::utf8*)"ApMechLookSkin.scheme");
 
     mSystem->setDefaultMouseCursor((CEGUI::utf8*)"ApMechLook", (CEGUI::utf8*)"MouseArrow");
     mSystem->setDefaultFont((CEGUI::utf8*)"BlueHighway-12");
@@ -84,7 +87,9 @@ namespace ap {
 
   Gui::~Gui()
   {
-    delete(mSystem);
+    // JL 4.6.2011, to compile with CEGUI 0.7.5 // delete(mSystem);
+    CEGUI::OgreRenderer::destroySystem();
+
   }
 
   void Gui::setupChatBox()
@@ -367,7 +372,7 @@ namespace ap {
       return name;
   }
 
-void Gui::clearLimboVehicleList() 
+void Gui::clearLimboVehicleList()
 {
     CEGUI::Listbox *lbox = dynamic_cast<CEGUI::Listbox *>(CEGUI::WindowManager::getSingletonPtr()->getWindow(limboListName));
     if (lbox == NULL) {
@@ -509,7 +514,8 @@ void Gui::clearLimboVehicleList()
 	}
       }
 
-    multiCL->requestRedraw(); // Update the score list element on next render cycle.
+        // JL porting 4.6.2011 // multiCL->requestRedraw();
+        multiCL->invalidate(); // Update the score list element on next render cycle.
   } // updateScores
 
   void Gui::activateChatBox(bool activate)
@@ -530,7 +536,7 @@ void Gui::clearLimboVehicleList()
     assert(receiver);
     pLoginReceiver = receiver;
   }
-  
+
   void Gui::setMouseReceiver(GuiMouseReceiver *receiver) {
     pMouseReceiver = receiver;
   }
@@ -704,12 +710,12 @@ void Gui::clearLimboVehicleList()
   void Gui::setTargetState(targetState state)
   {
       CEGUI::utf8 *image = NULL;
-    
+
     if (state == currentState) {
         // no change in cursor state
         return;
     }
-        
+
     assert(mSystem);
 
     switch (state) {
@@ -728,12 +734,12 @@ void Gui::clearLimboVehicleList()
         default:
             return;
     }
-    
+
     CEGUI::MouseCursor::getSingleton().setImage(
             (CEGUI::utf8*)"ApMechLook", image);
 
     currentState = state;
-  
+
     return;
   }
 
@@ -751,9 +757,13 @@ void Gui::clearLimboVehicleList()
 
     if (pMouseReceiver) {
         // Tell the interested parties where the mouse is now
-        pMouseReceiver->receiveMousePosition(
+/*        pMouseReceiver->receiveMousePosition(
                 event.xabs / renderer->getWidth(),
-                event.yabs / renderer->getHeight());
+                event.yabs / renderer->getHeight());*/
+        CEGUI::Size rendSize = renderer->getDisplaySize(); // JL porting 4.6.2011 //
+        pMouseReceiver->receiveMousePosition(
+                event.xabs / rendSize.d_width,
+                event.yabs / rendSize.d_height);
     }
     return retval;
   }

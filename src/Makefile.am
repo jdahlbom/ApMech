@@ -45,8 +45,8 @@ apmech_LDADD =  math/libapmath.a \
 		${SDL_LIBS} \
 		${ENET_LIBS} \
 		${SDLIMAGE_LIBS} \
-		-lboost_filesystem-mt \
-		-lboost_system-mt
+		-lboost_filesystem \
+		-lboost_system
 
 apserver_SOURCES = ObjectDataBase.cpp \
 		ObjectReader.cpp \
@@ -65,6 +65,6 @@ apserver_LDADD = math/libapmath.a \
 		${SDLIMAGE_LIBS} \
 		${ENET_LIBS} \
 		-lexpat \
-		-lboost_filesystem-mt \
-		-lboost_system-mt
+		-lboost_filesystem \
+		-lboost_system
 

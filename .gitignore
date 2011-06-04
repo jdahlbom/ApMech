@@ -23,6 +23,7 @@ profile
 # object files
 *.o
 *.obj
+*.a
 
 # VC++ output files
 *.exe
@@ -37,6 +38,7 @@ apserver
 jonni/cegui_sdl_test/jonnin
 jonni/nabla-wing/nablawing
 meshviewer
+*.x
 
 # SConstruct database
 .sconsign.dblite
