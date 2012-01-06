@@ -27,6 +27,7 @@ namespace ap {
   private:
     Ogre::Camera       *mCamera;
     Ogre::SceneManager *pSceneMgr;
+    Ogre::Viewport     *mMenuViewport;
   };
 } // namespace ap
 

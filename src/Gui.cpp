@@ -66,7 +66,7 @@ namespace ap {
     assert(renderer);
     using namespace CEGUI;
 
-	try {
+/*	try {
 //	JL 4.6.2011 porting // 	mSystem = new System( renderer );
         mSystem = &CEGUI::System::create( *renderer );
 	} catch (CEGUI::GenericException genException) {
@@ -74,6 +74,10 @@ namespace ap {
 		std::cout << genException.getMessage() << std::endl;
 		throw; // GUI cannot function without CEGUI, rethrow the exception.
 	}
+	*/
+	mSystem = &CEGUI::System::getSingleton();  // Porting to new CEGUI: now we just need a pointer.
+	assert(mSystem);
+	
     // JL 4.6.2011, porting to CEGUI 0.7.5 // SchemeManager::getSingleton().loadScheme((CEGUI::utf8*)"ApMechLookSkin.scheme");
     SchemeManager::getSingleton().create((CEGUI::utf8*)"ApMechLookSkin.scheme");
 
@@ -699,9 +703,9 @@ void Gui::clearLimboVehicleList()
     // assumption: WHEELUP/WHEELDOWN do not cause released events.
     switch(event.button) {
         case AP_B_LEFT: return mSystem->injectMouseButtonUp(CEGUI::LeftButton);
-    case AP_B_RIGHT: return mSystem->injectMouseButtonUp(CEGUI::RightButton);
-    case AP_B_MIDDLE: return mSystem->injectMouseButtonUp(CEGUI::MiddleButton);
-    default: return 0;
+        case AP_B_RIGHT: return mSystem->injectMouseButtonUp(CEGUI::RightButton);
+        case AP_B_MIDDLE: return mSystem->injectMouseButtonUp(CEGUI::MiddleButton);
+        default: return 0;
     }
     return 0;
   } // mouseReleased

@@ -71,6 +71,7 @@ private:
 
 void PlayState::enter( void ) {
     assert(netdata);    
+    assert(pSceneManager);
 
     GameWorld *gWorld;
     do {
@@ -79,10 +80,12 @@ void PlayState::enter( void ) {
         gWorld = dynamic_cast<GameWorld *>(netdata->getFirstObjectOfType(OBJECT_TYPE_GAMEWORLD));
     } while (gWorld == NULL);   // WAIT until we get a world
 
-    // Create the terrain
-    pSceneManager->setWorldGeometry(bundlePath() + gWorld->terrainFileName);
+    std::cout << "Setting up world geometry to "<<bundlePath()<<" + "<<gWorld->terrainFileName<<std::endl;
 
     setupCamera(pSceneManager);
+
+    // Create the terrain
+    pSceneManager->setWorldGeometry(bundlePath() + gWorld->terrainFileName);
 
     createLighting(pSceneManager);
 
@@ -388,7 +391,8 @@ void PlayState::setupCamera(Ogre::SceneManager *sceneManager) {
     assert(renderWindow);
 
     Ogre::ColourValue bgColor(0.2f, 0.6f, 0.2f);
-    renderWindow->addViewport(mCamera)->setBackgroundColour(bgColor);
+    mViewport = renderWindow->addViewport(mCamera);
+    mViewport->setBackgroundColour(bgColor);
 
     // Attach a camera to the player model
     mCameraNode = sceneManager->createSceneNode("Node/MyCamera");
@@ -396,6 +400,9 @@ void PlayState::setupCamera(Ogre::SceneManager *sceneManager) {
     mCameraNode->pitch(Ogre::Degree(-85)); // Camera needs to look down.
     mCameraNode->attachObject(mCamera);
     mCamera->setNearClipDistance(5);
+    
+    // JL: added this. Seems in vain :(
+    mCamera->setAspectRatio(Ogre::Real(mViewport->getActualWidth()) / Ogre::Real(mViewport->getActualHeight()));
 
     assert(mWorldCenter);
     attachCameraNode(mWorldCenter);

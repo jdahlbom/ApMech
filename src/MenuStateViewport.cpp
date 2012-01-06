@@ -23,17 +23,18 @@ namespace ap {
     assert(renderWindow);
     
     Ogre::ColourValue bgColor(0.0f, 0.0f, 0.0f);
-    renderWindow->addViewport(mCamera)->setBackgroundColour(bgColor);
+    mMenuViewport = renderWindow->addViewport(mCamera);
+    mMenuViewport->setBackgroundColour(bgColor);
   }
-
   MenuStateViewport::~MenuStateViewport()
   {
     pSceneMgr->destroyCamera(mCamera);
 
     Ogre::Root *pRoot = Ogre::Root::getSingletonPtr();
     assert(pRoot);
-
     pRoot->getRenderTarget("ApMech")->removeAllViewports();    
+
+    // Ogre::Root::getSingletonPtr()->getRenderTarget("ApMech")->removeViewport(mMenuViewport->getZOrder());
   }
   
 } // namespace ap

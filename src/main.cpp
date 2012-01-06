@@ -29,6 +29,7 @@ void setupOgreResources();
 CEGUI::Renderer *setupCEGUI(Ogre::RenderWindow *rWin, Ogre::SceneManager *sceneMgr);
 //CEGUI::OgreRenderer renderer;
 
+
 #if AP_PLATFORM == AP_PLATFORM_WIN32
 #define WIN32_LEAN_AND_MEAN
 #include "windows.h"
@@ -61,10 +62,18 @@ int main( int argc, char **argv ) {
 
     assert(renderWindow != 0);
     assert(sceneMgr != 0);
-    CEGUI::Renderer *ceguiRenderer = setupCEGUI(renderWindow, sceneMgr);
-    ap::Gui *gui = new ap::Gui(ceguiRenderer);
+    std::cout << "Before creating ceguiRenderer"<<std::endl;
+    
+    // Don't call the function, but rather make it here, just to make sure there's no issues
+    // with the only reference getting old at function exit..
+//    CEGUI::Renderer *ceguiRenderer = setupCEGUI(renderWindow, sceneMgr);
+    CEGUI::OgreRenderer & ceguiRenderer = CEGUI::OgreRenderer::bootstrapSystem(*renderWindow);//, Ogre::RENDER_QUEUE_OVERLAY, false, 0, sceneMgr);
+    std::cout << "After creating ceguiRenderer"<<std::endl;
+    ap::Gui *gui = new ap::Gui(&ceguiRenderer);
+    std::cout << "After creating Gui"<<std::endl;
 
     ap::ooinput::InputSystem *inputSystem = new ap::ooinput::SDLInputSystem();
+    std::cout << "After creating inputSystem"<<std::endl;
 
     ap::GameStateManager * gameManager = new ap::GameStateManager(root, inputSystem, sceneMgr, gui);
 
@@ -79,7 +88,7 @@ int main( int argc, char **argv ) {
     delete gameManager;
     delete inputSystem;
     delete gui;
-    delete ceguiRenderer;
+//    delete ceguiRenderer;
     delete root;
     return 0;
 } // main
