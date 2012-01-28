@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mech xmlns="urn:mech.xsd">
+  <schemaVersion>1</schemaVersion>
+  <name>hybridfalcon-15</name>
+  <stats>
+    <maxTurnRate>4</maxTurnRate>
+    <maxForwardAcceleration>40</maxForwardAcceleration>
+    <maxBackwardAcceleration>15</maxBackwardAcceleration>
+    <maxSpeed>18</maxSpeed>
+  </stats>
+  <design>
+    <torso turningRadius="90"/>
+  </design>
+  <media>
+    <mesh type="TORSO" file="HybridFalcon-torso.mesh" translation="000.00;007.82;000.00"/>
+    <mesh type="LEGS" file="HybridFalcon-legs.mesh" translation="000.00;006.07;000.00"/>
+  </media>
+</mech>

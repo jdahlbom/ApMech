@@ -1,0 +1,160 @@
+<schema
+  xmlns='http://www.w3.org/2001/XMLSchema'
+  targetNamespace='urn:apmech/skeletons'
+  xmlns:t='urn:apmech/skeletons'
+  elementFormDefault='qualified'>
+
+ <element name='skeleton'>
+  <complexType>
+   <sequence>
+    <element name="bones" type="t:bones"/>
+    <element ref='t:bonehierarchy'/>
+    <element ref='t:animations' minOccurs='0' maxOccurs='1'/>
+    <element ref='t:animationlinks' minOccurs='0' maxOccurs='1'/>
+   </sequence>
+  </complexType>
+ </element>
+
+  <complexType name="bones">
+   <sequence>
+    <element name="bone" type='t:bone' maxOccurs='unbounded'/>
+   </sequence>
+  </complexType>
+
+  <complexType name="bone">
+   <sequence>
+    <element name="position" type='t:position'/>
+    <element name="rotation" type='t:rotation'/>
+    <element name="scale" type='t:scale' minOccurs='0' maxOccurs='1'/>
+   </sequence>
+   <attribute name='id' type='string' use='required'/>
+   <attribute name='name' type='string' use='required'/>
+  </complexType>
+
+  <complexType name="position">
+   <attribute name='x' type='string' use='required'/>
+   <attribute name='y' type='string' use='required'/>
+   <attribute name='z' type='string' use='required'/>
+  </complexType>
+
+  <complexType name="rotation">
+   <sequence>
+    <element name="axis" type='t:axis'/>
+   </sequence>
+   <attribute name='angle' type='string' use='required'/>
+  </complexType>
+
+  <complexType name="axis">
+   <attribute name='x' type='string' use='required'/>
+   <attribute name='y' type='string' use='required'/>
+   <attribute name='z' type='string' use='required'/>
+  </complexType>
+
+ <element name='bonehierarchy'>
+  <complexType>
+   <sequence>
+    <element ref='t:boneparent' minOccurs='0' maxOccurs='unbounded'/>
+   </sequence>
+  </complexType>
+ </element>
+
+ <element name='boneparent'>
+  <complexType>
+   <attribute name='bone' type='string' use='required'/>
+   <attribute name='parent' type='string' use='required'/>
+  </complexType>
+ </element>
+
+ <element name='animations'>
+  <complexType>
+   <sequence>
+    <element ref='t:animation' maxOccurs='unbounded'/>
+   </sequence>
+  </complexType>
+ </element>
+
+ <element name='animation'>
+  <complexType>
+   <sequence>
+    <element ref='t:tracks'/>
+   </sequence>
+   <attribute name='name' type='string' use='required'/>
+   <attribute name='length' type='string' use='required'/>
+  </complexType>
+ </element>
+
+ <element name='tracks'>
+  <complexType>
+   <sequence>
+    <element ref='t:track' maxOccurs='unbounded'/>
+   </sequence>
+  </complexType>
+ </element>
+
+ <element name='track'>
+  <complexType>
+   <sequence>
+    <element ref='t:keyframes'/>
+   </sequence>
+   <attribute name='bone' type='string' use='required'/>
+  </complexType>
+ </element>
+
+ <element name='keyframes'>
+  <complexType>
+   <sequence>
+    <element ref='t:keyframe' maxOccurs='unbounded'/>
+   </sequence>
+  </complexType>
+ </element>
+
+ <element name='keyframe'>
+  <complexType>
+   <sequence>
+    <element ref='t:translate' minOccurs='0' maxOccurs='1'/>
+    <element ref='t:rotate' minOccurs='0' maxOccurs='1'/>
+    <element name="scale" type='t:scale' minOccurs='0' maxOccurs='1'/>
+   </sequence>
+   <attribute name='time' type='string' use='required'/>
+  </complexType>
+ </element>
+
+ <element name='translate'>
+  <complexType>
+   <attribute name='x' type='string' use='required'/>
+   <attribute name='y' type='string' use='required'/>
+   <attribute name='z' type='string' use='required'/>
+  </complexType>
+ </element>
+
+ <element name='rotate'>
+  <complexType>
+   <sequence>
+    <element name="axis" type='t:axis'/>
+   </sequence>
+   <attribute name='angle' type='string' use='required'/>
+  </complexType>
+ </element>
+
+  <complexType name="scale">
+   <attribute name='factor' type='string' use='optional'/>
+   <attribute name='x' type='string' use='optional'/>
+   <attribute name='y' type='string' use='optional'/>
+   <attribute name='z' type='string' use='optional'/>
+  </complexType>
+
+ <element name='animationlinks'>
+  <complexType>
+   <sequence>
+    <element ref='t:animationlink' maxOccurs='unbounded'/>
+   </sequence>
+  </complexType>
+ </element>
+
+ <element name='animationlink'>
+  <complexType>
+   <attribute name='skeletonName' type='string' use='required'/>
+   <attribute name='scale' type='string' default='1.0'/>
+  </complexType>
+ </element>
+</schema>

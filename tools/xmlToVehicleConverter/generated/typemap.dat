@@ -1,0 +1,3 @@
+genmech = "urn:apmech/mechs"
+genmesh = "urn:apmech/meshes"
+genskel = "urn:apmech/skeletons"

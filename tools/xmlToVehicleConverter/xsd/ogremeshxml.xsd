@@ -1,0 +1,553 @@
+<schema
+  xmlns='http://www.w3.org/2001/XMLSchema'
+  targetNamespace='urn:apmech/meshes'
+  xmlns:t='urn:apmech/meshes'
+  elementFormDefault='qualified'>
+
+ <element name='mesh'>
+  <complexType>
+   <sequence>
+    <element ref='t:sharedgeometry' minOccurs='0' maxOccurs='1'/>
+    <element ref='t:submeshes'/>
+    <element ref='t:skeletonlink' minOccurs='0' maxOccurs='1'/>
+    <element ref='t:boneassignments' minOccurs='0' maxOccurs='1'/>
+    <element ref='t:levelofdetail' minOccurs='0' maxOccurs='1'/>
+    <element ref='t:submeshnames' minOccurs='0' maxOccurs='1'/>
+    <element ref='t:poses' minOccurs='0' maxOccurs='1'/>
+    <element ref='t:animations' minOccurs='0' maxOccurs='1'/>
+    <element ref='t:extremes' minOccurs='0' maxOccurs='1'/>
+   </sequence>
+  </complexType>
+ </element>
+
+ <element name='sharedgeometry'>
+  <complexType>
+   <sequence>
+    <element ref='t:vertexbuffer' maxOccurs='unbounded'/>
+   </sequence>
+   <attribute name='vertexcount' type='string' use='required'/>
+  </complexType>
+ </element>
+
+ <element name='submeshes'>
+  <complexType>
+   <sequence>
+    <element ref='t:submesh' maxOccurs='unbounded'/>
+   </sequence>
+  </complexType>
+ </element>
+
+ <element name='submesh'>
+  <complexType>
+   <sequence>
+    <element ref='t:textures' minOccurs='0' maxOccurs='1'/>
+    <element ref='t:faces'/>
+    <element ref='t:geometry' minOccurs='0' maxOccurs='1'/>
+    <element ref='t:boneassignments' minOccurs='0' maxOccurs='1'/>
+   </sequence>
+   <attribute name='material' type='string' use='required'/>
+   <attribute name='usesharedvertices' default='true'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='use32bitindexes' default='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='operationtype' default='triangle_list'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='triangle_list'/>
+      <enumeration value='triangle_strip'/>
+      <enumeration value='triangle_fan'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+  </complexType>
+ </element>
+
+ <element name='textures'>
+  <complexType>
+   <sequence>
+    <element ref='t:texture' maxOccurs='unbounded'/>
+   </sequence>
+  </complexType>
+ </element>
+
+ <element name='texture'>
+  <complexType>
+   <attribute name='alias' type='string' use='required'/>
+   <attribute name='name' type='string' use='required'/>
+  </complexType>
+ </element>
+
+ <element name='faces'>
+  <complexType>
+   <sequence>
+    <element ref='t:face' maxOccurs='unbounded'/>
+   </sequence>
+   <attribute name='count' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='face'>
+  <complexType>
+   <attribute name='v1' type='string' use='required'/>
+   <attribute name='v2' type='string' use='optional'/>
+   <attribute name='v3' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='geometry'>
+  <complexType>
+   <sequence>
+    <element ref='t:vertexbuffer' maxOccurs='unbounded'/>
+   </sequence>
+   <attribute name='vertexcount' type='string' use='optional'/>
+  </complexType>
+ </element>
+
+ <element name='skeletonlink'>
+  <complexType>
+   <attribute name='name' type='string' use='required'/>
+  </complexType>
+ </element>
+
+ <element name='boneassignments'>
+  <complexType>
+   <sequence>
+    <element ref='t:vertexboneassignment' maxOccurs='unbounded'/>
+   </sequence>
+  </complexType>
+ </element>
+
+ <element name='vertexboneassignment'>
+  <complexType>
+   <attribute name='vertexindex' type='string' use='required'/>
+   <attribute name='boneindex' type='string' use='required'/>
+   <attribute name='weight' type='string' default='1.0'/>
+  </complexType>
+ </element>
+
+ <element name='levelofdetail'>
+  <complexType>
+   <choice maxOccurs='unbounded'>
+    <element ref='t:lodmanual'/>
+    <element ref='t:lodgenerated'/>
+   </choice>
+   <attribute name='numlevels' type='string' use='required'/>
+   <attribute name='manual' default='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+  </complexType>
+ </element>
+
+ <element name='lodmanual'>
+  <complexType>
+   <attribute name='fromdepthsquared' type='string' use='required'/>
+   <attribute name='meshname' type='string' use='required'/>
+  </complexType>
+ </element>
+
+ <element name='lodgenerated'>
+  <complexType>
+   <sequence>
+    <element ref='t:lodfacelist'/>
+   </sequence>
+   <attribute name='fromdepthsquared' type='string' use='required'/>
+   <attribute name='meshname' type='string' use='required'/>
+  </complexType>
+ </element>
+
+ <element name='lodfacelist'>
+  <complexType>
+   <sequence maxOccurs='unbounded'>
+    <element ref='t:face'/>
+   </sequence>
+   <attribute name='submeshindex' type='string' use='required'/>
+   <attribute name='numfaces' type='string' use='required'/>
+  </complexType>
+ </element>
+
+ <element name='vertexbuffer'>
+  <complexType>
+   <sequence>
+    <element ref='t:vertex' maxOccurs='unbounded'/>
+   </sequence>
+   <attribute name='positions' default='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='normals' default='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='colours_diffuse' default='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='colours_specular' default='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='texture_coords' default='0'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='0'/>
+      <enumeration value='1'/>
+      <enumeration value='2'/>
+      <enumeration value='3'/>
+      <enumeration value='4'/>
+      <enumeration value='5'/>
+      <enumeration value='6'/>
+      <enumeration value='7'/>
+      <enumeration value='8'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='texture_coord_dimensions_0' default='2'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='0'/>
+      <enumeration value='1'/>
+      <enumeration value='2'/>
+      <enumeration value='3'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='texture_coord_dimensions_1' default='2'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='0'/>
+      <enumeration value='1'/>
+      <enumeration value='2'/>
+      <enumeration value='3'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='texture_coord_dimensions_2' default='2'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='0'/>
+      <enumeration value='1'/>
+      <enumeration value='2'/>
+      <enumeration value='3'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='texture_coord_dimensions_3' default='2'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='0'/>
+      <enumeration value='1'/>
+      <enumeration value='2'/>
+      <enumeration value='3'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='texture_coord_dimensions_4' default='2'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='0'/>
+      <enumeration value='1'/>
+      <enumeration value='2'/>
+      <enumeration value='3'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='texture_coord_dimensions_5' default='2'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='0'/>
+      <enumeration value='1'/>
+      <enumeration value='2'/>
+      <enumeration value='3'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='texture_coord_dimensions_6' default='2'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='0'/>
+      <enumeration value='1'/>
+      <enumeration value='2'/>
+      <enumeration value='3'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='texture_coord_dimensions_7' default='2'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='0'/>
+      <enumeration value='1'/>
+      <enumeration value='2'/>
+      <enumeration value='3'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='tangents' default='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='tangent_dimensions' default='3'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='3'/>
+      <enumeration value='4'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='binormals' default='false'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='true'/>
+      <enumeration value='false'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+  </complexType>
+ </element>
+
+ <element name='vertex'>
+  <complexType>
+   <sequence>
+    <element ref='t:position'/>
+    <element ref='t:normal' minOccurs='0' maxOccurs='1'/>
+    <element ref='t:tangent' minOccurs='0' maxOccurs='1'/>
+    <element ref='t:binormal' minOccurs='0' maxOccurs='1'/>
+    <element ref='t:colour_diffuse' minOccurs='0' maxOccurs='1'/>
+    <element ref='t:colour_specular' minOccurs='0' maxOccurs='1'/>
+    <element ref='t:texcoord' minOccurs='0' maxOccurs='unbounded'/>
+   </sequence>
+  </complexType>
+ </element>
+
+ <element name='position'>
+  <complexType>
+   <attribute name='x' type='string' use='required'/>
+   <attribute name='y' type='string' use='required'/>
+   <attribute name='z' type='string' use='required'/>
+  </complexType>
+ </element>
+
+ <element name='normal'>
+  <complexType>
+   <attribute name='x' type='string' use='required'/>
+   <attribute name='y' type='string' use='required'/>
+   <attribute name='z' type='string' use='required'/>
+  </complexType>
+ </element>
+
+ <element name='tangent'>
+  <complexType>
+   <attribute name='x' type='string' use='required'/>
+   <attribute name='y' type='string' use='required'/>
+   <attribute name='z' type='string' use='required'/>
+   <attribute name='w' type='string' default='1'/>
+  </complexType>
+ </element>
+
+ <element name='binormal'>
+  <complexType>
+   <attribute name='x' type='string' use='required'/>
+   <attribute name='y' type='string' use='required'/>
+   <attribute name='z' type='string' use='required'/>
+  </complexType>
+ </element>
+
+ <element name='colour_diffuse'>
+  <complexType>
+   <attribute name='value' type='string' use='required'/>
+  </complexType>
+ </element>
+
+ <element name='colour_specular'>
+  <complexType>
+   <attribute name='value' type='string' use='required'/>
+  </complexType>
+ </element>
+
+ <element name='texcoord'>
+  <complexType>
+   <attribute name='u' type='string' use='required'/>
+   <attribute name='v' type='string' default='0'/>
+   <attribute name='w' type='string' default='0'/>
+  </complexType>
+ </element>
+
+ <element name='submeshnames'>
+  <complexType>
+   <sequence>
+    <element ref='t:submeshname' maxOccurs='unbounded'/>
+   </sequence>
+  </complexType>
+ </element>
+
+ <element name='submeshname'>
+  <complexType>
+   <attribute name='name' type='string' use='required'/>
+   <attribute name='index' type='string' use='required'/>
+  </complexType>
+ </element>
+
+ <element name='poses'>
+  <complexType>
+   <sequence>
+    <element ref='t:pose' maxOccurs='unbounded'/>
+   </sequence>
+  </complexType>
+ </element>
+
+ <element name='pose'>
+  <complexType>
+   <sequence>
+    <element ref='t:poseoffset' maxOccurs='unbounded'/>
+   </sequence>
+   <attribute name='target' use='required'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='mesh'/>
+      <enumeration value='submesh'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='index' type='string' default='0'/>
+   <attribute name='name' type='string' default=''/>
+  </complexType>
+ </element>
+
+ <element name='poseoffset'>
+  <complexType>
+   <attribute name='index' type='string' use='required'/>
+   <attribute name='x' type='string' use='required'/>
+   <attribute name='y' type='string' use='required'/>
+   <attribute name='z' type='string' use='required'/>
+  </complexType>
+ </element>
+
+ <element name='animations'>
+  <complexType>
+   <sequence>
+    <element ref='t:animation' maxOccurs='unbounded'/>
+   </sequence>
+  </complexType>
+ </element>
+
+ <element name='animation'>
+  <complexType>
+   <sequence>
+    <element ref='t:tracks'/>
+   </sequence>
+   <attribute name='name' type='string' use='required'/>
+   <attribute name='length' type='string' use='required'/>
+  </complexType>
+ </element>
+
+ <element name='tracks'>
+  <complexType>
+   <sequence>
+    <element ref='t:track' maxOccurs='unbounded'/>
+   </sequence>
+  </complexType>
+ </element>
+
+ <element name='track'>
+  <complexType>
+   <sequence>
+    <element ref='t:keyframes'/>
+   </sequence>
+   <attribute name='target' use='required'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='mesh'/>
+      <enumeration value='submesh'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+   <attribute name='index' type='string' default='0'/>
+   <attribute name='type' use='required'>
+    <simpleType>
+     <restriction base='string'>
+      <enumeration value='morph'/>
+      <enumeration value='pose'/>
+     </restriction>
+    </simpleType>
+   </attribute>
+  </complexType>
+ </element>
+
+ <element name='keyframes'>
+  <complexType>
+   <sequence>
+    <element ref='t:keyframe' minOccurs='0' maxOccurs='unbounded'/>
+   </sequence>
+  </complexType>
+ </element>
+
+ <element name='keyframe'>
+  <complexType>
+   <sequence>
+    <element ref='t:position' minOccurs='0' maxOccurs='unbounded'/>
+    <element ref='t:poseref' minOccurs='0' maxOccurs='unbounded'/>
+   </sequence>
+   <attribute name='time' type='string' use='required'/>
+  </complexType>
+ </element>
+
+ <element name='poseref'>
+  <complexType>
+   <attribute name='poseindex' type='string' use='required'/>
+   <attribute name='influence' type='string' default='1.0'/>
+  </complexType>
+ </element>
+
+ <element name='extremes'>
+  <complexType>
+   <sequence>
+    <element ref='t:submesh' maxOccurs='unbounded'/>
+   </sequence>
+  </complexType>
+ </element>
+
+ <element name='submesh_extremes'>
+  <complexType>
+   <sequence>
+    <element ref='t:position' maxOccurs='unbounded'/>
+   </sequence>
+   <attribute name='index' type='string' use='required'/>
+  </complexType>
+ </element>
+</schema>

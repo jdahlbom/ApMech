@@ -1,0 +1,57 @@
+<schema
+  xmlns='http://www.w3.org/2001/XMLSchema'
+  xmlns:xsd='http://www.w3.org/2001/XMLSchema'
+  targetNamespace='urn:apmech/mechs'
+  xmlns:t='urn:apmech/mechs'
+  elementFormDefault="qualified">
+
+ <element name='mech'>
+  <complexType>
+   <sequence>
+    <element name="schemaVersion" type="xsd:integer" fixed="1"/>
+    <element name="name" type="xsd:string"/>
+    <element name="stats" type="t:stats"/>
+    <element name="design" type="t:design"/>
+    <element name="media" type="t:media"/>
+   </sequence>
+  </complexType>
+ </element>
+
+ <complexType name="stats">
+  <sequence>
+   <element name="maxTurnRate" type="xsd:integer"/>
+   <element name="maxForwardAcceleration" type="xsd:integer"/>
+   <element name="maxBackwardAcceleration" type="xsd:integer"/>
+   <element name="maxSpeed" type="xsd:integer"/>
+  </sequence>
+ </complexType>
+
+ <complexType name="design">
+  <sequence>
+   <element name="torso" type="t:torso"/>
+  </sequence>
+ </complexType>
+
+ <complexType name="torso">
+  <attribute name="turningRadius" type="xsd:integer" default="90"/>
+ </complexType>
+
+ <complexType name="media">
+  <sequence>
+   <element name="mesh" type='t:mesh' minOccurs='1' maxOccurs='unbounded'/>
+  </sequence>
+ </complexType>
+
+ <complexType name="mesh">
+  <attribute name='translation' type='xsd:string' default='000.00;000.00;000.00'/>
+  <attribute name="type" type="t:meshType" use='required' />
+  <attribute name="file" type="xsd:string" use='required' />
+ </complexType>
+
+ <simpleType name="meshType">
+  <restriction base="xsd:string">
+   <enumeration value="TORSO"/>
+   <enumeration value="LEGS"/>
+  </restriction>
+ </simpleType>
+</schema>
