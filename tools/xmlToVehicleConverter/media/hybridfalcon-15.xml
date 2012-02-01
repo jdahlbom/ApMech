@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mech xmlns="urn:mech.xsd">
+<mech xmlns="urn:apmech/mechs/1">
   <schemaVersion>1</schemaVersion>
   <name>hybridfalcon-15</name>
   <stats>
@@ -10,6 +10,8 @@
   </stats>
   <design>
     <torso turningRadius="90"/>
+    <equipmentSlots />
+    <torsoBone>FIXME: INVALID!</torsoBone>
   </design>
   <media>
     <mesh type="TORSO" file="HybridFalcon-torso.mesh" translation="000.00;007.82;000.00"/>

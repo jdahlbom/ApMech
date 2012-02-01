@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<skeleton "urn:apmech/skeletons">
+<skeleton xmlns="urn:apmech/skeletons">
   <bones>
     <bone id="0" name="B_ROOT">
       <position x="0.000000" y="0.000000" z="0.000000"/>

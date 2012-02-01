@@ -1,8 +1,8 @@
 <schema
   xmlns='http://www.w3.org/2001/XMLSchema'
   xmlns:xsd='http://www.w3.org/2001/XMLSchema'
-  targetNamespace='urn:apmech/mechs'
-  xmlns:t='urn:apmech/mechs'
+  targetNamespace='urn:apmech/mechs/1'
+  xmlns:t='urn:apmech/mechs/1'
   elementFormDefault="qualified">
 
  <element name='mech'>
@@ -29,7 +29,22 @@
  <complexType name="design">
   <sequence>
    <element name="torso" type="t:torso"/>
+   <element name="equipmentSlots" type="t:equSlots" minOccurs="1" maxOccurs="1"/>
+   <element name="torsoBone" type="xsd:string" minOccurs="1" maxOccurs="1"/>
   </sequence>
+ </complexType>
+
+ <complexType name="equSlots">
+   <sequence>
+     <element name="slot" type="t:equSlot" minOccurs="0" maxOccurs="unbounded"/>
+   </sequence>
+ </complexType>
+ 
+ <complexType name="equSlot">
+   <sequence>
+     <element name="boneName" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+     <element name="defaultEqu" type="xsd:string" minOccurs="1" maxOccurs="1" default="UNUSED"/>
+   </sequence>
  </complexType>
 
  <complexType name="torso">
