@@ -7,7 +7,7 @@
 
 #include "generatedH.h"
 
-SOAP_SOURCE_STAMP("@(#) generatedC.cpp ver 2.7.9l 2012-01-28 18:29:23 GMT")
+SOAP_SOURCE_STAMP("@(#) generatedC.cpp ver 2.7.9l 2012-02-01 18:45:13 GMT")
 
 
 #ifndef WITH_NOGLOBAL
@@ -207,6 +207,8 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, int *type)
 		return soap_in__genmesh__submesh_usesharedvertices(soap, NULL, NULL, "genmesh:submesh-usesharedvertices");
 	case SOAP_TYPE_genmech__meshType:
 		return soap_in_genmech__meshType(soap, NULL, NULL, "genmech:meshType");
+	case SOAP_TYPE_std__string:
+		return soap_in_std__string(soap, NULL, NULL, "xsd:string");
 	case SOAP_TYPE_genskel__scale:
 		return soap_in_genskel__scale(soap, NULL, NULL, "genskel:scale");
 	case SOAP_TYPE_genskel__axis:
@@ -225,14 +227,14 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, int *type)
 		return soap_in_genmech__media(soap, NULL, NULL, "genmech:media");
 	case SOAP_TYPE_genmech__torso:
 		return soap_in_genmech__torso(soap, NULL, NULL, "genmech:torso");
+	case SOAP_TYPE_genmech__equSlot:
+		return soap_in_genmech__equSlot(soap, NULL, NULL, "genmech:equSlot");
+	case SOAP_TYPE_genmech__equSlots:
+		return soap_in_genmech__equSlots(soap, NULL, NULL, "genmech:equSlots");
 	case SOAP_TYPE_genmech__design:
 		return soap_in_genmech__design(soap, NULL, NULL, "genmech:design");
 	case SOAP_TYPE_genmech__stats:
 		return soap_in_genmech__stats(soap, NULL, NULL, "genmech:stats");
-	case SOAP_TYPE_xsd__integer:
-		return soap_in_xsd__integer(soap, NULL, NULL, "xsd:integer");
-	case SOAP_TYPE_std__string:
-		return soap_in_std__string(soap, NULL, NULL, "xsd:string");
 	case SOAP_TYPE_PointerTo_genskel__animationlink:
 		return soap_in_PointerTo_genskel__animationlink(soap, NULL, NULL, "genskel:animationlink");
 	case SOAP_TYPE_PointerTo_genskel__rotate:
@@ -353,6 +355,10 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, int *type)
 		return soap_in_PointerTogenmech__stats(soap, NULL, NULL, "genmech:stats");
 	case SOAP_TYPE_PointerTogenmech__mesh:
 		return soap_in_PointerTogenmech__mesh(soap, NULL, NULL, "genmech:mesh");
+	case SOAP_TYPE_PointerTogenmech__equSlot:
+		return soap_in_PointerTogenmech__equSlot(soap, NULL, NULL, "genmech:equSlot");
+	case SOAP_TYPE_PointerTogenmech__equSlots:
+		return soap_in_PointerTogenmech__equSlots(soap, NULL, NULL, "genmech:equSlots");
 	case SOAP_TYPE_PointerTogenmech__torso:
 		return soap_in_PointerTogenmech__torso(soap, NULL, NULL, "genmech:torso");
 	case SOAP_TYPE_string:
@@ -364,6 +370,10 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, int *type)
 	{	const char *t = soap->type;
 		if (!*t)
 			t = soap->tag;
+		if (!soap_match_tag(soap, t, "xsd:string"))
+		{	*type = SOAP_TYPE_std__string;
+			return soap_in_std__string(soap, NULL, NULL, NULL);
+		}
 		if (!soap_match_tag(soap, t, "genskel:scale"))
 		{	*type = SOAP_TYPE_genskel__scale;
 			return soap_in_genskel__scale(soap, NULL, NULL, NULL);
@@ -400,6 +410,14 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, int *type)
 		{	*type = SOAP_TYPE_genmech__torso;
 			return soap_in_genmech__torso(soap, NULL, NULL, NULL);
 		}
+		if (!soap_match_tag(soap, t, "genmech:equSlot"))
+		{	*type = SOAP_TYPE_genmech__equSlot;
+			return soap_in_genmech__equSlot(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "genmech:equSlots"))
+		{	*type = SOAP_TYPE_genmech__equSlots;
+			return soap_in_genmech__equSlots(soap, NULL, NULL, NULL);
+		}
 		if (!soap_match_tag(soap, t, "genmech:design"))
 		{	*type = SOAP_TYPE_genmech__design;
 			return soap_in_genmech__design(soap, NULL, NULL, NULL);
@@ -407,14 +425,6 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, int *type)
 		if (!soap_match_tag(soap, t, "genmech:stats"))
 		{	*type = SOAP_TYPE_genmech__stats;
 			return soap_in_genmech__stats(soap, NULL, NULL, NULL);
-		}
-		if (!soap_match_tag(soap, t, "xsd:integer"))
-		{	*type = SOAP_TYPE_xsd__integer;
-			return soap_in_xsd__integer(soap, NULL, NULL, NULL);
-		}
-		if (!soap_match_tag(soap, t, "xsd:string"))
-		{	*type = SOAP_TYPE_std__string;
-			return soap_in_std__string(soap, NULL, NULL, NULL);
 		}
 		if (!soap_match_tag(soap, t, "xsd:byte"))
 		{	*type = SOAP_TYPE_byte;
@@ -862,6 +872,8 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_putelement(struct soap *soap, const void *ptr, co
 		return soap_out__genmesh__submesh_usesharedvertices(soap, tag, id, (const enum _genmesh__submesh_usesharedvertices *)ptr, "genmesh:submesh-usesharedvertices");
 	case SOAP_TYPE_genmech__meshType:
 		return soap_out_genmech__meshType(soap, tag, id, (const enum genmech__meshType *)ptr, "genmech:meshType");
+	case SOAP_TYPE_std__string:
+		return soap_out_std__string(soap, tag, id, (const std::string *)ptr, "xsd:string");
 	case SOAP_TYPE__genskel__animationlink:
 		return ((_genskel__animationlink *)ptr)->soap_out(soap, "genskel:animationlink", id, NULL);
 	case SOAP_TYPE__genskel__animationlinks:
@@ -986,14 +998,14 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_putelement(struct soap *soap, const void *ptr, co
 		return ((genmech__media *)ptr)->soap_out(soap, tag, id, "genmech:media");
 	case SOAP_TYPE_genmech__torso:
 		return ((genmech__torso *)ptr)->soap_out(soap, tag, id, "genmech:torso");
+	case SOAP_TYPE_genmech__equSlot:
+		return ((genmech__equSlot *)ptr)->soap_out(soap, tag, id, "genmech:equSlot");
+	case SOAP_TYPE_genmech__equSlots:
+		return ((genmech__equSlots *)ptr)->soap_out(soap, tag, id, "genmech:equSlots");
 	case SOAP_TYPE_genmech__design:
 		return ((genmech__design *)ptr)->soap_out(soap, tag, id, "genmech:design");
 	case SOAP_TYPE_genmech__stats:
 		return ((genmech__stats *)ptr)->soap_out(soap, tag, id, "genmech:stats");
-	case SOAP_TYPE_xsd__integer:
-		return soap_out_xsd__integer(soap, tag, id, (const std::string *)ptr, "xsd:integer");
-	case SOAP_TYPE_std__string:
-		return soap_out_std__string(soap, tag, id, (const std::string *)ptr, "xsd:string");
 	case SOAP_TYPE_PointerTo_genskel__animationlink:
 		return soap_out_PointerTo_genskel__animationlink(soap, tag, id, (_genskel__animationlink *const*)ptr, "genskel:animationlink");
 	case SOAP_TYPE_PointerTo_genskel__rotate:
@@ -1114,6 +1126,10 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_putelement(struct soap *soap, const void *ptr, co
 		return soap_out_PointerTogenmech__stats(soap, tag, id, (genmech__stats *const*)ptr, "genmech:stats");
 	case SOAP_TYPE_PointerTogenmech__mesh:
 		return soap_out_PointerTogenmech__mesh(soap, tag, id, (genmech__mesh *const*)ptr, "genmech:mesh");
+	case SOAP_TYPE_PointerTogenmech__equSlot:
+		return soap_out_PointerTogenmech__equSlot(soap, tag, id, (genmech__equSlot *const*)ptr, "genmech:equSlot");
+	case SOAP_TYPE_PointerTogenmech__equSlots:
+		return soap_out_PointerTogenmech__equSlots(soap, tag, id, (genmech__equSlots *const*)ptr, "genmech:equSlots");
 	case SOAP_TYPE_PointerTogenmech__torso:
 		return soap_out_PointerTogenmech__torso(soap, tag, id, (genmech__torso *const*)ptr, "genmech:torso");
 	case SOAP_TYPE__QName:
@@ -1144,6 +1160,9 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 		break;
 	case SOAP_TYPE___genmesh__union_levelofdetail:
 		((__genmesh__union_levelofdetail *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE_std__string:
+		soap_serialize_std__string(soap, (const std::string *)ptr);
 		break;
 	case SOAP_TYPE__genskel__animationlink:
 		((_genskel__animationlink *)ptr)->soap_serialize(soap);
@@ -1331,17 +1350,17 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 	case SOAP_TYPE_genmech__torso:
 		((genmech__torso *)ptr)->soap_serialize(soap);
 		break;
+	case SOAP_TYPE_genmech__equSlot:
+		((genmech__equSlot *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE_genmech__equSlots:
+		((genmech__equSlots *)ptr)->soap_serialize(soap);
+		break;
 	case SOAP_TYPE_genmech__design:
 		((genmech__design *)ptr)->soap_serialize(soap);
 		break;
 	case SOAP_TYPE_genmech__stats:
 		((genmech__stats *)ptr)->soap_serialize(soap);
-		break;
-	case SOAP_TYPE_xsd__integer:
-		soap_serialize_xsd__integer(soap, (const std::string *)ptr);
-		break;
-	case SOAP_TYPE_std__string:
-		soap_serialize_std__string(soap, (const std::string *)ptr);
 		break;
 	case SOAP_TYPE_PointerTo_genskel__animationlink:
 		soap_serialize_PointerTo_genskel__animationlink(soap, (_genskel__animationlink *const*)ptr);
@@ -1529,6 +1548,12 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 	case SOAP_TYPE_PointerTogenmech__mesh:
 		soap_serialize_PointerTogenmech__mesh(soap, (genmech__mesh *const*)ptr);
 		break;
+	case SOAP_TYPE_PointerTogenmech__equSlot:
+		soap_serialize_PointerTogenmech__equSlot(soap, (genmech__equSlot *const*)ptr);
+		break;
+	case SOAP_TYPE_PointerTogenmech__equSlots:
+		soap_serialize_PointerTogenmech__equSlots(soap, (genmech__equSlots *const*)ptr);
+		break;
 	case SOAP_TYPE_PointerTogenmech__torso:
 		soap_serialize_PointerTogenmech__torso(soap, (genmech__torso *const*)ptr);
 		break;
@@ -1550,12 +1575,16 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 {
 	switch (t)
 	{
-	case SOAP_TYPE_std__string:
-		return (void*)soap_instantiate_std__string(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_genmech__stats:
 		return (void*)soap_instantiate_genmech__stats(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_std__string:
+		return (void*)soap_instantiate_std__string(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_genmech__design:
 		return (void*)soap_instantiate_genmech__design(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_genmech__equSlots:
+		return (void*)soap_instantiate_genmech__equSlots(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_genmech__equSlot:
+		return (void*)soap_instantiate_genmech__equSlot(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_genmech__torso:
 		return (void*)soap_instantiate_genmech__torso(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_genmech__media:
@@ -1704,8 +1733,6 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 	case SOAP_TYPE_SOAP_ENV__Fault:
 		return (void*)soap_instantiate_SOAP_ENV__Fault(soap, -1, type, arrayType, n);
 #endif
-	case SOAP_TYPE_xsd__integer:
-		return (void*)soap_instantiate_xsd__integer(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_std__vectorTemplateOfPointerTo_genskel__animationlink:
 		return (void*)soap_instantiate_std__vectorTemplateOfPointerTo_genskel__animationlink(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_std__vectorTemplateOfPointerTo_genskel__keyframe:
@@ -1750,6 +1777,8 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 		return (void*)soap_instantiate_std__vectorTemplateOfPointerTo_genmesh__vertexbuffer(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_std__vectorTemplateOfPointerTogenmech__mesh:
 		return (void*)soap_instantiate_std__vectorTemplateOfPointerTogenmech__mesh(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_std__vectorTemplateOfPointerTogenmech__equSlot:
+		return (void*)soap_instantiate_std__vectorTemplateOfPointerTogenmech__equSlot(soap, -1, type, arrayType, n);
 	}
 	return NULL;
 }
@@ -1757,23 +1786,35 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap_clist *p)
 {	switch (p->type)
 	{
-	case SOAP_TYPE_std__string:
-		if (p->size < 0)
-			delete (std::string*)p->ptr;
-		else
-			delete[] (std::string*)p->ptr;
-		break;
 	case SOAP_TYPE_genmech__stats:
 		if (p->size < 0)
 			delete (genmech__stats*)p->ptr;
 		else
 			delete[] (genmech__stats*)p->ptr;
 		break;
+	case SOAP_TYPE_std__string:
+		if (p->size < 0)
+			delete (std::string*)p->ptr;
+		else
+			delete[] (std::string*)p->ptr;
+		break;
 	case SOAP_TYPE_genmech__design:
 		if (p->size < 0)
 			delete (genmech__design*)p->ptr;
 		else
 			delete[] (genmech__design*)p->ptr;
+		break;
+	case SOAP_TYPE_genmech__equSlots:
+		if (p->size < 0)
+			delete (genmech__equSlots*)p->ptr;
+		else
+			delete[] (genmech__equSlots*)p->ptr;
+		break;
+	case SOAP_TYPE_genmech__equSlot:
+		if (p->size < 0)
+			delete (genmech__equSlot*)p->ptr;
+		else
+			delete[] (genmech__equSlot*)p->ptr;
 		break;
 	case SOAP_TYPE_genmech__torso:
 		if (p->size < 0)
@@ -2189,12 +2230,6 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap_clist *p)
 		else
 			delete[] (struct SOAP_ENV__Fault*)p->ptr;
 		break;
-	case SOAP_TYPE_xsd__integer:
-		if (p->size < 0)
-			delete (std::string*)p->ptr;
-		else
-			delete[] (std::string*)p->ptr;
-		break;
 	case SOAP_TYPE_std__vectorTemplateOfPointerTo_genskel__animationlink:
 		if (p->size < 0)
 			delete (std::vector<_genskel__animationlink * >*)p->ptr;
@@ -2327,6 +2362,12 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap_clist *p)
 		else
 			delete[] (std::vector<genmech__mesh * >*)p->ptr;
 		break;
+	case SOAP_TYPE_std__vectorTemplateOfPointerTogenmech__equSlot:
+		if (p->size < 0)
+			delete (std::vector<genmech__equSlot * >*)p->ptr;
+		else
+			delete[] (std::vector<genmech__equSlot * >*)p->ptr;
+		break;
 	default:	return SOAP_ERR;
 	}
 	return SOAP_OK;
@@ -2430,6 +2471,10 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_container_insert(struct soap *soap, int st, int 
 	case SOAP_TYPE_std__vectorTemplateOfPointerTogenmech__mesh:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Container insert type=%d in %d location=%p object=%p len=%lu\n", st, tt, p, q, (unsigned long)len));
 		(*(std::vector<genmech__mesh * >*)p)[len] = *(genmech__mesh **)q;
+		break;
+	case SOAP_TYPE_std__vectorTemplateOfPointerTogenmech__equSlot:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Container insert type=%d in %d location=%p object=%p len=%lu\n", st, tt, p, q, (unsigned long)len));
+		(*(std::vector<genmech__equSlot * >*)p)[len] = *(genmech__equSlot **)q;
 		break;
 	default:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Could not insert type=%d in %d\n", st, tt));
@@ -4677,6 +4722,101 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_copy___genmesh__union_levelofdetail(struct soap 
 {
 	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying __genmesh__union_levelofdetail %p -> %p\n", q, p));
 	*(__genmesh__union_levelofdetail*)p = *(__genmesh__union_levelofdetail*)q;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__string(struct soap *soap, std::string *p)
+{	(void)soap; /* appease -Wall -Werror */
+	p->erase();
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__string(struct soap *soap, const std::string *p)
+{	(void)soap; (void)p; /* appease -Wall -Werror */
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_std__string(struct soap *soap, const std::string *a, const char *tag, const char *type)
+{
+	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_std__string);
+	if (soap_out_std__string(soap, tag, id, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_std__string(struct soap *soap, const char *tag, int id, const std::string *s, const char *type)
+{
+	if ((soap->mode & SOAP_C_NILSTRING) && s->empty())
+		return soap_element_null(soap, tag, id, type);
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, s, SOAP_TYPE_std__string), type) || soap_string_out(soap, s->c_str(), 0) || soap_element_end_out(soap, tag))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 std::string * SOAP_FMAC4 soap_get_std__string(struct soap *soap, std::string *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_std__string(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC1 std::string * SOAP_FMAC2 soap_in_std__string(struct soap *soap, const char *tag, std::string *s, const char *type)
+{
+	if (soap_element_begin_in(soap, tag, 1, type))
+		return NULL;
+	if (!s)
+		s = soap_new_std__string(soap, -1);
+	if (soap->null)
+		if (s)
+			s->erase();
+	if (soap->body && !*soap->href)
+	{	char *t;
+		s = (std::string*)soap_class_id_enter(soap, soap->id, s, SOAP_TYPE_std__string, sizeof(std::string), soap->type, soap->arrayType);
+		if (s)
+			if ((t = soap_string_in(soap, 1, -1, -1)))
+				s->assign(t);
+			else
+				return NULL;
+	}
+	else
+		s = (std::string*)soap_id_forward(soap, soap->href, soap_class_id_enter(soap, soap->id, s, SOAP_TYPE_std__string, sizeof(std::string), soap->type, soap->arrayType), 0, SOAP_TYPE_std__string, 0, sizeof(std::string), 0, soap_copy_std__string);
+	if (soap->body && soap_element_end_in(soap, tag))
+		return NULL;
+	return s;
+}
+
+SOAP_FMAC5 std::string * SOAP_FMAC6 soap_new_std__string(struct soap *soap, int n)
+{	return soap_instantiate_std__string(soap, n, NULL, NULL, NULL);
+}
+
+SOAP_FMAC5 void SOAP_FMAC6 soap_delete_std__string(struct soap *soap, std::string *p)
+{	soap_delete(soap, p);
+}
+
+SOAP_FMAC3 std::string * SOAP_FMAC4 soap_instantiate_std__string(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_std__string(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_std__string, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)new std::string;
+		if (size)
+			*size = sizeof(std::string);
+	}
+	else
+	{	cp->ptr = (void*)new std::string[n];
+		if (!cp->ptr)
+		{	soap->error = SOAP_EOM;
+			return NULL;
+		}
+		if (size)
+			*size = n * sizeof(std::string);
+	}
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	return (std::string*)cp->ptr;
+}
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__string(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying std::string %p -> %p\n", q, p));
+	*(std::string*)p = *(std::string*)q;
 }
 
 void _genskel__animationlink::soap_default(struct soap *soap)
@@ -13711,7 +13851,7 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_copy__genmesh__mesh(struct soap *soap, int st, i
 void _genmech__mech::soap_default(struct soap *soap)
 {
 	this->soap = soap;
-	soap_default_xsd__integer(soap, &this->_genmech__mech::schemaVersion);
+	soap_default_int(soap, &this->_genmech__mech::schemaVersion);
 	soap_default_std__string(soap, &this->_genmech__mech::name);
 	this->_genmech__mech::stats = NULL;
 	this->_genmech__mech::design = NULL;
@@ -13722,7 +13862,6 @@ void _genmech__mech::soap_default(struct soap *soap)
 void _genmech__mech::soap_serialize(struct soap *soap) const
 {
 	(void)soap; /* appease -Wall -Werror */
-	soap_serialize_xsd__integer(soap, &this->_genmech__mech::schemaVersion);
 	soap_embedded(soap, &this->_genmech__mech::name, SOAP_TYPE_std__string);
 	soap_serialize_std__string(soap, &this->_genmech__mech::name);
 	soap_serialize_PointerTogenmech__stats(soap, &this->_genmech__mech::stats);
@@ -13748,7 +13887,7 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_out__genmech__mech(struct soap *soap, const char 
 {
 	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE__genmech__mech), type))
 		return soap->error;
-	if (soap_out_xsd__integer(soap, "genmech:schemaVersion", -1, &(a->_genmech__mech::schemaVersion), ""))
+	if (soap_out_int(soap, "genmech:schemaVersion", -1, &(a->_genmech__mech::schemaVersion), ""))
 		return soap->error;
 	if (soap_out_std__string(soap, "genmech:name", -1, &(a->_genmech__mech::name), ""))
 		return soap->error;
@@ -13799,8 +13938,8 @@ SOAP_FMAC3 _genmech__mech * SOAP_FMAC4 soap_in__genmech__mech(struct soap *soap,
 	{
 		for (;;)
 		{	soap->error = SOAP_TAG_MISMATCH;
-			if (soap_flag_schemaVersion1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
-				if (soap_in_xsd__integer(soap, "genmech:schemaVersion", &(a->_genmech__mech::schemaVersion), "xsd:integer"))
+			if (soap_flag_schemaVersion1 && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_int(soap, "genmech:schemaVersion", &(a->_genmech__mech::schemaVersion), "xsd:int"))
 				{	soap_flag_schemaVersion1--;
 					continue;
 				}
@@ -14179,7 +14318,7 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_copy_genmech__media(struct soap *soap, int st, i
 void genmech__torso::soap_default(struct soap *soap)
 {
 	this->soap = soap;
-	soap_default_xsd__integer(soap, &this->genmech__torso::turningRadius);
+	this->genmech__torso::turningRadius = 90;
 	/* transient soap skipped */
 }
 
@@ -14204,8 +14343,7 @@ int genmech__torso::soap_out(struct soap *soap, const char *tag, int id, const c
 
 SOAP_FMAC3 int SOAP_FMAC4 soap_out_genmech__torso(struct soap *soap, const char *tag, int id, const genmech__torso *a, const char *type)
 {
-	if (!((genmech__torso *)a)->turningRadius.empty())
-		soap_set_attr(soap, "turningRadius", ((genmech__torso *)a)->turningRadius.c_str());
+	soap_set_attr(soap, "turningRadius", soap_int2s(soap, ((genmech__torso *)a)->turningRadius));
 	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_genmech__torso), type))
 		return soap->error;
 	/* transient soap skipped */
@@ -14244,14 +14382,8 @@ SOAP_FMAC3 genmech__torso * SOAP_FMAC4 soap_in_genmech__torso(struct soap *soap,
 			return (genmech__torso *)a->soap_in(soap, tag, type);
 		}
 	}
-	{	const char *t = soap_attr_value(soap, "turningRadius", 0);
-		if (t)
-		{	char *s;
-			if (soap_s2string(soap, t, &s))
-				return NULL;
-			((genmech__torso *)a)->turningRadius.assign(s);
-		}
-	}
+	if (soap_s2int(soap, soap_attr_value(soap, "turningRadius", 0), &((genmech__torso *)a)->turningRadius))
+		return NULL;
 	if (soap->body && !*soap->href)
 	{
 		for (;;)
@@ -14315,10 +14447,300 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_copy_genmech__torso(struct soap *soap, int st, i
 	*(genmech__torso*)p = *(genmech__torso*)q;
 }
 
+void genmech__equSlot::soap_default(struct soap *soap)
+{
+	this->soap = soap;
+	soap_default_std__string(soap, &this->genmech__equSlot::boneName);
+	this->genmech__equSlot::defaultEqu = "UNUSED";
+	/* transient soap skipped */
+}
+
+void genmech__equSlot::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+	soap_embedded(soap, &this->genmech__equSlot::boneName, SOAP_TYPE_std__string);
+	soap_serialize_std__string(soap, &this->genmech__equSlot::boneName);
+	soap_embedded(soap, &this->genmech__equSlot::defaultEqu, SOAP_TYPE_std__string);
+	soap_serialize_std__string(soap, &this->genmech__equSlot::defaultEqu);
+	/* transient soap skipped */
+}
+
+int genmech__equSlot::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	register int id = soap_embed(soap, (void*)this, NULL, 0, tag, SOAP_TYPE_genmech__equSlot);
+	if (this->soap_out(soap, tag, id, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+int genmech__equSlot::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out_genmech__equSlot(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_genmech__equSlot(struct soap *soap, const char *tag, int id, const genmech__equSlot *a, const char *type)
+{
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_genmech__equSlot), type))
+		return soap->error;
+	if (soap_out_std__string(soap, "genmech:boneName", -1, &(a->genmech__equSlot::boneName), ""))
+		return soap->error;
+	if (soap_out_std__string(soap, "genmech:defaultEqu", -1, &(a->genmech__equSlot::defaultEqu), ""))
+		return soap->error;
+	/* transient soap skipped */
+	return soap_element_end_out(soap, tag);
+}
+
+void *genmech__equSlot::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get_genmech__equSlot(soap, this, tag, type);
+}
+
+SOAP_FMAC3 genmech__equSlot * SOAP_FMAC4 soap_get_genmech__equSlot(struct soap *soap, genmech__equSlot *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_genmech__equSlot(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void *genmech__equSlot::soap_in(struct soap *soap, const char *tag, const char *type)
+{	return soap_in_genmech__equSlot(soap, tag, this, type);
+}
+
+SOAP_FMAC3 genmech__equSlot * SOAP_FMAC4 soap_in_genmech__equSlot(struct soap *soap, const char *tag, genmech__equSlot *a, const char *type)
+{
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (genmech__equSlot *)soap_class_id_enter(soap, soap->id, a, SOAP_TYPE_genmech__equSlot, sizeof(genmech__equSlot), soap->type, soap->arrayType);
+	if (!a)
+		return NULL;
+	if (soap->alloced)
+	{	a->soap_default(soap);
+		if (soap->clist->type != SOAP_TYPE_genmech__equSlot)
+		{	soap_revert(soap);
+			*soap->id = '\0';
+			return (genmech__equSlot *)a->soap_in(soap, tag, type);
+		}
+	}
+	short soap_flag_boneName1 = 1, soap_flag_defaultEqu1 = 1;
+	if (soap->body && !*soap->href)
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_boneName1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_std__string(soap, "genmech:boneName", &(a->genmech__equSlot::boneName), "xsd:string"))
+				{	soap_flag_boneName1--;
+					continue;
+				}
+			if (soap_flag_defaultEqu1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_std__string(soap, "genmech:defaultEqu", &(a->genmech__equSlot::defaultEqu), "xsd:string"))
+				{	soap_flag_defaultEqu1--;
+					continue;
+				}
+			/* transient soap skipped */
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (genmech__equSlot *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_genmech__equSlot, 0, sizeof(genmech__equSlot), 0, soap_copy_genmech__equSlot);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_boneName1 > 0))
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC5 genmech__equSlot * SOAP_FMAC6 soap_new_genmech__equSlot(struct soap *soap, int n)
+{	return soap_instantiate_genmech__equSlot(soap, n, NULL, NULL, NULL);
+}
+
+SOAP_FMAC5 void SOAP_FMAC6 soap_delete_genmech__equSlot(struct soap *soap, genmech__equSlot *p)
+{	soap_delete(soap, p);
+}
+
+SOAP_FMAC3 genmech__equSlot * SOAP_FMAC4 soap_instantiate_genmech__equSlot(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_genmech__equSlot(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_genmech__equSlot, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)new genmech__equSlot;
+		if (size)
+			*size = sizeof(genmech__equSlot);
+		((genmech__equSlot*)cp->ptr)->soap = soap;
+	}
+	else
+	{	cp->ptr = (void*)new genmech__equSlot[n];
+		if (!cp->ptr)
+		{	soap->error = SOAP_EOM;
+			return NULL;
+		}
+		if (size)
+			*size = n * sizeof(genmech__equSlot);
+		for (int i = 0; i < n; i++)
+			((genmech__equSlot*)cp->ptr)[i].soap = soap;
+	}
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	return (genmech__equSlot*)cp->ptr;
+}
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_genmech__equSlot(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying genmech__equSlot %p -> %p\n", q, p));
+	*(genmech__equSlot*)p = *(genmech__equSlot*)q;
+}
+
+void genmech__equSlots::soap_default(struct soap *soap)
+{
+	this->soap = soap;
+	soap_default_std__vectorTemplateOfPointerTogenmech__equSlot(soap, &this->genmech__equSlots::slot);
+	/* transient soap skipped */
+}
+
+void genmech__equSlots::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+	soap_serialize_std__vectorTemplateOfPointerTogenmech__equSlot(soap, &this->genmech__equSlots::slot);
+	/* transient soap skipped */
+}
+
+int genmech__equSlots::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	register int id = soap_embed(soap, (void*)this, NULL, 0, tag, SOAP_TYPE_genmech__equSlots);
+	if (this->soap_out(soap, tag, id, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+int genmech__equSlots::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out_genmech__equSlots(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_genmech__equSlots(struct soap *soap, const char *tag, int id, const genmech__equSlots *a, const char *type)
+{
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_genmech__equSlots), type))
+		return soap->error;
+	if (soap_out_std__vectorTemplateOfPointerTogenmech__equSlot(soap, "genmech:slot", -1, &(a->genmech__equSlots::slot), ""))
+		return soap->error;
+	/* transient soap skipped */
+	return soap_element_end_out(soap, tag);
+}
+
+void *genmech__equSlots::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get_genmech__equSlots(soap, this, tag, type);
+}
+
+SOAP_FMAC3 genmech__equSlots * SOAP_FMAC4 soap_get_genmech__equSlots(struct soap *soap, genmech__equSlots *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_genmech__equSlots(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void *genmech__equSlots::soap_in(struct soap *soap, const char *tag, const char *type)
+{	return soap_in_genmech__equSlots(soap, tag, this, type);
+}
+
+SOAP_FMAC3 genmech__equSlots * SOAP_FMAC4 soap_in_genmech__equSlots(struct soap *soap, const char *tag, genmech__equSlots *a, const char *type)
+{
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (genmech__equSlots *)soap_class_id_enter(soap, soap->id, a, SOAP_TYPE_genmech__equSlots, sizeof(genmech__equSlots), soap->type, soap->arrayType);
+	if (!a)
+		return NULL;
+	if (soap->alloced)
+	{	a->soap_default(soap);
+		if (soap->clist->type != SOAP_TYPE_genmech__equSlots)
+		{	soap_revert(soap);
+			*soap->id = '\0';
+			return (genmech__equSlots *)a->soap_in(soap, tag, type);
+		}
+	}
+	if (soap->body && !*soap->href)
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_std__vectorTemplateOfPointerTogenmech__equSlot(soap, "genmech:slot", &(a->genmech__equSlots::slot), "genmech:equSlot"))
+					continue;
+			/* transient soap skipped */
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (genmech__equSlots *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_genmech__equSlots, 0, sizeof(genmech__equSlots), 0, soap_copy_genmech__equSlots);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC5 genmech__equSlots * SOAP_FMAC6 soap_new_genmech__equSlots(struct soap *soap, int n)
+{	return soap_instantiate_genmech__equSlots(soap, n, NULL, NULL, NULL);
+}
+
+SOAP_FMAC5 void SOAP_FMAC6 soap_delete_genmech__equSlots(struct soap *soap, genmech__equSlots *p)
+{	soap_delete(soap, p);
+}
+
+SOAP_FMAC3 genmech__equSlots * SOAP_FMAC4 soap_instantiate_genmech__equSlots(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_genmech__equSlots(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_genmech__equSlots, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)new genmech__equSlots;
+		if (size)
+			*size = sizeof(genmech__equSlots);
+		((genmech__equSlots*)cp->ptr)->soap = soap;
+	}
+	else
+	{	cp->ptr = (void*)new genmech__equSlots[n];
+		if (!cp->ptr)
+		{	soap->error = SOAP_EOM;
+			return NULL;
+		}
+		if (size)
+			*size = n * sizeof(genmech__equSlots);
+		for (int i = 0; i < n; i++)
+			((genmech__equSlots*)cp->ptr)[i].soap = soap;
+	}
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	return (genmech__equSlots*)cp->ptr;
+}
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_genmech__equSlots(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying genmech__equSlots %p -> %p\n", q, p));
+	*(genmech__equSlots*)p = *(genmech__equSlots*)q;
+}
+
 void genmech__design::soap_default(struct soap *soap)
 {
 	this->soap = soap;
 	this->genmech__design::torso = NULL;
+	this->genmech__design::equipmentSlots = NULL;
+	soap_default_std__string(soap, &this->genmech__design::torsoBone);
 	/* transient soap skipped */
 }
 
@@ -14326,6 +14748,9 @@ void genmech__design::soap_serialize(struct soap *soap) const
 {
 	(void)soap; /* appease -Wall -Werror */
 	soap_serialize_PointerTogenmech__torso(soap, &this->genmech__design::torso);
+	soap_serialize_PointerTogenmech__equSlots(soap, &this->genmech__design::equipmentSlots);
+	soap_embedded(soap, &this->genmech__design::torsoBone, SOAP_TYPE_std__string);
+	soap_serialize_std__string(soap, &this->genmech__design::torsoBone);
 	/* transient soap skipped */
 }
 
@@ -14347,6 +14772,10 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_out_genmech__design(struct soap *soap, const char
 	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_genmech__design), type))
 		return soap->error;
 	if (soap_out_PointerTogenmech__torso(soap, "genmech:torso", -1, &(a->genmech__design::torso), ""))
+		return soap->error;
+	if (soap_out_PointerTogenmech__equSlots(soap, "genmech:equipmentSlots", -1, &(a->genmech__design::equipmentSlots), ""))
+		return soap->error;
+	if (soap_out_std__string(soap, "genmech:torsoBone", -1, &(a->genmech__design::torsoBone), ""))
 		return soap->error;
 	/* transient soap skipped */
 	return soap_element_end_out(soap, tag);
@@ -14384,7 +14813,7 @@ SOAP_FMAC3 genmech__design * SOAP_FMAC4 soap_in_genmech__design(struct soap *soa
 			return (genmech__design *)a->soap_in(soap, tag, type);
 		}
 	}
-	short soap_flag_torso1 = 1;
+	short soap_flag_torso1 = 1, soap_flag_equipmentSlots1 = 1, soap_flag_torsoBone1 = 1;
 	if (soap->body && !*soap->href)
 	{
 		for (;;)
@@ -14392,6 +14821,16 @@ SOAP_FMAC3 genmech__design * SOAP_FMAC4 soap_in_genmech__design(struct soap *soa
 			if (soap_flag_torso1 && soap->error == SOAP_TAG_MISMATCH)
 				if (soap_in_PointerTogenmech__torso(soap, "genmech:torso", &(a->genmech__design::torso), "genmech:torso"))
 				{	soap_flag_torso1--;
+					continue;
+				}
+			if (soap_flag_equipmentSlots1 && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_PointerTogenmech__equSlots(soap, "genmech:equipmentSlots", &(a->genmech__design::equipmentSlots), "genmech:equSlots"))
+				{	soap_flag_equipmentSlots1--;
+					continue;
+				}
+			if (soap_flag_torsoBone1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_std__string(soap, "genmech:torsoBone", &(a->genmech__design::torsoBone), "xsd:string"))
+				{	soap_flag_torsoBone1--;
 					continue;
 				}
 			/* transient soap skipped */
@@ -14410,7 +14849,7 @@ SOAP_FMAC3 genmech__design * SOAP_FMAC4 soap_in_genmech__design(struct soap *soa
 		if (soap->body && soap_element_end_in(soap, tag))
 			return NULL;
 	}
-	if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_torso1 > 0))
+	if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_torso1 > 0 || soap_flag_equipmentSlots1 > 0 || soap_flag_torsoBone1 > 0))
 	{	soap->error = SOAP_OCCURS;
 		return NULL;
 	}
@@ -14460,20 +14899,16 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_copy_genmech__design(struct soap *soap, int st, 
 void genmech__stats::soap_default(struct soap *soap)
 {
 	this->soap = soap;
-	soap_default_xsd__integer(soap, &this->genmech__stats::maxTurnRate);
-	soap_default_xsd__integer(soap, &this->genmech__stats::maxForwardAcceleration);
-	soap_default_xsd__integer(soap, &this->genmech__stats::maxBackwardAcceleration);
-	soap_default_xsd__integer(soap, &this->genmech__stats::maxSpeed);
+	soap_default_int(soap, &this->genmech__stats::maxTurnRate);
+	soap_default_int(soap, &this->genmech__stats::maxForwardAcceleration);
+	soap_default_int(soap, &this->genmech__stats::maxBackwardAcceleration);
+	soap_default_int(soap, &this->genmech__stats::maxSpeed);
 	/* transient soap skipped */
 }
 
 void genmech__stats::soap_serialize(struct soap *soap) const
 {
 	(void)soap; /* appease -Wall -Werror */
-	soap_serialize_xsd__integer(soap, &this->genmech__stats::maxTurnRate);
-	soap_serialize_xsd__integer(soap, &this->genmech__stats::maxForwardAcceleration);
-	soap_serialize_xsd__integer(soap, &this->genmech__stats::maxBackwardAcceleration);
-	soap_serialize_xsd__integer(soap, &this->genmech__stats::maxSpeed);
 	/* transient soap skipped */
 }
 
@@ -14494,13 +14929,13 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_out_genmech__stats(struct soap *soap, const char 
 {
 	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_genmech__stats), type))
 		return soap->error;
-	if (soap_out_xsd__integer(soap, "genmech:maxTurnRate", -1, &(a->genmech__stats::maxTurnRate), ""))
+	if (soap_out_int(soap, "genmech:maxTurnRate", -1, &(a->genmech__stats::maxTurnRate), ""))
 		return soap->error;
-	if (soap_out_xsd__integer(soap, "genmech:maxForwardAcceleration", -1, &(a->genmech__stats::maxForwardAcceleration), ""))
+	if (soap_out_int(soap, "genmech:maxForwardAcceleration", -1, &(a->genmech__stats::maxForwardAcceleration), ""))
 		return soap->error;
-	if (soap_out_xsd__integer(soap, "genmech:maxBackwardAcceleration", -1, &(a->genmech__stats::maxBackwardAcceleration), ""))
+	if (soap_out_int(soap, "genmech:maxBackwardAcceleration", -1, &(a->genmech__stats::maxBackwardAcceleration), ""))
 		return soap->error;
-	if (soap_out_xsd__integer(soap, "genmech:maxSpeed", -1, &(a->genmech__stats::maxSpeed), ""))
+	if (soap_out_int(soap, "genmech:maxSpeed", -1, &(a->genmech__stats::maxSpeed), ""))
 		return soap->error;
 	/* transient soap skipped */
 	return soap_element_end_out(soap, tag);
@@ -14543,23 +14978,23 @@ SOAP_FMAC3 genmech__stats * SOAP_FMAC4 soap_in_genmech__stats(struct soap *soap,
 	{
 		for (;;)
 		{	soap->error = SOAP_TAG_MISMATCH;
-			if (soap_flag_maxTurnRate1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
-				if (soap_in_xsd__integer(soap, "genmech:maxTurnRate", &(a->genmech__stats::maxTurnRate), "xsd:integer"))
+			if (soap_flag_maxTurnRate1 && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_int(soap, "genmech:maxTurnRate", &(a->genmech__stats::maxTurnRate), "xsd:int"))
 				{	soap_flag_maxTurnRate1--;
 					continue;
 				}
-			if (soap_flag_maxForwardAcceleration1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
-				if (soap_in_xsd__integer(soap, "genmech:maxForwardAcceleration", &(a->genmech__stats::maxForwardAcceleration), "xsd:integer"))
+			if (soap_flag_maxForwardAcceleration1 && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_int(soap, "genmech:maxForwardAcceleration", &(a->genmech__stats::maxForwardAcceleration), "xsd:int"))
 				{	soap_flag_maxForwardAcceleration1--;
 					continue;
 				}
-			if (soap_flag_maxBackwardAcceleration1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
-				if (soap_in_xsd__integer(soap, "genmech:maxBackwardAcceleration", &(a->genmech__stats::maxBackwardAcceleration), "xsd:integer"))
+			if (soap_flag_maxBackwardAcceleration1 && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_int(soap, "genmech:maxBackwardAcceleration", &(a->genmech__stats::maxBackwardAcceleration), "xsd:int"))
 				{	soap_flag_maxBackwardAcceleration1--;
 					continue;
 				}
-			if (soap_flag_maxSpeed1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
-				if (soap_in_xsd__integer(soap, "genmech:maxSpeed", &(a->genmech__stats::maxSpeed), "xsd:integer"))
+			if (soap_flag_maxSpeed1 && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_int(soap, "genmech:maxSpeed", &(a->genmech__stats::maxSpeed), "xsd:int"))
 				{	soap_flag_maxSpeed1--;
 					continue;
 				}
@@ -14624,195 +15059,6 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_copy_genmech__stats(struct soap *soap, int st, i
 {
 	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying genmech__stats %p -> %p\n", q, p));
 	*(genmech__stats*)p = *(genmech__stats*)q;
-}
-
-SOAP_FMAC3 void SOAP_FMAC4 soap_default_xsd__integer(struct soap *soap, std::string *a)
-{	soap_default_std__string(soap, a);
-}
-
-SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_xsd__integer(struct soap *soap, std::string const*a)
-{	soap_serialize_std__string(soap, a);
-}
-
-SOAP_FMAC3 int SOAP_FMAC4 soap_put_xsd__integer(struct soap *soap, const std::string *a, const char *tag, const char *type)
-{
-	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_xsd__integer);
-	if (soap_out_xsd__integer(soap, tag, id, a, type))
-		return soap->error;
-	return soap_putindependent(soap);
-}
-SOAP_FMAC3 int SOAP_FMAC4 soap_out_xsd__integer(struct soap *soap, const char *tag, int id, const std::string *s, const char *type)
-{
-	if ((soap->mode & SOAP_C_NILSTRING) && s->empty())
-		return soap_element_null(soap, tag, id, type);
-	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, s, SOAP_TYPE_xsd__integer), type) || soap_string_out(soap, s->c_str(), 0) || soap_element_end_out(soap, tag))
-		return soap->error;
-	return SOAP_OK;
-}
-
-SOAP_FMAC3 std::string * SOAP_FMAC4 soap_get_xsd__integer(struct soap *soap, std::string *p, const char *tag, const char *type)
-{
-	if ((p = soap_in_xsd__integer(soap, tag, p, type)))
-		if (soap_getindependent(soap))
-			return NULL;
-	return p;
-}
-
-SOAP_FMAC1 std::string * SOAP_FMAC2 soap_in_xsd__integer(struct soap *soap, const char *tag, std::string *s, const char *type)
-{
-	if (soap_element_begin_in(soap, tag, 1, type))
-		return NULL;
-	if (!s)
-		s = soap_new_std__string(soap, -1);
-	if (soap->null)
-		if (s)
-			s->erase();
-	if (soap->body && !*soap->href)
-	{	char *t;
-		s = (std::string*)soap_class_id_enter(soap, soap->id, s, SOAP_TYPE_xsd__integer, sizeof(std::string), soap->type, soap->arrayType);
-		if (s)
-			if ((t = soap_string_in(soap, 1, -1, -1)))
-				s->assign(t);
-			else
-				return NULL;
-	}
-	else
-		s = (std::string*)soap_id_forward(soap, soap->href, soap_class_id_enter(soap, soap->id, s, SOAP_TYPE_xsd__integer, sizeof(std::string), soap->type, soap->arrayType), 0, SOAP_TYPE_xsd__integer, 0, sizeof(std::string), 0, soap_copy_xsd__integer);
-	if (soap->body && soap_element_end_in(soap, tag))
-		return NULL;
-	return s;
-}
-
-SOAP_FMAC5 std::string * SOAP_FMAC6 soap_new_xsd__integer(struct soap *soap, int n)
-{	return soap_instantiate_xsd__integer(soap, n, NULL, NULL, NULL);
-}
-
-SOAP_FMAC5 void SOAP_FMAC6 soap_delete_xsd__integer(struct soap *soap, std::string *p)
-{	soap_delete(soap, p);
-}
-
-SOAP_FMAC3 std::string * SOAP_FMAC4 soap_instantiate_xsd__integer(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
-{
-	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_xsd__integer(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
-	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_xsd__integer, n, soap_fdelete);
-	if (!cp)
-		return NULL;
-	if (n < 0)
-	{	cp->ptr = (void*)new std::string;
-		if (size)
-			*size = sizeof(std::string);
-	}
-	else
-	{	cp->ptr = (void*)new std::string[n];
-		if (!cp->ptr)
-		{	soap->error = SOAP_EOM;
-			return NULL;
-		}
-		if (size)
-			*size = n * sizeof(std::string);
-	}
-		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
-	return (std::string*)cp->ptr;
-}
-SOAP_FMAC3 void SOAP_FMAC4 soap_copy_xsd__integer(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
-{
-	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying std::string %p -> %p\n", q, p));
-	*(std::string*)p = *(std::string*)q;
-}
-
-SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__string(struct soap *soap, std::string *p)
-{	(void)soap; /* appease -Wall -Werror */
-	p->erase();
-}
-
-SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__string(struct soap *soap, const std::string *p)
-{	(void)soap; (void)p; /* appease -Wall -Werror */
-}
-
-SOAP_FMAC3 int SOAP_FMAC4 soap_put_std__string(struct soap *soap, const std::string *a, const char *tag, const char *type)
-{
-	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_std__string);
-	if (soap_out_std__string(soap, tag, id, a, type))
-		return soap->error;
-	return soap_putindependent(soap);
-}
-SOAP_FMAC3 int SOAP_FMAC4 soap_out_std__string(struct soap *soap, const char *tag, int id, const std::string *s, const char *type)
-{
-	if ((soap->mode & SOAP_C_NILSTRING) && s->empty())
-		return soap_element_null(soap, tag, id, type);
-	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, s, SOAP_TYPE_std__string), type) || soap_string_out(soap, s->c_str(), 0) || soap_element_end_out(soap, tag))
-		return soap->error;
-	return SOAP_OK;
-}
-
-SOAP_FMAC3 std::string * SOAP_FMAC4 soap_get_std__string(struct soap *soap, std::string *p, const char *tag, const char *type)
-{
-	if ((p = soap_in_std__string(soap, tag, p, type)))
-		if (soap_getindependent(soap))
-			return NULL;
-	return p;
-}
-
-SOAP_FMAC1 std::string * SOAP_FMAC2 soap_in_std__string(struct soap *soap, const char *tag, std::string *s, const char *type)
-{
-	if (soap_element_begin_in(soap, tag, 1, type))
-		return NULL;
-	if (!s)
-		s = soap_new_std__string(soap, -1);
-	if (soap->null)
-		if (s)
-			s->erase();
-	if (soap->body && !*soap->href)
-	{	char *t;
-		s = (std::string*)soap_class_id_enter(soap, soap->id, s, SOAP_TYPE_std__string, sizeof(std::string), soap->type, soap->arrayType);
-		if (s)
-			if ((t = soap_string_in(soap, 1, -1, -1)))
-				s->assign(t);
-			else
-				return NULL;
-	}
-	else
-		s = (std::string*)soap_id_forward(soap, soap->href, soap_class_id_enter(soap, soap->id, s, SOAP_TYPE_std__string, sizeof(std::string), soap->type, soap->arrayType), 0, SOAP_TYPE_std__string, 0, sizeof(std::string), 0, soap_copy_std__string);
-	if (soap->body && soap_element_end_in(soap, tag))
-		return NULL;
-	return s;
-}
-
-SOAP_FMAC5 std::string * SOAP_FMAC6 soap_new_std__string(struct soap *soap, int n)
-{	return soap_instantiate_std__string(soap, n, NULL, NULL, NULL);
-}
-
-SOAP_FMAC5 void SOAP_FMAC6 soap_delete_std__string(struct soap *soap, std::string *p)
-{	soap_delete(soap, p);
-}
-
-SOAP_FMAC3 std::string * SOAP_FMAC4 soap_instantiate_std__string(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
-{
-	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_std__string(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
-	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_std__string, n, soap_fdelete);
-	if (!cp)
-		return NULL;
-	if (n < 0)
-	{	cp->ptr = (void*)new std::string;
-		if (size)
-			*size = sizeof(std::string);
-	}
-	else
-	{	cp->ptr = (void*)new std::string[n];
-		if (!cp->ptr)
-		{	soap->error = SOAP_EOM;
-			return NULL;
-		}
-		if (size)
-			*size = n * sizeof(std::string);
-	}
-		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
-	return (std::string*)cp->ptr;
-}
-SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__string(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
-{
-	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying std::string %p -> %p\n", q, p));
-	*(std::string*)p = *(std::string*)q;
 }
 
 #ifndef WITH_NOGLOBAL
@@ -19085,6 +19331,116 @@ SOAP_FMAC3 genmech__mesh ** SOAP_FMAC4 soap_in_PointerTogenmech__mesh(struct soa
 	return a;
 }
 
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTogenmech__equSlot(struct soap *soap, genmech__equSlot *const*a)
+{
+	if (!soap_reference(soap, *a, SOAP_TYPE_genmech__equSlot))
+		(*a)->soap_serialize(soap);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTogenmech__equSlot(struct soap *soap, genmech__equSlot *const*a, const char *tag, const char *type)
+{
+	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_PointerTogenmech__equSlot);
+	if (soap_out_PointerTogenmech__equSlot(soap, tag, id, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTogenmech__equSlot(struct soap *soap, const char *tag, int id, genmech__equSlot *const*a, const char *type)
+{
+	id = soap_element_id(soap, tag, id, *a, NULL, 0, type, SOAP_TYPE_genmech__equSlot);
+	if (id < 0)
+		return soap->error;
+	return (*a)->soap_out(soap, tag, id, type);
+}
+
+SOAP_FMAC3 genmech__equSlot ** SOAP_FMAC4 soap_get_PointerTogenmech__equSlot(struct soap *soap, genmech__equSlot **p, const char *tag, const char *type)
+{
+	if ((p = soap_in_PointerTogenmech__equSlot(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 genmech__equSlot ** SOAP_FMAC4 soap_in_PointerTogenmech__equSlot(struct soap *soap, const char *tag, genmech__equSlot **a, const char *type)
+{
+	if (soap_element_begin_in(soap, tag, 1, NULL))
+		return NULL;
+	if (!a)
+		if (!(a = (genmech__equSlot **)soap_malloc(soap, sizeof(genmech__equSlot *))))
+			return NULL;
+	*a = NULL;
+	if (!soap->null && *soap->href != '#')
+	{	soap_revert(soap);
+		if (!(*a = (genmech__equSlot *)soap_instantiate_genmech__equSlot(soap, -1, soap->type, soap->arrayType, NULL)))
+			return NULL;
+		(*a)->soap_default(soap);
+		if (!(*a)->soap_in(soap, tag, NULL))
+			return NULL;
+	}
+	else
+	{	genmech__equSlot ** p = (genmech__equSlot **)soap_id_lookup(soap, soap->href, (void**)a, SOAP_TYPE_genmech__equSlot, sizeof(genmech__equSlot), 0);
+		a = p;
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTogenmech__equSlots(struct soap *soap, genmech__equSlots *const*a)
+{
+	if (!soap_reference(soap, *a, SOAP_TYPE_genmech__equSlots))
+		(*a)->soap_serialize(soap);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTogenmech__equSlots(struct soap *soap, genmech__equSlots *const*a, const char *tag, const char *type)
+{
+	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_PointerTogenmech__equSlots);
+	if (soap_out_PointerTogenmech__equSlots(soap, tag, id, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTogenmech__equSlots(struct soap *soap, const char *tag, int id, genmech__equSlots *const*a, const char *type)
+{
+	id = soap_element_id(soap, tag, id, *a, NULL, 0, type, SOAP_TYPE_genmech__equSlots);
+	if (id < 0)
+		return soap->error;
+	return (*a)->soap_out(soap, tag, id, type);
+}
+
+SOAP_FMAC3 genmech__equSlots ** SOAP_FMAC4 soap_get_PointerTogenmech__equSlots(struct soap *soap, genmech__equSlots **p, const char *tag, const char *type)
+{
+	if ((p = soap_in_PointerTogenmech__equSlots(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 genmech__equSlots ** SOAP_FMAC4 soap_in_PointerTogenmech__equSlots(struct soap *soap, const char *tag, genmech__equSlots **a, const char *type)
+{
+	if (soap_element_begin_in(soap, tag, 1, NULL))
+		return NULL;
+	if (!a)
+		if (!(a = (genmech__equSlots **)soap_malloc(soap, sizeof(genmech__equSlots *))))
+			return NULL;
+	*a = NULL;
+	if (!soap->null && *soap->href != '#')
+	{	soap_revert(soap);
+		if (!(*a = (genmech__equSlots *)soap_instantiate_genmech__equSlots(soap, -1, soap->type, soap->arrayType, NULL)))
+			return NULL;
+		(*a)->soap_default(soap);
+		if (!(*a)->soap_in(soap, tag, NULL))
+			return NULL;
+	}
+	else
+	{	genmech__equSlots ** p = (genmech__equSlots **)soap_id_lookup(soap, soap->href, (void**)a, SOAP_TYPE_genmech__equSlots, sizeof(genmech__equSlots), 0);
+		a = p;
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTogenmech__torso(struct soap *soap, genmech__torso *const*a)
 {
 	if (!soap_reference(soap, *a, SOAP_TYPE_genmech__torso))
@@ -21214,6 +21570,97 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__vectorTemplateOfPointerTogenmech__mesh
 {
 	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying std::vector<genmech__mesh * > %p -> %p\n", q, p));
 	*(std::vector<genmech__mesh * >*)p = *(std::vector<genmech__mesh * >*)q;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTogenmech__equSlot(struct soap *soap, std::vector<genmech__equSlot * >*p)
+{
+	p->clear();
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTogenmech__equSlot(struct soap *soap, const std::vector<genmech__equSlot * >*a)
+{
+	for (std::vector<genmech__equSlot * >::const_iterator i = a->begin(); i != a->end(); ++i)
+		soap_serialize_PointerTogenmech__equSlot(soap, &(*i));
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_std__vectorTemplateOfPointerTogenmech__equSlot(struct soap *soap, const char *tag, int id, const std::vector<genmech__equSlot * >*a, const char *type)
+{
+	for (std::vector<genmech__equSlot * >::const_iterator i = a->begin(); i != a->end(); ++i)
+	{
+		if (soap_out_PointerTogenmech__equSlot(soap, tag, id, &(*i), ""))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 std::vector<genmech__equSlot * >* SOAP_FMAC4 soap_in_std__vectorTemplateOfPointerTogenmech__equSlot(struct soap *soap, const char *tag, std::vector<genmech__equSlot * >*a, const char *type)
+{
+	if (soap_element_begin_in(soap, tag, 1, NULL))
+		return NULL;
+	if (!a && !(a = soap_new_std__vectorTemplateOfPointerTogenmech__equSlot(soap, -1)))
+		return NULL;
+	genmech__equSlot *n;
+	short soap_flag = 0;
+	do
+	{	soap_revert(soap);
+		n = NULL;
+		if (*soap->id || *soap->href)
+		{	if (!soap_container_id_forward(soap, *soap->id?soap->id:soap->href, a, (size_t)a->size(), SOAP_TYPE_genmech__equSlot, SOAP_TYPE_std__vectorTemplateOfPointerTogenmech__equSlot, sizeof(genmech__equSlot), 1))
+				break;
+			if (!soap_in_PointerTogenmech__equSlot(soap, tag, NULL, "genmech:equSlot"))
+				break;
+		}
+		else
+		{
+			if (!soap_in_PointerTogenmech__equSlot(soap, tag, &n, "genmech:equSlot"))
+				break;
+		}
+		a->push_back(n);
+		soap_flag = 1;
+	}
+	while (!soap_element_begin_in(soap, tag, 1, NULL));
+	if (soap_flag && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+	{	soap->error = SOAP_OK;
+		return a;
+	}
+	return NULL;
+}
+
+SOAP_FMAC5 std::vector<genmech__equSlot * > * SOAP_FMAC6 soap_new_std__vectorTemplateOfPointerTogenmech__equSlot(struct soap *soap, int n)
+{	return soap_instantiate_std__vectorTemplateOfPointerTogenmech__equSlot(soap, n, NULL, NULL, NULL);
+}
+
+SOAP_FMAC5 void SOAP_FMAC6 soap_delete_std__vectorTemplateOfPointerTogenmech__equSlot(struct soap *soap, std::vector<genmech__equSlot * >*p)
+{	soap_delete(soap, p);
+}
+
+SOAP_FMAC3 std::vector<genmech__equSlot * > * SOAP_FMAC4 soap_instantiate_std__vectorTemplateOfPointerTogenmech__equSlot(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_std__vectorTemplateOfPointerTogenmech__equSlot(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_std__vectorTemplateOfPointerTogenmech__equSlot, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)new std::vector<genmech__equSlot * >;
+		if (size)
+			*size = sizeof(std::vector<genmech__equSlot * >);
+	}
+	else
+	{	cp->ptr = (void*)new std::vector<genmech__equSlot * >[n];
+		if (!cp->ptr)
+		{	soap->error = SOAP_EOM;
+			return NULL;
+		}
+		if (size)
+			*size = n * sizeof(std::vector<genmech__equSlot * >);
+	}
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	return (std::vector<genmech__equSlot * >*)cp->ptr;
+}
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__vectorTemplateOfPointerTogenmech__equSlot(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying std::vector<genmech__equSlot * > %p -> %p\n", q, p));
+	*(std::vector<genmech__equSlot * >*)p = *(std::vector<genmech__equSlot * >*)q;
 }
 
 /* End of generatedC.cpp */

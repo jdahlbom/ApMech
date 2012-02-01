@@ -15,7 +15,7 @@ clean:
 
 generate_typemap:
 	- rm ${TYPEMAP}
-	echo 'genmech = "urn:apmech/mechs"' >> ${TYPEMAP}
+	echo 'genmech = "urn:apmech/mechs/1"' >> ${TYPEMAP}
 	echo 'genmesh = "urn:apmech/meshes"' >> ${TYPEMAP}
 	echo 'genskel = "urn:apmech/skeletons"' >> ${TYPEMAP}
 

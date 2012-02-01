@@ -24,139 +24,139 @@ enum genmech__meshType {genmech__meshType__TORSO = 0, genmech__meshType__LEGS = 
 #endif
 
 #ifndef SOAP_TYPE__genmesh__submesh_usesharedvertices
-#define SOAP_TYPE__genmesh__submesh_usesharedvertices (98)
+#define SOAP_TYPE__genmesh__submesh_usesharedvertices (102)
 /* genmesh:submesh-usesharedvertices */
 enum _genmesh__submesh_usesharedvertices {_genmesh__submesh_usesharedvertices__true_ = 0, _genmesh__submesh_usesharedvertices__false_ = 1};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__submesh_use32bitindexes
-#define SOAP_TYPE__genmesh__submesh_use32bitindexes (99)
+#define SOAP_TYPE__genmesh__submesh_use32bitindexes (103)
 /* genmesh:submesh-use32bitindexes */
 enum _genmesh__submesh_use32bitindexes {_genmesh__submesh_use32bitindexes__true_ = 0, _genmesh__submesh_use32bitindexes__false_ = 1};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__submesh_operationtype
-#define SOAP_TYPE__genmesh__submesh_operationtype (100)
+#define SOAP_TYPE__genmesh__submesh_operationtype (104)
 /* genmesh:submesh-operationtype */
 enum _genmesh__submesh_operationtype {_genmesh__submesh_operationtype__triangle_USCORElist = 0, _genmesh__submesh_operationtype__triangle_USCOREstrip = 1, _genmesh__submesh_operationtype__triangle_USCOREfan = 2};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__levelofdetail_manual
-#define SOAP_TYPE__genmesh__levelofdetail_manual (113)
+#define SOAP_TYPE__genmesh__levelofdetail_manual (117)
 /* genmesh:levelofdetail-manual */
 enum _genmesh__levelofdetail_manual {_genmesh__levelofdetail_manual__true_ = 0, _genmesh__levelofdetail_manual__false_ = 1};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_positions
-#define SOAP_TYPE__genmesh__vertexbuffer_positions (119)
+#define SOAP_TYPE__genmesh__vertexbuffer_positions (123)
 /* genmesh:vertexbuffer-positions */
 enum _genmesh__vertexbuffer_positions {_genmesh__vertexbuffer_positions__true_ = 0, _genmesh__vertexbuffer_positions__false_ = 1};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_normals
-#define SOAP_TYPE__genmesh__vertexbuffer_normals (120)
+#define SOAP_TYPE__genmesh__vertexbuffer_normals (124)
 /* genmesh:vertexbuffer-normals */
 enum _genmesh__vertexbuffer_normals {_genmesh__vertexbuffer_normals__true_ = 0, _genmesh__vertexbuffer_normals__false_ = 1};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_colours_USCOREdiffuse
-#define SOAP_TYPE__genmesh__vertexbuffer_colours_USCOREdiffuse (121)
+#define SOAP_TYPE__genmesh__vertexbuffer_colours_USCOREdiffuse (125)
 /* genmesh:vertexbuffer-colours_diffuse */
 enum _genmesh__vertexbuffer_colours_USCOREdiffuse {_genmesh__vertexbuffer_colours_USCOREdiffuse__true_ = 0, _genmesh__vertexbuffer_colours_USCOREdiffuse__false_ = 1};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_colours_USCOREspecular
-#define SOAP_TYPE__genmesh__vertexbuffer_colours_USCOREspecular (122)
+#define SOAP_TYPE__genmesh__vertexbuffer_colours_USCOREspecular (126)
 /* genmesh:vertexbuffer-colours_specular */
 enum _genmesh__vertexbuffer_colours_USCOREspecular {_genmesh__vertexbuffer_colours_USCOREspecular__true_ = 0, _genmesh__vertexbuffer_colours_USCOREspecular__false_ = 1};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoords
-#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoords (123)
+#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoords (127)
 /* genmesh:vertexbuffer-texture_coords */
 enum _genmesh__vertexbuffer_texture_USCOREcoords {_genmesh__vertexbuffer_texture_USCOREcoords__0 = 0, _genmesh__vertexbuffer_texture_USCOREcoords__1 = 1, _genmesh__vertexbuffer_texture_USCOREcoords__2 = 2, _genmesh__vertexbuffer_texture_USCOREcoords__3 = 3, _genmesh__vertexbuffer_texture_USCOREcoords__4 = 4, _genmesh__vertexbuffer_texture_USCOREcoords__5 = 5, _genmesh__vertexbuffer_texture_USCOREcoords__6 = 6, _genmesh__vertexbuffer_texture_USCOREcoords__7 = 7, _genmesh__vertexbuffer_texture_USCOREcoords__8 = 8};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE0
-#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE0 (124)
+#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE0 (128)
 /* genmesh:vertexbuffer-texture_coord_dimensions_0 */
 enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE0 {_genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE0__0 = 0, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE0__1 = 1, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE0__2 = 2, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE0__3 = 3};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE1
-#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE1 (125)
+#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE1 (129)
 /* genmesh:vertexbuffer-texture_coord_dimensions_1 */
 enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE1 {_genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE1__0 = 0, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE1__1 = 1, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE1__2 = 2, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE1__3 = 3};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE2
-#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE2 (126)
+#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE2 (130)
 /* genmesh:vertexbuffer-texture_coord_dimensions_2 */
 enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE2 {_genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE2__0 = 0, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE2__1 = 1, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE2__2 = 2, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE2__3 = 3};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE3
-#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE3 (127)
+#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE3 (131)
 /* genmesh:vertexbuffer-texture_coord_dimensions_3 */
 enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE3 {_genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE3__0 = 0, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE3__1 = 1, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE3__2 = 2, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE3__3 = 3};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE4
-#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE4 (128)
+#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE4 (132)
 /* genmesh:vertexbuffer-texture_coord_dimensions_4 */
 enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE4 {_genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE4__0 = 0, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE4__1 = 1, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE4__2 = 2, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE4__3 = 3};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE5
-#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE5 (129)
+#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE5 (133)
 /* genmesh:vertexbuffer-texture_coord_dimensions_5 */
 enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE5 {_genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE5__0 = 0, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE5__1 = 1, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE5__2 = 2, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE5__3 = 3};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE6
-#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE6 (130)
+#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE6 (134)
 /* genmesh:vertexbuffer-texture_coord_dimensions_6 */
 enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE6 {_genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE6__0 = 0, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE6__1 = 1, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE6__2 = 2, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE6__3 = 3};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE7
-#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE7 (131)
+#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE7 (135)
 /* genmesh:vertexbuffer-texture_coord_dimensions_7 */
 enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE7 {_genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE7__0 = 0, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE7__1 = 1, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE7__2 = 2, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE7__3 = 3};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_tangents
-#define SOAP_TYPE__genmesh__vertexbuffer_tangents (132)
+#define SOAP_TYPE__genmesh__vertexbuffer_tangents (136)
 /* genmesh:vertexbuffer-tangents */
 enum _genmesh__vertexbuffer_tangents {_genmesh__vertexbuffer_tangents__true_ = 0, _genmesh__vertexbuffer_tangents__false_ = 1};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_tangent_USCOREdimensions
-#define SOAP_TYPE__genmesh__vertexbuffer_tangent_USCOREdimensions (133)
+#define SOAP_TYPE__genmesh__vertexbuffer_tangent_USCOREdimensions (137)
 /* genmesh:vertexbuffer-tangent_dimensions */
 enum _genmesh__vertexbuffer_tangent_USCOREdimensions {_genmesh__vertexbuffer_tangent_USCOREdimensions__3 = 3, _genmesh__vertexbuffer_tangent_USCOREdimensions__4 = 4};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_binormals
-#define SOAP_TYPE__genmesh__vertexbuffer_binormals (134)
+#define SOAP_TYPE__genmesh__vertexbuffer_binormals (138)
 /* genmesh:vertexbuffer-binormals */
 enum _genmesh__vertexbuffer_binormals {_genmesh__vertexbuffer_binormals__true_ = 0, _genmesh__vertexbuffer_binormals__false_ = 1};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__pose_target
-#define SOAP_TYPE__genmesh__pose_target (149)
+#define SOAP_TYPE__genmesh__pose_target (153)
 /* genmesh:pose-target */
 enum _genmesh__pose_target {_genmesh__pose_target__mesh = 0, _genmesh__pose_target__submesh = 1};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__track_target
-#define SOAP_TYPE__genmesh__track_target (156)
+#define SOAP_TYPE__genmesh__track_target (160)
 /* genmesh:track-target */
 enum _genmesh__track_target {_genmesh__track_target__mesh = 0, _genmesh__track_target__submesh = 1};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__track_type
-#define SOAP_TYPE__genmesh__track_type (157)
+#define SOAP_TYPE__genmesh__track_type (161)
 /* genmesh:track-type */
 enum _genmesh__track_type {_genmesh__track_type__morph = 0, _genmesh__track_type__pose = 1};
 #endif
@@ -168,54 +168,99 @@ enum _genmesh__track_type {_genmesh__track_type__morph = 0, _genmesh__track_type
 \******************************************************************************/
 
 
-#if 0 /* volatile type: do not redeclare */
-
-#endif
-
 
 
 #ifndef SOAP_TYPE_genmech__stats
-#define SOAP_TYPE_genmech__stats (9)
+#define SOAP_TYPE_genmech__stats (7)
 /* genmech:stats */
 class SOAP_CMAC genmech__stats
 {
 public:
-	std::string maxTurnRate;	/* required element of type xsd:integer */
-	std::string maxForwardAcceleration;	/* required element of type xsd:integer */
-	std::string maxBackwardAcceleration;	/* required element of type xsd:integer */
-	std::string maxSpeed;	/* required element of type xsd:integer */
+	int maxTurnRate;	/* required element of type xsd:int */
+	int maxForwardAcceleration;	/* required element of type xsd:int */
+	int maxBackwardAcceleration;	/* required element of type xsd:int */
+	int maxSpeed;	/* required element of type xsd:int */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 9; } /* = unique id SOAP_TYPE_genmech__stats */
+	virtual int soap_type() const { return 7; } /* = unique id SOAP_TYPE_genmech__stats */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
 	virtual int soap_out(struct soap*, const char*, int, const char*) const;
 	virtual void *soap_get(struct soap*, const char*, const char*);
 	virtual void *soap_in(struct soap*, const char*, const char*);
-	         genmech__stats() : soap(NULL) { }
+	         genmech__stats() : maxTurnRate(0), maxForwardAcceleration(0), maxBackwardAcceleration(0), maxSpeed(0), soap(NULL) { }
 	virtual ~genmech__stats() { }
 };
 #endif
 
+#if 0 /* volatile type: do not redeclare */
+
+#endif
+
 #ifndef SOAP_TYPE_genmech__design
-#define SOAP_TYPE_genmech__design (10)
+#define SOAP_TYPE_genmech__design (8)
 /* genmech:design */
 class SOAP_CMAC genmech__design
 {
 public:
 	class genmech__torso *torso;	/* required element of type genmech:torso */
+	class genmech__equSlots *equipmentSlots;	/* required element of type genmech:equSlots */
+	std::string torsoBone;	/* required element of type xsd:string */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 10; } /* = unique id SOAP_TYPE_genmech__design */
+	virtual int soap_type() const { return 8; } /* = unique id SOAP_TYPE_genmech__design */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
 	virtual int soap_out(struct soap*, const char*, int, const char*) const;
 	virtual void *soap_get(struct soap*, const char*, const char*);
 	virtual void *soap_in(struct soap*, const char*, const char*);
-	         genmech__design() : torso(NULL), soap(NULL) { }
+	         genmech__design() : torso(NULL), equipmentSlots(NULL), soap(NULL) { }
 	virtual ~genmech__design() { }
+};
+#endif
+
+#ifndef SOAP_TYPE_genmech__equSlots
+#define SOAP_TYPE_genmech__equSlots (9)
+/* genmech:equSlots */
+class SOAP_CMAC genmech__equSlots
+{
+public:
+	std::vector<class genmech__equSlot * >slot;	/* optional element of type genmech:equSlot */
+	struct soap *soap;	/* transient */
+public:
+	virtual int soap_type() const { return 9; } /* = unique id SOAP_TYPE_genmech__equSlots */
+	virtual void soap_default(struct soap*);
+	virtual void soap_serialize(struct soap*) const;
+	virtual int soap_put(struct soap*, const char*, const char*) const;
+	virtual int soap_out(struct soap*, const char*, int, const char*) const;
+	virtual void *soap_get(struct soap*, const char*, const char*);
+	virtual void *soap_in(struct soap*, const char*, const char*);
+	         genmech__equSlots() : soap(NULL) { }
+	virtual ~genmech__equSlots() { }
+};
+#endif
+
+#ifndef SOAP_TYPE_genmech__equSlot
+#define SOAP_TYPE_genmech__equSlot (10)
+/* genmech:equSlot */
+class SOAP_CMAC genmech__equSlot
+{
+public:
+	std::string boneName;	/* required element of type xsd:string */
+	std::string defaultEqu;	/* required element of type xsd:string */
+	struct soap *soap;	/* transient */
+public:
+	virtual int soap_type() const { return 10; } /* = unique id SOAP_TYPE_genmech__equSlot */
+	virtual void soap_default(struct soap*);
+	virtual void soap_serialize(struct soap*) const;
+	virtual int soap_put(struct soap*, const char*, const char*) const;
+	virtual int soap_out(struct soap*, const char*, int, const char*) const;
+	virtual void *soap_get(struct soap*, const char*, const char*);
+	virtual void *soap_in(struct soap*, const char*, const char*);
+	         genmech__equSlot() : defaultEqu("UNUSED"), soap(NULL) { }
+	virtual ~genmech__equSlot() { }
 };
 #endif
 
@@ -225,7 +270,7 @@ public:
 class SOAP_CMAC genmech__torso
 {
 public:
-	std::string turningRadius;	/* optional attribute */
+	int turningRadius;	/* optional attribute */
 	struct soap *soap;	/* transient */
 public:
 	virtual int soap_type() const { return 11; } /* = unique id SOAP_TYPE_genmech__torso */
@@ -235,7 +280,7 @@ public:
 	virtual int soap_out(struct soap*, const char*, int, const char*) const;
 	virtual void *soap_get(struct soap*, const char*, const char*);
 	virtual void *soap_in(struct soap*, const char*, const char*);
-	         genmech__torso() : soap(NULL) { }
+	         genmech__torso() : turningRadius(90), soap(NULL) { }
 	virtual ~genmech__torso() { }
 };
 #endif
@@ -290,7 +335,7 @@ public:
 class SOAP_CMAC _genmech__mech
 {
 public:
-	std::string schemaVersion;	/* required element of type xsd:integer */
+	int schemaVersion;	/* required element of type xsd:int */
 	std::string name;	/* required element of type xsd:string */
 	genmech__stats *stats;	/* required element of type genmech:stats */
 	genmech__design *design;	/* required element of type genmech:design */
@@ -304,7 +349,7 @@ public:
 	virtual int soap_out(struct soap*, const char*, int, const char*) const;
 	virtual void *soap_get(struct soap*, const char*, const char*);
 	virtual void *soap_in(struct soap*, const char*, const char*);
-	         _genmech__mech() : stats(NULL), design(NULL), media(NULL), soap(NULL) { }
+	         _genmech__mech() : schemaVersion(0), stats(NULL), design(NULL), media(NULL), soap(NULL) { }
 	virtual ~_genmech__mech() { }
 };
 #endif
@@ -585,7 +630,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__union_levelofdetail
-#define SOAP_TYPE__genmesh__union_levelofdetail (111)
+#define SOAP_TYPE__genmesh__union_levelofdetail (115)
 /* xsd:choice */
 union _genmesh__union_levelofdetail
 {
@@ -597,7 +642,7 @@ union _genmesh__union_levelofdetail
 #endif
 
 #ifndef SOAP_TYPE___genmesh__union_levelofdetail
-#define SOAP_TYPE___genmesh__union_levelofdetail (108)
+#define SOAP_TYPE___genmesh__union_levelofdetail (112)
 /* Operation wrapper: */
 class SOAP_CMAC __genmesh__union_levelofdetail
 {
@@ -605,7 +650,7 @@ public:
 	int __union_levelofdetail;	/* union discriminant (of union defined below) */
 	union _genmesh__union_levelofdetail union_levelofdetail;	/* required element of type xsd:choice */
 public:
-	virtual int soap_type() const { return 108; } /* = unique id SOAP_TYPE___genmesh__union_levelofdetail */
+	virtual int soap_type() const { return 112; } /* = unique id SOAP_TYPE___genmesh__union_levelofdetail */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -687,14 +732,14 @@ public:
 #endif
 
 #ifndef SOAP_TYPE___genmesh__lodfacelist_sequence
-#define SOAP_TYPE___genmesh__lodfacelist_sequence (115)
+#define SOAP_TYPE___genmesh__lodfacelist_sequence (119)
 /* Operation wrapper: */
 class SOAP_CMAC __genmesh__lodfacelist_sequence
 {
 public:
 	_genmesh__face *genmesh__face;	/* required element of type genmesh:face */
 public:
-	virtual int soap_type() const { return 115; } /* = unique id SOAP_TYPE___genmesh__lodfacelist_sequence */
+	virtual int soap_type() const { return 119; } /* = unique id SOAP_TYPE___genmesh__lodfacelist_sequence */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1688,7 +1733,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE_SOAP_ENV__Header
-#define SOAP_TYPE_SOAP_ENV__Header (187)
+#define SOAP_TYPE_SOAP_ENV__Header (191)
 /* SOAP Header: */
 struct SOAP_ENV__Header
 {
@@ -1700,7 +1745,7 @@ private:
 #endif
 
 #ifndef SOAP_TYPE_SOAP_ENV__Code
-#define SOAP_TYPE_SOAP_ENV__Code (188)
+#define SOAP_TYPE_SOAP_ENV__Code (192)
 /* SOAP Fault Code: */
 struct SOAP_ENV__Code
 {
@@ -1711,7 +1756,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE_SOAP_ENV__Detail
-#define SOAP_TYPE_SOAP_ENV__Detail (190)
+#define SOAP_TYPE_SOAP_ENV__Detail (194)
 /* SOAP-ENV:Detail */
 struct SOAP_ENV__Detail
 {
@@ -1723,7 +1768,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE_SOAP_ENV__Reason
-#define SOAP_TYPE_SOAP_ENV__Reason (193)
+#define SOAP_TYPE_SOAP_ENV__Reason (197)
 /* SOAP-ENV:Reason */
 struct SOAP_ENV__Reason
 {
@@ -1733,7 +1778,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE_SOAP_ENV__Fault
-#define SOAP_TYPE_SOAP_ENV__Fault (194)
+#define SOAP_TYPE_SOAP_ENV__Fault (198)
 /* SOAP Fault: */
 struct SOAP_ENV__Fault
 {
@@ -1771,11 +1816,6 @@ typedef char *_XML;
 #ifndef SOAP_TYPE__QName
 #define SOAP_TYPE__QName (5)
 typedef char *_QName;
-#endif
-
-#ifndef SOAP_TYPE_xsd__integer
-#define SOAP_TYPE_xsd__integer (8)
-typedef std::string xsd__integer;
 #endif
 
 

@@ -8,7 +8,7 @@
  <element name='mech'>
   <complexType>
    <sequence>
-    <element name="schemaVersion" type="xsd:integer" fixed="1"/>
+    <element name="schemaVersion" type="xsd:int" fixed="1"/>
     <element name="name" type="xsd:string"/>
     <element name="stats" type="t:stats"/>
     <element name="design" type="t:design"/>
@@ -19,10 +19,10 @@
 
  <complexType name="stats">
   <sequence>
-   <element name="maxTurnRate" type="xsd:integer"/>
-   <element name="maxForwardAcceleration" type="xsd:integer"/>
-   <element name="maxBackwardAcceleration" type="xsd:integer"/>
-   <element name="maxSpeed" type="xsd:integer"/>
+   <element name="maxTurnRate" type="xsd:int"/>
+   <element name="maxForwardAcceleration" type="xsd:int"/>
+   <element name="maxBackwardAcceleration" type="xsd:int"/>
+   <element name="maxSpeed" type="xsd:int"/>
   </sequence>
  </complexType>
 
@@ -48,7 +48,7 @@
  </complexType>
 
  <complexType name="torso">
-  <attribute name="turningRadius" type="xsd:integer" default="90"/>
+  <attribute name="turningRadius" type="xsd:int" default="90"/>
  </complexType>
 
  <complexType name="media">

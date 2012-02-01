@@ -52,7 +52,7 @@ SOAP_FMAC3 int * SOAP_FMAC4 soap_get_int(struct soap*, int *, const char*, const
 SOAP_FMAC3 int * SOAP_FMAC4 soap_in_int(struct soap*, const char*, int *, const char*);
 
 #ifndef SOAP_TYPE__genmesh__track_type
-#define SOAP_TYPE__genmesh__track_type (157)
+#define SOAP_TYPE__genmesh__track_type (161)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default__genmesh__track_type(struct soap*, enum _genmesh__track_type *);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put__genmesh__track_type(struct soap*, const enum _genmesh__track_type *, const char*, const char*);
@@ -65,7 +65,7 @@ SOAP_FMAC3 enum _genmesh__track_type * SOAP_FMAC4 soap_in__genmesh__track_type(s
 SOAP_FMAC3S int SOAP_FMAC4S soap_s2_genmesh__track_type(struct soap*, const char*, enum _genmesh__track_type *);
 
 #ifndef SOAP_TYPE__genmesh__track_target
-#define SOAP_TYPE__genmesh__track_target (156)
+#define SOAP_TYPE__genmesh__track_target (160)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default__genmesh__track_target(struct soap*, enum _genmesh__track_target *);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put__genmesh__track_target(struct soap*, const enum _genmesh__track_target *, const char*, const char*);
@@ -78,7 +78,7 @@ SOAP_FMAC3 enum _genmesh__track_target * SOAP_FMAC4 soap_in__genmesh__track_targ
 SOAP_FMAC3S int SOAP_FMAC4S soap_s2_genmesh__track_target(struct soap*, const char*, enum _genmesh__track_target *);
 
 #ifndef SOAP_TYPE__genmesh__pose_target
-#define SOAP_TYPE__genmesh__pose_target (149)
+#define SOAP_TYPE__genmesh__pose_target (153)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default__genmesh__pose_target(struct soap*, enum _genmesh__pose_target *);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put__genmesh__pose_target(struct soap*, const enum _genmesh__pose_target *, const char*, const char*);
@@ -91,7 +91,7 @@ SOAP_FMAC3 enum _genmesh__pose_target * SOAP_FMAC4 soap_in__genmesh__pose_target
 SOAP_FMAC3S int SOAP_FMAC4S soap_s2_genmesh__pose_target(struct soap*, const char*, enum _genmesh__pose_target *);
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_binormals
-#define SOAP_TYPE__genmesh__vertexbuffer_binormals (134)
+#define SOAP_TYPE__genmesh__vertexbuffer_binormals (138)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default__genmesh__vertexbuffer_binormals(struct soap*, enum _genmesh__vertexbuffer_binormals *);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put__genmesh__vertexbuffer_binormals(struct soap*, const enum _genmesh__vertexbuffer_binormals *, const char*, const char*);
@@ -104,7 +104,7 @@ SOAP_FMAC3 enum _genmesh__vertexbuffer_binormals * SOAP_FMAC4 soap_in__genmesh__
 SOAP_FMAC3S int SOAP_FMAC4S soap_s2_genmesh__vertexbuffer_binormals(struct soap*, const char*, enum _genmesh__vertexbuffer_binormals *);
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_tangent_USCOREdimensions
-#define SOAP_TYPE__genmesh__vertexbuffer_tangent_USCOREdimensions (133)
+#define SOAP_TYPE__genmesh__vertexbuffer_tangent_USCOREdimensions (137)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default__genmesh__vertexbuffer_tangent_USCOREdimensions(struct soap*, enum _genmesh__vertexbuffer_tangent_USCOREdimensions *);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put__genmesh__vertexbuffer_tangent_USCOREdimensions(struct soap*, const enum _genmesh__vertexbuffer_tangent_USCOREdimensions *, const char*, const char*);
@@ -117,7 +117,7 @@ SOAP_FMAC3 enum _genmesh__vertexbuffer_tangent_USCOREdimensions * SOAP_FMAC4 soa
 SOAP_FMAC3S int SOAP_FMAC4S soap_s2_genmesh__vertexbuffer_tangent_USCOREdimensions(struct soap*, const char*, enum _genmesh__vertexbuffer_tangent_USCOREdimensions *);
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_tangents
-#define SOAP_TYPE__genmesh__vertexbuffer_tangents (132)
+#define SOAP_TYPE__genmesh__vertexbuffer_tangents (136)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default__genmesh__vertexbuffer_tangents(struct soap*, enum _genmesh__vertexbuffer_tangents *);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put__genmesh__vertexbuffer_tangents(struct soap*, const enum _genmesh__vertexbuffer_tangents *, const char*, const char*);
@@ -130,7 +130,7 @@ SOAP_FMAC3 enum _genmesh__vertexbuffer_tangents * SOAP_FMAC4 soap_in__genmesh__v
 SOAP_FMAC3S int SOAP_FMAC4S soap_s2_genmesh__vertexbuffer_tangents(struct soap*, const char*, enum _genmesh__vertexbuffer_tangents *);
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE7
-#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE7 (131)
+#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE7 (135)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE7(struct soap*, enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE7 *);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE7(struct soap*, const enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE7 *, const char*, const char*);
@@ -143,7 +143,7 @@ SOAP_FMAC3 enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCO
 SOAP_FMAC3S int SOAP_FMAC4S soap_s2_genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE7(struct soap*, const char*, enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE7 *);
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE6
-#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE6 (130)
+#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE6 (134)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE6(struct soap*, enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE6 *);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE6(struct soap*, const enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE6 *, const char*, const char*);
@@ -156,7 +156,7 @@ SOAP_FMAC3 enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCO
 SOAP_FMAC3S int SOAP_FMAC4S soap_s2_genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE6(struct soap*, const char*, enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE6 *);
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE5
-#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE5 (129)
+#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE5 (133)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE5(struct soap*, enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE5 *);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE5(struct soap*, const enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE5 *, const char*, const char*);
@@ -169,7 +169,7 @@ SOAP_FMAC3 enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCO
 SOAP_FMAC3S int SOAP_FMAC4S soap_s2_genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE5(struct soap*, const char*, enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE5 *);
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE4
-#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE4 (128)
+#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE4 (132)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE4(struct soap*, enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE4 *);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE4(struct soap*, const enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE4 *, const char*, const char*);
@@ -182,7 +182,7 @@ SOAP_FMAC3 enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCO
 SOAP_FMAC3S int SOAP_FMAC4S soap_s2_genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE4(struct soap*, const char*, enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE4 *);
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE3
-#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE3 (127)
+#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE3 (131)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE3(struct soap*, enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE3 *);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE3(struct soap*, const enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE3 *, const char*, const char*);
@@ -195,7 +195,7 @@ SOAP_FMAC3 enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCO
 SOAP_FMAC3S int SOAP_FMAC4S soap_s2_genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE3(struct soap*, const char*, enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE3 *);
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE2
-#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE2 (126)
+#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE2 (130)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE2(struct soap*, enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE2 *);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE2(struct soap*, const enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE2 *, const char*, const char*);
@@ -208,7 +208,7 @@ SOAP_FMAC3 enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCO
 SOAP_FMAC3S int SOAP_FMAC4S soap_s2_genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE2(struct soap*, const char*, enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE2 *);
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE1
-#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE1 (125)
+#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE1 (129)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE1(struct soap*, enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE1 *);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE1(struct soap*, const enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE1 *, const char*, const char*);
@@ -221,7 +221,7 @@ SOAP_FMAC3 enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCO
 SOAP_FMAC3S int SOAP_FMAC4S soap_s2_genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE1(struct soap*, const char*, enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE1 *);
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE0
-#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE0 (124)
+#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE0 (128)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE0(struct soap*, enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE0 *);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE0(struct soap*, const enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE0 *, const char*, const char*);
@@ -234,7 +234,7 @@ SOAP_FMAC3 enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCO
 SOAP_FMAC3S int SOAP_FMAC4S soap_s2_genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE0(struct soap*, const char*, enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE0 *);
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoords
-#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoords (123)
+#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoords (127)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default__genmesh__vertexbuffer_texture_USCOREcoords(struct soap*, enum _genmesh__vertexbuffer_texture_USCOREcoords *);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put__genmesh__vertexbuffer_texture_USCOREcoords(struct soap*, const enum _genmesh__vertexbuffer_texture_USCOREcoords *, const char*, const char*);
@@ -247,7 +247,7 @@ SOAP_FMAC3 enum _genmesh__vertexbuffer_texture_USCOREcoords * SOAP_FMAC4 soap_in
 SOAP_FMAC3S int SOAP_FMAC4S soap_s2_genmesh__vertexbuffer_texture_USCOREcoords(struct soap*, const char*, enum _genmesh__vertexbuffer_texture_USCOREcoords *);
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_colours_USCOREspecular
-#define SOAP_TYPE__genmesh__vertexbuffer_colours_USCOREspecular (122)
+#define SOAP_TYPE__genmesh__vertexbuffer_colours_USCOREspecular (126)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default__genmesh__vertexbuffer_colours_USCOREspecular(struct soap*, enum _genmesh__vertexbuffer_colours_USCOREspecular *);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put__genmesh__vertexbuffer_colours_USCOREspecular(struct soap*, const enum _genmesh__vertexbuffer_colours_USCOREspecular *, const char*, const char*);
@@ -260,7 +260,7 @@ SOAP_FMAC3 enum _genmesh__vertexbuffer_colours_USCOREspecular * SOAP_FMAC4 soap_
 SOAP_FMAC3S int SOAP_FMAC4S soap_s2_genmesh__vertexbuffer_colours_USCOREspecular(struct soap*, const char*, enum _genmesh__vertexbuffer_colours_USCOREspecular *);
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_colours_USCOREdiffuse
-#define SOAP_TYPE__genmesh__vertexbuffer_colours_USCOREdiffuse (121)
+#define SOAP_TYPE__genmesh__vertexbuffer_colours_USCOREdiffuse (125)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default__genmesh__vertexbuffer_colours_USCOREdiffuse(struct soap*, enum _genmesh__vertexbuffer_colours_USCOREdiffuse *);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put__genmesh__vertexbuffer_colours_USCOREdiffuse(struct soap*, const enum _genmesh__vertexbuffer_colours_USCOREdiffuse *, const char*, const char*);
@@ -273,7 +273,7 @@ SOAP_FMAC3 enum _genmesh__vertexbuffer_colours_USCOREdiffuse * SOAP_FMAC4 soap_i
 SOAP_FMAC3S int SOAP_FMAC4S soap_s2_genmesh__vertexbuffer_colours_USCOREdiffuse(struct soap*, const char*, enum _genmesh__vertexbuffer_colours_USCOREdiffuse *);
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_normals
-#define SOAP_TYPE__genmesh__vertexbuffer_normals (120)
+#define SOAP_TYPE__genmesh__vertexbuffer_normals (124)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default__genmesh__vertexbuffer_normals(struct soap*, enum _genmesh__vertexbuffer_normals *);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put__genmesh__vertexbuffer_normals(struct soap*, const enum _genmesh__vertexbuffer_normals *, const char*, const char*);
@@ -286,7 +286,7 @@ SOAP_FMAC3 enum _genmesh__vertexbuffer_normals * SOAP_FMAC4 soap_in__genmesh__ve
 SOAP_FMAC3S int SOAP_FMAC4S soap_s2_genmesh__vertexbuffer_normals(struct soap*, const char*, enum _genmesh__vertexbuffer_normals *);
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_positions
-#define SOAP_TYPE__genmesh__vertexbuffer_positions (119)
+#define SOAP_TYPE__genmesh__vertexbuffer_positions (123)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default__genmesh__vertexbuffer_positions(struct soap*, enum _genmesh__vertexbuffer_positions *);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put__genmesh__vertexbuffer_positions(struct soap*, const enum _genmesh__vertexbuffer_positions *, const char*, const char*);
@@ -299,7 +299,7 @@ SOAP_FMAC3 enum _genmesh__vertexbuffer_positions * SOAP_FMAC4 soap_in__genmesh__
 SOAP_FMAC3S int SOAP_FMAC4S soap_s2_genmesh__vertexbuffer_positions(struct soap*, const char*, enum _genmesh__vertexbuffer_positions *);
 
 #ifndef SOAP_TYPE__genmesh__levelofdetail_manual
-#define SOAP_TYPE__genmesh__levelofdetail_manual (113)
+#define SOAP_TYPE__genmesh__levelofdetail_manual (117)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default__genmesh__levelofdetail_manual(struct soap*, enum _genmesh__levelofdetail_manual *);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put__genmesh__levelofdetail_manual(struct soap*, const enum _genmesh__levelofdetail_manual *, const char*, const char*);
@@ -312,7 +312,7 @@ SOAP_FMAC3 enum _genmesh__levelofdetail_manual * SOAP_FMAC4 soap_in__genmesh__le
 SOAP_FMAC3S int SOAP_FMAC4S soap_s2_genmesh__levelofdetail_manual(struct soap*, const char*, enum _genmesh__levelofdetail_manual *);
 
 #ifndef SOAP_TYPE__genmesh__submesh_operationtype
-#define SOAP_TYPE__genmesh__submesh_operationtype (100)
+#define SOAP_TYPE__genmesh__submesh_operationtype (104)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default__genmesh__submesh_operationtype(struct soap*, enum _genmesh__submesh_operationtype *);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put__genmesh__submesh_operationtype(struct soap*, const enum _genmesh__submesh_operationtype *, const char*, const char*);
@@ -325,7 +325,7 @@ SOAP_FMAC3 enum _genmesh__submesh_operationtype * SOAP_FMAC4 soap_in__genmesh__s
 SOAP_FMAC3S int SOAP_FMAC4S soap_s2_genmesh__submesh_operationtype(struct soap*, const char*, enum _genmesh__submesh_operationtype *);
 
 #ifndef SOAP_TYPE__genmesh__submesh_use32bitindexes
-#define SOAP_TYPE__genmesh__submesh_use32bitindexes (99)
+#define SOAP_TYPE__genmesh__submesh_use32bitindexes (103)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default__genmesh__submesh_use32bitindexes(struct soap*, enum _genmesh__submesh_use32bitindexes *);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put__genmesh__submesh_use32bitindexes(struct soap*, const enum _genmesh__submesh_use32bitindexes *, const char*, const char*);
@@ -338,7 +338,7 @@ SOAP_FMAC3 enum _genmesh__submesh_use32bitindexes * SOAP_FMAC4 soap_in__genmesh_
 SOAP_FMAC3S int SOAP_FMAC4S soap_s2_genmesh__submesh_use32bitindexes(struct soap*, const char*, enum _genmesh__submesh_use32bitindexes *);
 
 #ifndef SOAP_TYPE__genmesh__submesh_usesharedvertices
-#define SOAP_TYPE__genmesh__submesh_usesharedvertices (98)
+#define SOAP_TYPE__genmesh__submesh_usesharedvertices (102)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default__genmesh__submesh_usesharedvertices(struct soap*, enum _genmesh__submesh_usesharedvertices *);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put__genmesh__submesh_usesharedvertices(struct soap*, const enum _genmesh__submesh_usesharedvertices *, const char*, const char*);
@@ -364,7 +364,7 @@ SOAP_FMAC3 enum genmech__meshType * SOAP_FMAC4 soap_in_genmech__meshType(struct 
 SOAP_FMAC3S int SOAP_FMAC4S soap_s2genmech__meshType(struct soap*, const char*, enum genmech__meshType *);
 
 #ifndef SOAP_TYPE___genmesh__lodfacelist_sequence
-#define SOAP_TYPE___genmesh__lodfacelist_sequence (115)
+#define SOAP_TYPE___genmesh__lodfacelist_sequence (119)
 #endif
 
 SOAP_FMAC3 int SOAP_FMAC4 soap_out___genmesh__lodfacelist_sequence(struct soap*, const char*, int, const __genmesh__lodfacelist_sequence *, const char*);
@@ -376,7 +376,7 @@ SOAP_FMAC3 __genmesh__lodfacelist_sequence * SOAP_FMAC4 soap_instantiate___genme
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy___genmesh__lodfacelist_sequence(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE___genmesh__union_levelofdetail
-#define SOAP_TYPE___genmesh__union_levelofdetail (108)
+#define SOAP_TYPE___genmesh__union_levelofdetail (112)
 #endif
 
 SOAP_FMAC3 int SOAP_FMAC4 soap_out___genmesh__union_levelofdetail(struct soap*, const char*, int, const __genmesh__union_levelofdetail *, const char*);
@@ -386,6 +386,20 @@ SOAP_FMAC5 __genmesh__union_levelofdetail * SOAP_FMAC6 soap_new___genmesh__union
 SOAP_FMAC5 void SOAP_FMAC6 soap_delete___genmesh__union_levelofdetail(struct soap*, __genmesh__union_levelofdetail*);
 SOAP_FMAC3 __genmesh__union_levelofdetail * SOAP_FMAC4 soap_instantiate___genmesh__union_levelofdetail(struct soap*, int, const char*, const char*, size_t*);
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy___genmesh__union_levelofdetail(struct soap*, int, int, void*, size_t, const void*, size_t);
+
+#ifndef SOAP_TYPE_std__string
+#define SOAP_TYPE_std__string (78)
+#endif
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__string(struct soap*, std::string *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__string(struct soap*, const std::string *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_std__string(struct soap*, const std::string *, const char*, const char*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_std__string(struct soap*, const char*, int, const std::string*, const char*);
+SOAP_FMAC3 std::string * SOAP_FMAC4 soap_get_std__string(struct soap*, std::string *, const char*, const char*);
+SOAP_FMAC3 std::string * SOAP_FMAC4 soap_in_std__string(struct soap*, const char*, std::string*, const char*);
+SOAP_FMAC5 std::string * SOAP_FMAC6 soap_new_std__string(struct soap*, int);
+SOAP_FMAC5 void SOAP_FMAC6 soap_delete_std__string(struct soap*, std::string*);
+SOAP_FMAC3 std::string * SOAP_FMAC4 soap_instantiate_std__string(struct soap*, int, const char*, const char*, size_t*);
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__string(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE__genskel__animationlink
 #define SOAP_TYPE__genskel__animationlink (72)
@@ -1131,8 +1145,32 @@ SOAP_FMAC5 void SOAP_FMAC6 soap_delete_genmech__torso(struct soap*, genmech__tor
 SOAP_FMAC3 genmech__torso * SOAP_FMAC4 soap_instantiate_genmech__torso(struct soap*, int, const char*, const char*, size_t*);
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_genmech__torso(struct soap*, int, int, void*, size_t, const void*, size_t);
 
+#ifndef SOAP_TYPE_genmech__equSlot
+#define SOAP_TYPE_genmech__equSlot (10)
+#endif
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_genmech__equSlot(struct soap*, const char*, int, const genmech__equSlot *, const char*);
+SOAP_FMAC3 genmech__equSlot * SOAP_FMAC4 soap_get_genmech__equSlot(struct soap*, genmech__equSlot *, const char*, const char*);
+SOAP_FMAC3 genmech__equSlot * SOAP_FMAC4 soap_in_genmech__equSlot(struct soap*, const char*, genmech__equSlot *, const char*);
+SOAP_FMAC5 genmech__equSlot * SOAP_FMAC6 soap_new_genmech__equSlot(struct soap*, int);
+SOAP_FMAC5 void SOAP_FMAC6 soap_delete_genmech__equSlot(struct soap*, genmech__equSlot*);
+SOAP_FMAC3 genmech__equSlot * SOAP_FMAC4 soap_instantiate_genmech__equSlot(struct soap*, int, const char*, const char*, size_t*);
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_genmech__equSlot(struct soap*, int, int, void*, size_t, const void*, size_t);
+
+#ifndef SOAP_TYPE_genmech__equSlots
+#define SOAP_TYPE_genmech__equSlots (9)
+#endif
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_genmech__equSlots(struct soap*, const char*, int, const genmech__equSlots *, const char*);
+SOAP_FMAC3 genmech__equSlots * SOAP_FMAC4 soap_get_genmech__equSlots(struct soap*, genmech__equSlots *, const char*, const char*);
+SOAP_FMAC3 genmech__equSlots * SOAP_FMAC4 soap_in_genmech__equSlots(struct soap*, const char*, genmech__equSlots *, const char*);
+SOAP_FMAC5 genmech__equSlots * SOAP_FMAC6 soap_new_genmech__equSlots(struct soap*, int);
+SOAP_FMAC5 void SOAP_FMAC6 soap_delete_genmech__equSlots(struct soap*, genmech__equSlots*);
+SOAP_FMAC3 genmech__equSlots * SOAP_FMAC4 soap_instantiate_genmech__equSlots(struct soap*, int, const char*, const char*, size_t*);
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_genmech__equSlots(struct soap*, int, int, void*, size_t, const void*, size_t);
+
 #ifndef SOAP_TYPE_genmech__design
-#define SOAP_TYPE_genmech__design (10)
+#define SOAP_TYPE_genmech__design (8)
 #endif
 
 SOAP_FMAC3 int SOAP_FMAC4 soap_out_genmech__design(struct soap*, const char*, int, const genmech__design *, const char*);
@@ -1144,7 +1182,7 @@ SOAP_FMAC3 genmech__design * SOAP_FMAC4 soap_instantiate_genmech__design(struct 
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_genmech__design(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_genmech__stats
-#define SOAP_TYPE_genmech__stats (9)
+#define SOAP_TYPE_genmech__stats (7)
 #endif
 
 SOAP_FMAC3 int SOAP_FMAC4 soap_out_genmech__stats(struct soap*, const char*, int, const genmech__stats *, const char*);
@@ -1155,38 +1193,10 @@ SOAP_FMAC5 void SOAP_FMAC6 soap_delete_genmech__stats(struct soap*, genmech__sta
 SOAP_FMAC3 genmech__stats * SOAP_FMAC4 soap_instantiate_genmech__stats(struct soap*, int, const char*, const char*, size_t*);
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_genmech__stats(struct soap*, int, int, void*, size_t, const void*, size_t);
 
-#ifndef SOAP_TYPE_xsd__integer
-#define SOAP_TYPE_xsd__integer (8)
-#endif
-SOAP_FMAC3 void SOAP_FMAC4 soap_default_xsd__integer(struct soap*, std::string *);
-SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_xsd__integer(struct soap*, std::string const*);
-SOAP_FMAC3 int SOAP_FMAC4 soap_put_xsd__integer(struct soap*, const std::string *, const char*, const char*);
-SOAP_FMAC3 int SOAP_FMAC4 soap_out_xsd__integer(struct soap*, const char*, int, const std::string*, const char*);
-SOAP_FMAC3 std::string * SOAP_FMAC4 soap_get_xsd__integer(struct soap*, std::string *, const char*, const char*);
-SOAP_FMAC3 std::string * SOAP_FMAC4 soap_in_xsd__integer(struct soap*, const char*, std::string*, const char*);
-SOAP_FMAC5 std::string * SOAP_FMAC6 soap_new_xsd__integer(struct soap*, int);
-SOAP_FMAC5 void SOAP_FMAC6 soap_delete_xsd__integer(struct soap*, std::string*);
-SOAP_FMAC3 std::string * SOAP_FMAC4 soap_instantiate_xsd__integer(struct soap*, int, const char*, const char*, size_t*);
-SOAP_FMAC3 void SOAP_FMAC4 soap_copy_xsd__integer(struct soap*, int, int, void*, size_t, const void*, size_t);
-
-#ifndef SOAP_TYPE_std__string
-#define SOAP_TYPE_std__string (7)
-#endif
-SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__string(struct soap*, std::string *);
-SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__string(struct soap*, const std::string *);
-SOAP_FMAC3 int SOAP_FMAC4 soap_put_std__string(struct soap*, const std::string *, const char*, const char*);
-SOAP_FMAC3 int SOAP_FMAC4 soap_out_std__string(struct soap*, const char*, int, const std::string*, const char*);
-SOAP_FMAC3 std::string * SOAP_FMAC4 soap_get_std__string(struct soap*, std::string *, const char*, const char*);
-SOAP_FMAC3 std::string * SOAP_FMAC4 soap_in_std__string(struct soap*, const char*, std::string*, const char*);
-SOAP_FMAC5 std::string * SOAP_FMAC6 soap_new_std__string(struct soap*, int);
-SOAP_FMAC5 void SOAP_FMAC6 soap_delete_std__string(struct soap*, std::string*);
-SOAP_FMAC3 std::string * SOAP_FMAC4 soap_instantiate_std__string(struct soap*, int, const char*, const char*, size_t*);
-SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__string(struct soap*, int, int, void*, size_t, const void*, size_t);
-
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Fault
-#define SOAP_TYPE_SOAP_ENV__Fault (194)
+#define SOAP_TYPE_SOAP_ENV__Fault (198)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_SOAP_ENV__Fault(struct soap*, struct SOAP_ENV__Fault *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_SOAP_ENV__Fault(struct soap*, const struct SOAP_ENV__Fault *);
@@ -1204,7 +1214,7 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_copy_SOAP_ENV__Fault(struct soap*, int, int, voi
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Reason
-#define SOAP_TYPE_SOAP_ENV__Reason (193)
+#define SOAP_TYPE_SOAP_ENV__Reason (197)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_SOAP_ENV__Reason(struct soap*, struct SOAP_ENV__Reason *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_SOAP_ENV__Reason(struct soap*, const struct SOAP_ENV__Reason *);
@@ -1222,7 +1232,7 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_copy_SOAP_ENV__Reason(struct soap*, int, int, vo
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Detail
-#define SOAP_TYPE_SOAP_ENV__Detail (190)
+#define SOAP_TYPE_SOAP_ENV__Detail (194)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_SOAP_ENV__Detail(struct soap*, struct SOAP_ENV__Detail *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_SOAP_ENV__Detail(struct soap*, const struct SOAP_ENV__Detail *);
@@ -1240,7 +1250,7 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_copy_SOAP_ENV__Detail(struct soap*, int, int, vo
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Code
-#define SOAP_TYPE_SOAP_ENV__Code (188)
+#define SOAP_TYPE_SOAP_ENV__Code (192)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_SOAP_ENV__Code(struct soap*, struct SOAP_ENV__Code *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_SOAP_ENV__Code(struct soap*, const struct SOAP_ENV__Code *);
@@ -1258,7 +1268,7 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_copy_SOAP_ENV__Code(struct soap*, int, int, void
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Header
-#define SOAP_TYPE_SOAP_ENV__Header (187)
+#define SOAP_TYPE_SOAP_ENV__Header (191)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_SOAP_ENV__Header(struct soap*, struct SOAP_ENV__Header *);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_SOAP_ENV__Header(struct soap*, const struct SOAP_ENV__Header *);
@@ -1274,7 +1284,7 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_copy_SOAP_ENV__Header(struct soap*, int, int, vo
 #endif
 
 #ifndef SOAP_TYPE__genmesh__union_levelofdetail
-#define SOAP_TYPE__genmesh__union_levelofdetail (111)
+#define SOAP_TYPE__genmesh__union_levelofdetail (115)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize__genmesh__union_levelofdetail(struct soap*, int, const union _genmesh__union_levelofdetail *);
 SOAP_FMAC3 int SOAP_FMAC4 soap_out__genmesh__union_levelofdetail(struct soap*, int, const union _genmesh__union_levelofdetail *);
@@ -1283,7 +1293,7 @@ SOAP_FMAC3 union _genmesh__union_levelofdetail * SOAP_FMAC4 soap_in__genmesh__un
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_PointerToSOAP_ENV__Reason
-#define SOAP_TYPE_PointerToSOAP_ENV__Reason (196)
+#define SOAP_TYPE_PointerToSOAP_ENV__Reason (200)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerToSOAP_ENV__Reason(struct soap*, struct SOAP_ENV__Reason *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerToSOAP_ENV__Reason(struct soap*, struct SOAP_ENV__Reason *const*, const char*, const char*);
@@ -1296,7 +1306,7 @@ SOAP_FMAC3 struct SOAP_ENV__Reason ** SOAP_FMAC4 soap_in_PointerToSOAP_ENV__Reas
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_PointerToSOAP_ENV__Detail
-#define SOAP_TYPE_PointerToSOAP_ENV__Detail (195)
+#define SOAP_TYPE_PointerToSOAP_ENV__Detail (199)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerToSOAP_ENV__Detail(struct soap*, struct SOAP_ENV__Detail *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerToSOAP_ENV__Detail(struct soap*, struct SOAP_ENV__Detail *const*, const char*, const char*);
@@ -1309,7 +1319,7 @@ SOAP_FMAC3 struct SOAP_ENV__Detail ** SOAP_FMAC4 soap_in_PointerToSOAP_ENV__Deta
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_PointerToSOAP_ENV__Code
-#define SOAP_TYPE_PointerToSOAP_ENV__Code (189)
+#define SOAP_TYPE_PointerToSOAP_ENV__Code (193)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerToSOAP_ENV__Code(struct soap*, struct SOAP_ENV__Code *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerToSOAP_ENV__Code(struct soap*, struct SOAP_ENV__Code *const*, const char*, const char*);
@@ -1320,7 +1330,7 @@ SOAP_FMAC3 struct SOAP_ENV__Code ** SOAP_FMAC4 soap_in_PointerToSOAP_ENV__Code(s
 #endif
 
 #ifndef SOAP_TYPE_PointerTo_genskel__animationlink
-#define SOAP_TYPE_PointerTo_genskel__animationlink (185)
+#define SOAP_TYPE_PointerTo_genskel__animationlink (189)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genskel__animationlink(struct soap*, _genskel__animationlink *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genskel__animationlink(struct soap*, _genskel__animationlink *const*, const char*, const char*);
@@ -1329,7 +1339,7 @@ SOAP_FMAC3 _genskel__animationlink ** SOAP_FMAC4 soap_get_PointerTo_genskel__ani
 SOAP_FMAC3 _genskel__animationlink ** SOAP_FMAC4 soap_in_PointerTo_genskel__animationlink(struct soap*, const char*, _genskel__animationlink **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genskel__rotate
-#define SOAP_TYPE_PointerTo_genskel__rotate (184)
+#define SOAP_TYPE_PointerTo_genskel__rotate (188)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genskel__rotate(struct soap*, _genskel__rotate *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genskel__rotate(struct soap*, _genskel__rotate *const*, const char*, const char*);
@@ -1338,7 +1348,7 @@ SOAP_FMAC3 _genskel__rotate ** SOAP_FMAC4 soap_get_PointerTo_genskel__rotate(str
 SOAP_FMAC3 _genskel__rotate ** SOAP_FMAC4 soap_in_PointerTo_genskel__rotate(struct soap*, const char*, _genskel__rotate **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genskel__translate
-#define SOAP_TYPE_PointerTo_genskel__translate (183)
+#define SOAP_TYPE_PointerTo_genskel__translate (187)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genskel__translate(struct soap*, _genskel__translate *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genskel__translate(struct soap*, _genskel__translate *const*, const char*, const char*);
@@ -1347,7 +1357,7 @@ SOAP_FMAC3 _genskel__translate ** SOAP_FMAC4 soap_get_PointerTo_genskel__transla
 SOAP_FMAC3 _genskel__translate ** SOAP_FMAC4 soap_in_PointerTo_genskel__translate(struct soap*, const char*, _genskel__translate **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genskel__keyframe
-#define SOAP_TYPE_PointerTo_genskel__keyframe (181)
+#define SOAP_TYPE_PointerTo_genskel__keyframe (185)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genskel__keyframe(struct soap*, _genskel__keyframe *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genskel__keyframe(struct soap*, _genskel__keyframe *const*, const char*, const char*);
@@ -1356,7 +1366,7 @@ SOAP_FMAC3 _genskel__keyframe ** SOAP_FMAC4 soap_get_PointerTo_genskel__keyframe
 SOAP_FMAC3 _genskel__keyframe ** SOAP_FMAC4 soap_in_PointerTo_genskel__keyframe(struct soap*, const char*, _genskel__keyframe **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genskel__keyframes
-#define SOAP_TYPE_PointerTo_genskel__keyframes (180)
+#define SOAP_TYPE_PointerTo_genskel__keyframes (184)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genskel__keyframes(struct soap*, _genskel__keyframes *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genskel__keyframes(struct soap*, _genskel__keyframes *const*, const char*, const char*);
@@ -1365,7 +1375,7 @@ SOAP_FMAC3 _genskel__keyframes ** SOAP_FMAC4 soap_get_PointerTo_genskel__keyfram
 SOAP_FMAC3 _genskel__keyframes ** SOAP_FMAC4 soap_in_PointerTo_genskel__keyframes(struct soap*, const char*, _genskel__keyframes **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genskel__track
-#define SOAP_TYPE_PointerTo_genskel__track (178)
+#define SOAP_TYPE_PointerTo_genskel__track (182)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genskel__track(struct soap*, _genskel__track *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genskel__track(struct soap*, _genskel__track *const*, const char*, const char*);
@@ -1374,7 +1384,7 @@ SOAP_FMAC3 _genskel__track ** SOAP_FMAC4 soap_get_PointerTo_genskel__track(struc
 SOAP_FMAC3 _genskel__track ** SOAP_FMAC4 soap_in_PointerTo_genskel__track(struct soap*, const char*, _genskel__track **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genskel__tracks
-#define SOAP_TYPE_PointerTo_genskel__tracks (177)
+#define SOAP_TYPE_PointerTo_genskel__tracks (181)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genskel__tracks(struct soap*, _genskel__tracks *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genskel__tracks(struct soap*, _genskel__tracks *const*, const char*, const char*);
@@ -1383,7 +1393,7 @@ SOAP_FMAC3 _genskel__tracks ** SOAP_FMAC4 soap_get_PointerTo_genskel__tracks(str
 SOAP_FMAC3 _genskel__tracks ** SOAP_FMAC4 soap_in_PointerTo_genskel__tracks(struct soap*, const char*, _genskel__tracks **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genskel__animation
-#define SOAP_TYPE_PointerTo_genskel__animation (175)
+#define SOAP_TYPE_PointerTo_genskel__animation (179)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genskel__animation(struct soap*, _genskel__animation *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genskel__animation(struct soap*, _genskel__animation *const*, const char*, const char*);
@@ -1392,7 +1402,7 @@ SOAP_FMAC3 _genskel__animation ** SOAP_FMAC4 soap_get_PointerTo_genskel__animati
 SOAP_FMAC3 _genskel__animation ** SOAP_FMAC4 soap_in_PointerTo_genskel__animation(struct soap*, const char*, _genskel__animation **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genskel__boneparent
-#define SOAP_TYPE_PointerTo_genskel__boneparent (173)
+#define SOAP_TYPE_PointerTo_genskel__boneparent (177)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genskel__boneparent(struct soap*, _genskel__boneparent *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genskel__boneparent(struct soap*, _genskel__boneparent *const*, const char*, const char*);
@@ -1401,7 +1411,7 @@ SOAP_FMAC3 _genskel__boneparent ** SOAP_FMAC4 soap_get_PointerTo_genskel__bonepa
 SOAP_FMAC3 _genskel__boneparent ** SOAP_FMAC4 soap_in_PointerTo_genskel__boneparent(struct soap*, const char*, _genskel__boneparent **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genskel__animationlinks
-#define SOAP_TYPE_PointerTo_genskel__animationlinks (172)
+#define SOAP_TYPE_PointerTo_genskel__animationlinks (176)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genskel__animationlinks(struct soap*, _genskel__animationlinks *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genskel__animationlinks(struct soap*, _genskel__animationlinks *const*, const char*, const char*);
@@ -1410,7 +1420,7 @@ SOAP_FMAC3 _genskel__animationlinks ** SOAP_FMAC4 soap_get_PointerTo_genskel__an
 SOAP_FMAC3 _genskel__animationlinks ** SOAP_FMAC4 soap_in_PointerTo_genskel__animationlinks(struct soap*, const char*, _genskel__animationlinks **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genskel__animations
-#define SOAP_TYPE_PointerTo_genskel__animations (171)
+#define SOAP_TYPE_PointerTo_genskel__animations (175)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genskel__animations(struct soap*, _genskel__animations *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genskel__animations(struct soap*, _genskel__animations *const*, const char*, const char*);
@@ -1419,7 +1429,7 @@ SOAP_FMAC3 _genskel__animations ** SOAP_FMAC4 soap_get_PointerTo_genskel__animat
 SOAP_FMAC3 _genskel__animations ** SOAP_FMAC4 soap_in_PointerTo_genskel__animations(struct soap*, const char*, _genskel__animations **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genskel__bonehierarchy
-#define SOAP_TYPE_PointerTo_genskel__bonehierarchy (170)
+#define SOAP_TYPE_PointerTo_genskel__bonehierarchy (174)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genskel__bonehierarchy(struct soap*, _genskel__bonehierarchy *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genskel__bonehierarchy(struct soap*, _genskel__bonehierarchy *const*, const char*, const char*);
@@ -1428,7 +1438,7 @@ SOAP_FMAC3 _genskel__bonehierarchy ** SOAP_FMAC4 soap_get_PointerTo_genskel__bon
 SOAP_FMAC3 _genskel__bonehierarchy ** SOAP_FMAC4 soap_in_PointerTo_genskel__bonehierarchy(struct soap*, const char*, _genskel__bonehierarchy **, const char*);
 
 #ifndef SOAP_TYPE_PointerTogenskel__bones
-#define SOAP_TYPE_PointerTogenskel__bones (169)
+#define SOAP_TYPE_PointerTogenskel__bones (173)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTogenskel__bones(struct soap*, genskel__bones *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTogenskel__bones(struct soap*, genskel__bones *const*, const char*, const char*);
@@ -1437,7 +1447,7 @@ SOAP_FMAC3 genskel__bones ** SOAP_FMAC4 soap_get_PointerTogenskel__bones(struct 
 SOAP_FMAC3 genskel__bones ** SOAP_FMAC4 soap_in_PointerTogenskel__bones(struct soap*, const char*, genskel__bones **, const char*);
 
 #ifndef SOAP_TYPE_PointerTogenskel__axis
-#define SOAP_TYPE_PointerTogenskel__axis (168)
+#define SOAP_TYPE_PointerTogenskel__axis (172)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTogenskel__axis(struct soap*, genskel__axis *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTogenskel__axis(struct soap*, genskel__axis *const*, const char*, const char*);
@@ -1446,7 +1456,7 @@ SOAP_FMAC3 genskel__axis ** SOAP_FMAC4 soap_get_PointerTogenskel__axis(struct so
 SOAP_FMAC3 genskel__axis ** SOAP_FMAC4 soap_in_PointerTogenskel__axis(struct soap*, const char*, genskel__axis **, const char*);
 
 #ifndef SOAP_TYPE_PointerTogenskel__scale
-#define SOAP_TYPE_PointerTogenskel__scale (167)
+#define SOAP_TYPE_PointerTogenskel__scale (171)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTogenskel__scale(struct soap*, genskel__scale *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTogenskel__scale(struct soap*, genskel__scale *const*, const char*, const char*);
@@ -1455,7 +1465,7 @@ SOAP_FMAC3 genskel__scale ** SOAP_FMAC4 soap_get_PointerTogenskel__scale(struct 
 SOAP_FMAC3 genskel__scale ** SOAP_FMAC4 soap_in_PointerTogenskel__scale(struct soap*, const char*, genskel__scale **, const char*);
 
 #ifndef SOAP_TYPE_PointerTogenskel__rotation
-#define SOAP_TYPE_PointerTogenskel__rotation (166)
+#define SOAP_TYPE_PointerTogenskel__rotation (170)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTogenskel__rotation(struct soap*, genskel__rotation *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTogenskel__rotation(struct soap*, genskel__rotation *const*, const char*, const char*);
@@ -1464,7 +1474,7 @@ SOAP_FMAC3 genskel__rotation ** SOAP_FMAC4 soap_get_PointerTogenskel__rotation(s
 SOAP_FMAC3 genskel__rotation ** SOAP_FMAC4 soap_in_PointerTogenskel__rotation(struct soap*, const char*, genskel__rotation **, const char*);
 
 #ifndef SOAP_TYPE_PointerTogenskel__position
-#define SOAP_TYPE_PointerTogenskel__position (165)
+#define SOAP_TYPE_PointerTogenskel__position (169)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTogenskel__position(struct soap*, genskel__position *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTogenskel__position(struct soap*, genskel__position *const*, const char*, const char*);
@@ -1473,7 +1483,7 @@ SOAP_FMAC3 genskel__position ** SOAP_FMAC4 soap_get_PointerTogenskel__position(s
 SOAP_FMAC3 genskel__position ** SOAP_FMAC4 soap_in_PointerTogenskel__position(struct soap*, const char*, genskel__position **, const char*);
 
 #ifndef SOAP_TYPE_PointerTogenskel__bone
-#define SOAP_TYPE_PointerTogenskel__bone (163)
+#define SOAP_TYPE_PointerTogenskel__bone (167)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTogenskel__bone(struct soap*, genskel__bone *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTogenskel__bone(struct soap*, genskel__bone *const*, const char*, const char*);
@@ -1482,7 +1492,7 @@ SOAP_FMAC3 genskel__bone ** SOAP_FMAC4 soap_get_PointerTogenskel__bone(struct so
 SOAP_FMAC3 genskel__bone ** SOAP_FMAC4 soap_in_PointerTogenskel__bone(struct soap*, const char*, genskel__bone **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__poseref
-#define SOAP_TYPE_PointerTo_genmesh__poseref (161)
+#define SOAP_TYPE_PointerTo_genmesh__poseref (165)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__poseref(struct soap*, _genmesh__poseref *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__poseref(struct soap*, _genmesh__poseref *const*, const char*, const char*);
@@ -1491,7 +1501,7 @@ SOAP_FMAC3 _genmesh__poseref ** SOAP_FMAC4 soap_get_PointerTo_genmesh__poseref(s
 SOAP_FMAC3 _genmesh__poseref ** SOAP_FMAC4 soap_in_PointerTo_genmesh__poseref(struct soap*, const char*, _genmesh__poseref **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__keyframe
-#define SOAP_TYPE_PointerTo_genmesh__keyframe (158)
+#define SOAP_TYPE_PointerTo_genmesh__keyframe (162)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__keyframe(struct soap*, _genmesh__keyframe *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__keyframe(struct soap*, _genmesh__keyframe *const*, const char*, const char*);
@@ -1500,7 +1510,7 @@ SOAP_FMAC3 _genmesh__keyframe ** SOAP_FMAC4 soap_get_PointerTo_genmesh__keyframe
 SOAP_FMAC3 _genmesh__keyframe ** SOAP_FMAC4 soap_in_PointerTo_genmesh__keyframe(struct soap*, const char*, _genmesh__keyframe **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__keyframes
-#define SOAP_TYPE_PointerTo_genmesh__keyframes (155)
+#define SOAP_TYPE_PointerTo_genmesh__keyframes (159)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__keyframes(struct soap*, _genmesh__keyframes *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__keyframes(struct soap*, _genmesh__keyframes *const*, const char*, const char*);
@@ -1509,7 +1519,7 @@ SOAP_FMAC3 _genmesh__keyframes ** SOAP_FMAC4 soap_get_PointerTo_genmesh__keyfram
 SOAP_FMAC3 _genmesh__keyframes ** SOAP_FMAC4 soap_in_PointerTo_genmesh__keyframes(struct soap*, const char*, _genmesh__keyframes **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__track
-#define SOAP_TYPE_PointerTo_genmesh__track (153)
+#define SOAP_TYPE_PointerTo_genmesh__track (157)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__track(struct soap*, _genmesh__track *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__track(struct soap*, _genmesh__track *const*, const char*, const char*);
@@ -1518,7 +1528,7 @@ SOAP_FMAC3 _genmesh__track ** SOAP_FMAC4 soap_get_PointerTo_genmesh__track(struc
 SOAP_FMAC3 _genmesh__track ** SOAP_FMAC4 soap_in_PointerTo_genmesh__track(struct soap*, const char*, _genmesh__track **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__tracks
-#define SOAP_TYPE_PointerTo_genmesh__tracks (152)
+#define SOAP_TYPE_PointerTo_genmesh__tracks (156)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__tracks(struct soap*, _genmesh__tracks *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__tracks(struct soap*, _genmesh__tracks *const*, const char*, const char*);
@@ -1527,7 +1537,7 @@ SOAP_FMAC3 _genmesh__tracks ** SOAP_FMAC4 soap_get_PointerTo_genmesh__tracks(str
 SOAP_FMAC3 _genmesh__tracks ** SOAP_FMAC4 soap_in_PointerTo_genmesh__tracks(struct soap*, const char*, _genmesh__tracks **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__animation
-#define SOAP_TYPE_PointerTo_genmesh__animation (150)
+#define SOAP_TYPE_PointerTo_genmesh__animation (154)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__animation(struct soap*, _genmesh__animation *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__animation(struct soap*, _genmesh__animation *const*, const char*, const char*);
@@ -1536,7 +1546,7 @@ SOAP_FMAC3 _genmesh__animation ** SOAP_FMAC4 soap_get_PointerTo_genmesh__animati
 SOAP_FMAC3 _genmesh__animation ** SOAP_FMAC4 soap_in_PointerTo_genmesh__animation(struct soap*, const char*, _genmesh__animation **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__poseoffset
-#define SOAP_TYPE_PointerTo_genmesh__poseoffset (147)
+#define SOAP_TYPE_PointerTo_genmesh__poseoffset (151)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__poseoffset(struct soap*, _genmesh__poseoffset *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__poseoffset(struct soap*, _genmesh__poseoffset *const*, const char*, const char*);
@@ -1545,7 +1555,7 @@ SOAP_FMAC3 _genmesh__poseoffset ** SOAP_FMAC4 soap_get_PointerTo_genmesh__poseof
 SOAP_FMAC3 _genmesh__poseoffset ** SOAP_FMAC4 soap_in_PointerTo_genmesh__poseoffset(struct soap*, const char*, _genmesh__poseoffset **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__pose
-#define SOAP_TYPE_PointerTo_genmesh__pose (145)
+#define SOAP_TYPE_PointerTo_genmesh__pose (149)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__pose(struct soap*, _genmesh__pose *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__pose(struct soap*, _genmesh__pose *const*, const char*, const char*);
@@ -1554,7 +1564,7 @@ SOAP_FMAC3 _genmesh__pose ** SOAP_FMAC4 soap_get_PointerTo_genmesh__pose(struct 
 SOAP_FMAC3 _genmesh__pose ** SOAP_FMAC4 soap_in_PointerTo_genmesh__pose(struct soap*, const char*, _genmesh__pose **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__submeshname
-#define SOAP_TYPE_PointerTo_genmesh__submeshname (143)
+#define SOAP_TYPE_PointerTo_genmesh__submeshname (147)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__submeshname(struct soap*, _genmesh__submeshname *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__submeshname(struct soap*, _genmesh__submeshname *const*, const char*, const char*);
@@ -1563,7 +1573,7 @@ SOAP_FMAC3 _genmesh__submeshname ** SOAP_FMAC4 soap_get_PointerTo_genmesh__subme
 SOAP_FMAC3 _genmesh__submeshname ** SOAP_FMAC4 soap_in_PointerTo_genmesh__submeshname(struct soap*, const char*, _genmesh__submeshname **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__texcoord
-#define SOAP_TYPE_PointerTo_genmesh__texcoord (141)
+#define SOAP_TYPE_PointerTo_genmesh__texcoord (145)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__texcoord(struct soap*, _genmesh__texcoord *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__texcoord(struct soap*, _genmesh__texcoord *const*, const char*, const char*);
@@ -1572,7 +1582,7 @@ SOAP_FMAC3 _genmesh__texcoord ** SOAP_FMAC4 soap_get_PointerTo_genmesh__texcoord
 SOAP_FMAC3 _genmesh__texcoord ** SOAP_FMAC4 soap_in_PointerTo_genmesh__texcoord(struct soap*, const char*, _genmesh__texcoord **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__colour_USCOREspecular
-#define SOAP_TYPE_PointerTo_genmesh__colour_USCOREspecular (140)
+#define SOAP_TYPE_PointerTo_genmesh__colour_USCOREspecular (144)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__colour_USCOREspecular(struct soap*, _genmesh__colour_USCOREspecular *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__colour_USCOREspecular(struct soap*, _genmesh__colour_USCOREspecular *const*, const char*, const char*);
@@ -1581,7 +1591,7 @@ SOAP_FMAC3 _genmesh__colour_USCOREspecular ** SOAP_FMAC4 soap_get_PointerTo_genm
 SOAP_FMAC3 _genmesh__colour_USCOREspecular ** SOAP_FMAC4 soap_in_PointerTo_genmesh__colour_USCOREspecular(struct soap*, const char*, _genmesh__colour_USCOREspecular **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__colour_USCOREdiffuse
-#define SOAP_TYPE_PointerTo_genmesh__colour_USCOREdiffuse (139)
+#define SOAP_TYPE_PointerTo_genmesh__colour_USCOREdiffuse (143)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__colour_USCOREdiffuse(struct soap*, _genmesh__colour_USCOREdiffuse *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__colour_USCOREdiffuse(struct soap*, _genmesh__colour_USCOREdiffuse *const*, const char*, const char*);
@@ -1590,7 +1600,7 @@ SOAP_FMAC3 _genmesh__colour_USCOREdiffuse ** SOAP_FMAC4 soap_get_PointerTo_genme
 SOAP_FMAC3 _genmesh__colour_USCOREdiffuse ** SOAP_FMAC4 soap_in_PointerTo_genmesh__colour_USCOREdiffuse(struct soap*, const char*, _genmesh__colour_USCOREdiffuse **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__binormal
-#define SOAP_TYPE_PointerTo_genmesh__binormal (138)
+#define SOAP_TYPE_PointerTo_genmesh__binormal (142)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__binormal(struct soap*, _genmesh__binormal *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__binormal(struct soap*, _genmesh__binormal *const*, const char*, const char*);
@@ -1599,7 +1609,7 @@ SOAP_FMAC3 _genmesh__binormal ** SOAP_FMAC4 soap_get_PointerTo_genmesh__binormal
 SOAP_FMAC3 _genmesh__binormal ** SOAP_FMAC4 soap_in_PointerTo_genmesh__binormal(struct soap*, const char*, _genmesh__binormal **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__tangent
-#define SOAP_TYPE_PointerTo_genmesh__tangent (137)
+#define SOAP_TYPE_PointerTo_genmesh__tangent (141)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__tangent(struct soap*, _genmesh__tangent *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__tangent(struct soap*, _genmesh__tangent *const*, const char*, const char*);
@@ -1608,7 +1618,7 @@ SOAP_FMAC3 _genmesh__tangent ** SOAP_FMAC4 soap_get_PointerTo_genmesh__tangent(s
 SOAP_FMAC3 _genmesh__tangent ** SOAP_FMAC4 soap_in_PointerTo_genmesh__tangent(struct soap*, const char*, _genmesh__tangent **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__normal
-#define SOAP_TYPE_PointerTo_genmesh__normal (136)
+#define SOAP_TYPE_PointerTo_genmesh__normal (140)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__normal(struct soap*, _genmesh__normal *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__normal(struct soap*, _genmesh__normal *const*, const char*, const char*);
@@ -1617,7 +1627,7 @@ SOAP_FMAC3 _genmesh__normal ** SOAP_FMAC4 soap_get_PointerTo_genmesh__normal(str
 SOAP_FMAC3 _genmesh__normal ** SOAP_FMAC4 soap_in_PointerTo_genmesh__normal(struct soap*, const char*, _genmesh__normal **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__position
-#define SOAP_TYPE_PointerTo_genmesh__position (135)
+#define SOAP_TYPE_PointerTo_genmesh__position (139)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__position(struct soap*, _genmesh__position *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__position(struct soap*, _genmesh__position *const*, const char*, const char*);
@@ -1626,7 +1636,7 @@ SOAP_FMAC3 _genmesh__position ** SOAP_FMAC4 soap_get_PointerTo_genmesh__position
 SOAP_FMAC3 _genmesh__position ** SOAP_FMAC4 soap_in_PointerTo_genmesh__position(struct soap*, const char*, _genmesh__position **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__vertex
-#define SOAP_TYPE_PointerTo_genmesh__vertex (117)
+#define SOAP_TYPE_PointerTo_genmesh__vertex (121)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__vertex(struct soap*, _genmesh__vertex *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__vertex(struct soap*, _genmesh__vertex *const*, const char*, const char*);
@@ -1635,7 +1645,7 @@ SOAP_FMAC3 _genmesh__vertex ** SOAP_FMAC4 soap_get_PointerTo_genmesh__vertex(str
 SOAP_FMAC3 _genmesh__vertex ** SOAP_FMAC4 soap_in_PointerTo_genmesh__vertex(struct soap*, const char*, _genmesh__vertex **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo__genmesh__lodfacelist_sequence
-#define SOAP_TYPE_PointerTo__genmesh__lodfacelist_sequence (116)
+#define SOAP_TYPE_PointerTo__genmesh__lodfacelist_sequence (120)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo__genmesh__lodfacelist_sequence(struct soap*, __genmesh__lodfacelist_sequence *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo__genmesh__lodfacelist_sequence(struct soap*, __genmesh__lodfacelist_sequence *const*, const char*, const char*);
@@ -1644,7 +1654,7 @@ SOAP_FMAC3 __genmesh__lodfacelist_sequence ** SOAP_FMAC4 soap_get_PointerTo__gen
 SOAP_FMAC3 __genmesh__lodfacelist_sequence ** SOAP_FMAC4 soap_in_PointerTo__genmesh__lodfacelist_sequence(struct soap*, const char*, __genmesh__lodfacelist_sequence **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__lodfacelist
-#define SOAP_TYPE_PointerTo_genmesh__lodfacelist (114)
+#define SOAP_TYPE_PointerTo_genmesh__lodfacelist (118)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__lodfacelist(struct soap*, _genmesh__lodfacelist *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__lodfacelist(struct soap*, _genmesh__lodfacelist *const*, const char*, const char*);
@@ -1653,7 +1663,7 @@ SOAP_FMAC3 _genmesh__lodfacelist ** SOAP_FMAC4 soap_get_PointerTo_genmesh__lodfa
 SOAP_FMAC3 _genmesh__lodfacelist ** SOAP_FMAC4 soap_in_PointerTo_genmesh__lodfacelist(struct soap*, const char*, _genmesh__lodfacelist **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo__genmesh__union_levelofdetail
-#define SOAP_TYPE_PointerTo__genmesh__union_levelofdetail (112)
+#define SOAP_TYPE_PointerTo__genmesh__union_levelofdetail (116)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo__genmesh__union_levelofdetail(struct soap*, __genmesh__union_levelofdetail *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo__genmesh__union_levelofdetail(struct soap*, __genmesh__union_levelofdetail *const*, const char*, const char*);
@@ -1662,7 +1672,7 @@ SOAP_FMAC3 __genmesh__union_levelofdetail ** SOAP_FMAC4 soap_get_PointerTo__genm
 SOAP_FMAC3 __genmesh__union_levelofdetail ** SOAP_FMAC4 soap_in_PointerTo__genmesh__union_levelofdetail(struct soap*, const char*, __genmesh__union_levelofdetail **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__lodgenerated
-#define SOAP_TYPE_PointerTo_genmesh__lodgenerated (110)
+#define SOAP_TYPE_PointerTo_genmesh__lodgenerated (114)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__lodgenerated(struct soap*, _genmesh__lodgenerated *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__lodgenerated(struct soap*, _genmesh__lodgenerated *const*, const char*, const char*);
@@ -1671,7 +1681,7 @@ SOAP_FMAC3 _genmesh__lodgenerated ** SOAP_FMAC4 soap_get_PointerTo_genmesh__lodg
 SOAP_FMAC3 _genmesh__lodgenerated ** SOAP_FMAC4 soap_in_PointerTo_genmesh__lodgenerated(struct soap*, const char*, _genmesh__lodgenerated **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__lodmanual
-#define SOAP_TYPE_PointerTo_genmesh__lodmanual (109)
+#define SOAP_TYPE_PointerTo_genmesh__lodmanual (113)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__lodmanual(struct soap*, _genmesh__lodmanual *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__lodmanual(struct soap*, _genmesh__lodmanual *const*, const char*, const char*);
@@ -1680,7 +1690,7 @@ SOAP_FMAC3 _genmesh__lodmanual ** SOAP_FMAC4 soap_get_PointerTo_genmesh__lodmanu
 SOAP_FMAC3 _genmesh__lodmanual ** SOAP_FMAC4 soap_in_PointerTo_genmesh__lodmanual(struct soap*, const char*, _genmesh__lodmanual **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__vertexboneassignment
-#define SOAP_TYPE_PointerTo_genmesh__vertexboneassignment (106)
+#define SOAP_TYPE_PointerTo_genmesh__vertexboneassignment (110)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__vertexboneassignment(struct soap*, _genmesh__vertexboneassignment *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__vertexboneassignment(struct soap*, _genmesh__vertexboneassignment *const*, const char*, const char*);
@@ -1689,7 +1699,7 @@ SOAP_FMAC3 _genmesh__vertexboneassignment ** SOAP_FMAC4 soap_get_PointerTo_genme
 SOAP_FMAC3 _genmesh__vertexboneassignment ** SOAP_FMAC4 soap_in_PointerTo_genmesh__vertexboneassignment(struct soap*, const char*, _genmesh__vertexboneassignment **, const char*);
 
 #ifndef SOAP_TYPE_PointerTostd__string
-#define SOAP_TYPE_PointerTostd__string (105)
+#define SOAP_TYPE_PointerTostd__string (109)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTostd__string(struct soap*, std::string *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTostd__string(struct soap*, std::string *const*, const char*, const char*);
@@ -1698,7 +1708,7 @@ SOAP_FMAC3 std::string ** SOAP_FMAC4 soap_get_PointerTostd__string(struct soap*,
 SOAP_FMAC3 std::string ** SOAP_FMAC4 soap_in_PointerTostd__string(struct soap*, const char*, std::string **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__face
-#define SOAP_TYPE_PointerTo_genmesh__face (103)
+#define SOAP_TYPE_PointerTo_genmesh__face (107)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__face(struct soap*, _genmesh__face *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__face(struct soap*, _genmesh__face *const*, const char*, const char*);
@@ -1707,7 +1717,7 @@ SOAP_FMAC3 _genmesh__face ** SOAP_FMAC4 soap_get_PointerTo_genmesh__face(struct 
 SOAP_FMAC3 _genmesh__face ** SOAP_FMAC4 soap_in_PointerTo_genmesh__face(struct soap*, const char*, _genmesh__face **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__texture
-#define SOAP_TYPE_PointerTo_genmesh__texture (101)
+#define SOAP_TYPE_PointerTo_genmesh__texture (105)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__texture(struct soap*, _genmesh__texture *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__texture(struct soap*, _genmesh__texture *const*, const char*, const char*);
@@ -1716,7 +1726,7 @@ SOAP_FMAC3 _genmesh__texture ** SOAP_FMAC4 soap_get_PointerTo_genmesh__texture(s
 SOAP_FMAC3 _genmesh__texture ** SOAP_FMAC4 soap_in_PointerTo_genmesh__texture(struct soap*, const char*, _genmesh__texture **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__geometry
-#define SOAP_TYPE_PointerTo_genmesh__geometry (97)
+#define SOAP_TYPE_PointerTo_genmesh__geometry (101)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__geometry(struct soap*, _genmesh__geometry *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__geometry(struct soap*, _genmesh__geometry *const*, const char*, const char*);
@@ -1725,7 +1735,7 @@ SOAP_FMAC3 _genmesh__geometry ** SOAP_FMAC4 soap_get_PointerTo_genmesh__geometry
 SOAP_FMAC3 _genmesh__geometry ** SOAP_FMAC4 soap_in_PointerTo_genmesh__geometry(struct soap*, const char*, _genmesh__geometry **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__faces
-#define SOAP_TYPE_PointerTo_genmesh__faces (96)
+#define SOAP_TYPE_PointerTo_genmesh__faces (100)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__faces(struct soap*, _genmesh__faces *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__faces(struct soap*, _genmesh__faces *const*, const char*, const char*);
@@ -1734,7 +1744,7 @@ SOAP_FMAC3 _genmesh__faces ** SOAP_FMAC4 soap_get_PointerTo_genmesh__faces(struc
 SOAP_FMAC3 _genmesh__faces ** SOAP_FMAC4 soap_in_PointerTo_genmesh__faces(struct soap*, const char*, _genmesh__faces **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__textures
-#define SOAP_TYPE_PointerTo_genmesh__textures (95)
+#define SOAP_TYPE_PointerTo_genmesh__textures (99)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__textures(struct soap*, _genmesh__textures *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__textures(struct soap*, _genmesh__textures *const*, const char*, const char*);
@@ -1743,7 +1753,7 @@ SOAP_FMAC3 _genmesh__textures ** SOAP_FMAC4 soap_get_PointerTo_genmesh__textures
 SOAP_FMAC3 _genmesh__textures ** SOAP_FMAC4 soap_in_PointerTo_genmesh__textures(struct soap*, const char*, _genmesh__textures **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__submesh
-#define SOAP_TYPE_PointerTo_genmesh__submesh (93)
+#define SOAP_TYPE_PointerTo_genmesh__submesh (97)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__submesh(struct soap*, _genmesh__submesh *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__submesh(struct soap*, _genmesh__submesh *const*, const char*, const char*);
@@ -1752,7 +1762,7 @@ SOAP_FMAC3 _genmesh__submesh ** SOAP_FMAC4 soap_get_PointerTo_genmesh__submesh(s
 SOAP_FMAC3 _genmesh__submesh ** SOAP_FMAC4 soap_in_PointerTo_genmesh__submesh(struct soap*, const char*, _genmesh__submesh **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__vertexbuffer
-#define SOAP_TYPE_PointerTo_genmesh__vertexbuffer (91)
+#define SOAP_TYPE_PointerTo_genmesh__vertexbuffer (95)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__vertexbuffer(struct soap*, _genmesh__vertexbuffer *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__vertexbuffer(struct soap*, _genmesh__vertexbuffer *const*, const char*, const char*);
@@ -1761,7 +1771,7 @@ SOAP_FMAC3 _genmesh__vertexbuffer ** SOAP_FMAC4 soap_get_PointerTo_genmesh__vert
 SOAP_FMAC3 _genmesh__vertexbuffer ** SOAP_FMAC4 soap_in_PointerTo_genmesh__vertexbuffer(struct soap*, const char*, _genmesh__vertexbuffer **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__extremes
-#define SOAP_TYPE_PointerTo_genmesh__extremes (90)
+#define SOAP_TYPE_PointerTo_genmesh__extremes (94)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__extremes(struct soap*, _genmesh__extremes *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__extremes(struct soap*, _genmesh__extremes *const*, const char*, const char*);
@@ -1770,7 +1780,7 @@ SOAP_FMAC3 _genmesh__extremes ** SOAP_FMAC4 soap_get_PointerTo_genmesh__extremes
 SOAP_FMAC3 _genmesh__extremes ** SOAP_FMAC4 soap_in_PointerTo_genmesh__extremes(struct soap*, const char*, _genmesh__extremes **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__animations
-#define SOAP_TYPE_PointerTo_genmesh__animations (89)
+#define SOAP_TYPE_PointerTo_genmesh__animations (93)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__animations(struct soap*, _genmesh__animations *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__animations(struct soap*, _genmesh__animations *const*, const char*, const char*);
@@ -1779,7 +1789,7 @@ SOAP_FMAC3 _genmesh__animations ** SOAP_FMAC4 soap_get_PointerTo_genmesh__animat
 SOAP_FMAC3 _genmesh__animations ** SOAP_FMAC4 soap_in_PointerTo_genmesh__animations(struct soap*, const char*, _genmesh__animations **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__poses
-#define SOAP_TYPE_PointerTo_genmesh__poses (88)
+#define SOAP_TYPE_PointerTo_genmesh__poses (92)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__poses(struct soap*, _genmesh__poses *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__poses(struct soap*, _genmesh__poses *const*, const char*, const char*);
@@ -1788,7 +1798,7 @@ SOAP_FMAC3 _genmesh__poses ** SOAP_FMAC4 soap_get_PointerTo_genmesh__poses(struc
 SOAP_FMAC3 _genmesh__poses ** SOAP_FMAC4 soap_in_PointerTo_genmesh__poses(struct soap*, const char*, _genmesh__poses **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__submeshnames
-#define SOAP_TYPE_PointerTo_genmesh__submeshnames (87)
+#define SOAP_TYPE_PointerTo_genmesh__submeshnames (91)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__submeshnames(struct soap*, _genmesh__submeshnames *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__submeshnames(struct soap*, _genmesh__submeshnames *const*, const char*, const char*);
@@ -1797,7 +1807,7 @@ SOAP_FMAC3 _genmesh__submeshnames ** SOAP_FMAC4 soap_get_PointerTo_genmesh__subm
 SOAP_FMAC3 _genmesh__submeshnames ** SOAP_FMAC4 soap_in_PointerTo_genmesh__submeshnames(struct soap*, const char*, _genmesh__submeshnames **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__levelofdetail
-#define SOAP_TYPE_PointerTo_genmesh__levelofdetail (86)
+#define SOAP_TYPE_PointerTo_genmesh__levelofdetail (90)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__levelofdetail(struct soap*, _genmesh__levelofdetail *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__levelofdetail(struct soap*, _genmesh__levelofdetail *const*, const char*, const char*);
@@ -1806,7 +1816,7 @@ SOAP_FMAC3 _genmesh__levelofdetail ** SOAP_FMAC4 soap_get_PointerTo_genmesh__lev
 SOAP_FMAC3 _genmesh__levelofdetail ** SOAP_FMAC4 soap_in_PointerTo_genmesh__levelofdetail(struct soap*, const char*, _genmesh__levelofdetail **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__boneassignments
-#define SOAP_TYPE_PointerTo_genmesh__boneassignments (85)
+#define SOAP_TYPE_PointerTo_genmesh__boneassignments (89)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__boneassignments(struct soap*, _genmesh__boneassignments *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__boneassignments(struct soap*, _genmesh__boneassignments *const*, const char*, const char*);
@@ -1815,7 +1825,7 @@ SOAP_FMAC3 _genmesh__boneassignments ** SOAP_FMAC4 soap_get_PointerTo_genmesh__b
 SOAP_FMAC3 _genmesh__boneassignments ** SOAP_FMAC4 soap_in_PointerTo_genmesh__boneassignments(struct soap*, const char*, _genmesh__boneassignments **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__skeletonlink
-#define SOAP_TYPE_PointerTo_genmesh__skeletonlink (84)
+#define SOAP_TYPE_PointerTo_genmesh__skeletonlink (88)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__skeletonlink(struct soap*, _genmesh__skeletonlink *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__skeletonlink(struct soap*, _genmesh__skeletonlink *const*, const char*, const char*);
@@ -1824,7 +1834,7 @@ SOAP_FMAC3 _genmesh__skeletonlink ** SOAP_FMAC4 soap_get_PointerTo_genmesh__skel
 SOAP_FMAC3 _genmesh__skeletonlink ** SOAP_FMAC4 soap_in_PointerTo_genmesh__skeletonlink(struct soap*, const char*, _genmesh__skeletonlink **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__submeshes
-#define SOAP_TYPE_PointerTo_genmesh__submeshes (83)
+#define SOAP_TYPE_PointerTo_genmesh__submeshes (87)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__submeshes(struct soap*, _genmesh__submeshes *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__submeshes(struct soap*, _genmesh__submeshes *const*, const char*, const char*);
@@ -1833,7 +1843,7 @@ SOAP_FMAC3 _genmesh__submeshes ** SOAP_FMAC4 soap_get_PointerTo_genmesh__submesh
 SOAP_FMAC3 _genmesh__submeshes ** SOAP_FMAC4 soap_in_PointerTo_genmesh__submeshes(struct soap*, const char*, _genmesh__submeshes **, const char*);
 
 #ifndef SOAP_TYPE_PointerTo_genmesh__sharedgeometry
-#define SOAP_TYPE_PointerTo_genmesh__sharedgeometry (82)
+#define SOAP_TYPE_PointerTo_genmesh__sharedgeometry (86)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_genmesh__sharedgeometry(struct soap*, _genmesh__sharedgeometry *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_genmesh__sharedgeometry(struct soap*, _genmesh__sharedgeometry *const*, const char*, const char*);
@@ -1842,7 +1852,7 @@ SOAP_FMAC3 _genmesh__sharedgeometry ** SOAP_FMAC4 soap_get_PointerTo_genmesh__sh
 SOAP_FMAC3 _genmesh__sharedgeometry ** SOAP_FMAC4 soap_in_PointerTo_genmesh__sharedgeometry(struct soap*, const char*, _genmesh__sharedgeometry **, const char*);
 
 #ifndef SOAP_TYPE_PointerTogenmech__media
-#define SOAP_TYPE_PointerTogenmech__media (81)
+#define SOAP_TYPE_PointerTogenmech__media (85)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTogenmech__media(struct soap*, genmech__media *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTogenmech__media(struct soap*, genmech__media *const*, const char*, const char*);
@@ -1851,7 +1861,7 @@ SOAP_FMAC3 genmech__media ** SOAP_FMAC4 soap_get_PointerTogenmech__media(struct 
 SOAP_FMAC3 genmech__media ** SOAP_FMAC4 soap_in_PointerTogenmech__media(struct soap*, const char*, genmech__media **, const char*);
 
 #ifndef SOAP_TYPE_PointerTogenmech__design
-#define SOAP_TYPE_PointerTogenmech__design (80)
+#define SOAP_TYPE_PointerTogenmech__design (84)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTogenmech__design(struct soap*, genmech__design *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTogenmech__design(struct soap*, genmech__design *const*, const char*, const char*);
@@ -1860,7 +1870,7 @@ SOAP_FMAC3 genmech__design ** SOAP_FMAC4 soap_get_PointerTogenmech__design(struc
 SOAP_FMAC3 genmech__design ** SOAP_FMAC4 soap_in_PointerTogenmech__design(struct soap*, const char*, genmech__design **, const char*);
 
 #ifndef SOAP_TYPE_PointerTogenmech__stats
-#define SOAP_TYPE_PointerTogenmech__stats (79)
+#define SOAP_TYPE_PointerTogenmech__stats (83)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTogenmech__stats(struct soap*, genmech__stats *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTogenmech__stats(struct soap*, genmech__stats *const*, const char*, const char*);
@@ -1869,13 +1879,31 @@ SOAP_FMAC3 genmech__stats ** SOAP_FMAC4 soap_get_PointerTogenmech__stats(struct 
 SOAP_FMAC3 genmech__stats ** SOAP_FMAC4 soap_in_PointerTogenmech__stats(struct soap*, const char*, genmech__stats **, const char*);
 
 #ifndef SOAP_TYPE_PointerTogenmech__mesh
-#define SOAP_TYPE_PointerTogenmech__mesh (77)
+#define SOAP_TYPE_PointerTogenmech__mesh (81)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTogenmech__mesh(struct soap*, genmech__mesh *const*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTogenmech__mesh(struct soap*, genmech__mesh *const*, const char*, const char*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTogenmech__mesh(struct soap*, const char *, int, genmech__mesh *const*, const char *);
 SOAP_FMAC3 genmech__mesh ** SOAP_FMAC4 soap_get_PointerTogenmech__mesh(struct soap*, genmech__mesh **, const char*, const char*);
 SOAP_FMAC3 genmech__mesh ** SOAP_FMAC4 soap_in_PointerTogenmech__mesh(struct soap*, const char*, genmech__mesh **, const char*);
+
+#ifndef SOAP_TYPE_PointerTogenmech__equSlot
+#define SOAP_TYPE_PointerTogenmech__equSlot (79)
+#endif
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTogenmech__equSlot(struct soap*, genmech__equSlot *const*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTogenmech__equSlot(struct soap*, genmech__equSlot *const*, const char*, const char*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTogenmech__equSlot(struct soap*, const char *, int, genmech__equSlot *const*, const char *);
+SOAP_FMAC3 genmech__equSlot ** SOAP_FMAC4 soap_get_PointerTogenmech__equSlot(struct soap*, genmech__equSlot **, const char*, const char*);
+SOAP_FMAC3 genmech__equSlot ** SOAP_FMAC4 soap_in_PointerTogenmech__equSlot(struct soap*, const char*, genmech__equSlot **, const char*);
+
+#ifndef SOAP_TYPE_PointerTogenmech__equSlots
+#define SOAP_TYPE_PointerTogenmech__equSlots (77)
+#endif
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTogenmech__equSlots(struct soap*, genmech__equSlots *const*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTogenmech__equSlots(struct soap*, genmech__equSlots *const*, const char*, const char*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTogenmech__equSlots(struct soap*, const char *, int, genmech__equSlots *const*, const char *);
+SOAP_FMAC3 genmech__equSlots ** SOAP_FMAC4 soap_get_PointerTogenmech__equSlots(struct soap*, genmech__equSlots **, const char*, const char*);
+SOAP_FMAC3 genmech__equSlots ** SOAP_FMAC4 soap_in_PointerTogenmech__equSlots(struct soap*, const char*, genmech__equSlots **, const char*);
 
 #ifndef SOAP_TYPE_PointerTogenmech__torso
 #define SOAP_TYPE_PointerTogenmech__torso (76)
@@ -1907,7 +1935,7 @@ SOAP_FMAC3 char ** SOAP_FMAC4 soap_get_string(struct soap*, char **, const char*
 SOAP_FMAC3 char * * SOAP_FMAC4 soap_in_string(struct soap*, const char*, char **, const char*);
 
 #ifndef SOAP_TYPE_std__vectorTemplateOfPointerTo_genskel__animationlink
-#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genskel__animationlink (186)
+#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genskel__animationlink (190)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTo_genskel__animationlink(struct soap*, std::vector<_genskel__animationlink * >*);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTo_genskel__animationlink(struct soap*, const std::vector<_genskel__animationlink * >*);
@@ -1919,7 +1947,7 @@ SOAP_FMAC3 std::vector<_genskel__animationlink * > * SOAP_FMAC4 soap_instantiate
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__vectorTemplateOfPointerTo_genskel__animationlink(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_std__vectorTemplateOfPointerTo_genskel__keyframe
-#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genskel__keyframe (182)
+#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genskel__keyframe (186)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTo_genskel__keyframe(struct soap*, std::vector<_genskel__keyframe * >*);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTo_genskel__keyframe(struct soap*, const std::vector<_genskel__keyframe * >*);
@@ -1931,7 +1959,7 @@ SOAP_FMAC3 std::vector<_genskel__keyframe * > * SOAP_FMAC4 soap_instantiate_std_
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__vectorTemplateOfPointerTo_genskel__keyframe(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_std__vectorTemplateOfPointerTo_genskel__track
-#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genskel__track (179)
+#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genskel__track (183)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTo_genskel__track(struct soap*, std::vector<_genskel__track * >*);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTo_genskel__track(struct soap*, const std::vector<_genskel__track * >*);
@@ -1943,7 +1971,7 @@ SOAP_FMAC3 std::vector<_genskel__track * > * SOAP_FMAC4 soap_instantiate_std__ve
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__vectorTemplateOfPointerTo_genskel__track(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_std__vectorTemplateOfPointerTo_genskel__animation
-#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genskel__animation (176)
+#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genskel__animation (180)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTo_genskel__animation(struct soap*, std::vector<_genskel__animation * >*);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTo_genskel__animation(struct soap*, const std::vector<_genskel__animation * >*);
@@ -1955,7 +1983,7 @@ SOAP_FMAC3 std::vector<_genskel__animation * > * SOAP_FMAC4 soap_instantiate_std
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__vectorTemplateOfPointerTo_genskel__animation(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_std__vectorTemplateOfPointerTo_genskel__boneparent
-#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genskel__boneparent (174)
+#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genskel__boneparent (178)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTo_genskel__boneparent(struct soap*, std::vector<_genskel__boneparent * >*);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTo_genskel__boneparent(struct soap*, const std::vector<_genskel__boneparent * >*);
@@ -1967,7 +1995,7 @@ SOAP_FMAC3 std::vector<_genskel__boneparent * > * SOAP_FMAC4 soap_instantiate_st
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__vectorTemplateOfPointerTo_genskel__boneparent(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_std__vectorTemplateOfPointerTogenskel__bone
-#define SOAP_TYPE_std__vectorTemplateOfPointerTogenskel__bone (164)
+#define SOAP_TYPE_std__vectorTemplateOfPointerTogenskel__bone (168)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTogenskel__bone(struct soap*, std::vector<genskel__bone * >*);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTogenskel__bone(struct soap*, const std::vector<genskel__bone * >*);
@@ -1979,7 +2007,7 @@ SOAP_FMAC3 std::vector<genskel__bone * > * SOAP_FMAC4 soap_instantiate_std__vect
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__vectorTemplateOfPointerTogenskel__bone(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__poseref
-#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__poseref (162)
+#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__poseref (166)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTo_genmesh__poseref(struct soap*, std::vector<_genmesh__poseref * >*);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTo_genmesh__poseref(struct soap*, const std::vector<_genmesh__poseref * >*);
@@ -1991,7 +2019,7 @@ SOAP_FMAC3 std::vector<_genmesh__poseref * > * SOAP_FMAC4 soap_instantiate_std__
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__vectorTemplateOfPointerTo_genmesh__poseref(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__position
-#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__position (160)
+#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__position (164)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTo_genmesh__position(struct soap*, std::vector<_genmesh__position * >*);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTo_genmesh__position(struct soap*, const std::vector<_genmesh__position * >*);
@@ -2003,7 +2031,7 @@ SOAP_FMAC3 std::vector<_genmesh__position * > * SOAP_FMAC4 soap_instantiate_std_
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__vectorTemplateOfPointerTo_genmesh__position(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__keyframe
-#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__keyframe (159)
+#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__keyframe (163)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTo_genmesh__keyframe(struct soap*, std::vector<_genmesh__keyframe * >*);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTo_genmesh__keyframe(struct soap*, const std::vector<_genmesh__keyframe * >*);
@@ -2015,7 +2043,7 @@ SOAP_FMAC3 std::vector<_genmesh__keyframe * > * SOAP_FMAC4 soap_instantiate_std_
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__vectorTemplateOfPointerTo_genmesh__keyframe(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__track
-#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__track (154)
+#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__track (158)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTo_genmesh__track(struct soap*, std::vector<_genmesh__track * >*);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTo_genmesh__track(struct soap*, const std::vector<_genmesh__track * >*);
@@ -2027,7 +2055,7 @@ SOAP_FMAC3 std::vector<_genmesh__track * > * SOAP_FMAC4 soap_instantiate_std__ve
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__vectorTemplateOfPointerTo_genmesh__track(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__animation
-#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__animation (151)
+#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__animation (155)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTo_genmesh__animation(struct soap*, std::vector<_genmesh__animation * >*);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTo_genmesh__animation(struct soap*, const std::vector<_genmesh__animation * >*);
@@ -2039,7 +2067,7 @@ SOAP_FMAC3 std::vector<_genmesh__animation * > * SOAP_FMAC4 soap_instantiate_std
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__vectorTemplateOfPointerTo_genmesh__animation(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__poseoffset
-#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__poseoffset (148)
+#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__poseoffset (152)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTo_genmesh__poseoffset(struct soap*, std::vector<_genmesh__poseoffset * >*);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTo_genmesh__poseoffset(struct soap*, const std::vector<_genmesh__poseoffset * >*);
@@ -2051,7 +2079,7 @@ SOAP_FMAC3 std::vector<_genmesh__poseoffset * > * SOAP_FMAC4 soap_instantiate_st
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__vectorTemplateOfPointerTo_genmesh__poseoffset(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__pose
-#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__pose (146)
+#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__pose (150)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTo_genmesh__pose(struct soap*, std::vector<_genmesh__pose * >*);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTo_genmesh__pose(struct soap*, const std::vector<_genmesh__pose * >*);
@@ -2063,7 +2091,7 @@ SOAP_FMAC3 std::vector<_genmesh__pose * > * SOAP_FMAC4 soap_instantiate_std__vec
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__vectorTemplateOfPointerTo_genmesh__pose(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__submeshname
-#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__submeshname (144)
+#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__submeshname (148)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTo_genmesh__submeshname(struct soap*, std::vector<_genmesh__submeshname * >*);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTo_genmesh__submeshname(struct soap*, const std::vector<_genmesh__submeshname * >*);
@@ -2075,7 +2103,7 @@ SOAP_FMAC3 std::vector<_genmesh__submeshname * > * SOAP_FMAC4 soap_instantiate_s
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__vectorTemplateOfPointerTo_genmesh__submeshname(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__texcoord
-#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__texcoord (142)
+#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__texcoord (146)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTo_genmesh__texcoord(struct soap*, std::vector<_genmesh__texcoord * >*);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTo_genmesh__texcoord(struct soap*, const std::vector<_genmesh__texcoord * >*);
@@ -2087,7 +2115,7 @@ SOAP_FMAC3 std::vector<_genmesh__texcoord * > * SOAP_FMAC4 soap_instantiate_std_
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__vectorTemplateOfPointerTo_genmesh__texcoord(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__vertex
-#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__vertex (118)
+#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__vertex (122)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTo_genmesh__vertex(struct soap*, std::vector<_genmesh__vertex * >*);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTo_genmesh__vertex(struct soap*, const std::vector<_genmesh__vertex * >*);
@@ -2099,7 +2127,7 @@ SOAP_FMAC3 std::vector<_genmesh__vertex * > * SOAP_FMAC4 soap_instantiate_std__v
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__vectorTemplateOfPointerTo_genmesh__vertex(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__vertexboneassignment
-#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__vertexboneassignment (107)
+#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__vertexboneassignment (111)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTo_genmesh__vertexboneassignment(struct soap*, std::vector<_genmesh__vertexboneassignment * >*);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTo_genmesh__vertexboneassignment(struct soap*, const std::vector<_genmesh__vertexboneassignment * >*);
@@ -2111,7 +2139,7 @@ SOAP_FMAC3 std::vector<_genmesh__vertexboneassignment * > * SOAP_FMAC4 soap_inst
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__vectorTemplateOfPointerTo_genmesh__vertexboneassignment(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__face
-#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__face (104)
+#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__face (108)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTo_genmesh__face(struct soap*, std::vector<_genmesh__face * >*);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTo_genmesh__face(struct soap*, const std::vector<_genmesh__face * >*);
@@ -2123,7 +2151,7 @@ SOAP_FMAC3 std::vector<_genmesh__face * > * SOAP_FMAC4 soap_instantiate_std__vec
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__vectorTemplateOfPointerTo_genmesh__face(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__texture
-#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__texture (102)
+#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__texture (106)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTo_genmesh__texture(struct soap*, std::vector<_genmesh__texture * >*);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTo_genmesh__texture(struct soap*, const std::vector<_genmesh__texture * >*);
@@ -2135,7 +2163,7 @@ SOAP_FMAC3 std::vector<_genmesh__texture * > * SOAP_FMAC4 soap_instantiate_std__
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__vectorTemplateOfPointerTo_genmesh__texture(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__submesh
-#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__submesh (94)
+#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__submesh (98)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTo_genmesh__submesh(struct soap*, std::vector<_genmesh__submesh * >*);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTo_genmesh__submesh(struct soap*, const std::vector<_genmesh__submesh * >*);
@@ -2147,7 +2175,7 @@ SOAP_FMAC3 std::vector<_genmesh__submesh * > * SOAP_FMAC4 soap_instantiate_std__
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__vectorTemplateOfPointerTo_genmesh__submesh(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__vertexbuffer
-#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__vertexbuffer (92)
+#define SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__vertexbuffer (96)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTo_genmesh__vertexbuffer(struct soap*, std::vector<_genmesh__vertexbuffer * >*);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTo_genmesh__vertexbuffer(struct soap*, const std::vector<_genmesh__vertexbuffer * >*);
@@ -2159,7 +2187,7 @@ SOAP_FMAC3 std::vector<_genmesh__vertexbuffer * > * SOAP_FMAC4 soap_instantiate_
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__vectorTemplateOfPointerTo_genmesh__vertexbuffer(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #ifndef SOAP_TYPE_std__vectorTemplateOfPointerTogenmech__mesh
-#define SOAP_TYPE_std__vectorTemplateOfPointerTogenmech__mesh (78)
+#define SOAP_TYPE_std__vectorTemplateOfPointerTogenmech__mesh (82)
 #endif
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTogenmech__mesh(struct soap*, std::vector<genmech__mesh * >*);
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTogenmech__mesh(struct soap*, const std::vector<genmech__mesh * >*);
@@ -2169,6 +2197,18 @@ SOAP_FMAC5 std::vector<genmech__mesh * > * SOAP_FMAC6 soap_new_std__vectorTempla
 SOAP_FMAC5 void SOAP_FMAC6 soap_delete_std__vectorTemplateOfPointerTogenmech__mesh(struct soap*, std::vector<genmech__mesh * >*);
 SOAP_FMAC3 std::vector<genmech__mesh * > * SOAP_FMAC4 soap_instantiate_std__vectorTemplateOfPointerTogenmech__mesh(struct soap*, int, const char*, const char*, size_t*);
 SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__vectorTemplateOfPointerTogenmech__mesh(struct soap*, int, int, void*, size_t, const void*, size_t);
+
+#ifndef SOAP_TYPE_std__vectorTemplateOfPointerTogenmech__equSlot
+#define SOAP_TYPE_std__vectorTemplateOfPointerTogenmech__equSlot (80)
+#endif
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTogenmech__equSlot(struct soap*, std::vector<genmech__equSlot * >*);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTogenmech__equSlot(struct soap*, const std::vector<genmech__equSlot * >*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_std__vectorTemplateOfPointerTogenmech__equSlot(struct soap*, const char*, int, const std::vector<genmech__equSlot * >*, const char*);
+SOAP_FMAC3 std::vector<genmech__equSlot * >* SOAP_FMAC4 soap_in_std__vectorTemplateOfPointerTogenmech__equSlot(struct soap*, const char*, std::vector<genmech__equSlot * >*, const char*);
+SOAP_FMAC5 std::vector<genmech__equSlot * > * SOAP_FMAC6 soap_new_std__vectorTemplateOfPointerTogenmech__equSlot(struct soap*, int);
+SOAP_FMAC5 void SOAP_FMAC6 soap_delete_std__vectorTemplateOfPointerTogenmech__equSlot(struct soap*, std::vector<genmech__equSlot * >*);
+SOAP_FMAC3 std::vector<genmech__equSlot * > * SOAP_FMAC4 soap_instantiate_std__vectorTemplateOfPointerTogenmech__equSlot(struct soap*, int, const char*, const char*, size_t*);
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__vectorTemplateOfPointerTogenmech__equSlot(struct soap*, int, int, void*, size_t, const void*, size_t);
 
 #endif
 
