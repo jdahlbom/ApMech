@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <assert.h>
 
 #include "../generated/generatedStub.h"
 #include "../generated/genmech.nsmap"
@@ -129,6 +130,29 @@ int doWork(char *sourceFile, char *sourcePath, char *targetFile) {
 		free(skeletonFile);
 		return 5;
 	}
+	soap_end_recv(&strsoap);
+
+	assert(skeleton.bones!=0);
+
+	std::vector<std::string> slotBones;	
+	std::vector<std::string> rotateBones;
+	std::vector<genskel__bone *>::iterator it;
+	std::vector<genskel__bone *>::iterator end = skeleton.bones->bone.end();
+	for (it = skeleton.bones->bone.begin(); it<end; ++it) {
+		if (!strncmp("B_SLOT", (*it)->name.c_str(), 6)) {
+			slotBones.push_back(std::string((*it)->name.c_str()));
+			continue;
+		}
+		if (!strncmp("B_ROTATE", (*it)->name.c_str(), 8)) {
+			rotateBones.push_back(std::string((*it)->name.c_str()));
+		}
+	}
+	std::cout << skeleton.bones->bone.size() << " bones in skeleton" << std::endl;
+	std::cout << slotBones.size() << " slot bones in skeleton" << std::endl;
+	std::cout << rotateBones.size() << " rotate bones in skeleton" << std::endl;
+	soap_destroy(&strsoap);
+	soap_end(&strsoap);
+	soap_done(&strsoap);
 
 	std::cout << "Read skeleton OK!" << std::endl;
 	free(skeletonFile);

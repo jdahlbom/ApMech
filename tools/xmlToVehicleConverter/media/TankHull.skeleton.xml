@@ -1,49 +1,31 @@
 <?xml version="1.0"?>
-<skeleton xmlns="urn:apmech/skeletons">
+<skeleton "urn:apmech/skeletons">
   <bones>
     <bone id="0" name="B_ROOT">
       <position x="0.000000" y="0.000000" z="0.000000"/>
-      <rotation angle="1.570796">
+      <rotation angle="0.000000">
         <axis x="1.000000" y="0.000000" z="0.000000"/>
       </rotation>
     </bone>
-    <bone id="1" name="Structure_front_right">
-      <position x="0.000000" y="1.000000" z="3.000000"/>
-      <rotation angle="2.094395">
-        <axis x="-0.577350" y="0.577350" z="0.577350"/>
+    <bone id="2" name="B_SLOT_surface_gun_right">
+      <position x="-2.000000" y="1.800002" z="2.999999"/>
+      <rotation angle="3.141593">
+        <axis x="0.000000" y="0.707107" z="0.707107"/>
       </rotation>
     </bone>
-    <bone id="4" name="Structure_front_top.001">
-      <position x="0.000000" y="1.800000" z="3.000000"/>
-      <rotation angle="2.094395">
-        <axis x="-0.577350" y="0.577350" z="0.577350"/>
+    <bone id="3" name="B_SLOT_surface_gun_left">
+      <position x="2.000000" y="1.800001" z="2.999998"/>
+      <rotation angle="3.141593">
+        <axis x="0.000000" y="0.707107" z="0.707107"/>
       </rotation>
     </bone>
-    <bone id="7" name="Structure_turret_center">
-      <position x="0.000000" y="1.000000" z="-0.000000"/>
-      <rotation angle="1.823477">
-        <axis x="-0.774597" y="0.447214" z="-0.447214"/>
+    <bone id="1" name="B_ROTATE_turret">
+      <position x="-0.000000" y="1.000000" z="-0.500000"/>
+      <rotation angle="3.141593">
+        <axis x="0.000000" y="1.000000" z="-0.000000"/>
       </rotation>
     </bone>
-    <bone id="6" name="SLOT_right_surface_gun">
-      <position x="-0.000000" y="2.000000" z="0.000000"/>
-      <rotation angle="1.570796">
-        <axis x="-0.000000" y="0.000000" z="1.000000"/>
-      </rotation>
-    </bone>
-    <bone id="2" name="Structure_front_top.002">
-      <position x="-0.000000" y="2.000000" z="0.000000"/>
-      <rotation angle="1.570796">
-        <axis x="-0.000000" y="0.000000" z="1.000000"/>
-      </rotation>
-    </bone>
-    <bone id="5" name="B_ROTATE_turret">
-      <position x="-0.000000" y="0.500000" z="0.000000"/>
-      <rotation angle="2.418859">
-        <axis x="-0.377964" y="0.654654" z="0.654654"/>
-      </rotation>
-    </bone>
-    <bone id="3" name="SLOT_turretMainGun">
+    <bone id="4" name="B_SLOT_turretMainGun">
       <position x="0.000000" y="2.000000" z="-0.000000"/>
       <rotation angle="1.570796">
         <axis x="-1.000000" y="0.000000" z="-0.000000"/>
@@ -51,12 +33,9 @@
     </bone>
   </bones>
   <bonehierarchy>
-    <boneparent bone="Structure_front_right" parent="B_ROOT"/>
-    <boneparent bone="Structure_front_top.001" parent="B_ROOT"/>
-    <boneparent bone="Structure_turret_center" parent="B_ROOT"/>
-    <boneparent bone="SLOT_right_surface_gun" parent="Structure_front_right"/>
-    <boneparent bone="Structure_front_top.002" parent="Structure_front_top.001"/>
-    <boneparent bone="B_ROTATE_turret" parent="Structure_turret_center"/>
-    <boneparent bone="SLOT_turretMainGun" parent="B_ROTATE_turret"/>
+    <boneparent bone="B_SLOT_surface_gun_right" parent="B_ROOT"/>
+    <boneparent bone="B_SLOT_surface_gun_left" parent="B_ROOT"/>
+    <boneparent bone="B_ROTATE_turret" parent="B_ROOT"/>
+    <boneparent bone="B_SLOT_turretMainGun" parent="B_ROTATE_turret"/>
   </bonehierarchy>
 </skeleton>
