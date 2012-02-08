@@ -55,11 +55,14 @@ void printHelp() {
 	cout << "-h, --help\t\tPrints this help" << endl;
 }
 
+_genmech__mech *constructEmptyMech();
+genmech__equSlot *constructEquSlot(const char *boneName);
+
 int doWork(char *sourceFile, char *sourcePath, char *targetFile) {
 	struct soap strsoap;
 	_genmesh__mesh mesh;
 	_genskel__skeleton skeleton;
-	_genmech__mech mech;
+	_genmech__mech *mech;
 
 	soap_init(&strsoap);
 	soap_begin(&strsoap);
@@ -134,27 +137,96 @@ int doWork(char *sourceFile, char *sourcePath, char *targetFile) {
 
 	assert(skeleton.bones!=0);
 
+	mech = constructEmptyMech();
+	mech->name = std::string(sourceFile);
+
 	std::vector<std::string> slotBones;	
 	std::vector<std::string> rotateBones;
 	std::vector<genskel__bone *>::iterator it;
 	std::vector<genskel__bone *>::iterator end = skeleton.bones->bone.end();
 	for (it = skeleton.bones->bone.begin(); it<end; ++it) {
-		if (!strncmp("B_SLOT", (*it)->name.c_str(), 6)) {
-			slotBones.push_back(std::string((*it)->name.c_str()));
+		const char *boneName = (*it)->name.c_str();
+		if (strncmp("B_SLOT", boneName, 6) == 0) {
+			slotBones.push_back(std::string(boneName));
+			mech->design->equipmentSlots->slot.push_back(constructEquSlot(boneName));
 			continue;
 		}
-		if (!strncmp("B_ROTATE", (*it)->name.c_str(), 8)) {
-			rotateBones.push_back(std::string((*it)->name.c_str()));
+		if (strncmp("B_ROTATE", boneName, 8) == 0) {
+			mech->design->torsoBone = std::string(boneName);
+			rotateBones.push_back(std::string(boneName));
 		}
 	}
 	std::cout << skeleton.bones->bone.size() << " bones in skeleton" << std::endl;
 	std::cout << slotBones.size() << " slot bones in skeleton" << std::endl;
 	std::cout << rotateBones.size() << " rotate bones in skeleton" << std::endl;
+	if (rotateBones.size() != 1) {
+		std::cout << "Expected just one rotate bone (torso), had more. This may be a problem." << std::endl;
+	}
 	soap_destroy(&strsoap);
 	soap_end(&strsoap);
 	soap_done(&strsoap);
 
 	std::cout << "Read skeleton OK!" << std::endl;
 	free(skeletonFile);
+
+	
+	soap_init(&strsoap);
+	soap_begin(&strsoap);
+	soap_set_omode(&strsoap, SOAP_XML_GRAPH);
+
+	mech->soap_serialize(&strsoap);
+	
+	std::ofstream os;
+	os.open(targetFile, std::ios_base::out | std::ios_base::trunc);
+	if (os.fail()) {
+		std::cout << "Error opening [" << targetFile << "] for write!";
+		return 6;
+	}
+	strsoap.os = &os;
+	strsoap.socket = -1;
+	
+	soap_begin_send(&strsoap);
+	mech->soap_put(&strsoap, "mech", NULL);
+	soap_end_send(&strsoap);
+
+	os.close();
+
+	soap_destroy(&strsoap);
+	soap_end(&strsoap);
+	soap_done(&strsoap);
+	
 	return 0;
 }
+
+
+/**
+ * Constructs a new mech object, initializing it correctly.
+ * User must delete the mech after using it.
+ */
+_genmech__mech *constructEmptyMech() {
+	_genmech__mech *mech = new _genmech__mech();
+
+	mech->stats = new genmech__stats();
+	mech->stats->maxTurnRate = 5;
+	mech->stats->maxForwardAcceleration = 5;
+	mech->stats->maxBackwardAcceleration = 5;
+	mech->stats->maxSpeed = 5;	
+
+	mech->design = new genmech__design();
+	mech->design->torso = new genmech__torso();
+	mech->design->equipmentSlots = new genmech__equSlots();
+
+	mech->media = new genmech__media();
+
+	return mech;
+}
+
+/**
+ * Constructs a new equ slot object with given bone name value
+ */
+genmech__equSlot *constructEquSlot(const char *boneName) {
+	genmech__equSlot *slot = new genmech__equSlot();
+	slot->boneName = std::string(boneName);
+	return slot;
+}
+
