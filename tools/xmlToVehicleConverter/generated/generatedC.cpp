@@ -7,7 +7,7 @@
 
 #include "generatedH.h"
 
-SOAP_SOURCE_STAMP("@(#) generatedC.cpp ver 2.7.9l 2012-02-01 18:45:13 GMT")
+SOAP_SOURCE_STAMP("@(#) generatedC.cpp ver 2.7.9l 2012-02-09 20:18:26 GMT")
 
 
 #ifndef WITH_NOGLOBAL
@@ -205,8 +205,6 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, int *type)
 		return soap_in__genmesh__submesh_use32bitindexes(soap, NULL, NULL, "genmesh:submesh-use32bitindexes");
 	case SOAP_TYPE__genmesh__submesh_usesharedvertices:
 		return soap_in__genmesh__submesh_usesharedvertices(soap, NULL, NULL, "genmesh:submesh-usesharedvertices");
-	case SOAP_TYPE_genmech__meshType:
-		return soap_in_genmech__meshType(soap, NULL, NULL, "genmech:meshType");
 	case SOAP_TYPE_std__string:
 		return soap_in_std__string(soap, NULL, NULL, "xsd:string");
 	case SOAP_TYPE_genskel__scale:
@@ -223,8 +221,6 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, int *type)
 		return soap_in_genskel__bones(soap, NULL, NULL, "genskel:bones");
 	case SOAP_TYPE_genmech__mesh:
 		return soap_in_genmech__mesh(soap, NULL, NULL, "genmech:mesh");
-	case SOAP_TYPE_genmech__media:
-		return soap_in_genmech__media(soap, NULL, NULL, "genmech:media");
 	case SOAP_TYPE_genmech__torso:
 		return soap_in_genmech__torso(soap, NULL, NULL, "genmech:torso");
 	case SOAP_TYPE_genmech__equSlot:
@@ -347,14 +343,12 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, int *type)
 		return soap_in_PointerTo_genmesh__submeshes(soap, NULL, NULL, "genmesh:submeshes");
 	case SOAP_TYPE_PointerTo_genmesh__sharedgeometry:
 		return soap_in_PointerTo_genmesh__sharedgeometry(soap, NULL, NULL, "genmesh:sharedgeometry");
-	case SOAP_TYPE_PointerTogenmech__media:
-		return soap_in_PointerTogenmech__media(soap, NULL, NULL, "genmech:media");
+	case SOAP_TYPE_PointerTogenmech__mesh:
+		return soap_in_PointerTogenmech__mesh(soap, NULL, NULL, "genmech:mesh");
 	case SOAP_TYPE_PointerTogenmech__design:
 		return soap_in_PointerTogenmech__design(soap, NULL, NULL, "genmech:design");
 	case SOAP_TYPE_PointerTogenmech__stats:
 		return soap_in_PointerTogenmech__stats(soap, NULL, NULL, "genmech:stats");
-	case SOAP_TYPE_PointerTogenmech__mesh:
-		return soap_in_PointerTogenmech__mesh(soap, NULL, NULL, "genmech:mesh");
 	case SOAP_TYPE_PointerTogenmech__equSlot:
 		return soap_in_PointerTogenmech__equSlot(soap, NULL, NULL, "genmech:equSlot");
 	case SOAP_TYPE_PointerTogenmech__equSlots:
@@ -401,10 +395,6 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, int *type)
 		if (!soap_match_tag(soap, t, "genmech:mesh"))
 		{	*type = SOAP_TYPE_genmech__mesh;
 			return soap_in_genmech__mesh(soap, NULL, NULL, NULL);
-		}
-		if (!soap_match_tag(soap, t, "genmech:media"))
-		{	*type = SOAP_TYPE_genmech__media;
-			return soap_in_genmech__media(soap, NULL, NULL, NULL);
 		}
 		if (!soap_match_tag(soap, t, "genmech:torso"))
 		{	*type = SOAP_TYPE_genmech__torso;
@@ -525,10 +515,6 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, int *type)
 		if (!soap_match_tag(soap, t, "genmesh:submesh-usesharedvertices"))
 		{	*type = SOAP_TYPE__genmesh__submesh_usesharedvertices;
 			return soap_in__genmesh__submesh_usesharedvertices(soap, NULL, NULL, NULL);
-		}
-		if (!soap_match_tag(soap, t, "genmech:meshType"))
-		{	*type = SOAP_TYPE_genmech__meshType;
-			return soap_in_genmech__meshType(soap, NULL, NULL, NULL);
 		}
 		if (!soap_match_tag(soap, t, "xsd:string"))
 		{	char **s;
@@ -870,8 +856,6 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_putelement(struct soap *soap, const void *ptr, co
 		return soap_out__genmesh__submesh_use32bitindexes(soap, tag, id, (const enum _genmesh__submesh_use32bitindexes *)ptr, "genmesh:submesh-use32bitindexes");
 	case SOAP_TYPE__genmesh__submesh_usesharedvertices:
 		return soap_out__genmesh__submesh_usesharedvertices(soap, tag, id, (const enum _genmesh__submesh_usesharedvertices *)ptr, "genmesh:submesh-usesharedvertices");
-	case SOAP_TYPE_genmech__meshType:
-		return soap_out_genmech__meshType(soap, tag, id, (const enum genmech__meshType *)ptr, "genmech:meshType");
 	case SOAP_TYPE_std__string:
 		return soap_out_std__string(soap, tag, id, (const std::string *)ptr, "xsd:string");
 	case SOAP_TYPE__genskel__animationlink:
@@ -994,8 +978,6 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_putelement(struct soap *soap, const void *ptr, co
 		return ((_genmech__mech *)ptr)->soap_out(soap, "genmech:mech", id, NULL);
 	case SOAP_TYPE_genmech__mesh:
 		return ((genmech__mesh *)ptr)->soap_out(soap, tag, id, "genmech:mesh");
-	case SOAP_TYPE_genmech__media:
-		return ((genmech__media *)ptr)->soap_out(soap, tag, id, "genmech:media");
 	case SOAP_TYPE_genmech__torso:
 		return ((genmech__torso *)ptr)->soap_out(soap, tag, id, "genmech:torso");
 	case SOAP_TYPE_genmech__equSlot:
@@ -1118,14 +1100,12 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_putelement(struct soap *soap, const void *ptr, co
 		return soap_out_PointerTo_genmesh__submeshes(soap, tag, id, (_genmesh__submeshes *const*)ptr, "genmesh:submeshes");
 	case SOAP_TYPE_PointerTo_genmesh__sharedgeometry:
 		return soap_out_PointerTo_genmesh__sharedgeometry(soap, tag, id, (_genmesh__sharedgeometry *const*)ptr, "genmesh:sharedgeometry");
-	case SOAP_TYPE_PointerTogenmech__media:
-		return soap_out_PointerTogenmech__media(soap, tag, id, (genmech__media *const*)ptr, "genmech:media");
+	case SOAP_TYPE_PointerTogenmech__mesh:
+		return soap_out_PointerTogenmech__mesh(soap, tag, id, (genmech__mesh *const*)ptr, "genmech:mesh");
 	case SOAP_TYPE_PointerTogenmech__design:
 		return soap_out_PointerTogenmech__design(soap, tag, id, (genmech__design *const*)ptr, "genmech:design");
 	case SOAP_TYPE_PointerTogenmech__stats:
 		return soap_out_PointerTogenmech__stats(soap, tag, id, (genmech__stats *const*)ptr, "genmech:stats");
-	case SOAP_TYPE_PointerTogenmech__mesh:
-		return soap_out_PointerTogenmech__mesh(soap, tag, id, (genmech__mesh *const*)ptr, "genmech:mesh");
 	case SOAP_TYPE_PointerTogenmech__equSlot:
 		return soap_out_PointerTogenmech__equSlot(soap, tag, id, (genmech__equSlot *const*)ptr, "genmech:equSlot");
 	case SOAP_TYPE_PointerTogenmech__equSlots:
@@ -1344,9 +1324,6 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 	case SOAP_TYPE_genmech__mesh:
 		((genmech__mesh *)ptr)->soap_serialize(soap);
 		break;
-	case SOAP_TYPE_genmech__media:
-		((genmech__media *)ptr)->soap_serialize(soap);
-		break;
 	case SOAP_TYPE_genmech__torso:
 		((genmech__torso *)ptr)->soap_serialize(soap);
 		break;
@@ -1536,17 +1513,14 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 	case SOAP_TYPE_PointerTo_genmesh__sharedgeometry:
 		soap_serialize_PointerTo_genmesh__sharedgeometry(soap, (_genmesh__sharedgeometry *const*)ptr);
 		break;
-	case SOAP_TYPE_PointerTogenmech__media:
-		soap_serialize_PointerTogenmech__media(soap, (genmech__media *const*)ptr);
+	case SOAP_TYPE_PointerTogenmech__mesh:
+		soap_serialize_PointerTogenmech__mesh(soap, (genmech__mesh *const*)ptr);
 		break;
 	case SOAP_TYPE_PointerTogenmech__design:
 		soap_serialize_PointerTogenmech__design(soap, (genmech__design *const*)ptr);
 		break;
 	case SOAP_TYPE_PointerTogenmech__stats:
 		soap_serialize_PointerTogenmech__stats(soap, (genmech__stats *const*)ptr);
-		break;
-	case SOAP_TYPE_PointerTogenmech__mesh:
-		soap_serialize_PointerTogenmech__mesh(soap, (genmech__mesh *const*)ptr);
 		break;
 	case SOAP_TYPE_PointerTogenmech__equSlot:
 		soap_serialize_PointerTogenmech__equSlot(soap, (genmech__equSlot *const*)ptr);
@@ -1587,8 +1561,6 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 		return (void*)soap_instantiate_genmech__equSlot(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_genmech__torso:
 		return (void*)soap_instantiate_genmech__torso(soap, -1, type, arrayType, n);
-	case SOAP_TYPE_genmech__media:
-		return (void*)soap_instantiate_genmech__media(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_genmech__mesh:
 		return (void*)soap_instantiate_genmech__mesh(soap, -1, type, arrayType, n);
 	case SOAP_TYPE__genmech__mech:
@@ -1775,8 +1747,6 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 		return (void*)soap_instantiate_std__vectorTemplateOfPointerTo_genmesh__submesh(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__vertexbuffer:
 		return (void*)soap_instantiate_std__vectorTemplateOfPointerTo_genmesh__vertexbuffer(soap, -1, type, arrayType, n);
-	case SOAP_TYPE_std__vectorTemplateOfPointerTogenmech__mesh:
-		return (void*)soap_instantiate_std__vectorTemplateOfPointerTogenmech__mesh(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_std__vectorTemplateOfPointerTogenmech__equSlot:
 		return (void*)soap_instantiate_std__vectorTemplateOfPointerTogenmech__equSlot(soap, -1, type, arrayType, n);
 	}
@@ -1821,12 +1791,6 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap_clist *p)
 			delete (genmech__torso*)p->ptr;
 		else
 			delete[] (genmech__torso*)p->ptr;
-		break;
-	case SOAP_TYPE_genmech__media:
-		if (p->size < 0)
-			delete (genmech__media*)p->ptr;
-		else
-			delete[] (genmech__media*)p->ptr;
 		break;
 	case SOAP_TYPE_genmech__mesh:
 		if (p->size < 0)
@@ -2356,12 +2320,6 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap_clist *p)
 		else
 			delete[] (std::vector<_genmesh__vertexbuffer * >*)p->ptr;
 		break;
-	case SOAP_TYPE_std__vectorTemplateOfPointerTogenmech__mesh:
-		if (p->size < 0)
-			delete (std::vector<genmech__mesh * >*)p->ptr;
-		else
-			delete[] (std::vector<genmech__mesh * >*)p->ptr;
-		break;
 	case SOAP_TYPE_std__vectorTemplateOfPointerTogenmech__equSlot:
 		if (p->size < 0)
 			delete (std::vector<genmech__equSlot * >*)p->ptr;
@@ -2467,10 +2425,6 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_container_insert(struct soap *soap, int st, int 
 	case SOAP_TYPE_std__vectorTemplateOfPointerTo_genmesh__vertexbuffer:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Container insert type=%d in %d location=%p object=%p len=%lu\n", st, tt, p, q, (unsigned long)len));
 		(*(std::vector<_genmesh__vertexbuffer * >*)p)[len] = *(_genmesh__vertexbuffer **)q;
-		break;
-	case SOAP_TYPE_std__vectorTemplateOfPointerTogenmech__mesh:
-		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Container insert type=%d in %d location=%p object=%p len=%lu\n", st, tt, p, q, (unsigned long)len));
-		(*(std::vector<genmech__mesh * >*)p)[len] = *(genmech__mesh **)q;
 		break;
 	case SOAP_TYPE_std__vectorTemplateOfPointerTogenmech__equSlot:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Container insert type=%d in %d location=%p object=%p len=%lu\n", st, tt, p, q, (unsigned long)len));
@@ -4409,86 +4363,6 @@ SOAP_FMAC3 enum _genmesh__submesh_usesharedvertices * SOAP_FMAC4 soap_in__genmes
 	}
 	else
 	{	a = (enum _genmesh__submesh_usesharedvertices *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__genmesh__submesh_usesharedvertices, 0, sizeof(enum _genmesh__submesh_usesharedvertices), 0, NULL);
-		if (soap->body && soap_element_end_in(soap, tag))
-			return NULL;
-	}
-	return a;
-}
-
-SOAP_FMAC3 void SOAP_FMAC4 soap_default_genmech__meshType(struct soap *soap, enum genmech__meshType *a)
-{	(void)soap; /* appease -Wall -Werror */
-#ifdef SOAP_DEFAULT_genmech__meshType
-	*a = SOAP_DEFAULT_genmech__meshType;
-#else
-	*a = (enum genmech__meshType)0;
-#endif
-}
-
-SOAP_FMAC3 int SOAP_FMAC4 soap_put_genmech__meshType(struct soap *soap, const enum genmech__meshType *a, const char *tag, const char *type)
-{
-	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_genmech__meshType);
-	if (soap_out_genmech__meshType(soap, tag, id, a, type))
-		return soap->error;
-	return soap_putindependent(soap);
-}
-
-static const struct soap_code_map soap_codes_genmech__meshType[] =
-{	{ (long)genmech__meshType__TORSO, "TORSO" },
-	{ (long)genmech__meshType__LEGS, "LEGS" },
-	{ 0, NULL }
-};
-
-SOAP_FMAC3S const char* SOAP_FMAC4S soap_genmech__meshType2s(struct soap *soap, enum genmech__meshType n)
-{	const char *s = soap_code_str(soap_codes_genmech__meshType, (long)n);
-	if (s)
-		return s;
-	return soap_long2s(soap, (long)n);
-}
-
-SOAP_FMAC3 int SOAP_FMAC4 soap_out_genmech__meshType(struct soap *soap, const char *tag, int id, const enum genmech__meshType *a, const char *type)
-{	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_genmech__meshType), type) || soap_send(soap, soap_genmech__meshType2s(soap, *a)))
-		return soap->error;
-	return soap_element_end_out(soap, tag);
-}
-
-SOAP_FMAC3 enum genmech__meshType * SOAP_FMAC4 soap_get_genmech__meshType(struct soap *soap, enum genmech__meshType *p, const char *tag, const char *type)
-{
-	if ((p = soap_in_genmech__meshType(soap, tag, p, type)))
-		if (soap_getindependent(soap))
-			return NULL;
-	return p;
-}
-
-SOAP_FMAC3S int SOAP_FMAC4S soap_s2genmech__meshType(struct soap *soap, const char *s, enum genmech__meshType *a)
-{
-	const struct soap_code_map *map;
-	if (!s)
-		return SOAP_OK;
-	map = soap_code(soap_codes_genmech__meshType, s);
-	if (map)
-		*a = (enum genmech__meshType)map->code;
-	else
-	{	long n;
-		if (soap_s2long(soap, s, &n) || ((soap->mode & SOAP_XML_STRICT) && (n < 0 || n > 1)))
-			return soap->error = SOAP_TYPE;
-		*a = (enum genmech__meshType)n;
-	}
-	return SOAP_OK;
-}
-
-SOAP_FMAC3 enum genmech__meshType * SOAP_FMAC4 soap_in_genmech__meshType(struct soap *soap, const char *tag, enum genmech__meshType *a, const char *type)
-{
-	if (soap_element_begin_in(soap, tag, 0, type))
-		return NULL;
-	a = (enum genmech__meshType *)soap_id_enter(soap, soap->id, a, SOAP_TYPE_genmech__meshType, sizeof(enum genmech__meshType), 0, NULL, NULL, NULL);
-	if (!a)
-		return NULL;
-	if (soap->body && !*soap->href)
-	{	if (!a || soap_s2genmech__meshType(soap, soap_value(soap), a) || soap_element_end_in(soap, tag))
-			return NULL;
-	}
-	else
-	{	a = (enum genmech__meshType *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_genmech__meshType, 0, sizeof(enum genmech__meshType), 0, NULL);
 		if (soap->body && soap_element_end_in(soap, tag))
 			return NULL;
 	}
@@ -13855,7 +13729,7 @@ void _genmech__mech::soap_default(struct soap *soap)
 	soap_default_std__string(soap, &this->_genmech__mech::name);
 	this->_genmech__mech::stats = NULL;
 	this->_genmech__mech::design = NULL;
-	this->_genmech__mech::media = NULL;
+	this->_genmech__mech::mesh = NULL;
 	/* transient soap skipped */
 }
 
@@ -13866,7 +13740,7 @@ void _genmech__mech::soap_serialize(struct soap *soap) const
 	soap_serialize_std__string(soap, &this->_genmech__mech::name);
 	soap_serialize_PointerTogenmech__stats(soap, &this->_genmech__mech::stats);
 	soap_serialize_PointerTogenmech__design(soap, &this->_genmech__mech::design);
-	soap_serialize_PointerTogenmech__media(soap, &this->_genmech__mech::media);
+	soap_serialize_PointerTogenmech__mesh(soap, &this->_genmech__mech::mesh);
 	/* transient soap skipped */
 }
 
@@ -13895,7 +13769,7 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_out__genmech__mech(struct soap *soap, const char 
 		return soap->error;
 	if (soap_out_PointerTogenmech__design(soap, "genmech:design", -1, &(a->_genmech__mech::design), ""))
 		return soap->error;
-	if (soap_out_PointerTogenmech__media(soap, "genmech:media", -1, &(a->_genmech__mech::media), ""))
+	if (soap_out_PointerTogenmech__mesh(soap, "genmech:mesh", -1, &(a->_genmech__mech::mesh), ""))
 		return soap->error;
 	/* transient soap skipped */
 	return soap_element_end_out(soap, tag);
@@ -13933,7 +13807,7 @@ SOAP_FMAC3 _genmech__mech * SOAP_FMAC4 soap_in__genmech__mech(struct soap *soap,
 			return (_genmech__mech *)a->soap_in(soap, tag, type);
 		}
 	}
-	short soap_flag_schemaVersion1 = 1, soap_flag_name1 = 1, soap_flag_stats1 = 1, soap_flag_design1 = 1, soap_flag_media1 = 1;
+	short soap_flag_schemaVersion1 = 1, soap_flag_name1 = 1, soap_flag_stats1 = 1, soap_flag_design1 = 1, soap_flag_mesh1 = 1;
 	if (soap->body && !*soap->href)
 	{
 		for (;;)
@@ -13958,9 +13832,9 @@ SOAP_FMAC3 _genmech__mech * SOAP_FMAC4 soap_in__genmech__mech(struct soap *soap,
 				{	soap_flag_design1--;
 					continue;
 				}
-			if (soap_flag_media1 && soap->error == SOAP_TAG_MISMATCH)
-				if (soap_in_PointerTogenmech__media(soap, "genmech:media", &(a->_genmech__mech::media), "genmech:media"))
-				{	soap_flag_media1--;
+			if (soap_flag_mesh1 && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_PointerTogenmech__mesh(soap, "genmech:mesh", &(a->_genmech__mech::mesh), "genmech:mesh"))
+				{	soap_flag_mesh1--;
 					continue;
 				}
 			/* transient soap skipped */
@@ -13979,7 +13853,7 @@ SOAP_FMAC3 _genmech__mech * SOAP_FMAC4 soap_in__genmech__mech(struct soap *soap,
 		if (soap->body && soap_element_end_in(soap, tag))
 			return NULL;
 	}
-	if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_schemaVersion1 > 0 || soap_flag_name1 > 0 || soap_flag_stats1 > 0 || soap_flag_design1 > 0 || soap_flag_media1 > 0))
+	if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_schemaVersion1 > 0 || soap_flag_name1 > 0 || soap_flag_stats1 > 0 || soap_flag_design1 > 0 || soap_flag_mesh1 > 0))
 	{	soap->error = SOAP_OCCURS;
 		return NULL;
 	}
@@ -14030,7 +13904,6 @@ void genmech__mesh::soap_default(struct soap *soap)
 {
 	this->soap = soap;
 	this->genmech__mesh::translation = "000.00;000.00;000.00";
-	soap_default_genmech__meshType(soap, &this->genmech__mesh::type);
 	soap_default_std__string(soap, &this->genmech__mesh::file);
 	/* transient soap skipped */
 }
@@ -14058,7 +13931,6 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_out_genmech__mesh(struct soap *soap, const char *
 {
 	if (!((genmech__mesh *)a)->translation.empty())
 		soap_set_attr(soap, "translation", ((genmech__mesh *)a)->translation.c_str());
-	soap_set_attr(soap, "type", soap_genmech__meshType2s(soap, ((genmech__mesh *)a)->type));
 	if (!((genmech__mesh *)a)->file.empty())
 		soap_set_attr(soap, "file", ((genmech__mesh *)a)->file.c_str());
 	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_genmech__mesh), type))
@@ -14107,8 +13979,6 @@ SOAP_FMAC3 genmech__mesh * SOAP_FMAC4 soap_in_genmech__mesh(struct soap *soap, c
 			((genmech__mesh *)a)->translation.assign(s);
 		}
 	}
-	if (soap_s2genmech__meshType(soap, soap_attr_value(soap, "type", 1), &((genmech__mesh *)a)->type))
-		return NULL;
 	{	const char *t = soap_attr_value(soap, "file", 1);
 		if (t)
 		{	char *s;
@@ -14178,141 +14048,6 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_copy_genmech__mesh(struct soap *soap, int st, in
 {
 	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying genmech__mesh %p -> %p\n", q, p));
 	*(genmech__mesh*)p = *(genmech__mesh*)q;
-}
-
-void genmech__media::soap_default(struct soap *soap)
-{
-	this->soap = soap;
-	soap_default_std__vectorTemplateOfPointerTogenmech__mesh(soap, &this->genmech__media::mesh);
-	/* transient soap skipped */
-}
-
-void genmech__media::soap_serialize(struct soap *soap) const
-{
-	(void)soap; /* appease -Wall -Werror */
-	soap_serialize_std__vectorTemplateOfPointerTogenmech__mesh(soap, &this->genmech__media::mesh);
-	/* transient soap skipped */
-}
-
-int genmech__media::soap_put(struct soap *soap, const char *tag, const  char *type) const
-{
-	register int id = soap_embed(soap, (void*)this, NULL, 0, tag, SOAP_TYPE_genmech__media);
-	if (this->soap_out(soap, tag, id, type))
-		return soap->error;
-	return soap_putindependent(soap);
-}
-
-int genmech__media::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
-{
-	return soap_out_genmech__media(soap, tag, id, this, type);
-}
-
-SOAP_FMAC3 int SOAP_FMAC4 soap_out_genmech__media(struct soap *soap, const char *tag, int id, const genmech__media *a, const char *type)
-{
-	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_genmech__media), type))
-		return soap->error;
-	if (soap_out_std__vectorTemplateOfPointerTogenmech__mesh(soap, "genmech:mesh", -1, &(a->genmech__media::mesh), ""))
-		return soap->error;
-	/* transient soap skipped */
-	return soap_element_end_out(soap, tag);
-}
-
-void *genmech__media::soap_get(struct soap *soap, const char *tag, const char *type)
-{
-	return soap_get_genmech__media(soap, this, tag, type);
-}
-
-SOAP_FMAC3 genmech__media * SOAP_FMAC4 soap_get_genmech__media(struct soap *soap, genmech__media *p, const char *tag, const char *type)
-{
-	if ((p = soap_in_genmech__media(soap, tag, p, type)))
-		if (soap_getindependent(soap))
-			return NULL;
-	return p;
-}
-
-void *genmech__media::soap_in(struct soap *soap, const char *tag, const char *type)
-{	return soap_in_genmech__media(soap, tag, this, type);
-}
-
-SOAP_FMAC3 genmech__media * SOAP_FMAC4 soap_in_genmech__media(struct soap *soap, const char *tag, genmech__media *a, const char *type)
-{
-	if (soap_element_begin_in(soap, tag, 0, NULL))
-		return NULL;
-	a = (genmech__media *)soap_class_id_enter(soap, soap->id, a, SOAP_TYPE_genmech__media, sizeof(genmech__media), soap->type, soap->arrayType);
-	if (!a)
-		return NULL;
-	if (soap->alloced)
-	{	a->soap_default(soap);
-		if (soap->clist->type != SOAP_TYPE_genmech__media)
-		{	soap_revert(soap);
-			*soap->id = '\0';
-			return (genmech__media *)a->soap_in(soap, tag, type);
-		}
-	}
-	if (soap->body && !*soap->href)
-	{
-		for (;;)
-		{	soap->error = SOAP_TAG_MISMATCH;
-			if (soap->error == SOAP_TAG_MISMATCH)
-				if (soap_in_std__vectorTemplateOfPointerTogenmech__mesh(soap, "genmech:mesh", &(a->genmech__media::mesh), "genmech:mesh"))
-					continue;
-			/* transient soap skipped */
-			if (soap->error == SOAP_TAG_MISMATCH)
-				soap->error = soap_ignore_element(soap);
-			if (soap->error == SOAP_NO_TAG)
-				break;
-			if (soap->error)
-				return NULL;
-		}
-		if (soap_element_end_in(soap, tag))
-			return NULL;
-	}
-	else
-	{	a = (genmech__media *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_genmech__media, 0, sizeof(genmech__media), 0, soap_copy_genmech__media);
-		if (soap->body && soap_element_end_in(soap, tag))
-			return NULL;
-	}
-	return a;
-}
-
-SOAP_FMAC5 genmech__media * SOAP_FMAC6 soap_new_genmech__media(struct soap *soap, int n)
-{	return soap_instantiate_genmech__media(soap, n, NULL, NULL, NULL);
-}
-
-SOAP_FMAC5 void SOAP_FMAC6 soap_delete_genmech__media(struct soap *soap, genmech__media *p)
-{	soap_delete(soap, p);
-}
-
-SOAP_FMAC3 genmech__media * SOAP_FMAC4 soap_instantiate_genmech__media(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
-{
-	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_genmech__media(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
-	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_genmech__media, n, soap_fdelete);
-	if (!cp)
-		return NULL;
-	if (n < 0)
-	{	cp->ptr = (void*)new genmech__media;
-		if (size)
-			*size = sizeof(genmech__media);
-		((genmech__media*)cp->ptr)->soap = soap;
-	}
-	else
-	{	cp->ptr = (void*)new genmech__media[n];
-		if (!cp->ptr)
-		{	soap->error = SOAP_EOM;
-			return NULL;
-		}
-		if (size)
-			*size = n * sizeof(genmech__media);
-		for (int i = 0; i < n; i++)
-			((genmech__media*)cp->ptr)[i].soap = soap;
-	}
-		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
-	return (genmech__media*)cp->ptr;
-}
-SOAP_FMAC3 void SOAP_FMAC4 soap_copy_genmech__media(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
-{
-	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying genmech__media %p -> %p\n", q, p));
-	*(genmech__media*)p = *(genmech__media*)q;
 }
 
 void genmech__torso::soap_default(struct soap *soap)
@@ -19111,54 +18846,54 @@ SOAP_FMAC3 _genmesh__sharedgeometry ** SOAP_FMAC4 soap_in_PointerTo_genmesh__sha
 	return a;
 }
 
-SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTogenmech__media(struct soap *soap, genmech__media *const*a)
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTogenmech__mesh(struct soap *soap, genmech__mesh *const*a)
 {
-	if (!soap_reference(soap, *a, SOAP_TYPE_genmech__media))
+	if (!soap_reference(soap, *a, SOAP_TYPE_genmech__mesh))
 		(*a)->soap_serialize(soap);
 }
 
-SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTogenmech__media(struct soap *soap, genmech__media *const*a, const char *tag, const char *type)
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTogenmech__mesh(struct soap *soap, genmech__mesh *const*a, const char *tag, const char *type)
 {
-	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_PointerTogenmech__media);
-	if (soap_out_PointerTogenmech__media(soap, tag, id, a, type))
+	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_PointerTogenmech__mesh);
+	if (soap_out_PointerTogenmech__mesh(soap, tag, id, a, type))
 		return soap->error;
 	return soap_putindependent(soap);
 }
 
-SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTogenmech__media(struct soap *soap, const char *tag, int id, genmech__media *const*a, const char *type)
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTogenmech__mesh(struct soap *soap, const char *tag, int id, genmech__mesh *const*a, const char *type)
 {
-	id = soap_element_id(soap, tag, id, *a, NULL, 0, type, SOAP_TYPE_genmech__media);
+	id = soap_element_id(soap, tag, id, *a, NULL, 0, type, SOAP_TYPE_genmech__mesh);
 	if (id < 0)
 		return soap->error;
 	return (*a)->soap_out(soap, tag, id, type);
 }
 
-SOAP_FMAC3 genmech__media ** SOAP_FMAC4 soap_get_PointerTogenmech__media(struct soap *soap, genmech__media **p, const char *tag, const char *type)
+SOAP_FMAC3 genmech__mesh ** SOAP_FMAC4 soap_get_PointerTogenmech__mesh(struct soap *soap, genmech__mesh **p, const char *tag, const char *type)
 {
-	if ((p = soap_in_PointerTogenmech__media(soap, tag, p, type)))
+	if ((p = soap_in_PointerTogenmech__mesh(soap, tag, p, type)))
 		if (soap_getindependent(soap))
 			return NULL;
 	return p;
 }
 
-SOAP_FMAC3 genmech__media ** SOAP_FMAC4 soap_in_PointerTogenmech__media(struct soap *soap, const char *tag, genmech__media **a, const char *type)
+SOAP_FMAC3 genmech__mesh ** SOAP_FMAC4 soap_in_PointerTogenmech__mesh(struct soap *soap, const char *tag, genmech__mesh **a, const char *type)
 {
 	if (soap_element_begin_in(soap, tag, 1, NULL))
 		return NULL;
 	if (!a)
-		if (!(a = (genmech__media **)soap_malloc(soap, sizeof(genmech__media *))))
+		if (!(a = (genmech__mesh **)soap_malloc(soap, sizeof(genmech__mesh *))))
 			return NULL;
 	*a = NULL;
 	if (!soap->null && *soap->href != '#')
 	{	soap_revert(soap);
-		if (!(*a = (genmech__media *)soap_instantiate_genmech__media(soap, -1, soap->type, soap->arrayType, NULL)))
+		if (!(*a = (genmech__mesh *)soap_instantiate_genmech__mesh(soap, -1, soap->type, soap->arrayType, NULL)))
 			return NULL;
 		(*a)->soap_default(soap);
 		if (!(*a)->soap_in(soap, tag, NULL))
 			return NULL;
 	}
 	else
-	{	genmech__media ** p = (genmech__media **)soap_id_lookup(soap, soap->href, (void**)a, SOAP_TYPE_genmech__media, sizeof(genmech__media), 0);
+	{	genmech__mesh ** p = (genmech__mesh **)soap_id_lookup(soap, soap->href, (void**)a, SOAP_TYPE_genmech__mesh, sizeof(genmech__mesh), 0);
 		a = p;
 		if (soap->body && soap_element_end_in(soap, tag))
 			return NULL;
@@ -19269,61 +19004,6 @@ SOAP_FMAC3 genmech__stats ** SOAP_FMAC4 soap_in_PointerTogenmech__stats(struct s
 	}
 	else
 	{	genmech__stats ** p = (genmech__stats **)soap_id_lookup(soap, soap->href, (void**)a, SOAP_TYPE_genmech__stats, sizeof(genmech__stats), 0);
-		a = p;
-		if (soap->body && soap_element_end_in(soap, tag))
-			return NULL;
-	}
-	return a;
-}
-
-SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTogenmech__mesh(struct soap *soap, genmech__mesh *const*a)
-{
-	if (!soap_reference(soap, *a, SOAP_TYPE_genmech__mesh))
-		(*a)->soap_serialize(soap);
-}
-
-SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTogenmech__mesh(struct soap *soap, genmech__mesh *const*a, const char *tag, const char *type)
-{
-	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_PointerTogenmech__mesh);
-	if (soap_out_PointerTogenmech__mesh(soap, tag, id, a, type))
-		return soap->error;
-	return soap_putindependent(soap);
-}
-
-SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTogenmech__mesh(struct soap *soap, const char *tag, int id, genmech__mesh *const*a, const char *type)
-{
-	id = soap_element_id(soap, tag, id, *a, NULL, 0, type, SOAP_TYPE_genmech__mesh);
-	if (id < 0)
-		return soap->error;
-	return (*a)->soap_out(soap, tag, id, type);
-}
-
-SOAP_FMAC3 genmech__mesh ** SOAP_FMAC4 soap_get_PointerTogenmech__mesh(struct soap *soap, genmech__mesh **p, const char *tag, const char *type)
-{
-	if ((p = soap_in_PointerTogenmech__mesh(soap, tag, p, type)))
-		if (soap_getindependent(soap))
-			return NULL;
-	return p;
-}
-
-SOAP_FMAC3 genmech__mesh ** SOAP_FMAC4 soap_in_PointerTogenmech__mesh(struct soap *soap, const char *tag, genmech__mesh **a, const char *type)
-{
-	if (soap_element_begin_in(soap, tag, 1, NULL))
-		return NULL;
-	if (!a)
-		if (!(a = (genmech__mesh **)soap_malloc(soap, sizeof(genmech__mesh *))))
-			return NULL;
-	*a = NULL;
-	if (!soap->null && *soap->href != '#')
-	{	soap_revert(soap);
-		if (!(*a = (genmech__mesh *)soap_instantiate_genmech__mesh(soap, -1, soap->type, soap->arrayType, NULL)))
-			return NULL;
-		(*a)->soap_default(soap);
-		if (!(*a)->soap_in(soap, tag, NULL))
-			return NULL;
-	}
-	else
-	{	genmech__mesh ** p = (genmech__mesh **)soap_id_lookup(soap, soap->href, (void**)a, SOAP_TYPE_genmech__mesh, sizeof(genmech__mesh), 0);
 		a = p;
 		if (soap->body && soap_element_end_in(soap, tag))
 			return NULL;
@@ -21479,97 +21159,6 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__vectorTemplateOfPointerTo_genmesh__ver
 {
 	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying std::vector<_genmesh__vertexbuffer * > %p -> %p\n", q, p));
 	*(std::vector<_genmesh__vertexbuffer * >*)p = *(std::vector<_genmesh__vertexbuffer * >*)q;
-}
-
-SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTogenmech__mesh(struct soap *soap, std::vector<genmech__mesh * >*p)
-{
-	p->clear();
-}
-
-SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTogenmech__mesh(struct soap *soap, const std::vector<genmech__mesh * >*a)
-{
-	for (std::vector<genmech__mesh * >::const_iterator i = a->begin(); i != a->end(); ++i)
-		soap_serialize_PointerTogenmech__mesh(soap, &(*i));
-}
-
-SOAP_FMAC3 int SOAP_FMAC4 soap_out_std__vectorTemplateOfPointerTogenmech__mesh(struct soap *soap, const char *tag, int id, const std::vector<genmech__mesh * >*a, const char *type)
-{
-	for (std::vector<genmech__mesh * >::const_iterator i = a->begin(); i != a->end(); ++i)
-	{
-		if (soap_out_PointerTogenmech__mesh(soap, tag, id, &(*i), ""))
-			return soap->error;
-	}
-	return SOAP_OK;
-}
-
-SOAP_FMAC3 std::vector<genmech__mesh * >* SOAP_FMAC4 soap_in_std__vectorTemplateOfPointerTogenmech__mesh(struct soap *soap, const char *tag, std::vector<genmech__mesh * >*a, const char *type)
-{
-	if (soap_element_begin_in(soap, tag, 1, NULL))
-		return NULL;
-	if (!a && !(a = soap_new_std__vectorTemplateOfPointerTogenmech__mesh(soap, -1)))
-		return NULL;
-	genmech__mesh *n;
-	short soap_flag = 0;
-	do
-	{	soap_revert(soap);
-		n = NULL;
-		if (*soap->id || *soap->href)
-		{	if (!soap_container_id_forward(soap, *soap->id?soap->id:soap->href, a, (size_t)a->size(), SOAP_TYPE_genmech__mesh, SOAP_TYPE_std__vectorTemplateOfPointerTogenmech__mesh, sizeof(genmech__mesh), 1))
-				break;
-			if (!soap_in_PointerTogenmech__mesh(soap, tag, NULL, "genmech:mesh"))
-				break;
-		}
-		else
-		{
-			if (!soap_in_PointerTogenmech__mesh(soap, tag, &n, "genmech:mesh"))
-				break;
-		}
-		a->push_back(n);
-		soap_flag = 1;
-	}
-	while (!soap_element_begin_in(soap, tag, 1, NULL));
-	if (soap_flag && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
-	{	soap->error = SOAP_OK;
-		return a;
-	}
-	return NULL;
-}
-
-SOAP_FMAC5 std::vector<genmech__mesh * > * SOAP_FMAC6 soap_new_std__vectorTemplateOfPointerTogenmech__mesh(struct soap *soap, int n)
-{	return soap_instantiate_std__vectorTemplateOfPointerTogenmech__mesh(soap, n, NULL, NULL, NULL);
-}
-
-SOAP_FMAC5 void SOAP_FMAC6 soap_delete_std__vectorTemplateOfPointerTogenmech__mesh(struct soap *soap, std::vector<genmech__mesh * >*p)
-{	soap_delete(soap, p);
-}
-
-SOAP_FMAC3 std::vector<genmech__mesh * > * SOAP_FMAC4 soap_instantiate_std__vectorTemplateOfPointerTogenmech__mesh(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
-{
-	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_std__vectorTemplateOfPointerTogenmech__mesh(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
-	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_std__vectorTemplateOfPointerTogenmech__mesh, n, soap_fdelete);
-	if (!cp)
-		return NULL;
-	if (n < 0)
-	{	cp->ptr = (void*)new std::vector<genmech__mesh * >;
-		if (size)
-			*size = sizeof(std::vector<genmech__mesh * >);
-	}
-	else
-	{	cp->ptr = (void*)new std::vector<genmech__mesh * >[n];
-		if (!cp->ptr)
-		{	soap->error = SOAP_EOM;
-			return NULL;
-		}
-		if (size)
-			*size = n * sizeof(std::vector<genmech__mesh * >);
-	}
-		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
-	return (std::vector<genmech__mesh * >*)cp->ptr;
-}
-SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__vectorTemplateOfPointerTogenmech__mesh(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
-{
-	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying std::vector<genmech__mesh * > %p -> %p\n", q, p));
-	*(std::vector<genmech__mesh * >*)p = *(std::vector<genmech__mesh * >*)q;
 }
 
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTogenmech__equSlot(struct soap *soap, std::vector<genmech__equSlot * >*p)

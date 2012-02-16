@@ -170,6 +170,12 @@ int doWork(char *sourceFile, char *sourcePath, char *targetFile) {
 	free(skeletonFile);
 
 	
+	char *meshfile = (char*) malloc(strlen(sourceFile)+6);
+	strcpy(meshfile, sourceFile);
+	strcat(meshfile, ".mesh");
+	mech->mesh->file = std::string(meshfile);
+	free(meshfile);
+	
 	soap_init(&strsoap);
 	soap_begin(&strsoap);
 	soap_set_omode(&strsoap, SOAP_XML_GRAPH);
@@ -216,7 +222,7 @@ _genmech__mech *constructEmptyMech() {
 	mech->design->torso = new genmech__torso();
 	mech->design->equipmentSlots = new genmech__equSlots();
 
-	mech->media = new genmech__media();
+	mech->mesh = new genmech__mesh();
 
 	return mech;
 }

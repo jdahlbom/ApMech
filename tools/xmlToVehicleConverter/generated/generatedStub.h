@@ -17,146 +17,140 @@
 \******************************************************************************/
 
 
-#ifndef SOAP_TYPE_genmech__meshType
-#define SOAP_TYPE_genmech__meshType (73)
-/* genmech:meshType */
-enum genmech__meshType {genmech__meshType__TORSO = 0, genmech__meshType__LEGS = 1};
-#endif
-
 #ifndef SOAP_TYPE__genmesh__submesh_usesharedvertices
-#define SOAP_TYPE__genmesh__submesh_usesharedvertices (102)
+#define SOAP_TYPE__genmesh__submesh_usesharedvertices (98)
 /* genmesh:submesh-usesharedvertices */
 enum _genmesh__submesh_usesharedvertices {_genmesh__submesh_usesharedvertices__true_ = 0, _genmesh__submesh_usesharedvertices__false_ = 1};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__submesh_use32bitindexes
-#define SOAP_TYPE__genmesh__submesh_use32bitindexes (103)
+#define SOAP_TYPE__genmesh__submesh_use32bitindexes (99)
 /* genmesh:submesh-use32bitindexes */
 enum _genmesh__submesh_use32bitindexes {_genmesh__submesh_use32bitindexes__true_ = 0, _genmesh__submesh_use32bitindexes__false_ = 1};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__submesh_operationtype
-#define SOAP_TYPE__genmesh__submesh_operationtype (104)
+#define SOAP_TYPE__genmesh__submesh_operationtype (100)
 /* genmesh:submesh-operationtype */
 enum _genmesh__submesh_operationtype {_genmesh__submesh_operationtype__triangle_USCORElist = 0, _genmesh__submesh_operationtype__triangle_USCOREstrip = 1, _genmesh__submesh_operationtype__triangle_USCOREfan = 2};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__levelofdetail_manual
-#define SOAP_TYPE__genmesh__levelofdetail_manual (117)
+#define SOAP_TYPE__genmesh__levelofdetail_manual (113)
 /* genmesh:levelofdetail-manual */
 enum _genmesh__levelofdetail_manual {_genmesh__levelofdetail_manual__true_ = 0, _genmesh__levelofdetail_manual__false_ = 1};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_positions
-#define SOAP_TYPE__genmesh__vertexbuffer_positions (123)
+#define SOAP_TYPE__genmesh__vertexbuffer_positions (119)
 /* genmesh:vertexbuffer-positions */
 enum _genmesh__vertexbuffer_positions {_genmesh__vertexbuffer_positions__true_ = 0, _genmesh__vertexbuffer_positions__false_ = 1};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_normals
-#define SOAP_TYPE__genmesh__vertexbuffer_normals (124)
+#define SOAP_TYPE__genmesh__vertexbuffer_normals (120)
 /* genmesh:vertexbuffer-normals */
 enum _genmesh__vertexbuffer_normals {_genmesh__vertexbuffer_normals__true_ = 0, _genmesh__vertexbuffer_normals__false_ = 1};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_colours_USCOREdiffuse
-#define SOAP_TYPE__genmesh__vertexbuffer_colours_USCOREdiffuse (125)
+#define SOAP_TYPE__genmesh__vertexbuffer_colours_USCOREdiffuse (121)
 /* genmesh:vertexbuffer-colours_diffuse */
 enum _genmesh__vertexbuffer_colours_USCOREdiffuse {_genmesh__vertexbuffer_colours_USCOREdiffuse__true_ = 0, _genmesh__vertexbuffer_colours_USCOREdiffuse__false_ = 1};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_colours_USCOREspecular
-#define SOAP_TYPE__genmesh__vertexbuffer_colours_USCOREspecular (126)
+#define SOAP_TYPE__genmesh__vertexbuffer_colours_USCOREspecular (122)
 /* genmesh:vertexbuffer-colours_specular */
 enum _genmesh__vertexbuffer_colours_USCOREspecular {_genmesh__vertexbuffer_colours_USCOREspecular__true_ = 0, _genmesh__vertexbuffer_colours_USCOREspecular__false_ = 1};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoords
-#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoords (127)
+#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoords (123)
 /* genmesh:vertexbuffer-texture_coords */
 enum _genmesh__vertexbuffer_texture_USCOREcoords {_genmesh__vertexbuffer_texture_USCOREcoords__0 = 0, _genmesh__vertexbuffer_texture_USCOREcoords__1 = 1, _genmesh__vertexbuffer_texture_USCOREcoords__2 = 2, _genmesh__vertexbuffer_texture_USCOREcoords__3 = 3, _genmesh__vertexbuffer_texture_USCOREcoords__4 = 4, _genmesh__vertexbuffer_texture_USCOREcoords__5 = 5, _genmesh__vertexbuffer_texture_USCOREcoords__6 = 6, _genmesh__vertexbuffer_texture_USCOREcoords__7 = 7, _genmesh__vertexbuffer_texture_USCOREcoords__8 = 8};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE0
-#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE0 (128)
+#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE0 (124)
 /* genmesh:vertexbuffer-texture_coord_dimensions_0 */
 enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE0 {_genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE0__0 = 0, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE0__1 = 1, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE0__2 = 2, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE0__3 = 3};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE1
-#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE1 (129)
+#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE1 (125)
 /* genmesh:vertexbuffer-texture_coord_dimensions_1 */
 enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE1 {_genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE1__0 = 0, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE1__1 = 1, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE1__2 = 2, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE1__3 = 3};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE2
-#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE2 (130)
+#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE2 (126)
 /* genmesh:vertexbuffer-texture_coord_dimensions_2 */
 enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE2 {_genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE2__0 = 0, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE2__1 = 1, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE2__2 = 2, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE2__3 = 3};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE3
-#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE3 (131)
+#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE3 (127)
 /* genmesh:vertexbuffer-texture_coord_dimensions_3 */
 enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE3 {_genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE3__0 = 0, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE3__1 = 1, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE3__2 = 2, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE3__3 = 3};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE4
-#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE4 (132)
+#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE4 (128)
 /* genmesh:vertexbuffer-texture_coord_dimensions_4 */
 enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE4 {_genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE4__0 = 0, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE4__1 = 1, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE4__2 = 2, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE4__3 = 3};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE5
-#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE5 (133)
+#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE5 (129)
 /* genmesh:vertexbuffer-texture_coord_dimensions_5 */
 enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE5 {_genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE5__0 = 0, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE5__1 = 1, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE5__2 = 2, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE5__3 = 3};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE6
-#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE6 (134)
+#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE6 (130)
 /* genmesh:vertexbuffer-texture_coord_dimensions_6 */
 enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE6 {_genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE6__0 = 0, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE6__1 = 1, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE6__2 = 2, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE6__3 = 3};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE7
-#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE7 (135)
+#define SOAP_TYPE__genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE7 (131)
 /* genmesh:vertexbuffer-texture_coord_dimensions_7 */
 enum _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE7 {_genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE7__0 = 0, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE7__1 = 1, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE7__2 = 2, _genmesh__vertexbuffer_texture_USCOREcoord_USCOREdimensions_USCORE7__3 = 3};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_tangents
-#define SOAP_TYPE__genmesh__vertexbuffer_tangents (136)
+#define SOAP_TYPE__genmesh__vertexbuffer_tangents (132)
 /* genmesh:vertexbuffer-tangents */
 enum _genmesh__vertexbuffer_tangents {_genmesh__vertexbuffer_tangents__true_ = 0, _genmesh__vertexbuffer_tangents__false_ = 1};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_tangent_USCOREdimensions
-#define SOAP_TYPE__genmesh__vertexbuffer_tangent_USCOREdimensions (137)
+#define SOAP_TYPE__genmesh__vertexbuffer_tangent_USCOREdimensions (133)
 /* genmesh:vertexbuffer-tangent_dimensions */
 enum _genmesh__vertexbuffer_tangent_USCOREdimensions {_genmesh__vertexbuffer_tangent_USCOREdimensions__3 = 3, _genmesh__vertexbuffer_tangent_USCOREdimensions__4 = 4};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer_binormals
-#define SOAP_TYPE__genmesh__vertexbuffer_binormals (138)
+#define SOAP_TYPE__genmesh__vertexbuffer_binormals (134)
 /* genmesh:vertexbuffer-binormals */
 enum _genmesh__vertexbuffer_binormals {_genmesh__vertexbuffer_binormals__true_ = 0, _genmesh__vertexbuffer_binormals__false_ = 1};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__pose_target
-#define SOAP_TYPE__genmesh__pose_target (153)
+#define SOAP_TYPE__genmesh__pose_target (149)
 /* genmesh:pose-target */
 enum _genmesh__pose_target {_genmesh__pose_target__mesh = 0, _genmesh__pose_target__submesh = 1};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__track_target
-#define SOAP_TYPE__genmesh__track_target (160)
+#define SOAP_TYPE__genmesh__track_target (156)
 /* genmesh:track-target */
 enum _genmesh__track_target {_genmesh__track_target__mesh = 0, _genmesh__track_target__submesh = 1};
 #endif
 
 #ifndef SOAP_TYPE__genmesh__track_type
-#define SOAP_TYPE__genmesh__track_type (161)
+#define SOAP_TYPE__genmesh__track_type (157)
 /* genmesh:track-type */
 enum _genmesh__track_type {_genmesh__track_type__morph = 0, _genmesh__track_type__pose = 1};
 #endif
@@ -285,52 +279,30 @@ public:
 };
 #endif
 
-#ifndef SOAP_TYPE_genmech__media
-#define SOAP_TYPE_genmech__media (12)
-/* genmech:media */
-class SOAP_CMAC genmech__media
-{
-public:
-	std::vector<class genmech__mesh * >mesh;	/* required element of type genmech:mesh */
-	struct soap *soap;	/* transient */
-public:
-	virtual int soap_type() const { return 12; } /* = unique id SOAP_TYPE_genmech__media */
-	virtual void soap_default(struct soap*);
-	virtual void soap_serialize(struct soap*) const;
-	virtual int soap_put(struct soap*, const char*, const char*) const;
-	virtual int soap_out(struct soap*, const char*, int, const char*) const;
-	virtual void *soap_get(struct soap*, const char*, const char*);
-	virtual void *soap_in(struct soap*, const char*, const char*);
-	         genmech__media() : soap(NULL) { }
-	virtual ~genmech__media() { }
-};
-#endif
-
 #ifndef SOAP_TYPE_genmech__mesh
-#define SOAP_TYPE_genmech__mesh (13)
+#define SOAP_TYPE_genmech__mesh (12)
 /* genmech:mesh */
 class SOAP_CMAC genmech__mesh
 {
 public:
 	std::string translation;	/* optional attribute */
-	enum genmech__meshType type;	/* required attribute */
 	std::string file;	/* required attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 13; } /* = unique id SOAP_TYPE_genmech__mesh */
+	virtual int soap_type() const { return 12; } /* = unique id SOAP_TYPE_genmech__mesh */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
 	virtual int soap_out(struct soap*, const char*, int, const char*) const;
 	virtual void *soap_get(struct soap*, const char*, const char*);
 	virtual void *soap_in(struct soap*, const char*, const char*);
-	         genmech__mesh() : translation("000.00;000.00;000.00"), type((enum genmech__meshType)0), soap(NULL) { }
+	         genmech__mesh() : translation("000.00;000.00;000.00"), soap(NULL) { }
 	virtual ~genmech__mesh() { }
 };
 #endif
 
 #ifndef SOAP_TYPE__genmech__mech
-#define SOAP_TYPE__genmech__mech (14)
+#define SOAP_TYPE__genmech__mech (13)
 /* genmech:mech */
 class SOAP_CMAC _genmech__mech
 {
@@ -339,23 +311,23 @@ public:
 	std::string name;	/* required element of type xsd:string */
 	genmech__stats *stats;	/* required element of type genmech:stats */
 	genmech__design *design;	/* required element of type genmech:design */
-	genmech__media *media;	/* required element of type genmech:media */
+	genmech__mesh *mesh;	/* required element of type genmech:mesh */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 14; } /* = unique id SOAP_TYPE__genmech__mech */
+	virtual int soap_type() const { return 13; } /* = unique id SOAP_TYPE__genmech__mech */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
 	virtual int soap_out(struct soap*, const char*, int, const char*) const;
 	virtual void *soap_get(struct soap*, const char*, const char*);
 	virtual void *soap_in(struct soap*, const char*, const char*);
-	         _genmech__mech() : schemaVersion(0), stats(NULL), design(NULL), media(NULL), soap(NULL) { }
+	         _genmech__mech() : schemaVersion(0), stats(NULL), design(NULL), mesh(NULL), soap(NULL) { }
 	virtual ~_genmech__mech() { }
 };
 #endif
 
 #ifndef SOAP_TYPE__genmesh__mesh
-#define SOAP_TYPE__genmesh__mesh (15)
+#define SOAP_TYPE__genmesh__mesh (14)
 /* genmesh:mesh */
 class SOAP_CMAC _genmesh__mesh
 {
@@ -371,7 +343,7 @@ public:
 	class _genmesh__extremes *genmesh__extremes;	/* optional element of type genmesh:extremes */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 15; } /* = unique id SOAP_TYPE__genmesh__mesh */
+	virtual int soap_type() const { return 14; } /* = unique id SOAP_TYPE__genmesh__mesh */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -384,7 +356,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__sharedgeometry
-#define SOAP_TYPE__genmesh__sharedgeometry (16)
+#define SOAP_TYPE__genmesh__sharedgeometry (15)
 /* genmesh:sharedgeometry */
 class SOAP_CMAC _genmesh__sharedgeometry
 {
@@ -393,7 +365,7 @@ public:
 	std::string vertexcount;	/* required attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 16; } /* = unique id SOAP_TYPE__genmesh__sharedgeometry */
+	virtual int soap_type() const { return 15; } /* = unique id SOAP_TYPE__genmesh__sharedgeometry */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -406,7 +378,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__submeshes
-#define SOAP_TYPE__genmesh__submeshes (17)
+#define SOAP_TYPE__genmesh__submeshes (16)
 /* genmesh:submeshes */
 class SOAP_CMAC _genmesh__submeshes
 {
@@ -414,7 +386,7 @@ public:
 	std::vector<class _genmesh__submesh * >genmesh__submesh;	/* required element of type genmesh:submesh */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 17; } /* = unique id SOAP_TYPE__genmesh__submeshes */
+	virtual int soap_type() const { return 16; } /* = unique id SOAP_TYPE__genmesh__submeshes */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -427,7 +399,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__submesh
-#define SOAP_TYPE__genmesh__submesh (18)
+#define SOAP_TYPE__genmesh__submesh (17)
 /* genmesh:submesh */
 class SOAP_CMAC _genmesh__submesh
 {
@@ -442,7 +414,7 @@ public:
 	enum _genmesh__submesh_operationtype operationtype;	/* optional attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 18; } /* = unique id SOAP_TYPE__genmesh__submesh */
+	virtual int soap_type() const { return 17; } /* = unique id SOAP_TYPE__genmesh__submesh */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -455,7 +427,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__textures
-#define SOAP_TYPE__genmesh__textures (19)
+#define SOAP_TYPE__genmesh__textures (18)
 /* genmesh:textures */
 class SOAP_CMAC _genmesh__textures
 {
@@ -463,7 +435,7 @@ public:
 	std::vector<class _genmesh__texture * >genmesh__texture;	/* required element of type genmesh:texture */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 19; } /* = unique id SOAP_TYPE__genmesh__textures */
+	virtual int soap_type() const { return 18; } /* = unique id SOAP_TYPE__genmesh__textures */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -476,7 +448,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__texture
-#define SOAP_TYPE__genmesh__texture (20)
+#define SOAP_TYPE__genmesh__texture (19)
 /* genmesh:texture */
 class SOAP_CMAC _genmesh__texture
 {
@@ -485,7 +457,7 @@ public:
 	std::string name;	/* required attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 20; } /* = unique id SOAP_TYPE__genmesh__texture */
+	virtual int soap_type() const { return 19; } /* = unique id SOAP_TYPE__genmesh__texture */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -498,7 +470,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__faces
-#define SOAP_TYPE__genmesh__faces (21)
+#define SOAP_TYPE__genmesh__faces (20)
 /* genmesh:faces */
 class SOAP_CMAC _genmesh__faces
 {
@@ -507,7 +479,7 @@ public:
 	std::string *count;	/* optional attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 21; } /* = unique id SOAP_TYPE__genmesh__faces */
+	virtual int soap_type() const { return 20; } /* = unique id SOAP_TYPE__genmesh__faces */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -520,7 +492,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__face
-#define SOAP_TYPE__genmesh__face (22)
+#define SOAP_TYPE__genmesh__face (21)
 /* genmesh:face */
 class SOAP_CMAC _genmesh__face
 {
@@ -530,7 +502,7 @@ public:
 	std::string *v3;	/* optional attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 22; } /* = unique id SOAP_TYPE__genmesh__face */
+	virtual int soap_type() const { return 21; } /* = unique id SOAP_TYPE__genmesh__face */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -543,7 +515,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__geometry
-#define SOAP_TYPE__genmesh__geometry (23)
+#define SOAP_TYPE__genmesh__geometry (22)
 /* genmesh:geometry */
 class SOAP_CMAC _genmesh__geometry
 {
@@ -552,7 +524,7 @@ public:
 	std::string *vertexcount;	/* optional attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 23; } /* = unique id SOAP_TYPE__genmesh__geometry */
+	virtual int soap_type() const { return 22; } /* = unique id SOAP_TYPE__genmesh__geometry */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -565,7 +537,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__skeletonlink
-#define SOAP_TYPE__genmesh__skeletonlink (24)
+#define SOAP_TYPE__genmesh__skeletonlink (23)
 /* genmesh:skeletonlink */
 class SOAP_CMAC _genmesh__skeletonlink
 {
@@ -573,7 +545,7 @@ public:
 	std::string name;	/* required attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 24; } /* = unique id SOAP_TYPE__genmesh__skeletonlink */
+	virtual int soap_type() const { return 23; } /* = unique id SOAP_TYPE__genmesh__skeletonlink */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -586,7 +558,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__boneassignments
-#define SOAP_TYPE__genmesh__boneassignments (25)
+#define SOAP_TYPE__genmesh__boneassignments (24)
 /* genmesh:boneassignments */
 class SOAP_CMAC _genmesh__boneassignments
 {
@@ -594,7 +566,7 @@ public:
 	std::vector<class _genmesh__vertexboneassignment * >genmesh__vertexboneassignment;	/* required element of type genmesh:vertexboneassignment */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 25; } /* = unique id SOAP_TYPE__genmesh__boneassignments */
+	virtual int soap_type() const { return 24; } /* = unique id SOAP_TYPE__genmesh__boneassignments */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -607,7 +579,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexboneassignment
-#define SOAP_TYPE__genmesh__vertexboneassignment (26)
+#define SOAP_TYPE__genmesh__vertexboneassignment (25)
 /* genmesh:vertexboneassignment */
 class SOAP_CMAC _genmesh__vertexboneassignment
 {
@@ -617,7 +589,7 @@ public:
 	std::string weight;	/* optional attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 26; } /* = unique id SOAP_TYPE__genmesh__vertexboneassignment */
+	virtual int soap_type() const { return 25; } /* = unique id SOAP_TYPE__genmesh__vertexboneassignment */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -630,7 +602,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__union_levelofdetail
-#define SOAP_TYPE__genmesh__union_levelofdetail (115)
+#define SOAP_TYPE__genmesh__union_levelofdetail (111)
 /* xsd:choice */
 union _genmesh__union_levelofdetail
 {
@@ -642,7 +614,7 @@ union _genmesh__union_levelofdetail
 #endif
 
 #ifndef SOAP_TYPE___genmesh__union_levelofdetail
-#define SOAP_TYPE___genmesh__union_levelofdetail (112)
+#define SOAP_TYPE___genmesh__union_levelofdetail (108)
 /* Operation wrapper: */
 class SOAP_CMAC __genmesh__union_levelofdetail
 {
@@ -650,7 +622,7 @@ public:
 	int __union_levelofdetail;	/* union discriminant (of union defined below) */
 	union _genmesh__union_levelofdetail union_levelofdetail;	/* required element of type xsd:choice */
 public:
-	virtual int soap_type() const { return 112; } /* = unique id SOAP_TYPE___genmesh__union_levelofdetail */
+	virtual int soap_type() const { return 108; } /* = unique id SOAP_TYPE___genmesh__union_levelofdetail */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -663,7 +635,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__levelofdetail
-#define SOAP_TYPE__genmesh__levelofdetail (27)
+#define SOAP_TYPE__genmesh__levelofdetail (26)
 /* genmesh:levelofdetail */
 class SOAP_CMAC _genmesh__levelofdetail
 {
@@ -674,7 +646,7 @@ public:
 	enum _genmesh__levelofdetail_manual manual;	/* optional attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 27; } /* = unique id SOAP_TYPE__genmesh__levelofdetail */
+	virtual int soap_type() const { return 26; } /* = unique id SOAP_TYPE__genmesh__levelofdetail */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -687,7 +659,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__lodmanual
-#define SOAP_TYPE__genmesh__lodmanual (28)
+#define SOAP_TYPE__genmesh__lodmanual (27)
 /* genmesh:lodmanual */
 class SOAP_CMAC _genmesh__lodmanual
 {
@@ -696,7 +668,7 @@ public:
 	std::string meshname;	/* required attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 28; } /* = unique id SOAP_TYPE__genmesh__lodmanual */
+	virtual int soap_type() const { return 27; } /* = unique id SOAP_TYPE__genmesh__lodmanual */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -709,7 +681,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__lodgenerated
-#define SOAP_TYPE__genmesh__lodgenerated (29)
+#define SOAP_TYPE__genmesh__lodgenerated (28)
 /* genmesh:lodgenerated */
 class SOAP_CMAC _genmesh__lodgenerated
 {
@@ -719,7 +691,7 @@ public:
 	std::string meshname;	/* required attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 29; } /* = unique id SOAP_TYPE__genmesh__lodgenerated */
+	virtual int soap_type() const { return 28; } /* = unique id SOAP_TYPE__genmesh__lodgenerated */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -732,14 +704,14 @@ public:
 #endif
 
 #ifndef SOAP_TYPE___genmesh__lodfacelist_sequence
-#define SOAP_TYPE___genmesh__lodfacelist_sequence (119)
+#define SOAP_TYPE___genmesh__lodfacelist_sequence (115)
 /* Operation wrapper: */
 class SOAP_CMAC __genmesh__lodfacelist_sequence
 {
 public:
 	_genmesh__face *genmesh__face;	/* required element of type genmesh:face */
 public:
-	virtual int soap_type() const { return 119; } /* = unique id SOAP_TYPE___genmesh__lodfacelist_sequence */
+	virtual int soap_type() const { return 115; } /* = unique id SOAP_TYPE___genmesh__lodfacelist_sequence */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -752,7 +724,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__lodfacelist
-#define SOAP_TYPE__genmesh__lodfacelist (30)
+#define SOAP_TYPE__genmesh__lodfacelist (29)
 /* genmesh:lodfacelist */
 class SOAP_CMAC _genmesh__lodfacelist
 {
@@ -763,7 +735,7 @@ public:
 	std::string numfaces;	/* required attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 30; } /* = unique id SOAP_TYPE__genmesh__lodfacelist */
+	virtual int soap_type() const { return 29; } /* = unique id SOAP_TYPE__genmesh__lodfacelist */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -776,7 +748,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertexbuffer
-#define SOAP_TYPE__genmesh__vertexbuffer (31)
+#define SOAP_TYPE__genmesh__vertexbuffer (30)
 /* genmesh:vertexbuffer */
 class SOAP_CMAC _genmesh__vertexbuffer
 {
@@ -800,7 +772,7 @@ public:
 	enum _genmesh__vertexbuffer_binormals binormals;	/* optional attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 31; } /* = unique id SOAP_TYPE__genmesh__vertexbuffer */
+	virtual int soap_type() const { return 30; } /* = unique id SOAP_TYPE__genmesh__vertexbuffer */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -813,7 +785,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__vertex
-#define SOAP_TYPE__genmesh__vertex (32)
+#define SOAP_TYPE__genmesh__vertex (31)
 /* genmesh:vertex */
 class SOAP_CMAC _genmesh__vertex
 {
@@ -827,7 +799,7 @@ public:
 	std::vector<class _genmesh__texcoord * >genmesh__texcoord;	/* optional element of type genmesh:texcoord */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 32; } /* = unique id SOAP_TYPE__genmesh__vertex */
+	virtual int soap_type() const { return 31; } /* = unique id SOAP_TYPE__genmesh__vertex */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -840,7 +812,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__position
-#define SOAP_TYPE__genmesh__position (33)
+#define SOAP_TYPE__genmesh__position (32)
 /* genmesh:position */
 class SOAP_CMAC _genmesh__position
 {
@@ -850,7 +822,7 @@ public:
 	std::string z;	/* required attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 33; } /* = unique id SOAP_TYPE__genmesh__position */
+	virtual int soap_type() const { return 32; } /* = unique id SOAP_TYPE__genmesh__position */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -863,7 +835,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__normal
-#define SOAP_TYPE__genmesh__normal (34)
+#define SOAP_TYPE__genmesh__normal (33)
 /* genmesh:normal */
 class SOAP_CMAC _genmesh__normal
 {
@@ -873,7 +845,7 @@ public:
 	std::string z;	/* required attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 34; } /* = unique id SOAP_TYPE__genmesh__normal */
+	virtual int soap_type() const { return 33; } /* = unique id SOAP_TYPE__genmesh__normal */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -886,7 +858,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__tangent
-#define SOAP_TYPE__genmesh__tangent (35)
+#define SOAP_TYPE__genmesh__tangent (34)
 /* genmesh:tangent */
 class SOAP_CMAC _genmesh__tangent
 {
@@ -897,7 +869,7 @@ public:
 	std::string w;	/* optional attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 35; } /* = unique id SOAP_TYPE__genmesh__tangent */
+	virtual int soap_type() const { return 34; } /* = unique id SOAP_TYPE__genmesh__tangent */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -910,7 +882,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__binormal
-#define SOAP_TYPE__genmesh__binormal (36)
+#define SOAP_TYPE__genmesh__binormal (35)
 /* genmesh:binormal */
 class SOAP_CMAC _genmesh__binormal
 {
@@ -920,7 +892,7 @@ public:
 	std::string z;	/* required attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 36; } /* = unique id SOAP_TYPE__genmesh__binormal */
+	virtual int soap_type() const { return 35; } /* = unique id SOAP_TYPE__genmesh__binormal */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -933,7 +905,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__colour_USCOREdiffuse
-#define SOAP_TYPE__genmesh__colour_USCOREdiffuse (37)
+#define SOAP_TYPE__genmesh__colour_USCOREdiffuse (36)
 /* genmesh:colour_diffuse */
 class SOAP_CMAC _genmesh__colour_USCOREdiffuse
 {
@@ -941,7 +913,7 @@ public:
 	std::string value;	/* required attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 37; } /* = unique id SOAP_TYPE__genmesh__colour_USCOREdiffuse */
+	virtual int soap_type() const { return 36; } /* = unique id SOAP_TYPE__genmesh__colour_USCOREdiffuse */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -954,7 +926,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__colour_USCOREspecular
-#define SOAP_TYPE__genmesh__colour_USCOREspecular (38)
+#define SOAP_TYPE__genmesh__colour_USCOREspecular (37)
 /* genmesh:colour_specular */
 class SOAP_CMAC _genmesh__colour_USCOREspecular
 {
@@ -962,7 +934,7 @@ public:
 	std::string value;	/* required attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 38; } /* = unique id SOAP_TYPE__genmesh__colour_USCOREspecular */
+	virtual int soap_type() const { return 37; } /* = unique id SOAP_TYPE__genmesh__colour_USCOREspecular */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -975,7 +947,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__texcoord
-#define SOAP_TYPE__genmesh__texcoord (39)
+#define SOAP_TYPE__genmesh__texcoord (38)
 /* genmesh:texcoord */
 class SOAP_CMAC _genmesh__texcoord
 {
@@ -985,7 +957,7 @@ public:
 	std::string w;	/* optional attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 39; } /* = unique id SOAP_TYPE__genmesh__texcoord */
+	virtual int soap_type() const { return 38; } /* = unique id SOAP_TYPE__genmesh__texcoord */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -998,7 +970,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__submeshnames
-#define SOAP_TYPE__genmesh__submeshnames (40)
+#define SOAP_TYPE__genmesh__submeshnames (39)
 /* genmesh:submeshnames */
 class SOAP_CMAC _genmesh__submeshnames
 {
@@ -1006,7 +978,7 @@ public:
 	std::vector<class _genmesh__submeshname * >genmesh__submeshname;	/* required element of type genmesh:submeshname */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 40; } /* = unique id SOAP_TYPE__genmesh__submeshnames */
+	virtual int soap_type() const { return 39; } /* = unique id SOAP_TYPE__genmesh__submeshnames */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1019,7 +991,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__submeshname
-#define SOAP_TYPE__genmesh__submeshname (41)
+#define SOAP_TYPE__genmesh__submeshname (40)
 /* genmesh:submeshname */
 class SOAP_CMAC _genmesh__submeshname
 {
@@ -1028,7 +1000,7 @@ public:
 	std::string index;	/* required attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 41; } /* = unique id SOAP_TYPE__genmesh__submeshname */
+	virtual int soap_type() const { return 40; } /* = unique id SOAP_TYPE__genmesh__submeshname */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1041,7 +1013,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__poses
-#define SOAP_TYPE__genmesh__poses (42)
+#define SOAP_TYPE__genmesh__poses (41)
 /* genmesh:poses */
 class SOAP_CMAC _genmesh__poses
 {
@@ -1049,7 +1021,7 @@ public:
 	std::vector<class _genmesh__pose * >genmesh__pose;	/* required element of type genmesh:pose */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 42; } /* = unique id SOAP_TYPE__genmesh__poses */
+	virtual int soap_type() const { return 41; } /* = unique id SOAP_TYPE__genmesh__poses */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1062,7 +1034,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__pose
-#define SOAP_TYPE__genmesh__pose (43)
+#define SOAP_TYPE__genmesh__pose (42)
 /* genmesh:pose */
 class SOAP_CMAC _genmesh__pose
 {
@@ -1073,7 +1045,7 @@ public:
 	std::string name;	/* optional attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 43; } /* = unique id SOAP_TYPE__genmesh__pose */
+	virtual int soap_type() const { return 42; } /* = unique id SOAP_TYPE__genmesh__pose */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1086,7 +1058,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__poseoffset
-#define SOAP_TYPE__genmesh__poseoffset (44)
+#define SOAP_TYPE__genmesh__poseoffset (43)
 /* genmesh:poseoffset */
 class SOAP_CMAC _genmesh__poseoffset
 {
@@ -1097,7 +1069,7 @@ public:
 	std::string z;	/* required attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 44; } /* = unique id SOAP_TYPE__genmesh__poseoffset */
+	virtual int soap_type() const { return 43; } /* = unique id SOAP_TYPE__genmesh__poseoffset */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1110,7 +1082,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__animations
-#define SOAP_TYPE__genmesh__animations (45)
+#define SOAP_TYPE__genmesh__animations (44)
 /* genmesh:animations */
 class SOAP_CMAC _genmesh__animations
 {
@@ -1118,7 +1090,7 @@ public:
 	std::vector<class _genmesh__animation * >genmesh__animation;	/* required element of type genmesh:animation */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 45; } /* = unique id SOAP_TYPE__genmesh__animations */
+	virtual int soap_type() const { return 44; } /* = unique id SOAP_TYPE__genmesh__animations */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1131,7 +1103,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__animation
-#define SOAP_TYPE__genmesh__animation (46)
+#define SOAP_TYPE__genmesh__animation (45)
 /* genmesh:animation */
 class SOAP_CMAC _genmesh__animation
 {
@@ -1141,7 +1113,7 @@ public:
 	std::string length;	/* required attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 46; } /* = unique id SOAP_TYPE__genmesh__animation */
+	virtual int soap_type() const { return 45; } /* = unique id SOAP_TYPE__genmesh__animation */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1154,7 +1126,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__tracks
-#define SOAP_TYPE__genmesh__tracks (47)
+#define SOAP_TYPE__genmesh__tracks (46)
 /* genmesh:tracks */
 class SOAP_CMAC _genmesh__tracks
 {
@@ -1162,7 +1134,7 @@ public:
 	std::vector<class _genmesh__track * >genmesh__track;	/* required element of type genmesh:track */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 47; } /* = unique id SOAP_TYPE__genmesh__tracks */
+	virtual int soap_type() const { return 46; } /* = unique id SOAP_TYPE__genmesh__tracks */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1175,7 +1147,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__track
-#define SOAP_TYPE__genmesh__track (48)
+#define SOAP_TYPE__genmesh__track (47)
 /* genmesh:track */
 class SOAP_CMAC _genmesh__track
 {
@@ -1186,7 +1158,7 @@ public:
 	enum _genmesh__track_type type;	/* required attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 48; } /* = unique id SOAP_TYPE__genmesh__track */
+	virtual int soap_type() const { return 47; } /* = unique id SOAP_TYPE__genmesh__track */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1199,7 +1171,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__keyframes
-#define SOAP_TYPE__genmesh__keyframes (49)
+#define SOAP_TYPE__genmesh__keyframes (48)
 /* genmesh:keyframes */
 class SOAP_CMAC _genmesh__keyframes
 {
@@ -1207,7 +1179,7 @@ public:
 	std::vector<class _genmesh__keyframe * >genmesh__keyframe;	/* optional element of type genmesh:keyframe */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 49; } /* = unique id SOAP_TYPE__genmesh__keyframes */
+	virtual int soap_type() const { return 48; } /* = unique id SOAP_TYPE__genmesh__keyframes */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1220,7 +1192,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__keyframe
-#define SOAP_TYPE__genmesh__keyframe (50)
+#define SOAP_TYPE__genmesh__keyframe (49)
 /* genmesh:keyframe */
 class SOAP_CMAC _genmesh__keyframe
 {
@@ -1230,7 +1202,7 @@ public:
 	std::string time;	/* required attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 50; } /* = unique id SOAP_TYPE__genmesh__keyframe */
+	virtual int soap_type() const { return 49; } /* = unique id SOAP_TYPE__genmesh__keyframe */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1243,7 +1215,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__poseref
-#define SOAP_TYPE__genmesh__poseref (51)
+#define SOAP_TYPE__genmesh__poseref (50)
 /* genmesh:poseref */
 class SOAP_CMAC _genmesh__poseref
 {
@@ -1252,7 +1224,7 @@ public:
 	std::string influence;	/* optional attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 51; } /* = unique id SOAP_TYPE__genmesh__poseref */
+	virtual int soap_type() const { return 50; } /* = unique id SOAP_TYPE__genmesh__poseref */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1265,7 +1237,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__extremes
-#define SOAP_TYPE__genmesh__extremes (52)
+#define SOAP_TYPE__genmesh__extremes (51)
 /* genmesh:extremes */
 class SOAP_CMAC _genmesh__extremes
 {
@@ -1273,7 +1245,7 @@ public:
 	std::vector<_genmesh__submesh * >genmesh__submesh;	/* required element of type genmesh:submesh */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 52; } /* = unique id SOAP_TYPE__genmesh__extremes */
+	virtual int soap_type() const { return 51; } /* = unique id SOAP_TYPE__genmesh__extremes */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1286,7 +1258,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genmesh__submesh_USCOREextremes
-#define SOAP_TYPE__genmesh__submesh_USCOREextremes (53)
+#define SOAP_TYPE__genmesh__submesh_USCOREextremes (52)
 /* genmesh:submesh_extremes */
 class SOAP_CMAC _genmesh__submesh_USCOREextremes
 {
@@ -1295,7 +1267,7 @@ public:
 	std::string index;	/* required attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 53; } /* = unique id SOAP_TYPE__genmesh__submesh_USCOREextremes */
+	virtual int soap_type() const { return 52; } /* = unique id SOAP_TYPE__genmesh__submesh_USCOREextremes */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1308,7 +1280,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE_genskel__bones
-#define SOAP_TYPE_genskel__bones (54)
+#define SOAP_TYPE_genskel__bones (53)
 /* genskel:bones */
 class SOAP_CMAC genskel__bones
 {
@@ -1316,7 +1288,7 @@ public:
 	std::vector<class genskel__bone * >bone;	/* required element of type genskel:bone */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 54; } /* = unique id SOAP_TYPE_genskel__bones */
+	virtual int soap_type() const { return 53; } /* = unique id SOAP_TYPE_genskel__bones */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1329,7 +1301,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE_genskel__bone
-#define SOAP_TYPE_genskel__bone (55)
+#define SOAP_TYPE_genskel__bone (54)
 /* genskel:bone */
 class SOAP_CMAC genskel__bone
 {
@@ -1341,7 +1313,7 @@ public:
 	std::string name;	/* required attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 55; } /* = unique id SOAP_TYPE_genskel__bone */
+	virtual int soap_type() const { return 54; } /* = unique id SOAP_TYPE_genskel__bone */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1354,7 +1326,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE_genskel__position
-#define SOAP_TYPE_genskel__position (56)
+#define SOAP_TYPE_genskel__position (55)
 /* genskel:position */
 class SOAP_CMAC genskel__position
 {
@@ -1364,7 +1336,7 @@ public:
 	std::string z;	/* required attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 56; } /* = unique id SOAP_TYPE_genskel__position */
+	virtual int soap_type() const { return 55; } /* = unique id SOAP_TYPE_genskel__position */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1377,7 +1349,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE_genskel__rotation
-#define SOAP_TYPE_genskel__rotation (57)
+#define SOAP_TYPE_genskel__rotation (56)
 /* genskel:rotation */
 class SOAP_CMAC genskel__rotation
 {
@@ -1386,7 +1358,7 @@ public:
 	std::string angle;	/* required attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 57; } /* = unique id SOAP_TYPE_genskel__rotation */
+	virtual int soap_type() const { return 56; } /* = unique id SOAP_TYPE_genskel__rotation */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1399,7 +1371,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE_genskel__axis
-#define SOAP_TYPE_genskel__axis (58)
+#define SOAP_TYPE_genskel__axis (57)
 /* genskel:axis */
 class SOAP_CMAC genskel__axis
 {
@@ -1409,7 +1381,7 @@ public:
 	std::string z;	/* required attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 58; } /* = unique id SOAP_TYPE_genskel__axis */
+	virtual int soap_type() const { return 57; } /* = unique id SOAP_TYPE_genskel__axis */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1422,7 +1394,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE_genskel__scale
-#define SOAP_TYPE_genskel__scale (59)
+#define SOAP_TYPE_genskel__scale (58)
 /* genskel:scale */
 class SOAP_CMAC genskel__scale
 {
@@ -1433,7 +1405,7 @@ public:
 	std::string *z;	/* optional attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 59; } /* = unique id SOAP_TYPE_genskel__scale */
+	virtual int soap_type() const { return 58; } /* = unique id SOAP_TYPE_genskel__scale */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1446,7 +1418,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genskel__skeleton
-#define SOAP_TYPE__genskel__skeleton (60)
+#define SOAP_TYPE__genskel__skeleton (59)
 /* genskel:skeleton */
 class SOAP_CMAC _genskel__skeleton
 {
@@ -1457,7 +1429,7 @@ public:
 	class _genskel__animationlinks *genskel__animationlinks;	/* optional element of type genskel:animationlinks */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 60; } /* = unique id SOAP_TYPE__genskel__skeleton */
+	virtual int soap_type() const { return 59; } /* = unique id SOAP_TYPE__genskel__skeleton */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1470,7 +1442,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genskel__bonehierarchy
-#define SOAP_TYPE__genskel__bonehierarchy (61)
+#define SOAP_TYPE__genskel__bonehierarchy (60)
 /* genskel:bonehierarchy */
 class SOAP_CMAC _genskel__bonehierarchy
 {
@@ -1478,7 +1450,7 @@ public:
 	std::vector<class _genskel__boneparent * >genskel__boneparent;	/* optional element of type genskel:boneparent */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 61; } /* = unique id SOAP_TYPE__genskel__bonehierarchy */
+	virtual int soap_type() const { return 60; } /* = unique id SOAP_TYPE__genskel__bonehierarchy */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1491,7 +1463,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genskel__boneparent
-#define SOAP_TYPE__genskel__boneparent (62)
+#define SOAP_TYPE__genskel__boneparent (61)
 /* genskel:boneparent */
 class SOAP_CMAC _genskel__boneparent
 {
@@ -1500,7 +1472,7 @@ public:
 	std::string parent;	/* required attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 62; } /* = unique id SOAP_TYPE__genskel__boneparent */
+	virtual int soap_type() const { return 61; } /* = unique id SOAP_TYPE__genskel__boneparent */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1513,7 +1485,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genskel__animations
-#define SOAP_TYPE__genskel__animations (63)
+#define SOAP_TYPE__genskel__animations (62)
 /* genskel:animations */
 class SOAP_CMAC _genskel__animations
 {
@@ -1521,7 +1493,7 @@ public:
 	std::vector<class _genskel__animation * >genskel__animation;	/* required element of type genskel:animation */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 63; } /* = unique id SOAP_TYPE__genskel__animations */
+	virtual int soap_type() const { return 62; } /* = unique id SOAP_TYPE__genskel__animations */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1534,7 +1506,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genskel__animation
-#define SOAP_TYPE__genskel__animation (64)
+#define SOAP_TYPE__genskel__animation (63)
 /* genskel:animation */
 class SOAP_CMAC _genskel__animation
 {
@@ -1544,7 +1516,7 @@ public:
 	std::string length;	/* required attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 64; } /* = unique id SOAP_TYPE__genskel__animation */
+	virtual int soap_type() const { return 63; } /* = unique id SOAP_TYPE__genskel__animation */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1557,7 +1529,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genskel__tracks
-#define SOAP_TYPE__genskel__tracks (65)
+#define SOAP_TYPE__genskel__tracks (64)
 /* genskel:tracks */
 class SOAP_CMAC _genskel__tracks
 {
@@ -1565,7 +1537,7 @@ public:
 	std::vector<class _genskel__track * >genskel__track;	/* required element of type genskel:track */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 65; } /* = unique id SOAP_TYPE__genskel__tracks */
+	virtual int soap_type() const { return 64; } /* = unique id SOAP_TYPE__genskel__tracks */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1578,7 +1550,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genskel__track
-#define SOAP_TYPE__genskel__track (66)
+#define SOAP_TYPE__genskel__track (65)
 /* genskel:track */
 class SOAP_CMAC _genskel__track
 {
@@ -1587,7 +1559,7 @@ public:
 	std::string bone;	/* required attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 66; } /* = unique id SOAP_TYPE__genskel__track */
+	virtual int soap_type() const { return 65; } /* = unique id SOAP_TYPE__genskel__track */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1600,7 +1572,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genskel__keyframes
-#define SOAP_TYPE__genskel__keyframes (67)
+#define SOAP_TYPE__genskel__keyframes (66)
 /* genskel:keyframes */
 class SOAP_CMAC _genskel__keyframes
 {
@@ -1608,7 +1580,7 @@ public:
 	std::vector<class _genskel__keyframe * >genskel__keyframe;	/* required element of type genskel:keyframe */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 67; } /* = unique id SOAP_TYPE__genskel__keyframes */
+	virtual int soap_type() const { return 66; } /* = unique id SOAP_TYPE__genskel__keyframes */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1621,7 +1593,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genskel__keyframe
-#define SOAP_TYPE__genskel__keyframe (68)
+#define SOAP_TYPE__genskel__keyframe (67)
 /* genskel:keyframe */
 class SOAP_CMAC _genskel__keyframe
 {
@@ -1632,7 +1604,7 @@ public:
 	std::string time;	/* required attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 68; } /* = unique id SOAP_TYPE__genskel__keyframe */
+	virtual int soap_type() const { return 67; } /* = unique id SOAP_TYPE__genskel__keyframe */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1645,7 +1617,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genskel__translate
-#define SOAP_TYPE__genskel__translate (69)
+#define SOAP_TYPE__genskel__translate (68)
 /* genskel:translate */
 class SOAP_CMAC _genskel__translate
 {
@@ -1655,7 +1627,7 @@ public:
 	std::string z;	/* required attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 69; } /* = unique id SOAP_TYPE__genskel__translate */
+	virtual int soap_type() const { return 68; } /* = unique id SOAP_TYPE__genskel__translate */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1668,7 +1640,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genskel__rotate
-#define SOAP_TYPE__genskel__rotate (70)
+#define SOAP_TYPE__genskel__rotate (69)
 /* genskel:rotate */
 class SOAP_CMAC _genskel__rotate
 {
@@ -1677,7 +1649,7 @@ public:
 	std::string angle;	/* required attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 70; } /* = unique id SOAP_TYPE__genskel__rotate */
+	virtual int soap_type() const { return 69; } /* = unique id SOAP_TYPE__genskel__rotate */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1690,7 +1662,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genskel__animationlinks
-#define SOAP_TYPE__genskel__animationlinks (71)
+#define SOAP_TYPE__genskel__animationlinks (70)
 /* genskel:animationlinks */
 class SOAP_CMAC _genskel__animationlinks
 {
@@ -1698,7 +1670,7 @@ public:
 	std::vector<class _genskel__animationlink * >genskel__animationlink;	/* required element of type genskel:animationlink */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 71; } /* = unique id SOAP_TYPE__genskel__animationlinks */
+	virtual int soap_type() const { return 70; } /* = unique id SOAP_TYPE__genskel__animationlinks */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1711,7 +1683,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE__genskel__animationlink
-#define SOAP_TYPE__genskel__animationlink (72)
+#define SOAP_TYPE__genskel__animationlink (71)
 /* genskel:animationlink */
 class SOAP_CMAC _genskel__animationlink
 {
@@ -1720,7 +1692,7 @@ public:
 	std::string scale;	/* optional attribute */
 	struct soap *soap;	/* transient */
 public:
-	virtual int soap_type() const { return 72; } /* = unique id SOAP_TYPE__genskel__animationlink */
+	virtual int soap_type() const { return 71; } /* = unique id SOAP_TYPE__genskel__animationlink */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -1733,7 +1705,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE_SOAP_ENV__Header
-#define SOAP_TYPE_SOAP_ENV__Header (191)
+#define SOAP_TYPE_SOAP_ENV__Header (187)
 /* SOAP Header: */
 struct SOAP_ENV__Header
 {
@@ -1745,7 +1717,7 @@ private:
 #endif
 
 #ifndef SOAP_TYPE_SOAP_ENV__Code
-#define SOAP_TYPE_SOAP_ENV__Code (192)
+#define SOAP_TYPE_SOAP_ENV__Code (188)
 /* SOAP Fault Code: */
 struct SOAP_ENV__Code
 {
@@ -1756,7 +1728,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE_SOAP_ENV__Detail
-#define SOAP_TYPE_SOAP_ENV__Detail (194)
+#define SOAP_TYPE_SOAP_ENV__Detail (190)
 /* SOAP-ENV:Detail */
 struct SOAP_ENV__Detail
 {
@@ -1768,7 +1740,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE_SOAP_ENV__Reason
-#define SOAP_TYPE_SOAP_ENV__Reason (197)
+#define SOAP_TYPE_SOAP_ENV__Reason (193)
 /* SOAP-ENV:Reason */
 struct SOAP_ENV__Reason
 {
@@ -1778,7 +1750,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE_SOAP_ENV__Fault
-#define SOAP_TYPE_SOAP_ENV__Fault (198)
+#define SOAP_TYPE_SOAP_ENV__Fault (194)
 /* SOAP Fault: */
 struct SOAP_ENV__Fault
 {

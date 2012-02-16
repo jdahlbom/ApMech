@@ -10,11 +10,8 @@
   </stats>
   <design>
     <torso turningRadius="90"/>
-    <equipmentSlots />
+    <equipmentSlots/>
     <torsoBone>FIXME: INVALID!</torsoBone>
   </design>
-  <media>
-    <mesh type="TORSO" file="HybridFalcon-torso.mesh" translation="000.00;007.82;000.00"/>
-    <mesh type="LEGS" file="HybridFalcon-legs.mesh" translation="000.00;006.07;000.00"/>
-  </media>
+  <mesh file="HybridFalcon-torso.mesh" translation="000.00;007.82;000.00"/>
 </mech>
