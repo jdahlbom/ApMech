@@ -111,8 +111,7 @@ bool Server::loadSettings(std::string serverConfigFile)
     std::vector<std::string>::const_iterator it;
     for (it=mechNames.begin(); it!=mechNames.end(); ++it) {
         std::cout << "Trying to create proto [" << *it << "]" << std::endl;
-        ap::MechReader *reader = mechDB->getMechReader(*it);
-	MechData *data = reader->getMechData();
+        MechData *data = mechDB->getMechData(*it);
 	std::cout << "Creating proto [" << data->getName() << "]" << std::endl;
         netdata->insertObject(data);
     }
@@ -295,7 +294,7 @@ void Server::spawnNewAvatars(ap::net::NetData *pNetData) {
             Ogre::Vector3 initialSpeed(0,0,0);
             ap::Mech *newAvatar = new ap::Mech();
             int newid = pNetData->insertObject(newAvatar);
-            ap::MechReader *reader = mechDB->getMechReader(pUser->chosenVehicleType);
+            ap::MechData *reader = mechDB->getMechData(pUser->chosenVehicleType);
 
             newAvatar->setTypeName(pUser->chosenVehicleType);
             if (reader) {

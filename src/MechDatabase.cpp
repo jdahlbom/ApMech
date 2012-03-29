@@ -1,7 +1,8 @@
-#include "ObjectDataBase.h"
+#include "MechDatabase.h"
 #include <boost/filesystem.hpp>
 
-#include "ObjectReader.h"
+#include "MechData.h"
+#include "MechReader.h"
 
 namespace fs = boost::filesystem;
 
@@ -9,7 +10,7 @@ namespace ap {
 
 MechDatabase::~MechDatabase(void) {
 
-    std::map<std::string, MechReader*>::iterator iter;
+    std::map<std::string, MechData*>::iterator iter;
 
     for (iter = mechMap.begin(); iter != mechMap.end(); ++iter)
         delete iter->second;
@@ -36,19 +37,21 @@ bool MechDatabase::readMechFiles() {
 #if 0
             std::cout << "Found XML file: " << iter->leaf() << std::endl;
 #endif
-            std::string file = dataPath + "/" + iter->leaf();
+            const std::string file = dataPath + "/" + iter->leaf();
 
-            MechReader *mechReader = new MechReader(&file);
-            mechReader->parseFile();
+		MechData *mechData = new MechData();
+		int result = ap::mechreader::readMech(mechData, &file);
+		if (result)
+			return false;
 
-#if 0
-            std::cout << "name: " << mechReader->getName() << std::endl;
-            std::cout << "turnrate: " << mechReader->getTurnRate() << std::endl;
-            std::cout << "forward acceleration: " << mechReader->getMaxForwardAcceleration() << std::endl;
-            std::cout << "backward acceleration: " << mechReader->getMaxBackwardAcceleration() << std::endl;
+#if 1
+            std::cout << "name: " << mechData->getName() << std::endl;
+            std::cout << "turnrate: " << mechData->getTurnRate() << std::endl;
+            std::cout << "forward acceleration: " << mechData->getMaxForwardAcceleration() << std::endl;
+            std::cout << "backward acceleration: " << mechData->getMaxBackwardAcceleration() << std::endl;
 #endif
 
-            mechMap.insert(std::make_pair<std::string, MechReader*>(mechReader->getName(), mechReader));
+            mechMap.insert(std::make_pair<std::string, MechData*>(mechData->getName(), mechData));
 
         }
     }
@@ -59,7 +62,7 @@ bool MechDatabase::readMechFiles() {
 std::vector<std::string> MechDatabase::getMechNames() {
 
     std::vector<std::string> keys;
-    std::map<std::string, MechReader*>::iterator iter;
+    std::map<std::string, MechData*>::iterator iter;
 
     for (iter = mechMap.begin(); iter != mechMap.end(); ++iter)
         keys.push_back(iter->first);

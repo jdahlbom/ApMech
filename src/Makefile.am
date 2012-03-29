@@ -48,9 +48,11 @@ apmech_LDADD =  math/libapmath.a \
 		-lboost_filesystem \
 		-lboost_system
 
-apserver_SOURCES = ObjectDataBase.cpp \
-		ObjectReader.cpp \
+apserver_SOURCES = MechDatabase.cpp \
+		MechReader.cpp \
 		servermain.cpp \
+		model/datamodelC.cpp \
+		gsoap/stdsoap2.cpp \
 		${MY_COMMONSOURCES}
 
 apserver_CXXFLAGS = -DSERIALIZER_WITH_OGRE \
@@ -64,7 +66,6 @@ apserver_LDADD = math/libapmath.a \
 		${OGRE_LIBS} \
 		${SDLIMAGE_LIBS} \
 		${ENET_LIBS} \
-		-lexpat \
 		-lboost_filesystem \
 		-lboost_system
 

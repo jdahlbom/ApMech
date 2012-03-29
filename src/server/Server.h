@@ -11,7 +11,7 @@
 #include "../ScoreListing.h"
 #include "../types.h"
 #include "../GameWorld.h"
-#include "../ObjectDataBase.h"
+#include "../MechDatabase.h"
 
 #include "MatchRules.h"
 

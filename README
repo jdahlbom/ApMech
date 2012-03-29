@@ -16,3 +16,8 @@ Start compilation by saying "scons ogre='/path/to/OgreSDK'".
 After compilation, you currently need to manually copy the 
 necessary frameworks (Ogre, CEGUI, OgreCEGUIRendeder) to the 
 Contents/Frameworks directory in the application bundle.
+
+Windows:
+
+You can try with MinGW but it is not really supported in any way.
+Best bet would be building your own vcproj file and compiling from that.

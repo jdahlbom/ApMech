@@ -32,8 +32,6 @@
 #include <vector>
 #include <string>
 
-#include "ObjectReader.h"
-
 namespace ap {
 
 class MechData;
@@ -47,16 +45,14 @@ public:
     bool readMechFiles();
     std::vector<std::string> getMechNames();
 
-    // TODO: use shared_ptr? The MechReader pointers are not usable
-    // after deleting the database.
-    MechReader * getMechReader(std::string name) { return mechMap[name]; }
+    MechData * getMechData(std::string name) { return mechMap[name]; }
 
 private:
     // map of ObjectDataModels (name -> object)
     
     std::string dataPath;
     
-    std::map<std::string, MechReader*> mechMap;
+    std::map<std::string, MechData*> mechMap;
 
 };
 }
