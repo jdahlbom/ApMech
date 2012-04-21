@@ -31,7 +31,7 @@ apmech_SOURCES = GameState.cpp \
 apmech_CXXFLAGS = -DSERIALIZER_WITH_OGRE \
 		${OGRE_CFLAGS} \
 		${CEGUI_CFLAGS} \
-		${CEGUI_OGRE_CFLAGS} \
+		${CEGUIOGRERENDERER_CFLAGS} \
 		${SDL_CFLAGS} \
 		${SDLIMAGE_CFLAGS} \
 		${ENET_CFLAGS}
@@ -41,7 +41,7 @@ apmech_LDADD =  math/libapmath.a \
 		net/libapnet.a \
 		${OGRE_LIBS} \
 		${CEGUI_LIBS} \
-		${CEGUI_OGRE_LIBS} \
+		${CEGUIOGRERENDERER_LIBS} \
 		${SDL_LIBS} \
 		${ENET_LIBS} \
 		${SDLIMAGE_LIBS} \

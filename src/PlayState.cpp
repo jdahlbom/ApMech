@@ -55,20 +55,6 @@ PlayState::~PlayState() {
     pSceneManager->destroyQuery(mRaySceneQuery);
 }
 
-class PlayState_MechDataVisitor : public MechDataVisitor
-{
-public:
-    PlayState_MechDataVisitor(std::vector<MechDataMesh> &meshVector) :
-	pMeshVector(meshVector) {}
-    bool mdv_visit(const MechDataMesh &mesh) {
-	pMeshVector.push_back(MechDataMesh(mesh));
-	return true;
-    }
-private:
-    std::vector<MechDataMesh> &pMeshVector;
-};
-
-
 void PlayState::enter( void ) {
     assert(netdata);    
     assert(pSceneManager);
@@ -298,32 +284,25 @@ void PlayState::createNewEntity(ap::MovingObject *newObject, uint32 objectId)
         const MechData *proto = getMechProto(mechName);
         assert(proto != NULL);
 
-	// get all meshes.
-	std::vector<MechDataMesh> meshes = std::vector<MechDataMesh>();
-	PlayState_MechDataVisitor mdv = PlayState_MechDataVisitor(meshes);
-	proto->accept(mdv); // populates the meshes vector with mesh data.
+	std::string meshFileName = proto->getMeshFile();
+        std::string meshName("");
+        meshName.append(baseId);
+        meshName.append(meshFileName);
 
-	std::vector<MechDataMesh>::const_iterator it = meshes.begin();
-	for (it=meshes.begin(); it!=meshes.end(); ++it) {
-	    MechDataMesh mesh(*it);
-	    std::string meshName("");
-	    meshName.append(baseId);
-	    meshName.append(mesh.getPartName());
+        /* TODO: Still needs the scenenode parenting code! */
+        Ogre::SceneNode *node = objNode->createChildSceneNode(/* no translation.. */);
+        Ogre::Entity *entity = pSceneManager->createEntity(meshName, meshFileName);
+        node->attachObject(entity);
+        pMech->addEntity(meshName, node, entity);
 
-	    /* TODO: Still needs the scenenode parenting code! */
-	    Ogre::SceneNode *node = objNode->createChildSceneNode(mesh.getTranslation());
-	    Ogre::Entity *entity = pSceneManager->createEntity(meshName, mesh.getFileName());
-	    node->attachObject(entity);
-	    pMech->addEntity(mesh.getPartName(), node, entity);
+        if (entity->getSkeleton()->hasBone("bTorso")) {
+	    Ogre::Bone *bone = entity->getSkeleton()->getBone("bTorso");
+	    bone->setManuallyControlled(true);
+	    // TODO: TransformSpace should be TS_LOCAL if I undestand it correctly,
+	    //       but it seems to point into wrong direction..
+            bone->yaw(Ogre::Radian(30.0f * 3.14f / 180.0f), Ogre::Node::TS_WORLD);
+        }
 
-	    if (entity->getSkeleton()->hasBone("bTorso")) {
-		Ogre::Bone *bone = entity->getSkeleton()->getBone("bTorso");
-		bone->setManuallyControlled(true);
-		// TODO: TransformSpace should be TS_LOCAL preferably,
-		//       but it seems to point into wrong direction..
-		bone->yaw(Ogre::Radian(30.0f * 3.14f / 180.0f), Ogre::Node::TS_WORLD);
-	    }
-	}
 	pMech->colorize(color);
       }
       break;

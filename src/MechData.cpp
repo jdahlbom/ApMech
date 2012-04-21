@@ -15,12 +15,12 @@ namespace ap {
 /**/static MechDataInject __mechdatainject;
 
 
-    MechData::MechData() : 
-	name(""), 
-	maxTurnRate(0), 
-	maxForwardAcceleration(0), 
-	maxBackwardAcceleration(0),
-	meshes(std::vector<MechDataMesh>()) {}
+MechData::MechData() : 
+   name(""), 
+   maxTurnRate(0), 
+   maxForwardAcceleration(0), 
+   maxBackwardAcceleration(0),
+   meshFile("") {}
 
 net::NetObject * MechData::create(uint32 id) const
 {
@@ -38,13 +38,7 @@ int MechData::serialize(uint8 buffer[], int start, int buflength) const
     length += ap::net::serialize(maxTurnRate, buffer, start+length, buflength-length);
     length += ap::net::serialize(maxTorsoAngle, buffer, start+length, buflength-length);
     length += ap::net::serialize(maxSpeed, buffer, start+length, buflength-length);
-
-    ap::uint8 numMeshes = meshes.size();
-    length += ap::net::serialize(numMeshes, buffer, start+length, buflength-length);
-    std::vector<MechDataMesh>::const_iterator it;
-    for (it = meshes.begin(); it!=meshes.end(); ++it) {
-	length += (*it).serialize(buffer, start+length, buflength-length);
-    }
+    length += ap::net::serialize(meshFile, buffer, start+length, buflength-length);
 
     return length;
 }
@@ -58,15 +52,7 @@ int MechData::unserialize(uint8 buffer[], int start)
     length += ap::net::unserialize(maxTurnRate, buffer, start+length);
     length += ap::net::unserialize(maxTorsoAngle, buffer, start+length);
     length += ap::net::unserialize(maxSpeed, buffer, start+length);
-    
-    uint8 numberOfMeshes = 0;
-    length += ap::net::unserialize(numberOfMeshes, buffer, start+length);
-    meshes.clear();
-    for (int i=0; i<numberOfMeshes; ++i) {
-	MechDataMesh newMesh = MechDataMesh();
-	length += newMesh.unserialize(buffer, start+length);
-	meshes.push_back(newMesh);
-    }
+    length += ap::net::unserialize(meshFile, buffer, start+length);
 
     return length;
 }
@@ -75,54 +61,4 @@ ap::uint8 MechData::getObjectType() const {
     return ap::OBJECT_TYPE_MECHDATA;
 }
 
-/**
- * Accepts a visitor to iterate through the mesh list.
- * @see Visitor pattern
- */
-void MechData::accept(MechDataVisitor &visitor) const {
-    std::vector<MechDataMesh>::const_iterator it;
-    
-    it = meshes.begin();
-    while (it!=meshes.end()) {
-	bool shouldContinue = visitor.mdv_visit(*it);
-	if (!shouldContinue)
-	    break;
-	++it;
-    }
-}
-
-void MechData::addMesh(const MechDataMesh &mesh) {
-    meshes.push_back(mesh);
-}
-
-    MechDataMesh::MechDataMesh() {} // NOTE: Only use for unserialization purposes!
-
-    MechDataMesh::MechDataMesh(std::string name, 
-			       std::string parent, 
-			       std::string file, 
-			       Ogre::Vector3 _translation) :
-	partName(name),
-	parentName(parent),
-	fileName(file),
-	translation(_translation) {}
-
-    int MechDataMesh::serialize(uint8 buffer[], int start, int buflength) const
-    {
-	int length = 0;
-	length += ap::net::serialize(partName, buffer, start+length, buflength-length);
-	length += ap::net::serialize(parentName, buffer, start+length, buflength-length);
-	length += ap::net::serialize(fileName, buffer, start+length, buflength-length);
-	length += ap::net::serialize(translation, buffer, start+length, buflength-length);
-	return length;
-    }
-
-    int MechDataMesh::unserialize(uint8 buffer[], int start)
-    {
-	int length;
-	length += ap::net::unserialize(partName, buffer, start+length);
-	length += ap::net::unserialize(parentName, buffer, start+length);
-	length += ap::net::unserialize(fileName, buffer, start+length);
-	length += ap::net::unserialize(translation, buffer, start+length);
-	return length;
-    }
 } // namespace ap

@@ -609,6 +609,8 @@ SDLIMAGE_CFLAGS
 SDL_LIBS
 SDL_CFLAGS
 SDL_CONFIG
+CEGUIOGRERENDERER_LIBS
+CEGUIOGRERENDERER_CFLAGS
 OGRE_LIBS
 OGRE_CFLAGS
 CEGUI_LIBS
@@ -725,6 +727,8 @@ CEGUI_CFLAGS
 CEGUI_LIBS
 OGRE_CFLAGS
 OGRE_LIBS
+CEGUIOGRERENDERER_CFLAGS
+CEGUIOGRERENDERER_LIBS
 SDLIMAGE_CFLAGS
 SDLIMAGE_LIBS
 XMKMF
@@ -1379,6 +1383,10 @@ Some influential environment variables:
   CEGUI_LIBS  linker flags for CEGUI, overriding pkg-config
   OGRE_CFLAGS C compiler flags for OGRE, overriding pkg-config
   OGRE_LIBS   linker flags for OGRE, overriding pkg-config
+  CEGUIOGRERENDERER_CFLAGS
+              C compiler flags for CEGUIOGRERENDERER, overriding pkg-config
+  CEGUIOGRERENDERER_LIBS
+              linker flags for CEGUIOGRERENDERER, overriding pkg-config
   SDLIMAGE_CFLAGS
               C compiler flags for SDLIMAGE, overriding pkg-config
   SDLIMAGE_LIBS
@@ -4646,6 +4654,97 @@ See \`config.log' for more details." "$LINENO" 5; }
 else
 	OGRE_CFLAGS=$pkg_cv_OGRE_CFLAGS
 	OGRE_LIBS=$pkg_cv_OGRE_LIBS
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+	:
+fi
+
+
+pkg_failed=no
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for CEGUIOGRERENDERER" >&5
+$as_echo_n "checking for CEGUIOGRERENDERER... " >&6; }
+
+if test -n "$PKG_CONFIG"; then
+    if test -n "$CEGUIOGRERENDERER_CFLAGS"; then
+        pkg_cv_CEGUIOGRERENDERER_CFLAGS="$CEGUIOGRERENDERER_CFLAGS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"CEGUI-OGRE >= 0.7.6\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "CEGUI-OGRE >= 0.7.6") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_CEGUIOGRERENDERER_CFLAGS=`$PKG_CONFIG --cflags "CEGUI-OGRE >= 0.7.6" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+if test -n "$PKG_CONFIG"; then
+    if test -n "$CEGUIOGRERENDERER_LIBS"; then
+        pkg_cv_CEGUIOGRERENDERER_LIBS="$CEGUIOGRERENDERER_LIBS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"CEGUI-OGRE >= 0.7.6\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "CEGUI-OGRE >= 0.7.6") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_CEGUIOGRERENDERER_LIBS=`$PKG_CONFIG --libs "CEGUI-OGRE >= 0.7.6" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+
+
+
+if test $pkg_failed = yes; then
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+	        CEGUIOGRERENDERER_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "CEGUI-OGRE >= 0.7.6"`
+        else
+	        CEGUIOGRERENDERER_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "CEGUI-OGRE >= 0.7.6"`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$CEGUIOGRERENDERER_PKG_ERRORS" >&5
+
+	as_fn_error "Package requirements (CEGUI-OGRE >= 0.7.6) were not met:
+
+$CEGUIOGRERENDERER_PKG_ERRORS
+
+Consider adjusting the PKG_CONFIG_PATH environment variable if you
+installed software in a non-standard prefix.
+
+Alternatively, you may set the environment variables CEGUIOGRERENDERER_CFLAGS
+and CEGUIOGRERENDERER_LIBS to avoid the need to call pkg-config.
+See the pkg-config man page for more details.
+" "$LINENO" 5
+elif test $pkg_failed = untried; then
+	{ { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
+$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
+as_fn_error "The pkg-config script could not be found or is too old.  Make sure it
+is in your PATH or set the PKG_CONFIG environment variable to the full
+path to pkg-config.
+
+Alternatively, you may set the environment variables CEGUIOGRERENDERER_CFLAGS
+and CEGUIOGRERENDERER_LIBS to avoid the need to call pkg-config.
+See the pkg-config man page for more details.
+
+To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+See \`config.log' for more details." "$LINENO" 5; }
+else
+	CEGUIOGRERENDERER_CFLAGS=$pkg_cv_CEGUIOGRERENDERER_CFLAGS
+	CEGUIOGRERENDERER_LIBS=$pkg_cv_CEGUIOGRERENDERER_LIBS
         { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
 	:

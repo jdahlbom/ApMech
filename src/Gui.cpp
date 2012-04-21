@@ -53,6 +53,7 @@ namespace ap {
   const std::string Gui::mainMenuWindowName = "MainMenu";
 
   Gui::Gui(CEGUI::Renderer *renderer) :
+    mSystem(0),
     keysBeingPressed(0),
     pChatReceiver(0),
     pLoginReceiver(0),
@@ -65,20 +66,18 @@ namespace ap {
   {
     assert(renderer);
     using namespace CEGUI;
-
-/*	try {
-//	JL 4.6.2011 porting // 	mSystem = new System( renderer );
+    
+    try {    
         mSystem = &CEGUI::System::create( *renderer );
-	} catch (CEGUI::GenericException genException) {
-		std::cout << "Could not create CEGUI::System!" << std::endl;
-		std::cout << genException.getMessage() << std::endl;
-		throw; // GUI cannot function without CEGUI, rethrow the exception.
-	}
-	*/
-	mSystem = &CEGUI::System::getSingleton();  // Porting to new CEGUI: now we just need a pointer.
-	assert(mSystem);
+    } catch (CEGUI::GenericException genException) {
+  	std::cout << "Could not create CEGUI::System!" << std::endl;
+	std::cout << genException.getMessage() << std::endl;
+	throw; // GUI cannot function without CEGUI, rethrow the exception.
+    }
+    assert(mSystem);
 	
-    // JL 4.6.2011, porting to CEGUI 0.7.5 // SchemeManager::getSingleton().loadScheme((CEGUI::utf8*)"ApMechLookSkin.scheme");
+    // JL 4.6.2011, porting to CEGUI 0.7.5 
+    //SchemeManager::getSingleton().loadScheme((CEGUI::utf8*)"ApMechLookSkin.scheme");
     SchemeManager::getSingleton().create((CEGUI::utf8*)"ApMechLookSkin.scheme");
 
     mSystem->setDefaultMouseCursor((CEGUI::utf8*)"ApMechLook", (CEGUI::utf8*)"MouseArrow");
@@ -91,7 +90,8 @@ namespace ap {
 
   Gui::~Gui()
   {
-    // JL 4.6.2011, to compile with CEGUI 0.7.5 // delete(mSystem);
+    // JL 4.6.2011, to compile with CEGUI 0.7.5 
+    //delete(mSystem);
     CEGUI::OgreRenderer::destroySystem();
 
   }
